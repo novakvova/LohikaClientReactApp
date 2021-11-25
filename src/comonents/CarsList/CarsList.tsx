@@ -1,49 +1,50 @@
+import * as React from 'react';
 import http from "../../http_common";
 import { useState, useEffect } from "react";
 import CarCard from "../CarCard";
 import CarsFilter from "../CarsFilter/CarsFilter";
 import Loader from "../../assets/Loader";
+import {useTypedSelector} from '../../hooks/useTypedSelector';
+import {useActions} from '../../hooks/useActions';
 
-const CarsList = () => {
+const CarsList : React.FC = () => {
+
+  const {cars, loading, error} = useTypedSelector(store => store.car);
+  const {fetchCars} = useActions();
+
   const [carsList, setCarsList] = useState([]);
   const [isLoadData, setIsLoadData] = useState(false);
   const [listToShow, setListToShow] = useState([]);
 
   useEffect(() => {
-    http
-      .get("api/Products/list")
-      .then((responce) => {
-        setCarsList(responce.data);
-        setListToShow(responce.data);
-        setIsLoadData(true);
-      })
-      .catch((error) => console.log(error));
+    fetchCars();
+
   }, []);
 
-  const onSortUpHandler = () => {
-    setListToShow(
-      [...[...carsList].sort((a, b) => a["price"] - b["price"])].reverse()
-    );
-  };
+  // const onSortUpHandler = () => {
+  //   setListToShow(
+  //     [...[...cars].sort((a, b) => a["price"] - b["price"])].reverse()
+  //   );
+  // };
 
-  const onSortDownHandler = () => {
-    setListToShow([...[...carsList].sort((a, b) => a["price"] - b["price"])]);
-  };
+  // const onSortDownHandler = () => {
+  //   setListToShow([...[...cars].sort((a, b) => a["price"] - b["price"])]);
+  // };
 
-  const onClearFilter = () => {
-    setListToShow([...carsList]);
-  };
+  // const onClearFilter = () => {
+  //   setListToShow([...cars]);
+  // };
 
   return (
     <div className="row d-flex justify-content-around flex-wrap">
-      <CarsFilter
+      {/* <CarsFilter
         onSortUp={onSortUpHandler}
         onSortDown={onSortDownHandler}
         onCLearFilter={onClearFilter}
-      />
-      {!isLoadData && <Loader />}
-      {isLoadData &&
-        listToShow.map((item) => (
+      /> */}
+      {loading && <Loader />}
+      {!loading &&
+        cars.map((item) => (
           <CarCard
             key={item["id"]}
             name={item["name"]}
