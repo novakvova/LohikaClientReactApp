@@ -2,7 +2,7 @@ import { Dispatch } from "react";
 import http from "../../http_common";
 import { AuthAction, AuthActionTypes } from "../../types/auth";
 
-interface ILogin {
+export interface ILogin {
     email: string,
     password: string
 }

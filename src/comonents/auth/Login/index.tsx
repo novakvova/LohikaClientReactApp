@@ -2,11 +2,11 @@ import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
 
 import validate from "../../../yupValidator/yupRegisterValidation";
-import { useNavigate } from "react-router-dom";
 import { IErors, IValidation } from "../../../yupValidator/validationInterface";
-
+import { ILogin } from '../../../store/action-creators/auth';
+import schema from '../../../yupValidator/yup.Schema'
 const LoginPage = () => {
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
   const [error, setError] = useState<IValidation>();
 
 
@@ -15,12 +15,18 @@ const LoginPage = () => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+    console.log(loginData);
+    
   };
 
   const handlerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setError({});
+    
     const res = await validate(loginData);
+    console.log(res);
+    
     if (res.length > 0) {
       res.map((el: IErors) =>
         setError((prev) => ({
@@ -28,7 +34,11 @@ const LoginPage = () => {
           [el.name]: el.message,
         }))
       );
+      console.log(error);
+      
     }
+
+  
   };
 
   return (
