@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import InputGroup from "../../common/InputGroup";
 
-import { IErors, ILoginValidation } from "../../../yupValidator/validationInterface";
+import { IValidation } from "../../../yupValidator/validationInterface";
 import { ILogin } from '../../../store/action-creators/auth';
-import {  } from '../../../yupValidator/yup.Schema';
 import validationFields from '../../../yupValidator/validationFields';
 const LoginPage = () => {
   const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
-  const [errorMessages, setErrorMessages] = useState<ILoginValidation>();
+  const [errorMessages, setErrorMessages] = useState<IValidation>();
   
   const handlerBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     validationFields(e.target.name)
@@ -34,10 +33,8 @@ const LoginPage = () => {
   
   const handlerSubmit =  (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(errorMessages);
     
     if (!!loginData.email && !!loginData.password.length){
-      console.log('work');
       
     }
   };
