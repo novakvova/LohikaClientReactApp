@@ -1,48 +1,45 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import InputGroup from "../../common/InputGroup";
 
-import { loginValidation } from "../../../yupValidator/yupRegisterLoginValidation";
 import { IErors, ILoginValidation } from "../../../yupValidator/validationInterface";
 import { ILogin } from '../../../store/action-creators/auth';
+import {  } from '../../../yupValidator/yup.Schema';
+import validationFields from '../../../yupValidator/validationFields';
 const LoginPage = () => {
   const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
   const [errorMessages, setErrorMessages] = useState<ILoginValidation>();
-
-
-  const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-    
-    };
-
-  const handlerSubmit =  (e: React.FormEvent) => {
-    e.preventDefault();
-
-
-    loginValidation(loginData).then((res) => {
-     console.log(res);
-     
-      
-    })
-    
-    
-    // if (res instanceof Array) {
-    //    res.map((el: IErors) =>
-    //     setErrorMessages((prev) => ({
-    //       ...prev,
-    //       [el.name]: el.message,
-    //     }))
-    //   );
-    //  console.log(errorMessages);
-
-    // }
-    // else {
-    //   console.log('Login');
-    // }
+  
+  const handlerBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    validationFields(e.target.name)
+      .validate({ [e.target.name]: e.target.value })
+      .then((valid) => {
+        setErrorMessages((prev) => ({ 
+          ...prev,
+          [Object.keys(valid)[0]]: null 
+        }));
+        
+        setLoginData((prev) => ({
+          ...prev,
+          ...valid,
+        }));
+      })
+      .catch((err) => {
+        setErrorMessages((prev) => ({
+          ...prev,
+          [err.errors[0].name]: err.errors[0].message 
+        }));
+      });
+  };
 
   
+  const handlerSubmit =  (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(errorMessages);
+    
+    if (!!loginData.email && !!loginData.password.length){
+      console.log('work');
+      
+    }
   };
 
   return (
@@ -56,7 +53,7 @@ const LoginPage = () => {
             label="Email"
             type="text"
             error={errorMessages?.email}
-            onChange={handlerChange}
+            onBlur={handlerBlur}
           />
 
           <InputGroup
@@ -64,7 +61,7 @@ const LoginPage = () => {
             label="Пароль"
             type="password"
             error={errorMessages?.password}
-            onChange={handlerChange}
+            onBlur={handlerBlur}
           />
           <div className="text-center">
             <button type="submit" className="btn btn-secondary px-5">

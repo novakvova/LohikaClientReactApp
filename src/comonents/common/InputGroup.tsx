@@ -13,6 +13,7 @@ const InputGroup: FC<InputGroupProps> = ({
   type = "text",
   error,
   onChange,
+  onBlur
 }) => {
   return (
     <div className="mb-3">
@@ -22,16 +23,17 @@ const InputGroup: FC<InputGroupProps> = ({
       <input
         type={type}
         onChange={onChange}
+        onBlur={onBlur}
         className={classnames("form-control", {
           "is-invalid": !!error,
-          "is-valid": error,
+          "is-valid": error===null,
         })}
         id={name}
         name={name}
       />
       {!!error && (
         <div id="validationServer03Feedback" className="invalid-feedback">
-          Please provide a valid city.
+          {error}
         </div>
       )}
     </div>

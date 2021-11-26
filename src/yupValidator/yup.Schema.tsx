@@ -1,6 +1,19 @@
 import * as yup from "yup";
 
-export const schemaRegister = yup.object().shape({
+export const schemaEmail = yup.object().shape({
+  email: yup
+    .string()
+    .email({
+      message: "Введіть коректний Email",
+      name: "email",
+    })
+    .required({
+      message: "Поле не повинне бути пустим",
+      name: "email",
+    }),
+});
+
+export const schema = yup.object().shape({
   email: yup
     .string()
     .email({
@@ -16,8 +29,7 @@ export const schemaRegister = yup.object().shape({
     .required({
       message: "Поле не повинне бути пустим",
       name: "firstName",
-    })
-    .ensure(),
+    }),
   lastName: yup.string().required({
     message: "Поле не повинне бути пустим",
     name: "lastName",
@@ -63,20 +75,3 @@ export const schemaRegister = yup.object().shape({
     }),
 });
 
-export const schemaLogin = yup.object().shape({
-  email: yup
-    .string()
-    .required({
-      message: "Поле не повинне бути пустим",
-      name: "email",
-    })
-    .email({
-      message: "Введіть коректний Email",
-      name: "email",
-    }),
-  password: yup
-    .string()
-    .required({ message: "Поле не повинне бути пустим", name: "password" })
-    .matches(/[0-9a-zA-Z!@#$%^&*]/, () => ({ message: "Пароль може містить латинські символи і цифри",name: "password" }))
-    .min(5, { message: "Пароль повинен містити мініму 5 символів", name: "password" }),
-});

@@ -18,3 +18,12 @@ export interface IErors {
   name: string;
 }
 
+export interface IValidation {
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  avatar?: string | null;
+  phone?: string | null;
+  password?: string | null;
+  confirmPassword?: string | null;
+}
