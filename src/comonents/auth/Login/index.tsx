@@ -1,13 +1,12 @@
 import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
 
-import validate from "../../../yupValidator/yupRegisterValidation";
-import { IErors, IValidation } from "../../../yupValidator/validationInterface";
+import { loginValidation } from "../../../yupValidator/yupRegisterLoginValidation";
+import { IErors, ILoginValidation } from "../../../yupValidator/validationInterface";
 import { ILogin } from '../../../store/action-creators/auth';
-import schema from '../../../yupValidator/yup.Schema'
 const LoginPage = () => {
   const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
-  const [error, setError] = useState<IValidation>();
+  const [errorMessages, setErrorMessages] = useState<ILoginValidation>();
 
 
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,28 +14,33 @@ const LoginPage = () => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(loginData);
     
-  };
+    };
 
-  const handlerSubmit = async (e: React.FormEvent) => {
+  const handlerSubmit =  (e: React.FormEvent) => {
     e.preventDefault();
 
-    setError({});
-    
-    const res = await validate(loginData);
-    console.log(res);
-    
-    if (res.length > 0) {
-      res.map((el: IErors) =>
-        setError((prev) => ({
-          ...prev,
-          [el.name]: el.message,
-        }))
-      );
-      console.log(error);
+
+    loginValidation(loginData).then((res) => {
+     console.log(res);
+     
       
-    }
+    })
+    
+    
+    // if (res instanceof Array) {
+    //    res.map((el: IErors) =>
+    //     setErrorMessages((prev) => ({
+    //       ...prev,
+    //       [el.name]: el.message,
+    //     }))
+    //   );
+    //  console.log(errorMessages);
+
+    // }
+    // else {
+    //   console.log('Login');
+    // }
 
   
   };
@@ -51,7 +55,7 @@ const LoginPage = () => {
             name="email"
             label="Email"
             type="text"
-            error={error?.email}
+            error={errorMessages?.email}
             onChange={handlerChange}
           />
 
@@ -59,7 +63,7 @@ const LoginPage = () => {
             name="password"
             label="Пароль"
             type="password"
-            error={error?.password}
+            error={errorMessages?.password}
             onChange={handlerChange}
           />
           <div className="text-center">

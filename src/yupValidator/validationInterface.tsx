@@ -1,4 +1,4 @@
-export  interface IValidation {
+export  interface IRegisterValidation {
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -6,6 +6,11 @@ export  interface IValidation {
   phone?: string;
   password?: string;
   confirmPassword?: string;
+}
+
+export interface ILoginValidation {
+  email?: string;
+  password?: string;
 }
 
 export interface IErors {
