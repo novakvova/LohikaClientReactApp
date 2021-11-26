@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import InputGroup from "../../common/InputGroup";
+import { useNavigate } from 'react-router';
 
 import { IValidation } from "../../../yupValidator/validationInterface";
 import { ILogin } from '../../../store/action-creators/auth';
 import validationFields from '../../../yupValidator/validationFields';
+import { useActions } from '../../../hooks/useActions';
+
+
 const LoginPage = () => {
   const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
   const [errorMessages, setErrorMessages] = useState<IValidation>();
+  const { LoginUser } = useActions();
+  const navigator = useNavigate();
+
   
   const handlerBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     validationFields(e.target.name)
@@ -29,13 +36,14 @@ const LoginPage = () => {
         }));
       });
   };
-
   
   const handlerSubmit =  (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!!loginData.email && !!loginData.password.length){
+      LoginUser(loginData);
       
+      navigator('/')
     }
   };
 

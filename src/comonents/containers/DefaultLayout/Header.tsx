@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-
+import { useActions } from '../../../hooks/useActions';
 const DefaultHeader = () => {
   const { user, isAuth } = useTypedSelector((store) => store.auth);
+  const { LogoutUser } = useActions();
+  
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,7 +39,7 @@ const DefaultHeader = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/logout">
+                <Link className="nav-link" to="/" onClick={() => LogoutUser()}>
                   Вихід
                 </Link>
               </li>
