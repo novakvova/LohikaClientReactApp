@@ -5,6 +5,6 @@ export interface IValidation {
   email?: string ;
   avatar?: string ;
   phone?: string ;
-  password?: string ;
+  password?: string;
   confirmPassword?: string;
 }

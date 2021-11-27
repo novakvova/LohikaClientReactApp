@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputGroup from "../../common/InputGroup";
 import { useNavigate } from 'react-router';
 
@@ -6,12 +6,14 @@ import { IValidation } from "../../../yupValidator/validationInterface";
 import { ILogin } from '../../../store/action-creators/auth';
 import validationFields from '../../../yupValidator/validationFields';
 import { useActions } from '../../../hooks/useActions';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
 
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
   const [errorMessages, setErrorMessages] = useState<IValidation>();
   const { LoginUser } = useActions();
+  const { isAuth, error, loading } = useTypedSelector((store) => store.auth);
   const navigator = useNavigate();
 
   
@@ -36,14 +38,20 @@ const LoginPage = () => {
         }));
       });
   };
+
+useEffect(() => {
+  setErrorMessages({ password: error });
+}, [error])
+
+useEffect(() => {
+  if (isAuth) navigator("/");
+}, [isAuth])
   
-  const handlerSubmit =  (e: React.FormEvent) => {
+  const handlerSubmit =  async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!!loginData.email && !!loginData.password.length){
+    if (loginData.email && loginData.password){
       LoginUser(loginData);
-      
-      navigator('/')
     }
   };
 
@@ -69,7 +77,11 @@ const LoginPage = () => {
             onBlur={handlerBlur}
           />
           <div className="text-center">
-            <button type="submit" className="btn btn-secondary px-5">
+            <button 
+            type="submit" 
+            className="btn btn-secondary px-5"
+            disabled={loading}
+            >
               Вхід
             </button>
           </div>
@@ -80,3 +92,4 @@ const LoginPage = () => {
   );
 };
 export default LoginPage;
+

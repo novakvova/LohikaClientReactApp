@@ -1,11 +1,11 @@
-import { AuthState,  AuthAction, AuthActionTypes, IUser } from '../../types/auth';
+import { AuthState,  AuthAction, AuthActionTypes } from '../../types/auth';
 
 let user = JSON.parse(localStorage.getItem("user")!);
 console.log(user);
 
 // 
 
-const initialState: AuthState = user ? { isAuth: true, loading: false, error: null, user }: 
+const initialState: AuthState = user ? { isAuth: true, loading: false, error: '', user }: 
 {
       user: {
         email: "",
@@ -13,7 +13,7 @@ const initialState: AuthState = user ? { isAuth: true, loading: false, error: nu
       },
       isAuth: false,
       loading: false,
-      error: null,
+      error: '',
     };
 
 export const authReducer = (state=initialState, action: AuthAction) : AuthState => {
@@ -33,7 +33,7 @@ export const authReducer = (state=initialState, action: AuthAction) : AuthState 
         return { ...state, loading: false, error: action.payload };
 
       case AuthActionTypes.LOGOUT_AUTH:
-        return {isAuth: false, loading: false, error: null, user:{email: '', image:''} };
+        return {isAuth: false, loading: false, error: '', user:{email: '', image:''} };
 
       default:
         return state;

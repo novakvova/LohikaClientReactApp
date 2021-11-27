@@ -13,7 +13,7 @@ export interface AuthState {
   user: IUser;
   isAuth: boolean;
   loading: boolean;
-  error: null | string;
+  error: undefined | string ;
 }
 
 export interface LoginAuthAction {
