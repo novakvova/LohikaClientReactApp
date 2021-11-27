@@ -1,5 +1,5 @@
 import * as React from 'react';
-import http from "../../http_common";
+
 import { useState, useEffect } from "react";
 import CarCard from "../CarCard";
 import CarsFilter from "../CarsFilter/CarsFilter";

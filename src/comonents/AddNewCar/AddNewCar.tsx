@@ -1,12 +1,17 @@
+import * as React from "react";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputGroup from "../common/InputGroup";
-import http from "../../http_common";
 
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 
-const AddNewCar = () => {
-  const [error, setError] = useState("");
-  const [dataWithForm, setDataWithForm] = useState({});
+const AddNewCar: React.FC = () => {
+  const { loading, error, nav } = useTypedSelector((store) => store.sendingCar);
+  const {sendCar} = useActions()
+
+  const [dataWithForm, setDataWithForm] = useState({name:'', priority:'', price:''});
   const [selectedFile, setSelectedFile] = useState();
 
   const navigate = useNavigate();
@@ -17,7 +22,6 @@ const AddNewCar = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
   const onChangeInputFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageData = (e.target as HTMLInputElement | any).files[0];
     setSelectedFile(imageData);
@@ -25,32 +29,13 @@ const AddNewCar = () => {
 
   const handlerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData();
-
-    Object.entries(dataWithForm).forEach(([key, value]) =>
-      formData.append(key, value as string)
-    );
-    formData.append("image", selectedFile as any);
-
-    http
-      .post("api/Products/add", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((resp) => {
-        console.log("response with sever", resp);
-      })
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log("errr with serv", error);
-        setError(error);
-      });
+    sendCar(dataWithForm, selectedFile)  
   };
 
+  if (nav) {
+    navigate('/')
+  }
+  
   return (
     <>
       <div className="row">
@@ -62,28 +47,28 @@ const AddNewCar = () => {
           <InputGroup
             name="name"
             label="Марка машини"
-            error={error}
+            error=""
             onChange={onChangeInputHandler}
           />
 
           <InputGroup
             name="priority"
             label="Приорітет"
-            error={error}
+            error=""
             onChange={onChangeInputHandler}
             type="text"
           />
           <InputGroup
             name="price"
             label="Ціна"
-            error={error}
+            error=""
             onChange={onChangeInputHandler}
             type="text"
           />
           <InputGroup
             name="image"
             label="Фото"
-            error={error}
+            error=""
             onChange={onChangeInputFileHandler}
             type="file"
           />
