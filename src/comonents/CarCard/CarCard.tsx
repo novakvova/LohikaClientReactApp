@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import Modal from '../../comonents/common/Modal/Modal'
+import Modal from '../../comonents/common/Modal/Modal';
+import classes from "./CarCard.module.css";
 
 interface CarCArdProps {
   name: string;
@@ -12,11 +13,10 @@ const CarCard: React.FC<CarCArdProps> = ({ name, price, image }) => {
 
 
   return (
-    <div className={" col-3 m-1 rounded shadow p-3 mb-5 bg-body rounded"}>
-      
+    <div className={`card ${classes.carCard} mt-3`}>
         <img 
           src={`https://vovalohika.tk${image}`}
-          className="card-img-top h-50"
+          className="card-img-top h-50 mt-2 rounded-3"
           alt={name}
         />
       
