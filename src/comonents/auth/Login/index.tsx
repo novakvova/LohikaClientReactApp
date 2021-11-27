@@ -15,7 +15,6 @@ const LoginPage = () => {
   const { LoginUser } = useActions();
   const { isAuth, error, loading } = useTypedSelector((store) => store.auth);
   const navigator = useNavigate();
-
   
   const handlerBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     validationFields(e.target.name)
@@ -45,7 +44,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (isAuth) navigator("/");
-}, [isAuth])
+}, [isAuth, navigator]);
   
   const handlerSubmit =  async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +64,7 @@ useEffect(() => {
             name="email"
             label="Email"
             type="text"
+            value={loginData.email}
             error={errorMessages?.email}
             onBlur={handlerBlur}
           />
@@ -73,6 +73,7 @@ useEffect(() => {
             name="password"
             label="Пароль"
             type="password"
+            value={loginData.password}
             error={errorMessages?.password}
             onBlur={handlerBlur}
           />

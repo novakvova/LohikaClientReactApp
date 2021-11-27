@@ -3,10 +3,11 @@ import http from "../../http_common";
 import { AuthAction, AuthActionTypes, IUser } from "../../types/auth";
 import jwt from "jsonwebtoken";
 import { AxiosError } from "axios";
+import setAuthToken from '../../helpers/setAuthToken';
 
 export interface ILogin {
     email: string,
-    password: string
+    password: string 
 }
 
 export const LoginUser = (data: ILogin) => {
@@ -15,6 +16,7 @@ export const LoginUser = (data: ILogin) => {
           dispatch({ type: AuthActionTypes.LOGIN_AUTH });
           const responce = await http.post("api/account/login", data);
           const token = await responce.data.token;
+          setAuthToken(token);
           const dataUser = jwt.decode(token, { json: true });
           const user: IUser = {
             email: dataUser!.name,
@@ -42,6 +44,7 @@ export const LoginUser = (data: ILogin) => {
 export const LogoutUser = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try {
+          setAuthToken('');
             dispatch({ type: AuthActionTypes.LOGOUT_AUTH });
             localStorage.removeItem('user')
         } catch (error) {

@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
 import Home from './comonents/Home';
-import Register from './comonents/auth/Register';
+import Register from './comonents/auth/Register/index';
 import DefaultLayout from './comonents/containers/DefaultLayout';
 import AddNewCar from './comonents/AddNewCar';
 import LoginPage from './comonents/auth/Login';

@@ -30,11 +30,11 @@ const validationFields = (field:string) => {
           name: "lastName",
         }),
       });
-    case "avatar":
+    case "photo":
       return yup.object().shape({
-        avatar: yup.string().required({
+        photo: yup.string().required({
           message: "Поле не повинне бути пустим",
-          name: "avatar",
+          name: "photo",
         }),
       });
     case "phone":
@@ -74,14 +74,6 @@ const validationFields = (field:string) => {
       return yup.object().shape({
         confirmPassword: yup
           .string()
-          .min(5, {
-            message: "Пароль повинен містити мініму 5 символів",
-            name: "password",
-          })
-          .oneOf([yup.ref("password"), null], {
-            message: "Паролі повинні співпадати",
-            name: "confirmPassword",
-          })
           .required({
             message: "Поле не повинне бути пустим",
             name: "confirmPassword",

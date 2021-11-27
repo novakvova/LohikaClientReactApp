@@ -39,7 +39,7 @@ const DefaultHeader = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={() => LogoutUser()}>
+                <Link className="nav-link" to="/" onClick={(LogoutUser)}>
                   Вихід
                 </Link>
               </li>
