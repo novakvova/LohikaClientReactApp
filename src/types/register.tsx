@@ -6,6 +6,7 @@ export enum RegisterActionTypes {
 
 export interface RegisterState {
 	data: string,
+  loading: boolean
 	isRegisterd:boolean,
 	error: string
 }

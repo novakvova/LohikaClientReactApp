@@ -16,7 +16,11 @@ export const LoginUser = (data: ILogin) => {
           dispatch({ type: AuthActionTypes.LOGIN_AUTH });
           const responce = await http.post("api/account/login", data);
           const token = await responce.data.token;
+          console.log(token);
+          
           setAuthToken(token);
+          console.log(http.defaults.headers);
+          
           const dataUser = jwt.decode(token, { json: true });
           const user: IUser = {
             email: dataUser!.name,

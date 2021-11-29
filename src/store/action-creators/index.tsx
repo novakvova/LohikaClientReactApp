@@ -4,7 +4,7 @@ import * as RegActionCreators from './register';
 import * as SendingCarActionCreators from './sendingCar'
 
  
-export default {
+export default  {
   ...CarActionCreators,
   ...AuthActionCreators,
   ...RegActionCreators,
