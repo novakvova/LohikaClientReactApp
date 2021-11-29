@@ -3,10 +3,11 @@ import * as AuthActionCreators from './auth';
 import * as RegActionCreators from './register';
 import * as SendingCarActionCreators from './sendingCar'
 
- 
-export default  {
+const actions = {
   ...CarActionCreators,
   ...AuthActionCreators,
   ...RegActionCreators,
   ...SendingCarActionCreators,
 };
+ 
+export default  actions;

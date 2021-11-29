@@ -24,7 +24,9 @@ export const LoginUser = (data: ILogin) => {
           const dataUser = jwt.decode(token, { json: true });
           const user: IUser = {
             email: dataUser!.name,
-            image: "",
+            image: dataUser!.image
+              ? dataUser!.image
+              : "https://konivjab.net/wp-content/uploads/2017/07/programist-adresa.jpg",
           };
 
           localStorage.setItem("user", JSON.stringify(user));
