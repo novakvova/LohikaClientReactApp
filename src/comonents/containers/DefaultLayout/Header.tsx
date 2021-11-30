@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { useActions } from '../../../hooks/useActions';
+import { useActions } from "../../../hooks/useActions";
+import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
+
 const DefaultHeader = () => {
   const { user, isAuth } = useTypedSelector((store) => store.auth);
-  const { LogoutUser } = useActions();
+  const { LogoutUser} = useActions();
   
 
   return (
@@ -34,18 +36,22 @@ const DefaultHeader = () => {
           {isAuth ? (
             <ul className="navbar-nav">
               <li className="nav-item">
+                <HeaderCartButton />
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                   {user.email}
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={(LogoutUser)}>
+                <Link className="nav-link" to="/" onClick={LogoutUser}>
                   Вихід
                 </Link>
               </li>
             </ul>
           ) : (
             <ul className="navbar-nav">
+              
               <li className="nav-item">
                 <Link className="nav-link" to="/register">
                   Реєстрація

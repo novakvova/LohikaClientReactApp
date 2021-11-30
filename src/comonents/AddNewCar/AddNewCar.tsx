@@ -8,7 +8,7 @@ import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 
 const AddNewCar: React.FC = () => {
-  const { loading, error, nav } = useTypedSelector((store) => store.sendingCar);
+  const { nav } = useTypedSelector((store) => store.sendingCar);
   const {sendCar} = useActions()
 
   const [dataWithForm, setDataWithForm] = useState({name:'', priority:'', price:''});

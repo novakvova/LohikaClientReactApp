@@ -7,7 +7,7 @@ import http from '../http_common';
 	}
 	else {
 		delete http.defaults.headers.common["Authorization"];
-	}
+	}  
 }
 
 export default setAuthToken;
