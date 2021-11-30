@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const DefaultHeader = () => {
-  const { user, isAuth } = useTypedSelector((store) => store.auth);
+  const { isAuth } = useTypedSelector((store) => store.auth);
   const { LogoutUser } = useActions();
   
 

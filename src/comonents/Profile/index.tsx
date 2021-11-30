@@ -1,16 +1,13 @@
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import InputGroup from '../common/InputGroup';
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import InputGroup from "../common/InputGroup";
 
 const ProfilePage = () => {
-	  const { user } = useTypedSelector(
-      (store) => store.auth
-    );
+  const { user } = useTypedSelector((store) => store.auth);
 
+  const handlerChange = () => {};
+  const handlerSubmit = () => {};
 
-	const handlerChange = () => {};
-	const handlerSubmit = () => {};
-
-	return (
+  return (
     <div className="row">
       <div className="col-4">
         <img src={user.image} alt="" className="mt-5 w-100" />
@@ -26,19 +23,17 @@ const ProfilePage = () => {
             onChange={handlerChange}
           />
 
-          <InputGroup 
-		  	name="email" 
-			label="Email" 
-			onChange={handlerChange}
-			value={user.email} />
+          <InputGroup name="email" label="Email" onChange={handlerChange} />
 
           <InputGroup
             name="photo"
             label="Аватар"
             type="file"
             onChange={handlerChange}
+            value={user.email}
           />
 
+         
           <InputGroup name="phone" label="Телефон" onChange={handlerChange} />
 
           <div className="text-center">
@@ -50,6 +45,6 @@ const ProfilePage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default ProfilePage;
