@@ -44,7 +44,6 @@ export const LoginUser = (data: ILogin) => {
 }
 
 
-
 export const LogoutUser = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try {

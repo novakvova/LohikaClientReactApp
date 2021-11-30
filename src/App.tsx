@@ -1,3 +1,4 @@
+
 import { Route, Routes } from 'react-router';
 import './App.css';
 import Home from './comonents/Home';
@@ -7,10 +8,17 @@ import AddNewCar from './comonents/AddNewCar';
 import LoginPage from './comonents/auth/Login';
 import ProfilePage from './comonents/Profile';
 import "../node_modules/font-awesome/css/font-awesome.css"; 
+import { useTypedSelector } from './hooks/useTypedSelector';
+import Cart from './comonents/Cart/Cart';
+
 
 function App() {
+  const {cartIsShow} = useTypedSelector(store => store.cart);
+  
   return (
     <>
+      
+      {cartIsShow && <Cart />}
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
