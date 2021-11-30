@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { useActions } from "../../../hooks/useActions";
+
+import { useActions } from '../../../hooks/useActions';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+
 import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
 
 const DefaultHeader = () => {
-  const { user, isAuth } = useTypedSelector((store) => store.auth);
-  const { LogoutUser} = useActions();
+  const { isAuth } = useTypedSelector((store) => store.auth);
+  const { LogoutUser } = useActions();
+
   
 
   return (
@@ -40,12 +45,14 @@ const DefaultHeader = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
-                  {user.email}
+                  <FontAwesomeIcon icon={faUser} size={"2x"} className="mx-2" />
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/" onClick={LogoutUser}>
-                  Вихід
+
+                  <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
+
                 </Link>
               </li>
             </ul>

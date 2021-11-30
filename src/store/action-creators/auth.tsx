@@ -16,11 +16,15 @@ export const LoginUser = (data: ILogin) => {
           dispatch({ type: AuthActionTypes.LOGIN_AUTH });
           const responce = await http.post("api/account/login", data);
           const token = await responce.data.token;
+          
           setAuthToken(token);
+          
           const dataUser = jwt.decode(token, { json: true });
           const user: IUser = {
             email: dataUser!.name,
-            image: "",
+            image: dataUser!.image
+              ? dataUser!.image
+              : "https://konivjab.net/wp-content/uploads/2017/07/programist-adresa.jpg",
           };
 
           localStorage.setItem("user", JSON.stringify(user));

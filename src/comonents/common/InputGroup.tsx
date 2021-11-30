@@ -13,7 +13,7 @@ const InputGroup: FC<InputGroupProps> = ({
   type = "text",
   error,
   onChange,
-  onBlur
+  onBlur,
 }) => {
   return (
     <div className="mb-3">
@@ -26,7 +26,7 @@ const InputGroup: FC<InputGroupProps> = ({
         onBlur={onBlur}
         className={classnames("form-control", {
           "is-invalid": !!error,
-          "is-valid": error===null,
+          "is-valid": error === null,
         })}
         id={name}
         name={name}

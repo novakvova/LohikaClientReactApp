@@ -13,7 +13,7 @@ const RegisterPage = () => {
   const [selectedFile, setSelectedFile] = useState();
 
   const { RegisterUser, LoginUser } = useActions();
-  const { isRegisterd, error, } = useTypedSelector((store) => store.register);
+  const { isRegisterd, error, loading } = useTypedSelector((store) => store.register);
   const navigator = useNavigate();
 
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +45,7 @@ const RegisterPage = () => {
        });
    };
 
+
     useEffect(() => {
       if (isRegisterd && registerData.email && registerData.password) {
         const user: ILogin = {
@@ -52,9 +53,15 @@ const RegisterPage = () => {
           password: registerData.password,
         };
         LoginUser(user);
-        navigator('/');
+        navigator("/");
       }
-    }, [isRegisterd]);
+    }, [
+      isRegisterd,
+      LoginUser,
+      navigator,
+      registerData.email,
+      registerData.password,
+    ]);
 
   const handlerSubmit = (e: React.FormEvent) => {
     
@@ -62,6 +69,10 @@ const RegisterPage = () => {
     if (registerData.password !== registerData.confirmPassword){
       setErrorMessages({confirmPassword: 'Паролі повинні співпадати'})
       return
+   }
+   if (error) {
+     setErrorMessages({ email: error });
+     return
    }
 
     const formData = new FormData();
@@ -132,8 +143,11 @@ const RegisterPage = () => {
             onChange={handlerChange}
           />
           <div className="text-center">
-            <button type="submit" className="btn btn-secondary">
-              Реєстрація
+            <button 
+              type="submit" 
+              className="btn btn-secondary"
+              disabled={loading}>
+               Реєстрація
             </button>
           </div>
         </form>

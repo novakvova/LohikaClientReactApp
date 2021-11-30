@@ -3,8 +3,6 @@ import { AuthState,  AuthAction, AuthActionTypes } from '../../types/auth';
 let user = JSON.parse(localStorage.getItem("user")!);
 
 
-// 
-
 const initialState: AuthState = user ? { isAuth: true, loading: false, error: '', user }: 
 {
       user: {
