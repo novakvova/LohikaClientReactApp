@@ -19,18 +19,22 @@ export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>
           dispatch({ type: AuthActionTypes.LOGIN_AUTH });
           const response = await http.post<ILoginResponse>("api/account/login", data);
           const { token } = await response.data;
-          
+         
           setAuthToken(token);
           
           const dataUser = jwt.decode(token, { json: true });
+          console.log(dataUser);
+          
           const user: IUser = {
             email: dataUser!.name,
             image: dataUser!.image
               ? dataUser!.image
               : "https://konivjab.net/wp-content/uploads/2017/07/programist-adresa.jpg",
+              
           };
 
           localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("token", JSON.stringify(token));
           dispatch({
             type: AuthActionTypes.LOGIN_AUTH_SUCCESS,
             payload: user,

@@ -10,7 +10,11 @@ const ProfilePage = () => {
   return (
     <div className="row">
       <div className="col-4">
-        <img src={user.image} alt="" className="mt-5 w-100" />
+        <img
+          src={`https://vovalohika.tk${user.image}`}
+          alt=""
+          className="mt-5 w-100"
+        />
       </div>
       <div className="col-8 mb-4">
         <h1 className="text-center mt-4">Профіль</h1>
@@ -33,7 +37,6 @@ const ProfilePage = () => {
             value={user.email}
           />
 
-         
           <InputGroup name="phone" label="Телефон" onChange={handlerChange} />
 
           <div className="text-center">

@@ -26,7 +26,7 @@ const InputGroup: FC<InputGroupProps> = ({
         onBlur={onBlur}
         className={classnames("form-control", {
           "is-invalid": !!error,
-          "is-valid": error === null,
+          "is-valid": error === undefined,
         })}
         id={name}
         name={name}

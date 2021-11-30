@@ -7,8 +7,12 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import setAuthToken from './helpers/setAuthToken';
 
-
+let token = JSON.parse(localStorage.getItem("token")!);
+if (token) {
+  setAuthToken(token);
+}
 
 ReactDOM.render(
   <Provider store={store}>

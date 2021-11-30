@@ -1,79 +1,50 @@
-import * as React from 'react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
+import Loader from "../../../assets/Loader"
 import { useNavigate } from 'react-router';
-
 import { ILogin } from '../../../store/action-creators/auth';
-import validationFields from '../../../yupValidator/validationFields';
-
-//import {LoginUser} from '../../../store/action-creators/auth';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { IValidation } from "./types";
 import { validationForm } from './validation';
-import { useDispatch } from 'react-redux';
+import { IError } from './interface';
 
 
 
 const LoginPage: React.FC = () => {
   const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
-  const [errorMessages, setErrorMessages] = useState<IValidation>();
+  const [errorMessages, setErrorMessages] = useState<IError>({ email: "", password: "" });
   const { LoginUser } = useActions();
-  const { isAuth, error, loading } = useTypedSelector((store) => store.auth);
+  const { loading } = useTypedSelector((store) => store.auth);
   const navigator = useNavigate();
-  const dispatch = useDispatch();
-  
-  const handlerBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    validationFields(e.target.name)
-      .validate({ [e.target.name]: e.target.value })
-      .then((valid) => {
-        setErrorMessages((prev) => ({ 
-          ...prev,
-          [Object.keys(valid)[0]]: null 
-        }));
-        
-        setLoginData((prev) => ({
-          ...prev,
-          ...valid,
-        }));
-      })
-      .catch((err) => {
-        setErrorMessages((prev) => ({
-          ...prev,
-          [err.errors[0].name]: err.errors[0].message 
-        }));
-      });
-  };
 
-useEffect(() => {
-  setErrorMessages({ password: error });
-}, [error])
-
+const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setLoginData((prev) => ({
+    ...prev, 
+    [e.target.name]: e.target.value
+  }))
+};
 
   
   const handlerSubmit =  async (e: React.FormEvent) => {
     e.preventDefault();
     const errors = validationForm(loginData);
+    
     const isValid = Object.keys(errors).length === 0;
-
     
     if (isValid){
-      try
-      {
-        console.log("BEgin LOgin");
+      try {
         await LoginUser(loginData);
-        console.log("End login");
         navigator("/");
       }
-      catch(problem)
-      {
-        console.log("End login problem");
+      catch(error){
+        setErrorMessages({
+          email: "Неправельні дані",
+          password: "Неправельні дані"
+        })
       }
-        
-
     }
     else {
-      setErrorMessages(errors);
+      setErrorMessages(errors)
     }
   };
 
@@ -83,15 +54,13 @@ useEffect(() => {
       <div className="col-6">
         <h1 className="text-center mt-4">Вхід</h1>
         <form onSubmit={handlerSubmit}>
-          {error && <h2>{error}</h2>}
           <InputGroup
             name="email"
             label="Email"
             type="text"
             value={loginData.email}
             error={errorMessages?.email}
-            onChange={handlerBlur}
-            onBlur={handlerBlur}
+            onChange={handlerChange}
           />
 
           <InputGroup
@@ -100,18 +69,23 @@ useEffect(() => {
             type="password"
             value={loginData.password}
             error={errorMessages?.password}
-            onBlur={handlerBlur}
+            onChange={handlerChange}
           />
           <div className="text-center">
-            <button 
-            type="submit" 
-            className="btn btn-secondary px-5"
-            disabled={loading}
+            <button
+              type="submit"
+              className="btn btn-secondary px-5"
+              disabled={loading}
             >
               Вхід
             </button>
           </div>
         </form>
+        {loading && (
+          <h2 className="text-center">
+            <Loader />
+          </h2>
+        )}
       </div>
       <div className="col-3"></div>
     </div>
