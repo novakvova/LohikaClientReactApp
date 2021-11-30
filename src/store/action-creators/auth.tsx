@@ -10,12 +10,15 @@ export interface ILogin {
     password: string 
 }
 
-export const LoginUser = (data: ILogin) => {
-    return async (dispatch: Dispatch<AuthAction>) => {
+export interface ILoginResponse {
+  token: string
+}
+
+export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>) => {
         try {
           dispatch({ type: AuthActionTypes.LOGIN_AUTH });
-          const responce = await http.post("api/account/login", data);
-          const token = await responce.data.token;
+          const response = await http.post<ILoginResponse>("api/account/login", data);
+          const { token } = await response.data;
           
           setAuthToken(token);
           
@@ -32,16 +35,20 @@ export const LoginUser = (data: ILogin) => {
             type: AuthActionTypes.LOGIN_AUTH_SUCCESS,
             payload: user,
           });
+          console.log("End reducer data");
+          return Promise.resolve();
+
         } catch (err: any) {
 
              dispatch({
                type: AuthActionTypes.LOGIN_AUTH_ERROR,
                payload: (err as AxiosError).response?.data.errors.invalid[0],
              });
+             return Promise.reject();
           
         }
     }
-}
+
 
 
 export const LogoutUser = () => {
