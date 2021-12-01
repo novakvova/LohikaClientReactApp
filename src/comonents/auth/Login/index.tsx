@@ -2,17 +2,19 @@ import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
 import Loader from "../../../assets/Loader"
 import { useNavigate } from 'react-router';
-import { ILogin } from '../../../store/action-creators/auth';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { validationForm } from './validation';
-import { IError } from './interface';
+import { ILogin } from "./interface";
 
 
 
 const LoginPage: React.FC = () => {
-  const [loginData, setLoginData] = useState<ILogin>({ email: "", password: "" });
-  const [errorMessages, setErrorMessages] = useState<IError>({ email: "", password: "" });
+  const [loginData, setLoginData] = useState<ILogin>({
+    email: "",
+    password: "",
+  });
+  const [errorMessages, setErrorMessages] = useState<ILogin>({});
   const { LoginUser } = useActions();
   const { loading } = useTypedSelector((store) => store.auth);
   const navigator = useNavigate();
@@ -53,6 +55,7 @@ const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       <div className="col-3"></div>
       <div className="col-6">
         <h1 className="text-center mt-4">Вхід</h1>
+        
         <form onSubmit={handlerSubmit}>
           <InputGroup
             name="email"

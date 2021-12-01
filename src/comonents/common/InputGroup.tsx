@@ -5,6 +5,7 @@ interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
   error?: string;
+  value?: string;
 }
 
 const InputGroup: FC<InputGroupProps> = ({
@@ -13,7 +14,7 @@ const InputGroup: FC<InputGroupProps> = ({
   type = "text",
   error,
   onChange,
-  onBlur,
+  value,
 }) => {
   return (
     <div className="mb-3">
@@ -22,11 +23,11 @@ const InputGroup: FC<InputGroupProps> = ({
       </label>
       <input
         type={type}
+        value={value}
         onChange={onChange}
-        onBlur={onBlur}
         className={classnames("form-control", {
           "is-invalid": !!error,
-          "is-valid": error === undefined,
+          "is-valid": error === "",
         })}
         id={name}
         name={name}
@@ -41,3 +42,4 @@ const InputGroup: FC<InputGroupProps> = ({
 };
 
 export default InputGroup;
+

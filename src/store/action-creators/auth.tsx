@@ -4,11 +4,8 @@ import { AuthAction, AuthActionTypes, IUser } from "../../types/auth";
 import jwt from "jsonwebtoken";
 import { AxiosError } from "axios";
 import setAuthToken from '../../helpers/setAuthToken';
+import { ILogin } from '../../comonents/auth/Login/interface';
 
-export interface ILogin {
-    email: string,
-    password: string 
-}
 
 export interface ILoginResponse {
   token: string
@@ -23,7 +20,6 @@ export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>
           setAuthToken(token);
           
           const dataUser = jwt.decode(token, { json: true });
-          console.log(dataUser);
           
           const user: IUser = {
             email: dataUser!.name,
@@ -39,7 +35,6 @@ export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>
             type: AuthActionTypes.LOGIN_AUTH_SUCCESS,
             payload: user,
           });
-          console.log("End reducer data");
           return Promise.resolve();
 
         } catch (err: any) {

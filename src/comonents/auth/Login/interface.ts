@@ -1,5 +1,5 @@
 
-export interface IError {
+export interface ILogin {
   email?: string;
   password?: string;
 }
