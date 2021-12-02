@@ -37,7 +37,7 @@ const Users = () => {
         {!loading && (
           <tbody>
             {users.map(({ id, firstName, image, phone, email }) => (
-              <tr key={id} onClick={() => navigator(`/users/${id}`)}>
+              <tr key={id}>
                 <th scope="row">{id}</th>
                 <td>{firstName}</td>
                 <td>

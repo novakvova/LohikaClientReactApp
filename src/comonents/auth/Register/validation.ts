@@ -1,4 +1,4 @@
-import { IRegister } from "./interface";
+import { IRegister } from "./types";
 
 const validateEmail = (email: string): IRegister | undefined  => {
   const re =

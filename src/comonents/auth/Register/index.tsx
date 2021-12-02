@@ -1,15 +1,25 @@
 import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
+import InputGroupErrors from "../../common/InputGroupErrors";
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useNavigate } from 'react-router';
 import { validationForm } from './validation';
-import { IRegister } from './interface';
+import { IRegister, RegisterError } from './types';
 import Loader from '../../../assets/Loader';
 import { ILogin } from '../Login/interface';
 
 const RegisterPage = () => {
-  const [errorMessages, setErrorMessages] = useState<IRegister>();
+  const [errorMessages, setErrorMessages] = useState<RegisterError>({
+    firstName: [],
+    lastName: [],
+    email: [],
+    phone: [],
+    photo: [],
+    error: "",
+    password: [],
+    confirmPassword: [],
+  });
   const [registerData, setRegisterData] = useState<IRegister>({
     firstName: "" ,
     lastName: "" ,
@@ -38,11 +48,11 @@ const RegisterPage = () => {
 
   const handlerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const errors = validationForm(registerData);
+   // const errors = validationForm(registerData);
     
-    setErrorMessages(errors);
-    const isValid = Object.keys(errors).length === 0;
-
+    //setErrorMessages(errors);
+    const isValid = true;//Object.keys(errors).length === 0;
+   
     if (isValid) {
       const formData = new FormData();
       Object.entries(registerData)
@@ -56,8 +66,10 @@ const RegisterPage = () => {
           await RegisterUser(formData);
           await LoginUser(user);
           await navigator('/')
-        } catch (error) {
-          
+        } catch (ex) {
+          console.log("Problem register: ", ex);
+          const serverErrors = ex as RegisterError;
+          setErrorMessages(serverErrors);
         }
 
     } 
@@ -76,61 +88,61 @@ const RegisterPage = () => {
         )}
 
         <form onSubmit={handlerSubmit} name="test">
-          <InputGroup
+          <InputGroupErrors
             name="firstName"
             label="Ім'я"
-            error={errorMessages?.firstName}
+            errors={errorMessages?.firstName}
             onChange={handlerChange}
             value={registerData.firstName}
           />
 
-          <InputGroup
+          <InputGroupErrors
             name="lastName"
             label="Прізвище"
-            error={errorMessages?.lastName}
+            errors={errorMessages?.lastName}
             onChange={handlerChange}
             value={registerData.lastName}
           />
 
-          <InputGroup
+          <InputGroupErrors
             name="email"
             label="Email"
-            error={errorMessages?.email}
+            errors={errorMessages?.email}
             onChange={handlerChange}
             value={registerData.email}
           />
 
-          <InputGroup
+          <InputGroupErrors
             name="photo"
             label="Аватар"
             type="file"
-            error={errorMessages?.photo}
+            errors={errorMessages?.photo}
             onChange={handlerFileChange}
             value={registerData.photo}
           />
 
-          <InputGroup
+          <InputGroupErrors
             name="phone"
             label="Телефон"
-            error={errorMessages?.phone}
+            errors={errorMessages?.phone}
             onChange={handlerChange}
             value={registerData.phone}
           />
 
-          <InputGroup
+          <InputGroupErrors
             name="password"
             label="Пароль"
             type="password"
-            error={errorMessages?.password}
+            errors={errorMessages?.password}
             onChange={handlerChange}
             value={registerData.password}
           />
 
-          <InputGroup
+          <InputGroupErrors
             name="confirmPassword"
             label="Підтвердіть пароль"
             type="password"
-            error={errorMessages?.confirmPassword}
+            errors={errorMessages?.confirmPassword}
             onChange={handlerChange}
             value={registerData.confirmPassword}
           />

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { carReducer } from "./car-reducer";
 import { authReducer } from "./auth-reducer";
-import { registerReducer } from "./register-reducer";
+import { registerReducer } from "../../comonents/auth/Register/reducer";
 import { sendingCarReducer } from "./sendingCar-reducer";
 import { cartReducer } from "./cart-reduser";
 import { profileReducer } from './profile-reducer';
