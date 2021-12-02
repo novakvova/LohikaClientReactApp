@@ -6,6 +6,7 @@ import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { validationForm } from './validation';
 import { ILogin } from "./interface";
+import EclipseWidget from '../../common/eclipse';
 
 
 
@@ -51,6 +52,7 @@ const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   };
 
   return (
+    <>
     <div className="row">
       <div className="col-3"></div>
       <div className="col-6">
@@ -84,14 +86,16 @@ const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             </button>
           </div>
         </form>
-        {loading && (
+        {/* {loading && (
           <h2 className="text-center">
             <Loader />
           </h2>
-        )}
+        )} */}
       </div>
       <div className="col-3"></div>
     </div>
+    {loading && <EclipseWidget/>}
+    </>
   );
 };
 export default LoginPage;

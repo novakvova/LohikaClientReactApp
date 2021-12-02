@@ -1,4 +1,4 @@
-import { RegisterAction, RegisterState, RegisterActionTypes } from "../../types/register";
+import { RegisterAction, RegisterState, RegisterActionTypes } from "./types";
 
 
 const initialState: RegisterState = {

@@ -12,6 +12,7 @@ import { useTypedSelector } from './hooks/useTypedSelector';
 import Cart from './comonents/Cart/Cart';
 import UsersPage from './comonents/Users/index'
 import UserDetailPage from "./comonents/Users/UserPage";
+import NoMatch from './comonents/NoMatch';
 
 function App() {
   const {cartIsShow} = useTypedSelector(store => store.cart);
@@ -28,6 +29,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/users/:id" element={<UserDetailPage />} />
+          <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
     </>
