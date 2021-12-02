@@ -4,8 +4,6 @@ import classes from "./CarCard.module.css";
 import classesIcon from "../common/HeaderCartButton/HeaderCartButton.module.css";
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { uploadDataToCart } from "../../store/action-creators/cart";
 import { useActions } from "../../hooks/useActions";
 
 interface CarCArdProps {
@@ -18,8 +16,7 @@ interface CarCArdProps {
 const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
   const [count, setCount] = useState("1");
   const [showLoader, setShowLoader] = useState(false);
-  const {downloadDataToCart} = useActions()
-  const dispatch = useDispatch();
+  const {downloadDataToCart, uploadDataToCart} = useActions()
 
   const countHandler = (value: string) => {
     setCount(value);
@@ -27,7 +24,7 @@ const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
 
   const uploadItemToCartHandler = async () => {
     setShowLoader(true);
-    await dispatch(uploadDataToCart(id, +count));
+    await uploadDataToCart(id, +count);// dispatch(uploadDataToCart(id, +count));
     downloadDataToCart();
     setShowLoader(false);
   };
