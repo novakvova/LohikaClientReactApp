@@ -30,7 +30,7 @@ const RegisterPage = () => {
   });
   const [selectedFile, setSelectedFile] = useState<FileList>();
 
-  const { RegisterUser, LoginUser } = useActions();
+  const { RegisterUser } = useActions();
   const { error, loading } = useTypedSelector((store) => store.register);
   const navigator = useNavigate();
 
@@ -64,7 +64,7 @@ const RegisterPage = () => {
         }
         try {
           await RegisterUser(formData);
-          await LoginUser(user);
+          //await LoginUser(user);
           await navigator('/')
         } catch (ex) {
           console.log("Problem register: ", ex);

@@ -33,7 +33,7 @@ export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>
         }
     }
 
-export const setAuthUserByToken = (token: string, dispatch: Dispatch<AuthAction>) => {
+export const setAuthUserByToken = (token: string, dispatch: Dispatch<any>) => {
 
   setAuthToken(token);
   const dataUser = jwt.decode(token, { json: true });
