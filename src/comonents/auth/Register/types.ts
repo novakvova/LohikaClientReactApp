@@ -19,7 +19,8 @@ export interface RegisterSuccessAction {
 
 export type RegisterAction =
   | RegisterStartAction
-  | RegisterSuccessAction;
+  | RegisterSuccessAction
+;
 
 
 
@@ -53,9 +54,5 @@ export type RegisterErrors = {
   errors: RegisterError,
   status: number, 
 };
-
-export interface IRegisterResponse {
-  token: string;
-}
 
 

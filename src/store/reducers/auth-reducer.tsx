@@ -1,10 +1,7 @@
 import { AuthState,  AuthAction, AuthActionTypes } from '../../types/auth';
 
-// let user = JSON.parse(localStorage.getItem("user")!);
 
-
-const initialState: AuthState = //user ? { isAuth: true, loading: false, error: '', user }: 
-{
+const initialState: AuthState = {
       user: {
         email: "",
         image: "",
@@ -12,7 +9,7 @@ const initialState: AuthState = //user ? { isAuth: true, loading: false, error: 
       isAuth: false,
       loading: false,
       error: '',
-    };
+};
 
 export const authReducer = (state=initialState, action: AuthAction) : AuthState => {
     switch (action.type) {

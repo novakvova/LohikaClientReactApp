@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import { setAuthUserByToken } from "./store/action-creators/auth";
 
-let token = JSON.parse(localStorage.getItem("token")!);
+let token = localStorage.token;
 if (token) {
   setAuthUserByToken(token, store.dispatch);
 }

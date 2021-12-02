@@ -29,7 +29,7 @@ const RegisterPage = () => {
   const [selectedFile, setSelectedFile] = useState<FileList>();
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { RegisterUser } = useActions();
+  const { RegisterUser} = useActions();
   const navigator = useNavigate();
 
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,9 +67,6 @@ const RegisterPage = () => {
       formData.append("photo", selectedFile as any);
       try {
         setLoading(true);
-        const test = RegisterUser(formData);
-        console.log(test);
-        
         await RegisterUser(formData);
         await navigator("/");
         await setLoading(false);
