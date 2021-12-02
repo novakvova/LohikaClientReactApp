@@ -8,10 +8,12 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import setAuthToken from './helpers/setAuthToken';
+import { setAuthUserByToken } from "./store/action-creators/auth";
 
 let token = JSON.parse(localStorage.getItem("token")!);
 if (token) {
-  setAuthToken(token);
+  //setAuthToken(token);
+  setAuthUserByToken(token, store.dispatch);
 }
 
 ReactDOM.render(

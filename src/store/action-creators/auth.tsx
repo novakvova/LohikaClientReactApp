@@ -16,22 +16,10 @@ export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>
           dispatch({ type: AuthActionTypes.LOGIN_AUTH });
           const response = await http.post<ILoginResponse>("api/account/login", data);
           const { token } = await response.data;
-         
-          setAuthToken(token);
-          
-          const dataUser = jwt.decode(token, { json: true });
-          
-          const user: IUser = {
-            email: dataUser!.name,
-            image: dataUser!.image,
-          };
-
-          localStorage.setItem("user", JSON.stringify(user));
           localStorage.setItem("token", JSON.stringify(token));
-          dispatch({
-            type: AuthActionTypes.LOGIN_AUTH_SUCCESS,
-            payload: user,
-          });
+          
+          setAuthUserByToken(token, dispatch);
+         
           return Promise.resolve();
 
         } catch (err: any) {
@@ -45,7 +33,22 @@ export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>
         }
     }
 
+export const setAuthUserByToken = (token: string, dispatch: Dispatch<AuthAction>) => {
 
+  setAuthToken(token);
+  const dataUser = jwt.decode(token, { json: true });
+  const user: IUser = {
+    email: dataUser!.name,
+    image: dataUser!.image,
+  };
+  
+  dispatch({
+    type: AuthActionTypes.LOGIN_AUTH_SUCCESS,
+    payload: user,
+  });
+
+
+}
 
 export const LogoutUser = () => {
     return async (dispatch: Dispatch<AuthAction>) => {

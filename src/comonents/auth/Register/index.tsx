@@ -71,9 +71,7 @@ const RegisterPage = () => {
           const serverErrors = ex as RegisterError;
           setErrorMessages(serverErrors);
         }
-
     } 
-
   };
 
   return (
