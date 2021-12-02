@@ -1,5 +1,6 @@
 import * as React from "react";
 
+
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
@@ -11,7 +12,7 @@ const HeaderCartButton: React.FC = () => {
   const {cartData} = useTypedSelector(store => store.cart)
  
  
-  const totalQuantity = cartData.reduce((prevValue, currentValue)=> prevValue+currentValue.quantity, 0)
+  const totalQuantity = cartData.length
     
   
   return (
@@ -20,7 +21,8 @@ const HeaderCartButton: React.FC = () => {
       onClick={showCart}
     >
       <span className={classes.icon}>
-        <CartIcon />
+        <div className="mh-20"><CartIcon /></div>
+        
       </span>
       <span>Кошик</span>
       <span className={classes.badge}>{totalQuantity}</span>

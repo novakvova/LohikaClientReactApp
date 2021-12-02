@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
-import { useActions } from '../../../hooks/useActions';
+import { useActions } from "../../../hooks/useActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 
 import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
+import HeaderSearch from "../../common/HeaderSearch/HeaderSearch";
 
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
   const { LogoutUser } = useActions();
-
-  
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,16 +30,19 @@ const DefaultHeader = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul className="d-flex navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/products/add">
                 Додати продукт
               </Link>
             </li>
+            <li className="ms-3">
+              <HeaderSearch />
+            </li>
           </ul>
           {isAuth ? (
             <ul className="navbar-nav">
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <HeaderCartButton />
               </li>
               <li className="nav-item">
@@ -50,15 +52,12 @@ const DefaultHeader = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/" onClick={LogoutUser}>
-
                   <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
-
                 </Link>
               </li>
             </ul>
           ) : (
             <ul className="navbar-nav">
-              
               <li className="nav-item">
                 <Link className="nav-link" to="/register">
                   Реєстрація
