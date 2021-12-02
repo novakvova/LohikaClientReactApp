@@ -6,3 +6,7 @@
 	width: auto;
 	height: 5rem;
 }
+
+tr {
+	cursor: pointer;
+}

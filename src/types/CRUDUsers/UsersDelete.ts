@@ -1,4 +1,3 @@
-import { UserInfo } from '../../types/CRUDUsers/UsersFetch';
 
 export enum DeleteUserActionTypes {
   DELETE_USER = "DELETE_USER",

@@ -1,4 +1,3 @@
-import { DeleteUserAction } from './../../types/CRUDUsers/UsersDelete';
 import { Dispatch } from "react";
 import http from "../../http_common";
 import { UsersAction, UsersActionTypes } from "../../types/CRUDUsers/UsersFetch";
@@ -31,13 +30,14 @@ export const deleteUser = (id: number) => {
         type: DeleteUserActionTypes.DELETE_USER
       })
       const response = await http.delete(`api/Users/delete/${id}`);
-
-      dispatch({
-        type: DeleteUserActionTypes.DELETE_USER_SUCCESS,
-        payload: id
-      })
-      
-    } catch (error ) {
+      if (response.status === 200){
+        dispatch({
+          type: DeleteUserActionTypes.DELETE_USER_SUCCESS,
+          payload: id
+        })
+      }
+      else throw Error('Щось пішло не так')
+    } catch ( error ) {
       dispatch({
         type: DeleteUserActionTypes.DELETE_USER_ERROR,
         payload: "Error"});

@@ -14,7 +14,6 @@ const RegisterPage = () => {
     firstName: "" ,
     lastName: "" ,
     email: "",
-    photo: "",
     phone: "",
     password: "",
     confirmPassword: "",

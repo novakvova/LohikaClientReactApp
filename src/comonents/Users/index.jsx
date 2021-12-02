@@ -1,15 +1,20 @@
 import { useEffect } from 'react';
 import Loader from '../../assets/Loader';
 import { useActions } from '../../hooks/useActions';
-
+import { useNavigate, Link } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 
 import './index.css';
 
 const Users = () => {
+
   const { users, loading } = useTypedSelector(store=> store.users);
   const {fetchUsers, deleteUser} = useActions();
+  const navigator = useNavigate();
+  
+
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -32,7 +37,7 @@ const Users = () => {
         {!loading && (
           <tbody>
             {users.map(({ id, firstName, image, phone, email }) => (
-              <tr key={id}>
+              <tr key={id} onClick={() => navigator(`/users/${id}`)}>
                 <th scope="row">{id}</th>
                 <td>{firstName}</td>
                 <td>
