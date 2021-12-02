@@ -12,7 +12,7 @@ import { setAuthUserByToken } from "./store/action-creators/auth";
 
 let token = JSON.parse(localStorage.getItem("token")!);
 if (token) {
-  //setAuthToken(token);
+  //
   setAuthUserByToken(token, store.dispatch);
 }
 
