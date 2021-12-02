@@ -1,0 +1,12 @@
+.size {
+	width: auto;
+	height: 5rem;
+}
+.size img {
+	width: auto;
+	height: 5rem;
+}
+
+tr {
+	cursor: pointer;
+}

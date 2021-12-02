@@ -1,88 +1,67 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
-import validationFields from '../../../yupValidator/validationFields';
-import { IValidation } from '../../../yupValidator/validationInterface';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useNavigate } from 'react-router';
-import { ILogin } from '../../../store/action-creators/auth';
+import { validationForm } from './validation';
+import { IRegister } from './interface';
+import Loader from '../../../assets/Loader';
+import { ILogin } from '../Login/interface';
 
 const RegisterPage = () => {
-  const [errorMessages, setErrorMessages] = useState<IValidation>({});
-  const [registerData, setRegisterData] = useState<IValidation>({});
-  const [selectedFile, setSelectedFile] = useState();
+  const [errorMessages, setErrorMessages] = useState<IRegister>();
+  const [registerData, setRegisterData] = useState<IRegister>({
+    firstName: "" ,
+    lastName: "" ,
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [selectedFile, setSelectedFile] = useState<FileList>();
 
   const { RegisterUser, LoginUser } = useActions();
-  const { isRegisterd, error, loading } = useTypedSelector((store) => store.register);
+  const { error, loading } = useTypedSelector((store) => store.register);
   const navigator = useNavigate();
 
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-     validationFields(e.target.name)
-       .validate({ [e.target.name]: e.target.value })
-       .then((valid) => {
-         setErrorMessages((prev) => {
-           return {
-           ...prev,
-           [Object.keys(valid)[0]]: null,
-         }}
-         );
+     setRegisterData((prev) => ({
+       ...prev,
+       [e.target.name]: e.target.value,
+     }));
+  }
 
-         if (e.target.name === "photo") {
-           setSelectedFile((e.target as any).files[0] as any);
-         } 
+  const handlerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imageData = (e.target as HTMLInputElement | any).files[0];
+    setSelectedFile(imageData);
+  };
 
-        setRegisterData((prev) => ({
-          ...prev,
-          ...valid,
-        }));
-
-       })
-       .catch((err) => {
-         setErrorMessages((prev) => ({
-           ...prev,
-           [err.errors[0].name]: err.errors[0].message,
-         }));
-       });
-   };
-
-
-    useEffect(() => {
-      if (isRegisterd && registerData.email && registerData.password) {
-        const user: ILogin = {
-          email: registerData.email,
-          password: registerData.password,
-        };
-        LoginUser(user);
-        navigator("/");
-      }
-    }, [
-      isRegisterd,
-      LoginUser,
-      navigator,
-      registerData.email,
-      registerData.password,
-    ]);
-
-  const handlerSubmit = (e: React.FormEvent) => {
-    
+  const handlerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (registerData.password !== registerData.confirmPassword){
-      setErrorMessages({confirmPassword: 'Паролі повинні співпадати'})
-      return
-   }
-   if (error) {
-     setErrorMessages({ email: error });
-     return
-   }
+    const errors = validationForm(registerData);
+    
+    setErrorMessages(errors);
+    const isValid = Object.keys(errors).length === 0;
 
-    const formData = new FormData();
-  
-    Object.entries(registerData).forEach(([key, value]) =>
-      formData.append(key, value)
-    );
-    formData.append("photo", selectedFile as any);
+    if (isValid) {
+      const formData = new FormData();
+      Object.entries(registerData)
+        .forEach(([key, value]) => formData.append(key, value));
+        formData.append("photo", selectedFile as any);
+        const user:ILogin = {
+          email: registerData.email,
+          password: registerData.password
+        }
+        try {
+          await RegisterUser(formData);
+          await LoginUser(user);
+          await navigator('/')
+        } catch (error) {
+          
+        }
 
-    RegisterUser(formData)
+    } 
+
   };
 
   return (
@@ -90,12 +69,19 @@ const RegisterPage = () => {
       <div className="col-3"></div>
       <div className="col-6 mb-4">
         <h1 className="text-center mt-4">Реєстрація</h1>
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handlerSubmit} name="test">
           <InputGroup
             name="firstName"
             label="Ім'я"
             error={errorMessages?.firstName}
             onChange={handlerChange}
+            value={registerData.firstName}
           />
 
           <InputGroup
@@ -103,6 +89,7 @@ const RegisterPage = () => {
             label="Прізвище"
             error={errorMessages?.lastName}
             onChange={handlerChange}
+            value={registerData.lastName}
           />
 
           <InputGroup
@@ -110,6 +97,7 @@ const RegisterPage = () => {
             label="Email"
             error={errorMessages?.email}
             onChange={handlerChange}
+            value={registerData.email}
           />
 
           <InputGroup
@@ -117,7 +105,8 @@ const RegisterPage = () => {
             label="Аватар"
             type="file"
             error={errorMessages?.photo}
-            onChange={handlerChange}
+            onChange={handlerFileChange}
+            value={registerData.photo}
           />
 
           <InputGroup
@@ -125,6 +114,7 @@ const RegisterPage = () => {
             label="Телефон"
             error={errorMessages?.phone}
             onChange={handlerChange}
+            value={registerData.phone}
           />
 
           <InputGroup
@@ -133,6 +123,7 @@ const RegisterPage = () => {
             type="password"
             error={errorMessages?.password}
             onChange={handlerChange}
+            value={registerData.password}
           />
 
           <InputGroup
@@ -141,16 +132,23 @@ const RegisterPage = () => {
             type="password"
             error={errorMessages?.confirmPassword}
             onChange={handlerChange}
+            value={registerData.confirmPassword}
           />
           <div className="text-center">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="btn btn-secondary"
-              disabled={loading}>
-               Реєстрація
+              disabled={loading}
+            >
+              Реєстрація
             </button>
           </div>
         </form>
+        {loading && (
+          <h2 className="text-center">
+            <Loader />
+          </h2>
+        )}
       </div>
       <div className="col-3"></div>
     </div>

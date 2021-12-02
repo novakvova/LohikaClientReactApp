@@ -25,9 +25,11 @@ export const registerReducer = ( state = initialState, action: RegisterAction): 
       };
 
     case RegisterActionTypes.REGISTER_ERROR:
-      return { 
-        ...state, 
-        error: action.payload };
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
 
 
     default:

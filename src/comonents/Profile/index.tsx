@@ -1,49 +1,78 @@
+import { useEffect } from 'react';
+import Loader from '../../assets/Loader';
+import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import InputGroup from "../common/InputGroup";
+
+import './index.css'
 
 const ProfilePage = () => {
-  const { user } = useTypedSelector((store) => store.auth);
-
-  const handlerChange = () => {};
-  const handlerSubmit = () => {};
+  const { GetProfileData } = useActions();
+  const { profile : {email, phone, image, firstName}, loading } = useTypedSelector( store => store.profile);
+useEffect(() => {
+  GetProfileData();
+}, [])
 
   return (
-    <div className="row">
-      <div className="col-4">
-        <img src={user.image} alt="" className="mt-5 w-100" />
-      </div>
-      <div className="col-8 mb-4">
-        <h1 className="text-center mt-4">Профіль</h1>
-        <form onSubmit={handlerSubmit} name="test">
-          <InputGroup name="firstName" label="Ім'я" onChange={handlerChange} />
-
-          <InputGroup
-            name="lastName"
-            label="Прізвище"
-            onChange={handlerChange}
-          />
-
-          <InputGroup name="email" label="Email" onChange={handlerChange} />
-
-          <InputGroup
-            name="photo"
-            label="Аватар"
-            type="file"
-            onChange={handlerChange}
-            value={user.email}
-          />
-
-         
-          <InputGroup name="phone" label="Телефон" onChange={handlerChange} />
-
-          <div className="text-center">
-            <button type="submit" className="btn btn-secondary" disabled={true}>
-              Змінити
-            </button>
+    <section>
+      <div className="container py-5 mt-3 ">
+        <h2 className="text-center pb-5">Мій профіль</h2>
+        {loading && (
+          <h2 className="text-center">
+            <Loader />
+          </h2>
+        )}
+        {!loading && (
+          <div className="row">
+            <div className="col-lg-4">
+              <div className="card mb-4">
+                <div className="card-body text-center">
+                  <img
+                    src={
+                      image.endsWith("image/")
+                        ? "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
+                        : `https://vovalohika.tk${image}`
+                    }
+                    alt="avatar"
+                    className="rounded-circle img-fluid"
+                  />
+                  <h5 className="my-3">{firstName}</h5>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-8">
+              <div className="card mb-4">
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0">Ім'я</p>
+                    </div>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{firstName}</p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0">Email</p>
+                    </div>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{email}</p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0">Телефон</p>
+                    </div>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{phone}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </form>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 
