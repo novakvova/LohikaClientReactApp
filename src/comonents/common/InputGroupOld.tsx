@@ -4,7 +4,7 @@ import classnames from "classnames";
 interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
-  errors?: Array<string>;
+  error?: string;
   value?: string;
 }
 
@@ -12,7 +12,7 @@ const InputGroup: FC<InputGroupProps> = ({
   name,
   label,
   type = "text",
-  errors,
+  error,
   onChange,
   value,
 }) => {
@@ -26,24 +26,17 @@ const InputGroup: FC<InputGroupProps> = ({
         value={value}
         onChange={onChange}
         className={classnames("form-control", {
-          // "is-invalid": !errors,
-          // "is-valid": errors,
+          "is-invalid": !!error,
+          "is-valid": error === "",
         })}
         id={name}
         name={name}
       />
-
-      {errors &&
-        errors.map((message, key) => (
-          <span
-          className="text-danger"
-            key={key}
-            // id="validationServer03Feedback"
-            // className="invalid-feedback"
-          >
-            {message}
-          </span>
-        ))}
+      {!!error && (
+        <div id="validationServer03Feedback" className="invalid-feedback">
+          {error}
+        </div>
+      )}
     </div>
   );
 };

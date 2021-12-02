@@ -1,5 +1,5 @@
 import { useState } from "react";
-import InputGroup from "../../common/InputGroup";
+import InputGroup from "../../common/InputGroupOld";
 import Loader from "../../../assets/Loader"
 import { useNavigate } from 'react-router';
 import { useActions } from '../../../hooks/useActions';

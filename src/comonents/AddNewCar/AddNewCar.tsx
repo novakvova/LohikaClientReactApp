@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InputGroup from "../common/InputGroup";
+import InputGroup from "../common/InputGroupOld";
 
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
