@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { Dispatch } from 'react';
 import http from '../../../http_common';
 import { store } from '../../../store';
-import { setAuthUserByToken } from '../../../store/action-creators/auth';
+import { setAuthUserByToken } from '../Login/action';
 import { RegisterAction, RegisterActionTypes, RegisterErrors} from './types';
 
 export const RegisterUser = (data: FormData) => {

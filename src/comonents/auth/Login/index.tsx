@@ -1,13 +1,10 @@
 import { useState } from "react";
-import InputGroup from "../../common/InputGroupOld";
-import Loader from "../../../assets/Loader"
+import InputGroup from "../../common/InputGroup";
 import { useNavigate } from 'react-router';
 import { useActions } from '../../../hooks/useActions';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { validationForm } from './validation';
-import { ILogin } from "./interface";
+import { ILogin, ILoginError } from "./types";
 import EclipseWidget from '../../common/eclipse';
-
 
 
 const LoginPage: React.FC = () => {
@@ -15,9 +12,13 @@ const LoginPage: React.FC = () => {
     email: "",
     password: "",
   });
-  const [errorMessages, setErrorMessages] = useState<ILogin>({});
+  const [errorMessages, setErrorMessages] = useState<ILoginError>({
+    email: [],
+    password: [],
+    invalid:[]
+  });
+  const [loading, setLoading] = useState<boolean>(false)
   const { LoginUser } = useActions();
-  const { loading } = useTypedSelector((store) => store.auth);
   const navigator = useNavigate();
 
 const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +26,10 @@ const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     ...prev, 
     [e.target.name]: e.target.value
   }))
+  setErrorMessages((prev) => ({
+    ...prev,
+    [e.target.name]: ""
+  }));
 };
 
   
@@ -34,67 +39,67 @@ const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     
     const isValid = Object.keys(errors).length === 0;
     
-    if (isValid){
+    if (isValid) {
       try {
-        await LoginUser(loginData);
-        navigator("/");
+        setLoading(true);
+         await LoginUser(loginData);
+         await navigator("/");
+         setLoading(false);
+
+      } catch (errors) {
+        setLoading(false);
+        const serverErrors = errors as ILoginError;
+        setErrorMessages(serverErrors);
       }
-      catch(error){
-        setErrorMessages({
-          email: "Неправельні дані",
-          password: "Неправельні дані"
-        })
-      }
-    }
-    else {
-      setErrorMessages(errors)
+    } else {
+      setErrorMessages(errors);
     }
   };
 
   return (
     <>
-    <div className="row">
-      <div className="col-3"></div>
-      <div className="col-6">
-        <h1 className="text-center mt-4">Вхід</h1>
-        
-        <form onSubmit={handlerSubmit}>
-          <InputGroup
-            name="email"
-            label="Email"
-            type="text"
-            value={loginData.email}
-            error={errorMessages?.email}
-            onChange={handlerChange}
-          />
+      <div className="row">
+        <div className="col-3"></div>
+        <div className="col-6">
+          <h1 className="text-center mt-4">Вхід</h1>
+          {errorMessages.invalid?.length !== 0 &&
+            errorMessages.invalid?.map((el, i) => (
+              <div key={i} className="alert alert-dismissible alert-danger">
+                <strong>{el}</strong>
+              </div>
+            ))}
+          <form onSubmit={handlerSubmit}>
+            <InputGroup
+              name="email"
+              label="Email"
+              type="text"
+              value={loginData.email}
+              errors={errorMessages?.email}
+              onChange={handlerChange}
+            />
 
-          <InputGroup
-            name="password"
-            label="Пароль"
-            type="password"
-            value={loginData.password}
-            error={errorMessages?.password}
-            onChange={handlerChange}
-          />
-          <div className="text-center">
-            <button
-              type="submit"
-              className="btn btn-secondary px-5"
-              disabled={loading}
-            >
-              Вхід
-            </button>
-          </div>
-        </form>
-        {/* {loading && (
-          <h2 className="text-center">
-            <Loader />
-          </h2>
-        )} */}
+            <InputGroup
+              name="password"
+              label="Пароль"
+              type="password"
+              value={loginData.password}
+              errors={errorMessages?.password}
+              onChange={handlerChange}
+            />
+            <div className="text-center">
+              <button
+                type="submit"
+                className="btn btn-secondary px-5"
+                disabled={loading}
+              >
+                Вхід
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="col-3"></div>
       </div>
-      <div className="col-3"></div>
-    </div>
-    {loading && <EclipseWidget/>}
+      {loading && <EclipseWidget />}
     </>
   );
 };
