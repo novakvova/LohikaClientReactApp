@@ -16,15 +16,6 @@ export const cartReducer = (state = initialState, action: CartAction) : CartStat
     case CartActionTypes.FETCH_DATA_TO_CART : return {
       ...state, cartData: action.payload
     }
-    case CartActionTypes.ADD_CAR_TO_CART : return {
-      ...state, carAddedToCart: true
-    }
-    case CartActionTypes.SHOW_ADD_CAR_TO_CART_MODAL : return {
-      ...state, cartModalIsShow: true
-    }
-    case CartActionTypes.HIDE_ADD_CAR_TO_CART_MODAL : return {
-      ...state, cartModalIsShow: false
-    }
     default:
       return state;
   }

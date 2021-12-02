@@ -2,10 +2,25 @@ export enum CarActionTypes {
   FETCH_CARS = "FETCH_CARS",
   FETCH_CARS_SUCCESS = "FETCH_CARS_SUCCESS",
   FETCH_CARS_ERROR = "FETCH_CARS_ERROR",
+  FETCH_SEARCH_CARS = "FETCH_SEARCH_CARS",
+}
+
+export interface ISearchCar {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+}
+
+export interface ICarSearchList {
+  products: Array<ISearchCar>;
+  pages: number;
+  total: number;
 }
 
 export interface CarState {
   cars: Array<any>;
+  carsSearchList: ICarSearchList;
   loading: boolean;
   error: null | string;
 }
@@ -24,7 +39,13 @@ export interface FetchErrorsCarAction {
   payload: string;
 }
 
+export interface FetchCarsSearchAction {
+  type: CarActionTypes.FETCH_SEARCH_CARS;
+  payload: ICarSearchList;
+}
+
 export type CarAction =
   | FetchCarAction
   | FetchSuccessCarAction
-  | FetchErrorsCarAction;
+  | FetchErrorsCarAction
+  | FetchCarsSearchAction;

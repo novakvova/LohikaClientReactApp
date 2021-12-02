@@ -1,8 +1,14 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
-
-
 import { CartAction, CartActionTypes } from "../../types/cart";
+
+interface IRespData {
+  id: number;
+  productName: string;
+  productImage: string;
+  productPrice: number;
+  quantity: number;
+}
 
 export const showCart = () => {
   return (dispatch: Dispatch<CartAction>) => {
@@ -29,37 +35,22 @@ export const downloadDataToCart = () => {
   };
 };
 
-
-export const showModalAddCarToCart = () => {
-  return (dispatch: Dispatch<CartAction>) => {
-    dispatch({type:CartActionTypes.SHOW_ADD_CAR_TO_CART_MODAL})
-  }
-}
-
-export const hideModalAddCarToCart = () => {
-  return (dispatch: Dispatch<CartAction>) => {
-    dispatch({type:CartActionTypes.HIDE_ADD_CAR_TO_CART_MODAL})
-  }
-}
-
-export const uploadDataToCart = (id: number, quantity: number) => {
-  return async (dispatch: Dispatch<CartAction>) => {
+export const uploadDataToCart =
+  (id: number, quantity: number) => async (dispatch: Dispatch<CartAction>) => {
     try {
-      const responseAdd = await http.post("api/Carts/add", {
+      const responseAdd = await http.post<IRespData>("api/Carts/add", {
         productId: id,
         quantity: quantity,
       });
-      console.log(responseAdd.data);
+      console.log("What returns", responseAdd.data);
       dispatch({ type: CartActionTypes.ADD_CAR_TO_CART });
 
-      const responseList= await http.get("api/Carts/list");
+      downloadDataToCart();
 
-      dispatch({
-        type: CartActionTypes.FETCH_DATA_TO_CART,
-        payload: responseList.data,
+      return new Promise((resolve) => {
+        resolve(responseAdd.data);
       });
     } catch {
-      console.log("catch");
+      Promise.reject();
     }
   };
-};

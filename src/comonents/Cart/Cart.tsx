@@ -3,9 +3,17 @@ import Modal from "../containers/Modal/Modal";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
+
 const Cart = () => {
+  
   const { hideCart } = useActions();
   const { cartData } = useTypedSelector((store) => store.cart);
+
+  
+  const totalPrice = cartData.reduce(
+    (prevValue, currentValue) => prevValue + currentValue.productPrice,
+    0
+  );
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -24,10 +32,7 @@ const Cart = () => {
     </ul>
   );
 
-  const totalPrice = cartData.reduce(
-    (prevValue, currentValue) => prevValue + currentValue.productPrice,
-    0
-  );
+  
 
   return (
     <Modal onClose={hideCart}>

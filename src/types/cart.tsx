@@ -19,6 +19,7 @@ export interface CartState {
   cartModalIsShow: boolean;
 }
 
+
 export interface ShowCartAction {
   type: CartActionTypes.SHOW_CART;
 }
@@ -41,6 +42,8 @@ export interface ShowAddCartToCartMoadlAction {
 export interface HideAddCartToCartMoadlAction {
   type: CartActionTypes.HIDE_ADD_CAR_TO_CART_MODAL;
 }
+
+
 
 export type CartAction =
   | ShowCartAction
