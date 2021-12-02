@@ -44,21 +44,23 @@ const DefaultHeader = () => {
                 <HeaderCartButton />
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to="/users">
+                  Юзери
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                   <FontAwesomeIcon icon={faUser} size={"2x"} className="mx-2" />
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/" onClick={LogoutUser}>
-
                   <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
-
                 </Link>
               </li>
             </ul>
           ) : (
             <ul className="navbar-nav">
-              
               <li className="nav-item">
                 <Link className="nav-link" to="/register">
                   Реєстрація

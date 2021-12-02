@@ -1,4 +1,3 @@
-import { setTextRange } from 'typescript';
 import {ProfileState, ProfileActions, ProfileActionTypes} from '../../types/profile';
 
 const intialState: ProfileState = {
