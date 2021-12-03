@@ -88,10 +88,10 @@ const RegisterPage = () => {
         <h1 className="text-center mt-4">Реєстрація</h1>
 
         <form onSubmit={handlerSubmit} name="test">
-          <InputGroup
+          {/* <InputGroup
             name="firstName"
             label="Ім'я"
-            errors={errorMessages?.firstName}
+            //errors={errorMessages?.firstName}
             onChange={handlerChange}
             value={registerData.firstName}
           />
@@ -145,7 +145,7 @@ const RegisterPage = () => {
             errors={errorMessages?.confirmPassword}
             onChange={handlerChange}
             value={registerData.confirmPassword}
-          />
+          /> */}
           <div className="text-center">
             <button
               type="submit"

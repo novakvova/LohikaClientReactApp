@@ -1,40 +1,12 @@
-import { ILogin, ILoginError, ILoginErrors } from "./types";
+import * as Yup from "yup";
 
-const validateEmail = (email: string | undefined): ILoginError | undefined => {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const LoginSchema = Yup.object({
+  email: Yup.string()
+    .email("Не коректно вказана пошта")
+    .required("Вкажіть пошту"),
 
-  if (!email) {
-    return {
-      email: ["Поле не повинне бути пустим"],
-    };
-  }
-  if (!re.test(email.toLowerCase())) {
-    return {
-      email: ["Некоректний Email"],
-    };
-  }
-};
-
-const validatePassword = (password: string | undefined): ILoginError | undefined => {
-  if (!password) {
-    return {
-      password: ["Поле не повинне бути пустим"],
-    };
-  }
-  if (password.length < 5)
-    return {
-      password: ["Пароль має містити мінімум 5 символів"],
-    };
-};
-
-
- export const validationForm = (loginData: ILogin) => {
-   const email = validateEmail(loginData.email);
-   const password = validatePassword(loginData.password);
-
-   const errors: ILoginError = { ...email, ...password };
-   
-    return errors
- }
-
+  // password: Yup.string()
+  //     .required('Вкажіть пароль.')
+  //     .min(5, 'Пароль має містить мінімум 5 символів.')
+  //     .matches(/[a-zA-Z]/, 'Пароль має містить латинські символи.'),
+});
