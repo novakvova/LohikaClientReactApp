@@ -27,22 +27,16 @@ const LoginPage: React.FC = () => {
     } catch (errors) {
       setLoading(false);
       const serverErrors = errors as ILoginError;
-      console.log(serverErrors);
       
-      console.log("tewst1 ");
-      if (serverErrors.password.length !== 0) {
-        setFieldError("password", serverErrors.password[0]);
-      }
-      console.log("tewst2 ");
-      if (serverErrors.invalid.length !== 0) {
-        setFieldError("invalid", serverErrors.invalid[0]);
-      }
-      else {
-        console.log('else');
+      const { password, invalid } = serverErrors;
+      if (password.length !== 0) {
+        setFieldError("password", password[0]);
         
       }
-      console.log('tewst3');
-      
+      if (invalid.length !== 0) {
+        setFieldError("invalid", invalid[0]);
+        console.log(invalid[0]);
+      }
     }
   };
 const formik = useFormik({
@@ -52,10 +46,6 @@ const formik = useFormik({
 });
 const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
   
-console.log(errors);
-
-
-
   return (
     <>
       <div className="row">
@@ -64,8 +54,6 @@ console.log(errors);
           <h1 className="text-center mt-4">Вхід</h1>
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
-              <Field field="invalid" type="hidden"/>
-              {errors.invalid ? <div>{errors.invalid}</div> : null}
               <InputGroup
                 field="email"
                 label="Email"
