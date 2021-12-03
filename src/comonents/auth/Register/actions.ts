@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Dispatch } from 'react';
 import http from '../../../http_common';
+import { setAuthUserByToken } from '../../../store/action-creators/auth';
 import { RegisterAction, RegisterActionTypes, RegisterErrors } from './types';
 
 export const RegisterUser = (data: FormData) => {
@@ -17,6 +18,8 @@ export const RegisterUser = (data: FormData) => {
         type: RegisterActionTypes.REGISTER_SUCCESS,
         payload: token,
       });
+
+      setAuthUserByToken(token, dispatch);
     } catch (err: any) {
 
       console.log("Server error pre ",err);
