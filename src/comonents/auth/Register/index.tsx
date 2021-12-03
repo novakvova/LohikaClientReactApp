@@ -1,13 +1,10 @@
 import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
-import InputGroupErrors from "../../common/InputGroupErrors";
 import { useActions } from '../../../hooks/useActions';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useNavigate } from 'react-router';
 import { validationForm } from './validation';
 import { IRegister, RegisterError } from './types';
-import Loader from '../../../assets/Loader';
-import { ILogin } from '../Login/interface';
+import EclipseWidget from '../../common/eclipse';
 
 const RegisterPage = () => {
   const [errorMessages, setErrorMessages] = useState<RegisterError>({
@@ -24,17 +21,22 @@ const RegisterPage = () => {
     firstName: "" ,
     lastName: "" ,
     email: "",
+    photo: "",
     phone: "",
     password: "",
     confirmPassword: "",
   });
   const [selectedFile, setSelectedFile] = useState<FileList>();
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const { RegisterUser } = useActions();
-  const { error, loading } = useTypedSelector((store) => store.register);
+  const { RegisterUser} = useActions();
   const navigator = useNavigate();
 
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessages((prev) => ({
+      ...prev,
+      [e.target.name]:[]
+    }));
      setRegisterData((prev) => ({
        ...prev,
        [e.target.name]: e.target.value,
@@ -44,33 +46,38 @@ const RegisterPage = () => {
   const handlerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageData = (e.target as HTMLInputElement | any).files[0];
     setSelectedFile(imageData);
+    setRegisterData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handlerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-   // const errors = validationForm(registerData);
+    const errors = validationForm(registerData);
+    setErrorMessages(errors);
     
-    //setErrorMessages(errors);
-    const isValid = true;//Object.keys(errors).length === 0;
+    const isValid = Object.keys(errors).length === 0;
    
     if (isValid) {
       const formData = new FormData();
-      Object.entries(registerData)
-        .forEach(([key, value]) => formData.append(key, value));
-        formData.append("photo", selectedFile as any);
-        const user:ILogin = {
-          email: registerData.email,
-          password: registerData.password
-        }
-        try {
-          await RegisterUser(formData);
-          //await LoginUser(user);
-          await navigator('/')
-        } catch (ex) {
-          console.log("Problem register: ", ex);
-          const serverErrors = ex as RegisterError;
-          setErrorMessages(serverErrors);
-        }
+      Object.entries(registerData).forEach(([key, value]) =>
+        formData.append(key, value)
+      );
+      formData.append("photo", selectedFile as any);
+      try {
+        setLoading(true);
+        await RegisterUser(formData);
+        await navigator("/");
+        await setLoading(false);
+      } catch (ex) {
+
+        const serverErrors = ex as RegisterError;
+        console.log(serverErrors);
+        
+        setErrorMessages(serverErrors);
+        setLoading(false);
+      }
     } 
   };
 
@@ -79,14 +86,9 @@ const RegisterPage = () => {
       <div className="col-3"></div>
       <div className="col-6 mb-4">
         <h1 className="text-center mt-4">Реєстрація</h1>
-        {error && (
-          <div className="alert alert-danger" role="alert">
-            {error}
-          </div>
-        )}
 
         <form onSubmit={handlerSubmit} name="test">
-          <InputGroupErrors
+          <InputGroup
             name="firstName"
             label="Ім'я"
             errors={errorMessages?.firstName}
@@ -94,7 +96,7 @@ const RegisterPage = () => {
             value={registerData.firstName}
           />
 
-          <InputGroupErrors
+          <InputGroup
             name="lastName"
             label="Прізвище"
             errors={errorMessages?.lastName}
@@ -102,7 +104,7 @@ const RegisterPage = () => {
             value={registerData.lastName}
           />
 
-          <InputGroupErrors
+          <InputGroup
             name="email"
             label="Email"
             errors={errorMessages?.email}
@@ -110,7 +112,7 @@ const RegisterPage = () => {
             value={registerData.email}
           />
 
-          <InputGroupErrors
+          <InputGroup
             name="photo"
             label="Аватар"
             type="file"
@@ -119,7 +121,7 @@ const RegisterPage = () => {
             value={registerData.photo}
           />
 
-          <InputGroupErrors
+          <InputGroup
             name="phone"
             label="Телефон"
             errors={errorMessages?.phone}
@@ -127,7 +129,7 @@ const RegisterPage = () => {
             value={registerData.phone}
           />
 
-          <InputGroupErrors
+          <InputGroup
             name="password"
             label="Пароль"
             type="password"
@@ -136,7 +138,7 @@ const RegisterPage = () => {
             value={registerData.password}
           />
 
-          <InputGroupErrors
+          <InputGroup
             name="confirmPassword"
             label="Підтвердіть пароль"
             type="password"
@@ -154,13 +156,9 @@ const RegisterPage = () => {
             </button>
           </div>
         </form>
-        {loading && (
-          <h2 className="text-center">
-            <Loader />
-          </h2>
-        )}
       </div>
       <div className="col-3"></div>
+      {loading && <EclipseWidget />}
     </div>
   );
 };

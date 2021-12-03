@@ -1,18 +1,5 @@
 import * as yup from "yup";
 
-export const schemaEmail = yup.object().shape({
-  email: yup
-    .string()
-    .email({
-      message: "Введіть коректний Email",
-      name: "email",
-    })
-    .required({
-      message: "Поле не повинне бути пустим",
-      name: "email",
-    }),
-});
-
 export const schema = yup.object().shape({
   email: yup
     .string()

@@ -35,6 +35,9 @@ const DefaultHeader = () => {
               <Link className="nav-link" to="/products/add">
                 Додати продукт
               </Link>
+              <Link className="nav-link" to="/Flogin">
+                FormikLogin
+              </Link>
             </li>
             <li className="ms-3">
               <HeaderSearch />
