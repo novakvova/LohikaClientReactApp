@@ -1,41 +1,43 @@
 import { Dispatch } from "react";
-import http from "../../http_common";
-import { AuthAction, AuthActionTypes, IUser } from "../../types/auth";
+import http from "../../../http_common";
+import { AuthAction, AuthActionTypes, ILoginErrors, IUser } from "./types";
 import jwt from "jsonwebtoken";
-import { AxiosError } from "axios";
-import setAuthToken from '../../helpers/setAuthToken';
-import { ILogin } from '../../comonents/auth/Login/interface';
-
+import axios, { AxiosError } from "axios";
+import setAuthToken from '../../../helpers/setAuthToken';
+import { ILogin } from './types';
 
 export interface ILoginResponse {
   token: string
 }
 
+
 export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>) => {
         try {
-          dispatch({ type: AuthActionTypes.LOGIN_AUTH });
           const response = await http.post<ILoginResponse>("api/account/login", data);
           const { token } = await response.data;
-          localStorage.setItem("token", JSON.stringify(token));
           
           setAuthUserByToken(token, dispatch);
-         
           return Promise.resolve();
 
         } catch (err: any) {
-
-             dispatch({
-               type: AuthActionTypes.LOGIN_AUTH_ERROR,
-               payload: (err as AxiosError).response?.data.errors.invalid[0],
-             });
+            if (axios.isAxiosError(err)) {
+              const serverError = err as AxiosError<ILoginErrors>;
+              if (serverError && serverError.response) {
+                const { errors } = serverError.response.data;
+                return Promise.reject(errors);
+              }
+            }
+            
              return Promise.reject();
           
         }
     }
 
-export const setAuthUserByToken = (token: string, dispatch: Dispatch<any>) => {
+export const setAuthUserByToken = (token: string , dispatch: Dispatch<any>) => {
 
   setAuthToken(token);
+  localStorage.token = token;
+
   const dataUser = jwt.decode(token, { json: true });
   const user: IUser = {
     email: dataUser!.name,

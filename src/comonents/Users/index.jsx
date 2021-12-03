@@ -34,7 +34,6 @@ const Users = () => {
           </tr>
         </thead>
 
-        {!loading && (
           <tbody>
             {users.map(({ id, firstName, image, phone, email }) => (
               <tr key={id}>
@@ -66,7 +65,6 @@ const Users = () => {
               </tr>
             ))}
           </tbody>
-        )}
       </table>
       {loading && (
         <h2 className="text-center">

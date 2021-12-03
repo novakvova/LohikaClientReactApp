@@ -1,14 +1,11 @@
 export enum RegisterActionTypes {
   REGISTER_START = "REGISTER_START",
   REGISTER_SUCCESS = "REGISTER_SUCCESS",
-  REGISTER_ERROR = "REGISTER_ERROR",
 }
 
 export interface RegisterState {
 	data: string,
-  loading: boolean
 	isRegisterd:boolean,
-	error: string
 }
 
 export interface RegisterStartAction {
@@ -20,15 +17,10 @@ export interface RegisterSuccessAction {
   payload: string;
 }
 
-export interface RegisterErrorAction {
-  type: RegisterActionTypes.REGISTER_ERROR
-  payload: string;
-}
-
 export type RegisterAction =
   | RegisterStartAction
   | RegisterSuccessAction
-  | RegisterErrorAction;
+;
 
 
 
@@ -43,20 +35,24 @@ export interface IRegister {
 }
 
 export type RegisterError = {
-  firstName: Array<string>,
-  lastName: Array<string>,
-  photo: Array<string>,
-  phone: Array<string>,
-  email: Array<string>, 
-  password: Array<string>, 
-  confirmPassword: Array<string>, 
-  error: string 
+  firstName?: Array<string>,
+  lastName?: Array<string>,
+  photo?: Array<string>,
+  phone?: Array<string>,
+  email?: Array<string>, 
+  password?: Array<string>, 
+  confirmPassword?: Array<string>, 
+  error?: string 
 };
+
+export interface Pasword {
+  key: string;
+  value: string;
+}
 
 export type RegisterErrors = {
   errors: RegisterError,
   status: number, 
 };
-
 
 

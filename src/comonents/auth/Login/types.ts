@@ -12,8 +12,6 @@ export interface IUser {
 export interface AuthState {
   user: IUser;
   isAuth: boolean;
-  loading: boolean;
-  error: undefined | string ;
 }
 
 export interface LoginAuthAction {
@@ -38,3 +36,20 @@ export type AuthAction =
   | LoginAuthSuccessAction
   | LoginAuthErrorAction
   | LogoutAuth;
+
+export interface ILogin {
+  email?: string;
+  password?: string;
+}
+
+export interface ILoginError {
+  password?: Array<string>;
+  email?: Array<string>;
+  invalid?: Array<string>;
+}
+
+export interface ILoginErrors {
+  errors: ILoginError,
+  status: number
+}
+
