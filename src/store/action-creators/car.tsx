@@ -33,6 +33,7 @@ export const fetchCarsSearch =
 
       console.log("response search" , response);
       return Promise.resolve();
+      
     } catch (error) {
       console.log(error)
       return Promise.reject();

@@ -2,7 +2,7 @@ import {
   SendingCarState,
   SendingAction,
   SendingCarTypes,
-} from "../../types/carSending";
+} from "./types";
 
 const initialState: SendingCarState = {
   car: { name: "", priority: 0, price: 0, photo: "" },

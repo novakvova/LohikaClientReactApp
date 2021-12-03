@@ -3,21 +3,19 @@ export enum SendingCarTypes {
   SENDING_CAR_SUCCESS = "SENDING_CAR_SUCCESS",
   SENDING_CAR_SUCCESS_STOP_NAV = "SENDING_CAR_SUCCESS_STOP_NAV",
   SENDING_CAR_ERROR = "SENDING_CAR_ERROR",
-
 }
 
 export interface ISendingCar {
   name: string;
   priority: string;
   price: string;
-  
 }
 
 export interface SendingCarState {
   car: ISendingCar | any;
   loading: boolean;
   error: null | string;
-  nav: boolean
+  nav: boolean;
 }
 
 export interface SendingCarAction {
@@ -30,7 +28,6 @@ export interface SendingCarSuccsessAction {
 }
 export interface SendingCarSuccsessStopNavAction {
   type: SendingCarTypes.SENDING_CAR_SUCCESS_STOP_NAV;
-  
 }
 
 export interface SendingCarErrorAction {
@@ -42,4 +39,11 @@ export type SendingAction =
   | SendingCarAction
   | SendingCarSuccsessAction
   | SendingCarErrorAction
-  | SendingCarSuccsessStopNavAction
+  | SendingCarSuccsessStopNavAction;
+
+export interface IAddCar {
+  name: string;
+  priority: number | null;
+  price: number | null;
+  image: string;
+}

@@ -1,12 +1,13 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
+import axios, { Axios, AxiosError } from "axios";
 import {
   SendingAction,
   SendingCarTypes,
   ISendingCar,
-} from "../../types/carSending";
+} from "./types";
 
-export const sendCar = (data: ISendingCar, image: any) => {
+export const addNewCar = (data: ISendingCar, image: any) => {
   return async (dispatch: Dispatch<SendingAction>) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) =>
@@ -27,6 +28,7 @@ export const sendCar = (data: ISendingCar, image: any) => {
       });
       dispatch({ type: SendingCarTypes.SENDING_CAR_SUCCESS_STOP_NAV });
     } catch (error) {
+      console.log(error as AxiosError)
       dispatch({ type: SendingCarTypes.SENDING_CAR_ERROR, payload: "Error" });
     }
   };
