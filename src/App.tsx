@@ -13,6 +13,7 @@ import Cart from './comonents/Cart/Cart';
 import UsersPage from './comonents/Users/index'
 import UserDetailPage from "./comonents/Users/UserPage";
 import NoMatch from './comonents/NoMatch';
+import FLogin from './comonents/auth/Login/IndexFormik';
 
 function App() {
   const {cartIsShow} = useTypedSelector(store => store.cart);
@@ -27,6 +28,7 @@ function App() {
           <Route path="/products/add" element={<AddNewCar />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/Flogin" element={<FLogin />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/users/:id" element={<UserDetailPage />} />
           <Route path="*" element={<NoMatch />} />
