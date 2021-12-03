@@ -27,9 +27,7 @@ export const LoginUser = (data: ILogin) => async (dispatch: Dispatch<AuthAction>
                 return Promise.reject(errors);
               }
             }
-            
              return Promise.reject();
-          
         }
     }
 
@@ -54,12 +52,8 @@ export const setAuthUserByToken = (token: string , dispatch: Dispatch<any>) => {
 
 export const LogoutUser = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
-        try {
           setAuthToken('');
             dispatch({ type: AuthActionTypes.LOGOUT_AUTH });
-            localStorage.removeItem('user')
-        } catch (error) {
-            
-        }
+            localStorage.removeItem("token")
     }
 }

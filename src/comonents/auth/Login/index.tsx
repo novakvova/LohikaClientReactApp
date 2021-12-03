@@ -5,17 +5,13 @@ import { useActions } from "../../../hooks/useActions";
 import { LoginSchema } from "./validation";
 import { ILogin, ILoginError } from "./types";
 import EclipseWidget from "../../common/eclipse";
-import { useFormik, Form, FormikProvider, FormikHelpers } from "formik";
+import { useFormik, Form, FormikProvider, FormikHelpers, ErrorMessage, Field } from "formik";
 
 const LoginPage: React.FC = () => {
-  // const [loginData, setLoginData] = useState<ILogin>({
-  //   email: "",
-  //   password: "",
-  // });
 
-  const initialValues: ILogin = { email: "", password: "" };
-
+  const initialValues: ILogin = { email: "", password: "", invalid:"" };
   const [loading, setLoading] = useState<boolean>(false);
+  
   const { LoginUser } = useActions();
   const navigator = useNavigate();
 
@@ -31,21 +27,34 @@ const LoginPage: React.FC = () => {
     } catch (errors) {
       setLoading(false);
       const serverErrors = errors as ILoginError;
-      if (serverErrors.password.length != 0) {
+      console.log(serverErrors);
+      
+      console.log("tewst1 ");
+      if (serverErrors.password.length !== 0) {
         setFieldError("password", serverErrors.password[0]);
       }
-
-      //setErrorMessages(serverErrors);
+      console.log("tewst2 ");
+      if (serverErrors.invalid.length !== 0) {
+        setFieldError("invalid", serverErrors.invalid[0]);
+      }
+      else {
+        console.log('else');
+        
+      }
+      console.log('tewst3');
+      
     }
   };
+const formik = useFormik({
+  initialValues: initialValues,
+  validationSchema: LoginSchema,
+  onSubmit: onHandleSubmit,
+});
+const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
+  
+console.log(errors);
 
-  const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: LoginSchema,
-    onSubmit: onHandleSubmit,
-  });
 
-  const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
 
   return (
     <>
@@ -53,14 +62,10 @@ const LoginPage: React.FC = () => {
         <div className="col-3"></div>
         <div className="col-6">
           <h1 className="text-center mt-4">Вхід</h1>
-          {/* {errorMessages.invalid?.length !== 0 &&
-            errorMessages.invalid?.map((el, i) => (
-              <div key={i} className="alert alert-dismissible alert-danger">
-                <strong>{el}</strong>
-              </div>
-            ))} */}
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
+              <Field field="invalid" type="hidden"/>
+              {errors.invalid ? <div>{errors.invalid}</div> : null}
               <InputGroup
                 field="email"
                 label="Email"

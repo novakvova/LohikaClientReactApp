@@ -2,69 +2,34 @@ import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
 import { useActions } from '../../../hooks/useActions';
 import { useNavigate } from 'react-router';
-import { validationForm } from './validation';
+import { RegisterSchema } from './validation';
 import { IRegister, RegisterError } from './types';
 import EclipseWidget from '../../common/eclipse';
+import { Form, FormikHelpers, FormikProvider, useFormik, useField } from 'formik';
 
 const RegisterPage = () => {
-  const [errorMessages, setErrorMessages] = useState<RegisterError>({
-    firstName: [],
-    lastName: [],
-    email: [],
-    phone: [],
-    photo: [],
-    error: "",
-    password: [],
-    confirmPassword: [],
-  });
-  const [registerData, setRegisterData] = useState<IRegister>({
-    firstName: "" ,
-    lastName: "" ,
-    email: "",
-    photo: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [selectedFile, setSelectedFile] = useState<FileList>();
   const [loading, setLoading] = useState<boolean>(false)
-
   const { RegisterUser} = useActions();
   const navigator = useNavigate();
-
-  const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setErrorMessages((prev) => ({
-      ...prev,
-      [e.target.name]:[]
-    }));
-     setRegisterData((prev) => ({
-       ...prev,
-       [e.target.name]: e.target.value,
-     }));
+  const initialValues:IRegister = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    photo: [],
+    phone: "",
+    password: "",
+    confirmPassword: ""
   }
+   // const [field, meta, helpers] = useField("photo");
 
-  const handlerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const imageData = (e.target as HTMLInputElement | any).files[0];
-    setSelectedFile(imageData);
-    setRegisterData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const onHandleSubmit = async (values: IRegister,
+    { setFieldError }: FormikHelpers<IRegister>
+  ) => {
 
-  const handlerSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const errors = validationForm(registerData);
-    setErrorMessages(errors);
-    
-    const isValid = Object.keys(errors).length === 0;
-   
-    if (isValid) {
-      const formData = new FormData();
-      Object.entries(registerData).forEach(([key, value]) =>
-        formData.append(key, value)
-      );
-      formData.append("photo", selectedFile as any);
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) =>
+      formData.append(key, value)
+    );
       try {
         setLoading(true);
         await RegisterUser(formData);
@@ -75,77 +40,85 @@ const RegisterPage = () => {
         const serverErrors = ex as RegisterError;
         console.log(serverErrors);
         
-        setErrorMessages(serverErrors);
         setLoading(false);
       }
     } 
-  };
 
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: RegisterSchema,
+    onSubmit: onHandleSubmit,
+  });
+
+    const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
+  
+
+  
   return (
     <div className="row">
       <div className="col-3"></div>
       <div className="col-6 mb-4">
         <h1 className="text-center mt-4">Реєстрація</h1>
-
-        <form onSubmit={handlerSubmit} name="test">
-          {/* <InputGroup
-            name="firstName"
+        <FormikProvider value={formik}>
+        <Form onSubmit={handleSubmit}>
+          <InputGroup
+            field="firstName"
             label="Ім'я"
-            //errors={errorMessages?.firstName}
-            onChange={handlerChange}
-            value={registerData.firstName}
+            error={errors.firstName}
+            onChange={handleChange}
+            touched={touched.firstName}
           />
 
           <InputGroup
-            name="lastName"
+            field="lastName"
             label="Прізвище"
-            errors={errorMessages?.lastName}
-            onChange={handlerChange}
-            value={registerData.lastName}
+            error={errors.lastName}
+            onChange={handleChange}
+            touched={touched.firstName}
           />
 
           <InputGroup
-            name="email"
+            field="email"
             label="Email"
-            errors={errorMessages?.email}
-            onChange={handlerChange}
-            value={registerData.email}
+            error={errors.email}
+            onChange={handleChange}
+            touched={touched.email}
           />
 
           <InputGroup
-            name="photo"
+            field="photo"
             label="Аватар"
             type="file"
-            errors={errorMessages?.photo}
-            onChange={handlerFileChange}
-            value={registerData.photo}
+            error={errors.photo}
+            onChange={handleChange}
+            touched={touched.photo}
           />
 
           <InputGroup
-            name="phone"
+            field="phone"
             label="Телефон"
-            errors={errorMessages?.phone}
-            onChange={handlerChange}
-            value={registerData.phone}
+            error={errors.phone}
+            onChange={handleChange}
+            touched={touched.phone}
           />
 
           <InputGroup
-            name="password"
+            field="password"
             label="Пароль"
             type="password"
-            errors={errorMessages?.password}
-            onChange={handlerChange}
-            value={registerData.password}
+            error={errors.password}
+            onChange={handleChange}
+            touched={touched.password}
           />
 
           <InputGroup
-            name="confirmPassword"
+            field="confirmPassword"
             label="Підтвердіть пароль"
             type="password"
-            errors={errorMessages?.confirmPassword}
-            onChange={handlerChange}
-            value={registerData.confirmPassword}
-          /> */}
+            error={errors.confirmPassword}
+            onChange={handleChange}
+            touched={touched.confirmPassword}
+          />
           <div className="text-center">
             <button
               type="submit"
@@ -155,7 +128,8 @@ const RegisterPage = () => {
               Реєстрація
             </button>
           </div>
-        </form>
+        </Form>
+        </FormikProvider>
       </div>
       <div className="col-3"></div>
       {loading && <EclipseWidget />}

@@ -28,7 +28,7 @@ export interface IRegister {
   firstName?: string ;
   lastName?: string ;
   email?: string;
-  photo?: string;
+  photo?: FileList[];
   phone?: string;
   password?: string;
   confirmPassword?: string;

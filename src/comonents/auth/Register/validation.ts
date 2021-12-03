@@ -1,55 +1,28 @@
-import { IRegister, Pasword, RegisterError } from "./types";
+import * as yup from "yup"
 
-const validateEmail = (email: string):RegisterError | undefined => {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  if (!re.test(email.toLowerCase())) {
-    return {
-      email: ["Некоректний Email"],
-    };
-  }
-};
-
-const validatePassword = (password: Pasword): RegisterError | undefined => {
-  const { key, value } = password;
-  if (value.length < 5)
-    return {
-      [key]: ["Пароль має містити мінімум 5 символів"],
-    };
-};
-
-export const validationForm = (registerData: IRegister): RegisterError => {
-  let errors: RegisterError = {};
-
-  Object.entries(registerData).forEach(([key, value]) => {
-    if (!value) {
-      errors = {
-        ...errors,
-        [key]: ["Поле не повинно бути пустим"],
-      };
-    }
-
-    if (value && (key === "password" || key === "confirmPassword")) {
-      const password = validatePassword({ key, value });
-      errors = { ...errors, ...password };
-    }
-    
-    if (value && key === "email") {
-      const email = validateEmail(value);
-      errors = { ...errors, ...email };
-    }
-  });
-
-  const { password, confirmPassword} = registerData;
-
-  if (password !== confirmPassword) {
-     errors = {
-       ...errors,
-       password: ["Паролі повинні співпадати"],
-       confirmPassword: ["Паролі повинні співпадати"],
-     };
-  }
- return errors
- 
-};
+export const RegisterSchema = yup.object({
+  // email: yup
+  //   .string()
+  //   .email("Введіть коректний Email")
+  //   .required("Поле не повинне бути пустим"),
+  // firstName: yup.string().required("Поле не повинне бути пустим"),
+  // lastName: yup.string().required("Поле не повинне бути пустим"),
+  // photo: yup.array().min(1, "Виберіть аватар").nullable(),
+  // phone: yup
+  //   .string()
+  //   .matches(
+  //     /^((\+?3)?8)?((0\(\d{2}\)?)|(\(0\d{2}\))|(0\d{2}))\d{7}$/,
+  //     "Невірний формат"
+  //   )
+  //   .required("Поле не повинне бути пустим"),
+  // password: yup
+  //   .string()
+  //   .min(5, "Пароль повинен містити мініму 5 символів")
+  //   .matches(/[0-9a-zA-Z]/, "Пароль може містить латинські символи і цифри")
+  //   .required("Поле не повинне бути пустим"),
+  // confirmPassword: yup
+  //   .string()
+  //   .min(5, "Пароль повинен містити мініму 5 символів")
+  //   .oneOf([yup.ref("password"), null], "Паролі повинні співпадати")
+  //   .required("Поле не повинне бути пустим"),
+});
