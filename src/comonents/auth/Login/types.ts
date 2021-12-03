@@ -43,9 +43,9 @@ export interface ILogin {
 }
 
 export interface ILoginError {
-  password?: Array<string>;
-  email?: Array<string>;
-  invalid?: Array<string>;
+  password: Array<string>;
+  email: Array<string> ;
+  invalid: string;
 }
 
 export interface ILoginErrors {

@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { Dispatch } from 'react';
 import http from '../../../http_common';
-import { store } from '../../../store';
 import { setAuthUserByToken } from '../Login/action';
-import { RegisterAction, RegisterActionTypes, RegisterErrors} from './types';
+import { RegisterAction, RegisterActionTypes, RegisterErrors } from './types';
+
 
 export const RegisterUser = (data: FormData) => {
   return async (dispatch: Dispatch<RegisterAction>) => {
@@ -16,9 +16,9 @@ export const RegisterUser = (data: FormData) => {
         type: RegisterActionTypes.REGISTER_SUCCESS,
         payload: token,
       });
-      setAuthUserByToken(token, store.dispatch);
-
+      setAuthUserByToken(token, dispatch);
       return Promise.resolve( token );
+
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
         const serverError = err as AxiosError<RegisterErrors>;

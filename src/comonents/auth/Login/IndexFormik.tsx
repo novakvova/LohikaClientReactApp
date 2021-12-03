@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik, FormikErrors, FormikHelpers } from 'formik';
-import { LoginSchema } from './formikSchema';
+import { LoginSchema } from './validation';
 
 interface Login {
 	email: string,
