@@ -8,10 +8,13 @@ import {
   GetUserActions,
   UserInfo} from "./types";
 
+
   const user: UserInfo = {
     id: 0,
     email: "",
     firstName: "",
+    secondName:"",
+    image: "",
     phone: "",
   };
 

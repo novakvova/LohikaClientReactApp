@@ -30,7 +30,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/users/:id" element={<UserDetailPage />} />
-          <Route path="/users/edit:id" element={<EditPage />} />
+          <Route path="/users/edit/:id" element={<EditPage />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

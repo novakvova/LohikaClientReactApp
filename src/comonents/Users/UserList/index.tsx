@@ -61,7 +61,7 @@ const handlerInfo = (id:number) => {
                 <button
                   className="btn btn-success btn-sm"
                   onClick={() => {
-                    navigator(`edit${id}`);
+                    navigator(`edit/${id}`);
                   }}
                 >
                   Змінити

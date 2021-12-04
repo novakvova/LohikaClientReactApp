@@ -24,8 +24,8 @@ export interface GetAllUsers {
 export interface UserInfo {
   id: number;
   firstName: string;
-  secondName?: string,
-  image?: FileList[];
+  secondName: string,
+  image: string;
   phone: string;
   email: string;
 }
@@ -35,7 +35,7 @@ export interface EditUser {
   firstName?: string;
   secondName?: string;
   email?: string;
-  image?: File;
+  image?: string | File;
   phone?: string;
 }
 

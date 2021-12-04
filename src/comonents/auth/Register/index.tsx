@@ -28,7 +28,7 @@ const reader = new FileReader();
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setFieldValue("photo", (e.target as any).files[0]);
     const file = (e.target as any).files[0]
-    setImg( URL.createObjectURL(file ));
+    setImg( URL.createObjectURL(file));
   }
     
   const onHandleSubmit = async (values: IRegister,
