@@ -1,14 +1,30 @@
-import { UsersState, UsersAction, UsersActionTypes } from "../../types/CRUDUsers/UsersFetch";
-import { DeleteUserActions, DeleteUserActionTypes } from '../../types/CRUDUsers/UsersDelete'
+import { 
+  UsersState, 
+  UsersActions, 
+  UsersActionTypes, 
+  DeleteUserActions, 
+  DeleteUserActionTypes, 
+  GetUserActionTypes, 
+  GetUserActions,
+  UserInfo} from "./types";
+
+  const user: UserInfo = {
+    id: 0,
+    email: "",
+    firstName: "",
+    image: "",
+    phone: "",
+  };
+
 const initialState: UsersState = {
   users: [],
+  userData: user,
   loading: false,
   error: null,
 };
 
-export const usersReducer = (
-  state = initialState,
-    action: UsersAction | DeleteUserActions
+export const usersReducer = (state = initialState,
+    action: UsersActions | DeleteUserActions | GetUserActions
 ) => {
   switch (action.type) {
     case UsersActionTypes.FETCH_USERS:
@@ -29,7 +45,15 @@ export const usersReducer = (
     case DeleteUserActionTypes.DELETE_USER_ERROR: 
       return {...state, loading: false, error: action.payload};
       
+    case GetUserActionTypes.GET_USER:
+      return {...state, loading: true};
 
+    case GetUserActionTypes.GET_USER_SUCCESS:
+      return {...state, loading: false, userData: action.payload};
+
+    case GetUserActionTypes.GET_USER_ERROR: 
+      return {...state, loading: false, error: action.payload};
+    
     default:
       return state;
   }

@@ -1,20 +1,29 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { UsersAction, UsersActionTypes } from "../../types/CRUDUsers/UsersFetch";
-import { DeleteUserActions, DeleteUserActionTypes} from '../../types/CRUDUsers/UsersDelete'
+import {
+  DeleteUserActions,
+  DeleteUserActionTypes,
+  GetUserActionTypes,
+  GetUserActions,
+  UsersActionTypes,
+  UsersActions,
+  UserInfo,
+} from "./types";
 
 export const fetchUsers = () => {
-  return async (dispatch: Dispatch<UsersAction>) => {
+  return async (dispatch: Dispatch<UsersActions>) => {
     try {
       dispatch({ 
         type: UsersActionTypes.FETCH_USERS 
       });
-      const responce = await http.get("api/Users/all");
+      const response = await http.get<UserInfo[]>("api/Users/all");
+      
       dispatch({
         type: UsersActionTypes.FETCH_USERS_SUCCESS,
-        payload: responce.data,
+        payload: response.data,
       });
     } catch (error: any) {
+      
       dispatch({
         type: UsersActionTypes.FETCH_USERS_ERROR,
         payload: error,
@@ -44,4 +53,29 @@ export const deleteUser = (id: number) => {
     }
 
   }
-}
+};
+
+export const getUserById = (id:number) => {
+  return async (dispatch: Dispatch<GetUserActions>) => {
+    try {
+      dispatch({
+        type: GetUserActionTypes.GET_USER,
+      });
+      const response = await http.get<UserInfo>(`api/Users/get/${id}`);
+      const { data  } = response; 
+      dispatch({
+        type: GetUserActionTypes.GET_USER_SUCCESS,
+        payload: data
+      })
+      
+      return Promise.resolve(response.data);
+    } catch (error: any) {
+      dispatch({
+        type: GetUserActionTypes.GET_USER_ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
+

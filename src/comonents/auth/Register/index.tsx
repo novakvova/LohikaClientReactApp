@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { RegisterSchema } from './validation';
 import { IRegister, RegisterError } from './types';
 import EclipseWidget from '../../common/eclipse';
-import { Form, FormikHelpers, FormikProvider, useFormik, useField } from 'formik';
+import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 
 const RegisterPage = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -26,7 +26,7 @@ const RegisterPage = () => {
   }
     
   const onHandleSubmit = async (values: IRegister,
-    { setFieldError, setFieldValue }: FormikHelpers<IRegister>
+    { setFieldError }: FormikHelpers<IRegister>
   ) => {
     const formData = new FormData();
     Object.entries(values).forEach(([key, value]) =>
@@ -63,7 +63,6 @@ const RegisterPage = () => {
       touched,
       handleChange,
       handleSubmit,
-      setFieldError,
       setFieldValue
     } = formik;
   

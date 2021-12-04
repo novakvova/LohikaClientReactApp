@@ -10,9 +10,10 @@ import ProfilePage from './comonents/Profile';
 import "../node_modules/font-awesome/css/font-awesome.css"; 
 import { useTypedSelector } from './hooks/useTypedSelector';
 import Cart from './comonents/Cart/Cart';
-import UsersPage from './comonents/Users/index'
+import UsersPage from './comonents/Users/UserList/index'
 import UserDetailPage from "./comonents/Users/UserPage";
 import NoMatch from './comonents/NoMatch';
+import EditPage from './comonents/Users/EditPage';
 
 function App() {
   const {cartIsShow} = useTypedSelector(store => store.cart);
@@ -29,6 +30,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/users/:id" element={<UserDetailPage />} />
+          <Route path="/users/edit:id" element={<EditPage />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

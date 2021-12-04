@@ -5,7 +5,7 @@ import { useActions } from "../../../hooks/useActions";
 import { LoginSchema } from "./validation";
 import { ILogin, ILoginError } from "./types";
 import EclipseWidget from "../../common/eclipse";
-import { useFormik, Form, FormikProvider, FormikHelpers, ErrorMessage, Field } from "formik";
+import { useFormik, Form, FormikProvider, FormikHelpers } from "formik";
 
 const LoginPage: React.FC = () => {
 
@@ -44,7 +44,7 @@ const formik = useFormik({
   validationSchema: LoginSchema,
   onSubmit: onHandleSubmit,
 });
-const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
+const { errors, touched, handleChange, handleSubmit } = formik;
   
   return (
     <>

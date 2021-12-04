@@ -23,6 +23,6 @@ export const RegisterSchema = yup.object({
   confirmPassword: yup
     .string()
     .min(5, "Пароль повинен містити мініму 5 символів")
-    .oneOf([yup.ref("password"), null], "Паролі повинні співпадати")
+    .oneOf([yup.ref("password"), null], () => "Паролі повинні співпадати")
     .required("Поле не повинне бути пустим"),
 });

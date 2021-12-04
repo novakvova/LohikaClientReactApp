@@ -3,8 +3,8 @@ import * as AuthActionCreators from "../../comonents/auth/Login/action";
 import * as RegActionCreators from "../../comonents/auth/Register/actions";
 import * as SendingCarActionCreators from "./sendingCar";
 import * as CartActionCreators from "./cart";
-import * as ProfileActionCreators from './profile';
-import * as UsersActionCreators from './users'
+import * as ProfileActionCreators from '../../comonents/Profile/actions';
+import * as UsersActionCreators from '../../comonents/Users/actions'
 
 
 const actions = {
@@ -15,7 +15,7 @@ const actions = {
   ...SendingCarActionCreators,
   ...CartActionCreators,
   ...ProfileActionCreators,
-  ...UsersActionCreators
+  ...UsersActionCreators,
 };
  
 export default  actions;
