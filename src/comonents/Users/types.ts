@@ -21,20 +21,21 @@ export interface GetAllUsers {
 }
 
 
-export interface UserInfo  {
+export interface UserInfo {
   id: number;
   firstName: string;
-  image: string;
+  secondName?: string,
+  image?: FileList[];
   phone: string;
   email: string;
 }
 
 export interface EditUser {
-  id: number,
+  id: number;
   firstName?: string;
-  lastName?: string;
+  secondName?: string;
   email?: string;
-  photo?: FileList[];
+  image?: File;
   phone?: string;
 }
 

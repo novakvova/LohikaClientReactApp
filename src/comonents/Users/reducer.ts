@@ -12,7 +12,6 @@ import {
     id: 0,
     email: "",
     firstName: "",
-    image: "",
     phone: "",
   };
 

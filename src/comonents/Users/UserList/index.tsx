@@ -44,14 +44,7 @@ const handlerInfo = (id:number) => {
               <td>{firstName}</td>
               <td>
                 <div className="size">
-                  <img
-                    src={
-                      image.endsWith("images/")
-                        ? "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
-                        : `https://vovalohika.tk${image}`
-                    }
-                    alt={image}
-                  />
+                  <img src={`https://vovalohika.tk${image}`} />
                 </div>
               </td>
               <td>{phone}</td>
@@ -65,10 +58,14 @@ const handlerInfo = (id:number) => {
                 </button>
               </td>
               <td>
-                <button 
+                <button
                   className="btn btn-success btn-sm"
-                  onClick={() => {navigator(`edit${id}`);}}
-                >Змінити</button>
+                  onClick={() => {
+                    navigator(`edit${id}`);
+                  }}
+                >
+                  Змінити
+                </button>
               </td>
               <td>
                 <button

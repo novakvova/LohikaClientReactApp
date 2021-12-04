@@ -1,4 +1,5 @@
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { values } from 'lodash';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
@@ -11,18 +12,18 @@ const EditPage = () => {
 	const { users } = useTypedSelector(store => store.userCrud);
 	const { id } = useParams();
 	const _id = Number(id);
-	let user: EditUser | undefined;
-	useEffect(() => {
-		user = users.find( ({id}) => id === _id )
-	}, [])
+	let user = users.find( ({id}) => id === _id)
+	console.log(user?.image);
+
+	
 
 
 	const initValues:EditUser = {
 		id: _id,
 		firstName:  user?.firstName,
-		lastName: user?.lastName,
+		secondName: user?.secondName,
 		email: user?.email,
-		photo: user?.photo,
+		image: (user?.image as any),
 		phone: user?.phone,
 	}
 
@@ -30,7 +31,6 @@ const EditPage = () => {
 		setFieldValue("photo", (e.target as any).files[0]);
 	};
 	const onHandleSubmit = async (values: EditUser, {setFieldError}: FormikHelpers<EditUser>) => {
-		console.log(users);
 		
 	}
 
@@ -55,14 +55,16 @@ const EditPage = () => {
               error={errors.firstName}
               onChange={handleChange}
               touched={touched.firstName}
+              value={initValues.firstName}
             />
 
             <InputGroup
               field="lastName"
               label="Прізвище"
-              error={errors.lastName}
+              error={errors.secondName}
               onChange={handleChange}
               touched={touched.firstName}
+              value={initValues.secondName}
             />
 
             <InputGroup
@@ -71,15 +73,16 @@ const EditPage = () => {
               error={errors.email}
               onChange={handleChange}
               touched={touched.email}
+              value={initValues.email}
             />
 
             <InputGroup
               field="photo"
               label="Аватар"
               type="file"
-              error={errors.photo}
+              error={errors.image}
               onChange={handleFileChange}
-              touched={touched.photo}
+              touched={touched.image}
             />
 
             <InputGroup
@@ -88,13 +91,11 @@ const EditPage = () => {
               error={errors.phone}
               onChange={handleChange}
               touched={touched.phone}
+              value={initValues.phone}
             />
 
             <div className="text-center">
-              <button
-                type="submit"
-                className="btn btn-secondary"
-              >
+              <button type="submit" className="btn btn-secondary">
                 Редагувати
               </button>
             </div>

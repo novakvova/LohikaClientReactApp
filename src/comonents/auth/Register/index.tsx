@@ -8,7 +8,8 @@ import EclipseWidget from '../../common/eclipse';
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 
 const RegisterPage = () => {
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [img, setImg] = useState<string>();
   const { RegisterUser} = useActions();
   const navigator = useNavigate();
   const initialValues:IRegister = {
@@ -21,8 +22,13 @@ const RegisterPage = () => {
     confirmPassword: ""
   }
 
+  let prewiew: any;
+const reader = new FileReader();
+
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setFieldValue("photo", (e.target as any).files[0])
+    setFieldValue("photo", (e.target as any).files[0]);
+    const file = (e.target as any).files[0]
+    setImg( URL.createObjectURL(file ));
   }
     
   const onHandleSubmit = async (values: IRegister,
@@ -70,7 +76,15 @@ const RegisterPage = () => {
   
   return (
     <div className="row">
-      <div className="col-3"></div>
+      <div className="col-3">
+        {img && (
+          <div className="card mt-5">
+            <div className="card-body text-center">
+              <img src={img} alt="asdasd" />
+            </div>
+          </div>
+        )}
+      </div>
       <div className="col-6 mb-4">
         <h1 className="text-center mt-4">Реєстрація</h1>
         <FormikProvider value={formik}>

@@ -7,10 +7,11 @@ interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   touched?: boolean | null,
   error?: string | null,
   type?: "text"|"email"|"password"| "file" | "hidden"
+  value? : string 
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-const InputGroup: FC<InputGroupProps> = ({label, field, onChange, touched=null, error=null, type="text"}: InputGroupProps) => {
+const InputGroup: FC<InputGroupProps> = ({label, field, onChange, touched=null, error=null, type="text", value}: InputGroupProps) => {
   return (
     <div className="mb-3">
       <label htmlFor={field} className="form-label">
@@ -25,6 +26,7 @@ const InputGroup: FC<InputGroupProps> = ({label, field, onChange, touched=null, 
         )}
         id={field}
         onChange={onChange}
+        value={value}
       />
       {(touched && error) && <div className="invalid-feedback">{error}</div>}
     </div>
