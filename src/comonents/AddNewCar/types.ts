@@ -43,7 +43,7 @@ export type SendingAction =
 
 export interface IAddCar {
   name: string;
-  priority: number | null;
-  price: number | null;
+  priority: string | null;
+  price: string | null;
   image: string;
 }
