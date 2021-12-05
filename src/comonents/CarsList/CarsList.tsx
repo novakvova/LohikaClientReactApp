@@ -7,6 +7,7 @@ import Loader from "../../assets/Loader";
 
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
+import EclipseWidget from "../common/eclipse";
 
 const CarsList: React.FC = () => {
   const { cars, loading } = useTypedSelector((store) => store.car);
@@ -20,7 +21,7 @@ const CarsList: React.FC = () => {
 
   return (
     <div className="row d-flex justify-content-around flex-wrap">
-      {loading && <Loader />}
+      {loading && <EclipseWidget />}
       {!loading &&
         cars.map((item) => (
           <CarCard
