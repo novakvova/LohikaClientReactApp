@@ -1,15 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Loader from '../../../assets/Loader';
 import { useActions } from '../../../hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import Modal from '../../common/Modal';
 import './index.css';
 
 const Users = () => {
 
   const { users, loading } = useTypedSelector( store => store.userCrud)
+  const [idDel, setIdDel]  = useState<number>(0)
   const { fetchUsers, deleteUser, getUserById } = useActions();
   const navigator = useNavigate();
+
+  const modalClick = (bool: boolean) => {
+    if (bool) deleteUser(idDel);    
+  }
   
   useEffect(() => {
     fetchUsers();
@@ -23,6 +29,7 @@ const handlerInfo = (id:number) => {
 	return (
     <div className="contgainer">
       <h1 className="text-center m-4">Користувачі</h1>
+      <Modal text="Дійсно видалити" click={modalClick} />
       <table className="table align-middle table-striped table-hover">
         <thead>
           <tr>
@@ -44,7 +51,7 @@ const handlerInfo = (id:number) => {
               <td>{firstName}</td>
               <td>
                 <div className="size">
-                  <img src={`https://vovalohika.tk${image}`} />
+                  <img src={`https://vovalohika.tk${image}`} alt="Avatar" />
                 </div>
               </td>
               <td>{phone}</td>
@@ -70,7 +77,9 @@ const handlerInfo = (id:number) => {
               <td>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => deleteUser(id)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  onClick={() => setIdDel(id)}
                 >
                   Видалити
                 </button>

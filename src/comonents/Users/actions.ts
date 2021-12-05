@@ -62,13 +62,14 @@ export const getUserById = (id:number) => {
         type: GetUserActionTypes.GET_USER,
       });
       const response = await http.get<UserInfo>(`api/Users/get/${id}`);
-      const { data  } = response; 
+      const { data } = response; 
+      
       dispatch({
         type: GetUserActionTypes.GET_USER_SUCCESS,
         payload: data
       })
       
-      return Promise.resolve(response.data);
+      return Promise.resolve<UserInfo>(data);
     } catch (error: any) {
       dispatch({
         type: GetUserActionTypes.GET_USER_ERROR,

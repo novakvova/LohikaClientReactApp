@@ -1,6 +1,5 @@
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
-import { values } from 'lodash';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useParams } from 'react-router';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import InputGroup from '../../common/InputGroup';
@@ -14,7 +13,9 @@ const EditPage = () => {
 	const _id = Number(id);
     let user = users.find(({ id }) => id === _id);
 
-	const [img, setImg] = useState<string>(`https://vovalohika.tk${user?.image}`);
+    const [img, setImg] = useState<string>(
+      `https://vovalohika.tk${user?.image}`
+    );
 
 	const initValues:EditUser = {
 		id: _id,
@@ -42,80 +43,81 @@ const EditPage = () => {
 	const formik = useFormik({
 		initialValues: initValues,
 		validationSchema: EditUserSchema,
-		onSubmit: onHandleSubmit
+		onSubmit: onHandleSubmit,
+		enableReinitialize: true,
 	});
 
 	const { errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
 
 	return (
-				<div className="row">
-				<div className="col-3">
-					<div className="card mt-5">
-					<div className="card-body text-center">
-						<img src={img} alt="asdasd" />
-					</div>
-					</div>
-				</div>
-				<div className="col-6 mb-4">
-					<h1 className="text-center mt-4">Редагувати</h1>
-					<FormikProvider value={formik}>
-					<Form onSubmit={handleSubmit}>
-						<InputGroup
-							field="firstName"
-							label="Ім'я"
-							error={errors.firstName}
-							touched={touched.firstName}
-							value={initValues.firstName}
-							onChange={handleChange}
-						/>
+    <div className="row">
+      <div className="col-3">
+        <div className="card mt-5">
+          <div className="card-body text-center">
+            <img src={img} alt="asdasd" />
+          </div>
+        </div>
+      </div>
+      <div className="col-6 mb-4">
+        <h1 className="text-center mt-4">Редагувати</h1>
+        <FormikProvider value={formik}>
+          <Form onSubmit={handleSubmit}>
+            <InputGroup
+              field="firstName"
+              label="Ім'я"
+              error={errors.firstName}
+              touched={touched.firstName}
+              value={initValues.firstName}
+              onChange={handleChange}
+            />
 
-						<InputGroup
-							field="lastName"
-							label="Прізвище"
-							error={errors.secondName}
-							onChange={handleChange}
-							touched={touched.firstName}
-							value={initValues.secondName}
-						/>
+            <InputGroup
+              field="lastName"
+              label="Прізвище"
+              error={errors.secondName}
+              onChange={handleChange}
+              touched={touched.firstName}
+              value={initValues.secondName}
+            />
 
-						<InputGroup
-							field="email"
-							label="Email"
-							error={errors.email}
-							onChange={handleChange}
-							touched={touched.email}
-							value={initValues.email}
-						/>
+            <InputGroup
+              field="email"
+              label="Email"
+              error={errors.email}
+              onChange={handleChange}
+              touched={touched.email}
+              value={initValues.email}
+            />
 
-						<InputGroup
-							field="photo"
-							label="Аватар"
-							type="file"
-							error={errors.image}
-							onChange={handleFileChange}
-							touched={touched.image}
-						/>
+            <InputGroup
+              field="photo"
+              label="Аватар"
+              type="file"
+              error={errors.image}
+              onChange={handleFileChange}
+              touched={touched.image}
+            />
 
-						<InputGroup
-							field="phone"
-							label="Телефон"
-							error={errors.phone}
-							onChange={handleChange}
-							touched={touched.phone}
-							value={initValues.phone}
-						/>
+            <InputGroup
+              field="phone"
+              label="Телефон"
+              error={errors.phone}
+              onChange={handleChange}
+              touched={touched.phone}
+              value={initValues.phone}
+            />
 
-						<div className="text-center">
-						<button type="submit" className="btn btn-secondary">
-							Редагувати
-						</button>
-						</div>
-					</Form>
-					</FormikProvider>
-				</div>
-				{/* <div className="col-3"></div>
+            <div className="text-center">
+              <button type="submit" className="btn btn-secondary">
+                Редагувати
+              </button>
+            </div>
+          </Form>
+        </FormikProvider>
+      </div>
+      {/* <div className="col-3"></div>
 				{loading && <EclipseWidget />} */}
-				</div>
+    </div>
   );
 };
 export default EditPage;
