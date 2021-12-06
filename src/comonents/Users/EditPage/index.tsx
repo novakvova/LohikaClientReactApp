@@ -44,10 +44,9 @@ const EditPage = () => {
 		initialValues: initValues,
 		validationSchema: EditUserSchema,
 		onSubmit: onHandleSubmit,
-		enableReinitialize: true,
 	});
 
-	const { errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
+	const { errors, touched, handleChange, handleSubmit, setFieldValue, values } = formik;
 
 	return (
     <div className="row">
@@ -67,7 +66,7 @@ const EditPage = () => {
               label="Ім'я"
               error={errors.firstName}
               touched={touched.firstName}
-              value={initValues.firstName}
+              value={values.firstName}
               onChange={handleChange}
             />
 
