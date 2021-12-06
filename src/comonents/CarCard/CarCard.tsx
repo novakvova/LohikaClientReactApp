@@ -1,4 +1,5 @@
 import CartIcon from "../common/HeaderCartButton/CartIcon";
+import EclipseWidget from "../common/eclipse";
 
 import classes from "./CarCard.module.css";
 import classesIcon from "../common/HeaderCartButton/HeaderCartButton.module.css";
@@ -16,7 +17,7 @@ interface CarCArdProps {
 const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
   const [count, setCount] = useState("1");
   const [showLoader, setShowLoader] = useState(false);
-  const {downloadDataToCart, uploadDataToCart} = useActions()
+  const { downloadDataToCart, uploadDataToCart } = useActions();
 
   const countHandler = (value: string) => {
     setCount(value);
@@ -24,13 +25,14 @@ const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
 
   const uploadItemToCartHandler = async () => {
     setShowLoader(true);
-    await uploadDataToCart(id, +count);// dispatch(uploadDataToCart(id, +count));
+    await uploadDataToCart(id, +count); // dispatch(uploadDataToCart(id, +count));
     downloadDataToCart();
     setShowLoader(false);
   };
 
   return (
     <div className={`card ${classes.carCard} mt-3`}>
+      {/* {showLoader && <EclipseWidget />} */}
       <img
         src={`https://vovalohika.tk${image}`}
         className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
@@ -40,8 +42,7 @@ const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
         <h5 className="card-title">{name}</h5>
         <p className="card-text">Ціна: {price} $ </p>
         <div className="row">
-          <div className="col input-group mb-3 ">
-            
+          <div className="col-6 input-group mb-3 ">
             <input
               type="number"
               className=" form-control text-center"
@@ -54,17 +55,20 @@ const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
               }}
             />
             <button
-              className="btn btn-outline-secondary w-80 d-flex justify-content-between fw-bold"
+              className="w-75 btn btn-outline-secondary d-flex justify-content-around align-items-center fw-bold"
               type="button"
               id="button-addon2"
               onClick={uploadItemToCartHandler}
+              disabled={showLoader}
             >
               <div className={classesIcon.icon}>
                 <CartIcon />
               </div>
 
               {!showLoader && <div>В кошик</div>}
-              {showLoader && <div>Дадаємо</div>}
+              {showLoader && <div className="spinner-border spinner-border-sm" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>}
             </button>
           </div>
         </div>
