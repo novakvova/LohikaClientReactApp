@@ -1,5 +1,5 @@
 
-import { Route, Routes, useParams } from 'react-router';
+import { Route, Routes } from 'react-router';
 import './App.css';
 import Home from './comonents/Home';
 import Register from './comonents/auth/Register/index';

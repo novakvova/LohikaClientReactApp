@@ -11,7 +11,7 @@ import {
 } from "./types";
 
 export const fetchUsers = () => {
-  return async (dispatch: Dispatch<UsersActions>) => {
+  return  async (dispatch: Dispatch<UsersActions>) => {
     try {
       dispatch({ 
         type: UsersActionTypes.FETCH_USERS 
@@ -30,7 +30,7 @@ export const fetchUsers = () => {
       });
     }
   };
-};
+}
 
 export const deleteUser = (id: number) => {
   return async (dispatch: Dispatch<DeleteUserActions>) => {

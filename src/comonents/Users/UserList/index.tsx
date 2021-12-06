@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Loader from '../../../assets/Loader';
 import { useActions } from '../../../hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import Modal from '../../common/Modal';
 import './index.css';
+import EclipseWidget from '../../common/eclipse';
 
 const Users = () => {
 
@@ -88,11 +88,7 @@ const handlerInfo = (id:number) => {
           ))}
         </tbody>
       </table>
-      {loading && (
-        <h2 className="text-center">
-          <Loader />
-        </h2>
-      )}
+      {loading && <EclipseWidget />}
     </div>
   );
 }
