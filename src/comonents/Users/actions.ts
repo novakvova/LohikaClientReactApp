@@ -1,3 +1,4 @@
+import axios, { AxiosError } from 'axios';
 import { Dispatch } from "react";
 import http from "../../http_common";
 import {
@@ -8,6 +9,13 @@ import {
   UsersActionTypes,
   UsersActions,
   UserInfo,
+  UpdateUserActions,
+  UpdateUserActionTypes,
+  UpdateErrors,
+  CreateUserActionTypes,
+  ICreateUserErrors,
+  CreateUserActions,
+  ICreateUser,
 } from "./types";
 
 export const fetchUsers = () => {
@@ -62,21 +70,100 @@ export const getUserById = (id:number) => {
         type: GetUserActionTypes.GET_USER,
       });
       const response = await http.get<UserInfo>(`api/Users/get/${id}`);
-      const { data } = response; 
-      
+      const { data } = response;
+
       dispatch({
         type: GetUserActionTypes.GET_USER_SUCCESS,
-        payload: data
-      })
-      
-      return Promise.resolve<UserInfo>(data);
+        payload: data,
+      });
+
+      return Promise.resolve<UserInfo>({...data});
     } catch (error: any) {
       dispatch({
         type: GetUserActionTypes.GET_USER_ERROR,
         payload: error,
       });
+            // if (axios.isAxiosError(error)) {
+            //   const serverError = error as AxiosError<UpdateErrors>;
+            //   if (serverError && serverError.response) {
+            //     const { errors } = serverError.response.data;
+            //     console.log(errors);
+                
+            //     return Promise.reject(errors);
+            //   }
+            // }
     }
   };
 };
 
+export const updateUser = (data:UserInfo) => {
+  return async (dispatch: Dispatch<UpdateUserActions>) => {
+    try {
+      dispatch({
+        type: UpdateUserActionTypes.UPDATE_USER
+      });
+      
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) =>
+        formData.append(key, value)
+      );
+      console.log(formData.get("photo"));
+      
+      const response = await http.put<UserInfo>("/api/Users/edit", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+console.log(response);
+
+      dispatch({
+        type: UpdateUserActionTypes.UPDATE_USER_SUCCESS,
+        payload: data
+      });
+      
+    } catch (error) {
+      dispatch({
+        type: UpdateUserActionTypes.UPDATE_USER_ERROR,
+        payload: "error"
+      });
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<UpdateErrors>;
+        if (serverError && serverError.response) {
+          const { errors } = serverError.response.data;
+          return Promise.reject(errors);
+        }
+      }
+    }
+  }
+}; 
+
+export const CreateUser = (data: ICreateUser) => {
+  return async (dispatch: Dispatch<CreateUserActions>) => {
+    try {
+       const formData = new FormData();
+       Object.entries(data).forEach(([key, value]) =>
+         formData.append(key, value)
+       );
+      const response = await http.post<ICreateUser>(
+        "api/users/create",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      const { status } = response;
+      
+      dispatch({
+        type: CreateUserActionTypes.CREATE_USER_SUCCESS,
+      });
+      return Promise.resolve(status);
+    } catch (err: any) {
+      if (axios.isAxiosError(err)) {
+        const serverError = err as AxiosError<ICreateUserErrors>;
+        if (serverError && serverError.response) {
+          const { errors } = serverError.response.data;
+          return Promise.reject(errors);
+        }
+      }
+    }
+  };
+};
 

@@ -1,12 +1,13 @@
 import * as yup from "yup";
 
 export const EditUserSchema = yup.object({
+  id: yup.number().required(),
   email: yup
     .string()
     .email("Введіть коректний Email")
     .required("Поле не повинне бути пустим"),
   firstName: yup.string().required("Поле не повинне бути пустим"),
-  lastName: yup.string().required("Поле не повинне бути пустим"),
+  secondName: yup.string().required("Поле не повинне бути пустим"),
   photo: yup.array().nullable(),
   phone: yup
     .string()

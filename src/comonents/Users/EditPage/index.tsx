@@ -1,30 +1,33 @@
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
-import {  useState } from 'react';
-import { useParams } from 'react-router';
+import { Form,  FormikProvider, useFormik } from 'formik';
+import {  useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import EclipseWidget from '../../common/eclipse';
 import InputGroup from '../../common/InputGroup';
-import { EditUser } from '../types';
+import {  UpdateErrors, UserInfo } from '../types';
 import { EditUserSchema } from './validation';
 
 
 const EditPage = () => {
-	const { users } = useTypedSelector(store => store.userCrud);
-	const { id } = useParams();
+	const { userData, loading } = useTypedSelector(store => store.userCrud);
+  const { updateUser } = useActions();
+  const navigator = useNavigate();
+  const { id } = useParams();
 	const _id = Number(id);
-    let user = users.find(({ id }) => id === _id);
 
-    const [img, setImg] = useState<string>(
-      `https://vovalohika.tk${user?.image}`
-    );
+  const [img, setImg] = useState<string>(
+    `https://vovalohika.tk${userData?.photo}`
+  );
 
-	const initValues:EditUser = {
-		id: _id,
-		firstName:  user?.firstName,
-		secondName: user?.secondName,
-		email: user?.email,
-		image: user?.image,
-		phone: user?.phone,
-	}
+	let initValues: UserInfo = {
+    id: _id,
+    firstName: userData.firstName,
+    secondName: userData.secondName,
+    email: userData.email,
+    photo: userData.photo,
+    phone: userData.phone,
+  };
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFieldValue("photo", (e.target as any).files[0]);
@@ -32,90 +35,106 @@ const EditPage = () => {
         setImg(URL.createObjectURL(file));
 	};
 
-	const onHandleSubmit = async (values: EditUser, {setFieldError}: FormikHelpers<EditUser>) => {
-		const formData = new FormData();
-        Object.entries(values).forEach(([key, value]) =>
-        formData.append(key, value)
-      );
-	  
-	}
+
+	const onHandleSubmit = async (values: UserInfo ) => {
+    try {
+      await updateUser(values);
+      //navigator('/users')
+      console.log(updateUser(values));
+      
+    } catch (error) {
+      const serverErrors = error as UpdateErrors;
+
+      console.log(serverErrors);
+    }
+  };
 
 	const formik = useFormik({
-		initialValues: initValues,
-		validationSchema: EditUserSchema,
-		onSubmit: onHandleSubmit,
-	});
+    initialValues: initValues,
+    validationSchema: EditUserSchema,
+    onSubmit: onHandleSubmit,
+  });
 
-	const { errors, touched, handleChange, handleSubmit, setFieldValue, values } = formik;
+	const {
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    values,
+  } = formik;
 
 	return (
     <div className="row">
-      <div className="col-3">
-        <div className="card mt-5">
-          <div className="card-body text-center">
-            <img src={img} alt="asdasd" />
-          </div>
-        </div>
-      </div>
-      <div className="col-6 mb-4">
-        <h1 className="text-center mt-4">Редагувати</h1>
-        <FormikProvider value={formik}>
-          <Form onSubmit={handleSubmit}>
-            <InputGroup
-              field="firstName"
-              label="Ім'я"
-              error={errors.firstName}
-              touched={touched.firstName}
-              value={values.firstName}
-              onChange={handleChange}
-            />
-
-            <InputGroup
-              field="lastName"
-              label="Прізвище"
-              error={errors.secondName}
-              onChange={handleChange}
-              touched={touched.firstName}
-              value={initValues.secondName}
-            />
-
-            <InputGroup
-              field="email"
-              label="Email"
-              error={errors.email}
-              onChange={handleChange}
-              touched={touched.email}
-              value={initValues.email}
-            />
-
-            <InputGroup
-              field="photo"
-              label="Аватар"
-              type="file"
-              error={errors.image}
-              onChange={handleFileChange}
-              touched={touched.image}
-            />
-
-            <InputGroup
-              field="phone"
-              label="Телефон"
-              error={errors.phone}
-              onChange={handleChange}
-              touched={touched.phone}
-              value={initValues.phone}
-            />
-
-            <div className="text-center">
-              <button type="submit" className="btn btn-secondary">
-                Редагувати
-              </button>
+      {loading && <EclipseWidget />}
+      {!loading && (
+        <>
+          <div className="col-3">
+            <div className="card mt-5">
+              <div className="card-body text-center">
+                <img src={img} alt="asdasd" />
+              </div>
             </div>
-          </Form>
-        </FormikProvider>
-      </div>
-      {/* <div className="col-3"></div>
-				{loading && <EclipseWidget />} */}
+          </div>
+          <div className="col-6 mb-4">
+            <h1 className="text-center mt-4">Редагувати</h1>
+            <FormikProvider value={formik}>
+              <Form onSubmit={handleSubmit}>
+                <InputGroup
+                  field="firstName"
+                  label="Ім'я"
+                  error={errors.firstName}
+                  touched={touched.firstName}
+                  value={values.firstName}
+                  onChange={handleChange}
+                />
+
+                <InputGroup
+                  field="secondName"
+                  label="Прізвище"
+                  error={errors.secondName}
+                  onChange={handleChange}
+                  touched={touched.secondName}
+                  value={values.secondName}
+                />
+
+                <InputGroup
+                  field="email"
+                  label="Email"
+                  error={errors.email}
+                  onChange={handleChange}
+                  touched={touched.email}
+                  value={values.email}
+                />
+
+                <InputGroup
+                  field="photo"
+                  label="Аватар"
+                  type="file"
+                  error={errors.photo}
+                  onChange={handleFileChange}
+                  touched={touched.photo}
+                />
+
+                <InputGroup
+                  field="phone"
+                  label="Телефон"
+                  error={errors.phone}
+                  onChange={handleChange}
+                  touched={touched.phone}
+                  value={values.phone}
+                />
+
+                <div className="text-center">
+                  <button type="submit" className="btn btn-primary">
+                    Редагувати
+                  </button>
+                </div>
+              </Form>
+            </FormikProvider>
+          </div>
+        </>
+      )}
     </div>
   );
 };

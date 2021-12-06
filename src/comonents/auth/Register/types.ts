@@ -40,11 +40,6 @@ export type RegisterError = {
   confirmPassword: Array<string>, 
 };
 
-export interface Pasword {
-  key: string;
-  value: string;
-}
-
 export type RegisterErrors = {
   errors: RegisterError,
   status: number, 

@@ -6,7 +6,7 @@ interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   field: string,
   touched?: boolean | null,
   error?: string | null,
-  type?: "text"|"email"|"password"| "file"| "number"
+  type?: "text" | "email" | "password" | "file"| "number" | "hidden"
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 

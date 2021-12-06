@@ -5,9 +5,10 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import Modal from '../../common/Modal';
 import './index.css';
 import EclipseWidget from '../../common/eclipse';
+import CreateUser from '../CreatePage';
 
 const Users = () => {
-
+const [toggleAdd, setToggleAdd] = useState<boolean>(false);
   const { users, loading } = useTypedSelector( store => store.userCrud)
   const [idDel, setIdDel]  = useState<number>(0)
   const { fetchUsers, deleteUser, getUserById } = useActions();
@@ -25,9 +26,15 @@ const handlerInfo = (id:number) => {
   navigator(`${id}`);
 }
 
-
 	return (
     <div className="contgainer">
+      <button
+        className="btn btn-primary m-3 "
+        onClick={() => setToggleAdd(!toggleAdd)}
+      >
+        Добавати користувача
+      </button>
+      {toggleAdd && <CreateUser />}
       <h1 className="text-center m-4">Користувачі</h1>
       <Modal text="Дійсно видалити" click={modalClick} />
       <table className="table align-middle table-striped table-hover">
@@ -45,7 +52,7 @@ const handlerInfo = (id:number) => {
         </thead>
 
         <tbody>
-          {users.map(({ id, firstName, image, phone, email }) => (
+          {/* {users.map(({ id, firstName, image, phone, email }) => (
             <tr key={id}>
               <th scope="row">{id}</th>
               <td>{firstName}</td>
@@ -67,8 +74,9 @@ const handlerInfo = (id:number) => {
               <td>
                 <button
                   className="btn btn-success btn-sm"
-                  onClick={() => {
-                    navigator(`edit/${id}`);
+                  onClick={async () => {
+                    await getUserById(id);
+                    await navigator(`edit/${id}`);
                   }}
                 >
                   Змінити
@@ -85,7 +93,7 @@ const handlerInfo = (id:number) => {
                 </button>
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
       {loading && <EclipseWidget />}

@@ -1,3 +1,8 @@
+export enum UpdateUserActionTypes {
+  UPDATE_USER = "UPDATE_USER",
+  UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS",
+  UPDATE_USER_ERROR = "UPDATE_USER_ERROR",
+}
 
 export enum UsersActionTypes {
   FETCH_USERS = "FETCH_USERS",
@@ -15,28 +20,50 @@ export enum DeleteUserActionTypes {
   DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS",
   DELETE_USER_ERROR = "DELETE_USER_ERROR",
 }
+
+export enum CreateUserActionTypes {
+  CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS",
+}
 export interface GetAllUsers {
   data: Array<UserInfo>;
   status: number;
 }
 
+export interface UpdateErrors {
+  errors : {
+    id?: string[],
+    invalid?: string[]
+  }
+  status: number
+}
+export interface ICreateUser {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  photo?: FileList[];
+  phone?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+export type ICreateUserError = {
+  email: Array<string>;
+  password: Array<string>;
+  confirmPassword: Array<string>;
+};
+
+export type ICreateUserErrors = {
+  errors: ICreateUserError;
+  status: number;
+};
 
 export interface UserInfo {
   id: number;
   firstName: string;
-  secondName: string,
-  image: string;
+  secondName: string;
+  photo: string | File;
   phone: string;
   email: string;
-}
-
-export interface EditUser {
-  id: number;
-  firstName?: string;
-  secondName?: string;
-  email?: string;
-  image?: string | File;
-  phone?: string;
 }
 
 export interface UsersState {
@@ -44,6 +71,10 @@ export interface UsersState {
   userData: UserInfo;
   loading: boolean;
   error: string | null;
+}
+
+export interface CreateSuccessUserAction {
+  type: CreateUserActionTypes.CREATE_USER_SUCCESS,
 }
 
 export interface FetchUsersAction {
@@ -74,6 +105,20 @@ export interface DeleteErrorUserAction {
   payload: string;
 }
 
+export interface UpdateUserAction {
+  type: UpdateUserActionTypes.UPDATE_USER;
+}
+
+export interface UpdateSuccessUserAction {
+  type: UpdateUserActionTypes.UPDATE_USER_SUCCESS;
+  payload: UserInfo;
+}
+
+export interface UpdateErrorUserAction {
+  type: UpdateUserActionTypes.UPDATE_USER_ERROR;
+  payload: string;
+}
+
 export interface GetUserAction {
   type: GetUserActionTypes.GET_USER;
 }
@@ -89,21 +134,24 @@ export interface GetErrorUserAction {
 }
 
 export type DeleteUserActions =
-    DeleteUserAction
+  | DeleteUserAction
   | DeleteSuccessUserAction
   | DeleteErrorUserAction;
 
-
 export type UsersActions =
-    FetchUsersAction
+  | FetchUsersAction
   | FetchSuccessUsersAction
   | FetchErrorUsersAction;
 
-export type GetUserActions = 
-    GetUserAction
+export type GetUserActions =
+  | GetUserAction
   | GetSuccessUserAction
   | GetErrorUserAction;
-  
 
+export type UpdateUserActions = 
+  | UpdateUserAction
+  | UpdateSuccessUserAction
+  | UpdateErrorUserAction;
 
-  
+export type CreateUserActions = 
+  | CreateSuccessUserAction;
