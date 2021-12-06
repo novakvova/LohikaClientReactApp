@@ -1,77 +1,105 @@
 import * as React from "react";
 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InputGroup from "../common/InputGroupOld";
+import InputGroup from "../common/InputGroup";
 
-import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 
+import { IAddCar } from "./types";
+import { useFormik, FormikHelpers } from "formik";
+import { AddCarSchema as validationSchema } from "./validation";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import EclipseWidget from "../common/eclipse/index";
+
+const initialValues: IAddCar = {
+  name: "",
+  priority: "",
+  price: "",
+  image: "",
+};
+
 const AddNewCar: React.FC = () => {
-  const { nav } = useTypedSelector((store) => store.sendingCar);
-  const {sendCar} = useActions()
-
-  const [dataWithForm, setDataWithForm] = useState({name:'', priority:'', price:''});
-  const [selectedFile, setSelectedFile] = useState();
-
+  const { addNewCar } = useActions();
+  const {
+    nav,
+    error: serverError,
+    loading,
+  } = useTypedSelector((store) => store.sendingCar);
   const navigate = useNavigate();
 
-  const onChangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDataWithForm((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-  const onChangeInputFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const imageData = (e.target as HTMLInputElement | any).files[0];
-    setSelectedFile(imageData);
+  const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
+    addNewCar(values);
   };
 
-  const handlerSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    sendCar(dataWithForm, selectedFile)  
-  };
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+    validateOnBlur: true,
+  });
 
-  if (nav) {
-    navigate('/')
-  }
-  
+  const handleImageChange = React.useCallback(
+    (e) => formik.setFieldValue("image", (e.target.files as FileList)[0]),
+    []
+  );
+
+  React.useEffect(() => {
+    if (nav) {
+      navigate("/");
+    }
+  }, [nav, serverError]);
+
   return (
     <>
       <div className="row">
         <h1 className="text-center">Додати автомобіль</h1>
-
+        {serverError && <h2>{serverError}</h2>}
+        {loading && <EclipseWidget />}
         <div className="col-4"></div>
 
-        <form onSubmit={handlerSubmit} className="col-4">
+        <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
           <InputGroup
-            name="name"
-            label="Марка машини"
-            error=""
-            onChange={onChangeInputHandler}
+            field="name"
+            label="Ім'я"
+            type="text"
+            touched={formik.touched.name}
+            error={formik.errors.name}
+            value={formik.values.name as string}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
 
           <InputGroup
-            name="priority"
+            field="priority"
             label="Приорітет"
-            error=""
-            onChange={onChangeInputHandler}
-            type="text"
+            type="number"
+            touched={formik.touched.priority}
+            error={formik.errors.priority}
+            value={formik.values.priority as string}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+
           <InputGroup
-            name="price"
+            field="price"
             label="Ціна"
-            error=""
-            onChange={onChangeInputHandler}
-            type="text"
+            type="number"
+            touched={formik.touched.price}
+            error={formik.errors.price}
+            value={formik.values.price as string}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+
           <InputGroup
-            name="image"
+            field="image"
             label="Фото"
-            error=""
-            onChange={onChangeInputFileHandler}
             type="file"
+            touched={formik.touched.image}
+            error={formik.errors.image}
+            onChange={handleImageChange}
           />
+
           <div className="text-center">
             <button type="submit" className="btn btn-primary">
               Додати машину

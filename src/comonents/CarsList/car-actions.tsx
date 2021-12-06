@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { CarAction, CarActionTypes, ICarSearchList } from "../../types/car";
+import { CarAction, CarActionTypes, ICarSearchList } from "./types";
 
 export const fetchCars = () => {
   return async (dispatch: Dispatch<CarAction>) => {
@@ -33,6 +33,7 @@ export const fetchCarsSearch =
 
       console.log("response search" , response);
       return Promise.resolve();
+      
     } catch (error) {
       console.log(error)
       return Promise.reject();

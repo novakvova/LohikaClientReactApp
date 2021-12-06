@@ -3,7 +3,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchCarsSearch } from "../../../store/action-creators/car";
+import { fetchCarsSearch } from "../../CarsList/car-actions";
 
 
 const HeaderSearch = () => {

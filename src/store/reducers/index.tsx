@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
-import { carReducer } from "./car-reducer";
+import { carReducer } from "../../comonents/CarsList/car-reducer";
 import { authReducer } from "../../comonents/auth/Login/reducer";
 import { registerReducer } from "../../comonents/auth/Register/reducer";
-import { sendingCarReducer } from "./sendingCar-reducer";
-import { cartReducer } from "./cart-reduser";
 import { profileReducer } from '../../comonents/Profile/reducer';
 import { usersReducer } from "../../comonents/Users/reducer";
+import { sendingCarReducer } from "../../comonents/AddNewCar/addCar-reducer";
+import { cartReducer } from "../../comonents/Cart/cart-reduser";
 
 export const rootReducer = combineReducers({
   car: carReducer,
