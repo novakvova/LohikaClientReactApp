@@ -38,14 +38,15 @@ export type AuthAction =
   | LogoutAuth;
 
 export interface ILogin {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
+  invalid:string
 }
 
 export interface ILoginError {
   password: Array<string>;
-  email: Array<string> ;
-  invalid: string;
+  email: Array<string>;
+  invalid: Array<string>;
 }
 
 export interface ILoginErrors {

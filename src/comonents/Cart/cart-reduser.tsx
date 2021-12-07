@@ -1,4 +1,4 @@
-import { CartState, CartActionTypes, CartAction } from "./../../types/cart";
+import { CartState, CartActionTypes, CartAction } from "../../types/cart";
 
 const initialState: CartState = {
   cartIsShow: false,

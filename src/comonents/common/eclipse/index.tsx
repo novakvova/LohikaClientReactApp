@@ -1,6 +1,8 @@
 import React from 'react';
 import './index.css';
 
+
+
 const EclipseWidgetContainer = () => {
     return (
         <div className="my_eclipse">

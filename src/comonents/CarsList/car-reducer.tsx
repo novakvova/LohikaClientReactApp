@@ -1,4 +1,4 @@
-import { CarState, CarAction, CarActionTypes } from '../../types/car';
+import { CarState, CarAction, CarActionTypes } from './types';
 
 const initialState: CarState = {
     cars: [],

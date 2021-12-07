@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import Loader from '../../assets/Loader';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import EclipseWidget from '../common/eclipse';
 
 import './index.css'
 
 const ProfilePage = () => {
   const { GetProfileData } = useActions();
-  const { profile : {email, phone, image, firstName}, loading } = useTypedSelector( store => store.profile);
+  const { profile : {email, phone, photo, firstName}, loading } = useTypedSelector( store => store.profile);
 useEffect(() => {
   GetProfileData();
 }, [])
@@ -16,11 +16,7 @@ useEffect(() => {
     <section>
       <div className="container py-5 mt-3 ">
         <h2 className="text-center pb-5">Мій профіль</h2>
-        {loading && (
-          <h2 className="text-center">
-            <Loader />
-          </h2>
-        )}
+        {loading && <EclipseWidget />}
         {!loading && (
           <div className="row">
             <div className="col-lg-4">
@@ -28,9 +24,9 @@ useEffect(() => {
                 <div className="card-body text-center">
                   <img
                     src={
-                      image.endsWith("image/")
-                        ? "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
-                        : `https://vovalohika.tk${image}`
+                      photo && photo.endsWith("image/")
+                        ? `https://vovalohika.tk${photo}`
+                        : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
                     }
                     alt="avatar"
                     className="rounded-circle img-fluid"
