@@ -24,9 +24,9 @@ const EditPage = () => {
     id: _id,
     firstName: userData.firstName,
     secondName: userData.secondName,
+    phone: userData.phone,
     email: userData.email,
     photo: userData.photo,
-    phone: userData.phone,
   };
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,11 +37,13 @@ const EditPage = () => {
 
 
 	const onHandleSubmit = async (values: UserInfo ) => {
+          const formData = new FormData();
+          Object.entries(values).forEach(([key, value]) =>
+            formData.append(key, value)
+          );
     try {
-      await updateUser(values);
-      //navigator('/users')
-      console.log(updateUser(values));
-      
+      await updateUser(values, formData);
+      navigator('/users')
     } catch (error) {
       const serverErrors = error as UpdateErrors;
 

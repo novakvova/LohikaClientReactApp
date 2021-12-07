@@ -5,7 +5,7 @@ const intialState: ProfileState = {
 	  id: null,
 	  email: '',
 	  firstName:'',
-	  image: '',
+	  photo: '',
 	  phone: ''
   },
   loading: false,

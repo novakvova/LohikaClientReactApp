@@ -8,7 +8,7 @@ import EclipseWidget from '../../common/eclipse';
 import CreateUser from '../CreatePage';
 
 const Users = () => {
-const [toggleAdd, setToggleAdd] = useState<boolean>(false);
+  const [toggleAdd, setToggleAdd] = useState<boolean>(false);
   const { users, loading } = useTypedSelector( store => store.userCrud)
   const [idDel, setIdDel]  = useState<number>(0)
   const { fetchUsers, deleteUser, getUserById } = useActions();
@@ -54,13 +54,16 @@ const handlerInfo = (id:number) => {
         </thead>
 
         <tbody>
-          {/* {users.map(({ id, firstName, image, phone, email }) => (
+          {users.map(({ id, firstName, photo, phone, email }) => (
             <tr key={id}>
               <th scope="row">{id}</th>
               <td>{firstName}</td>
               <td>
                 <div className="size">
-                  <img src={`https://vovalohika.tk${image}`} alt="Avatar" />
+                  <img
+                    src={`https://vovalohika.tk${photo}`}
+                    alt="Avatar"
+                  />
                 </div>
               </td>
               <td>{phone}</td>
@@ -95,7 +98,7 @@ const handlerInfo = (id:number) => {
                 </button>
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
       {loading && <EclipseWidget />}

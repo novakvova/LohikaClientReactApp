@@ -96,19 +96,13 @@ export const getUserById = (id:number) => {
   };
 };
 
-export const updateUser = (data:UserInfo) => {
+export const updateUser = (data:UserInfo, formData:FormData) => {
   return async (dispatch: Dispatch<UpdateUserActions>) => {
     try {
       dispatch({
         type: UpdateUserActionTypes.UPDATE_USER
       });
-      
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) =>
-        formData.append(key, value)
-      );
-      console.log(formData.get("photo"));
-      
+
       const response = await http.put<UserInfo>("/api/Users/edit", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
