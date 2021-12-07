@@ -127,27 +127,30 @@ export const updateUser = (data:UserInfo, formData:FormData) => {
     }
   }
 }; 
+export interface ICreateUserResponse {
+  status: number
+}
 
-export const CreateUser = (data: ICreateUser) => {
+export const CreateUser = (data: ICreateUser) : any => {
   return async (dispatch: Dispatch<CreateUserActions>) => {
     try {
        const formData = new FormData();
        Object.entries(data).forEach(([key, value]) =>
          formData.append(key, value)
        );
-      const response = await http.post<ICreateUser>(
+      const response = await http.post<ICreateUserResponse>(
         "api/users/create",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      const { status } = response;
+      const result = response.data;
       
       dispatch({
         type: CreateUserActionTypes.CREATE_USER_SUCCESS,
       });
-      return Promise.resolve(status);
+      return Promise.resolve<ICreateUserResponse>(result);
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
         const serverError = err as AxiosError<ICreateUserErrors>;

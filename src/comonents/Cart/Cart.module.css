@@ -3,10 +3,8 @@
   margin: 0;
   padding: 0;
 }
-.cartItem {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+.cart-item {
+  height: 7rem;
 }
 
 .total {

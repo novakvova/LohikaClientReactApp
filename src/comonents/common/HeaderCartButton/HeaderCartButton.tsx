@@ -9,12 +9,12 @@ import classes from "./HeaderCartButton.module.css";
 
 const HeaderCartButton: React.FC = () => {
   const { showCart} = useActions();
-  const {cartData} = useTypedSelector(store => store.cart)
- 
- 
-  const totalQuantity = cartData.length
-    
+  const {totalCount} = useTypedSelector(store => store.cart)
   
+
+  
+  
+    
   return (
     <button
       className={classes.button}
@@ -25,7 +25,7 @@ const HeaderCartButton: React.FC = () => {
         
       </span>
       <span>Кошик</span>
-      <span className={classes.badge}>{totalQuantity}</span>
+      <span className={classes.badge}>{totalCount}</span>
     </button>
   );
 };

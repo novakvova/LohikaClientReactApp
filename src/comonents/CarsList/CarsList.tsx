@@ -3,8 +3,6 @@ import * as React from "react";
 import { useEffect } from "react";
 import CarCard from "../CarCard";
 
-import Loader from "../../assets/Loader";
-
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import EclipseWidget from "../common/eclipse";

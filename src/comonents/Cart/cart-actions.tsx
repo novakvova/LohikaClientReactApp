@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { CartAction, CartActionTypes } from "../../types/cart";
+import { CarAction } from "../CarsList/types";
+import { CartAction, CartActionTypes } from "./types";
 
 interface IRespData {
   id: number;
@@ -9,6 +10,8 @@ interface IRespData {
   productPrice: number;
   quantity: number;
 }
+
+
 
 export const showCart = () => {
   return (dispatch: Dispatch<CartAction>) => {
@@ -38,19 +41,43 @@ export const downloadDataToCart = () => {
 export const uploadDataToCart =
   (id: number, quantity: number) => async (dispatch: Dispatch<CartAction>) => {
     try {
-      const responseAdd = await http.post<IRespData>("api/Carts/add", {
+      const response = await http.post<IRespData>("api/Carts/add", {
         productId: id,
         quantity: quantity,
       });
-      console.log("What returns", responseAdd.data);
       dispatch({ type: CartActionTypes.ADD_CAR_TO_CART });
+      return Promise.resolve();
+    } catch (error) {
+      Promise.reject(error);
+    }
+  };
 
-      downloadDataToCart();
-
-      return new Promise((resolve) => {
-        resolve(responseAdd.data);
+export const updateCartItem =
+  (id: number, quantity: number) => async (dispatch: Dispatch<CartAction>) => {
+    try {
+      console.log(id, "-id with reducer");
+      const response = await http.put("api/Carts/edit", {
+        id: id,
+        quantity: quantity,
       });
-    } catch {
-      Promise.reject();
+      dispatch({
+        type: CartActionTypes.UPDATE_CART_ITEM,
+        payload: { id , quantity },
+      });
+      return Promise.resolve();
+    } catch (error) {
+      Promise.reject(error);
+    }
+  };
+
+export const deleteCartItem =
+  (id: number) => async (dispatch: Dispatch<CartAction>) => {
+    try {
+      const responce = await http.delete<number>(`api/Carts/delete/${id}`);
+      console.log("delete action", id);
+      dispatch({ type: CartActionTypes.DELETE_CART_ITEM, payload: id });
+      return Promise.resolve();
+    } catch (error) {
+      Promise.reject(error);
     }
   };

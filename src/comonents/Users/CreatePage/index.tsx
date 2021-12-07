@@ -6,17 +6,18 @@ import { CreateUserSchema } from "./validation";
 import { ICreateUser, ICreateUserError } from "../types";
 import EclipseWidget from "../../common/eclipse";
 import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import { ICreateUserResponse } from "../actions";
 
 interface prop {
-  toggle(val:boolean):void
+  toggle(val: boolean): void;
 }
 
-const CreateUser = (props:prop) => {
+const CreateUser = (props: prop) => {
   const { toggle } = props;
   const { CreateUser } = useActions();
-  const { loading } = useTypedSelector(store => store.userCrud)
-  const [load, setLoad] = useState<boolean>(false)
+  const { loading } = useTypedSelector((store) => store.userCrud);
+  const [load, setLoad] = useState<boolean>(false);
   const navigator = useNavigate();
   const initialValues: ICreateUser = {
     firstName: "",
@@ -36,15 +37,18 @@ const CreateUser = (props:prop) => {
     values: ICreateUser,
     { setFieldError }: FormikHelpers<ICreateUser>
   ) => {
-    
     try {
-		 setLoad(true);
-     const res = await CreateUser(values);
-	   navigator("/users");
-		 setLoad(false);
-     toggle(true);
+      setLoad(true);
+      const res = await CreateUser(values);
+      const result = res as ICreateUserResponse;
+      if (result.status == 200) {
+        console.log("res", res);
+      }
+      navigator("/users");
+      setLoad(false);
+      toggle(true);
     } catch (err) {
-	  setLoad(false);
+      setLoad(false);
       const serverErrors = err as ICreateUserError;
       const { email, password, confirmPassword } = serverErrors;
       if (password?.length !== 0) setFieldError("password", password[0]);
