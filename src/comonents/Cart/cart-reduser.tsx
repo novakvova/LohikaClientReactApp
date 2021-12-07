@@ -1,13 +1,14 @@
-import { CartState, CartActionTypes, CartAction } from "./types";
+import { CartState, CartActionTypes, CartAction, ICartData } from "./types";
 
 const initialState: CartState = {
   cartIsShow: false,
-  cartData: [],
+  cartData:[],
   carAddedToCart: false,
   cartModalIsShow: false,
   cartUpdated: false,
   totalCount: 0
 };
+
 
 export const cartReducer = (
   state = initialState,
@@ -32,6 +33,13 @@ export const cartReducer = (
           } else {
             return item;
           }
+          // return {
+          //   id:item.id,
+          //   productImage: 'img',
+          //   productName:item.productName,
+          //   productPrice: item.productPrice,
+          //   quantity: action.payload.quantity
+          // }
         }),
       };
 

@@ -9,13 +9,21 @@ export enum CartActionTypes {
 }
 
 export interface ICarToAdd {
-  id: number | null;
-  quantity: number | null;
+  id: number ;
+  quantity: number ;
+}
+
+export interface ICartData {
+  id: number;
+  productName: string;
+  productImage: string;
+  productPrice: number;
+  quantity: number;
 }
 
 export interface CartState {
   cartIsShow: boolean;
-  cartData: Array<any>;
+  cartData: ICartData[];
   carAddedToCart: boolean;
   cartModalIsShow: boolean;
   cartUpdated: boolean;

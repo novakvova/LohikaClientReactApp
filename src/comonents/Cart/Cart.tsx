@@ -9,10 +9,10 @@ const Cart = () => {
   const { hideCart} = useActions();
   const { cartData } = useTypedSelector((store) => store.cart);
 
-  const totalPrice = cartData.reduce(
-    (prevValue, currentValue) => prevValue + currentValue.productPrice,
-    0
-  );
+  // const totalPrice = cartData.reduce(
+  //   (prevValue, currentValue) => prevValue + currentValue.productPrice?,
+  //   0
+  // );
 
   // useEffect(()=> {
   //   const identifier = setTimeout(()=> {
@@ -31,7 +31,7 @@ const Cart = () => {
      <CartItems />
       <div className={classes.total}>
         <span>Загальна сумма</span>
-        <span>{totalPrice}</span>
+        {/* <span>{totalPrice}</span> */}
       </div>
       <div className={classes.actions}>
         <button className={classes["button--alt"]} onClick={hideCart}>

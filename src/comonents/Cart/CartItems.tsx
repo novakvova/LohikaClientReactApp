@@ -14,12 +14,12 @@ const CartItems = () => {
 
   const cartItems = cartArr.map((cart) => (
     <CartItem
-      key={cart["id"]}
-      id={cart["id"]}
-      productImage={cart["productImage"]}
-      productName={cart["productName"]}
-      productPrice={cart["productPrice"]}
-      quantity={cart["quantity"]}
+      key={cart.id}
+      id={cart.id}
+      productImage={cart.productImage}
+      productName={cart.productName}
+      productPrice={cart.productPrice}
+      quantity={cart.quantity}
     />
   ))
 

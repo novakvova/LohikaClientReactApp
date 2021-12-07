@@ -11,6 +11,8 @@ interface IRespData {
   quantity: number;
 }
 
+
+
 export const showCart = () => {
   return (dispatch: Dispatch<CartAction>) => {
     dispatch({ type: CartActionTypes.SHOW_CART });
@@ -60,7 +62,7 @@ export const updateCartItem =
       });
       dispatch({
         type: CartActionTypes.UPDATE_CART_ITEM,
-        payload: { id, quantity },
+        payload: { id , quantity },
       });
       return Promise.resolve();
     } catch (error) {
