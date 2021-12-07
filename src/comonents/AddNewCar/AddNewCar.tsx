@@ -28,7 +28,7 @@ const AddNewCar: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    addNewCar(values);
+     addNewCar(values)
   };
 
   const formik = useFormik({

@@ -3,8 +3,9 @@ export enum CartActionTypes {
   HIDE_CART = "HIDE_CART",
   FETCH_DATA_TO_CART = "DOWNLOAD_DATA_TO_CART",
   ADD_CAR_TO_CART = "ADD_CAR_TO_CART",
-  SHOW_ADD_CAR_TO_CART_MODAL = "SHOW_ADD_CAR_TO_CART_MODAL",
-  HIDE_ADD_CAR_TO_CART_MODAL = "HIDE_ADD_CAR_TO_CART_MODAL",
+  EDIT_CART = "EDIT_CART",
+  EDIT_CART_ITEM_IN_SERVER = "EDIT_CART_IN_SERVER",
+  DELETE_CART_ITEM = "DELETE_CART_ITEM"
 }
 
 export interface ICarToAdd {
@@ -12,13 +13,14 @@ export interface ICarToAdd {
   quantity: number | null;
 }
 
+
 export interface CartState {
   cartIsShow: boolean;
   cartData: Array<any>;
   carAddedToCart: boolean;
   cartModalIsShow: boolean;
+  cartUpdated:boolean
 }
-
 
 export interface ShowCartAction {
   type: CartActionTypes.SHOW_CART;
@@ -36,19 +38,25 @@ export interface AddCartToCartAction {
   type: CartActionTypes.ADD_CAR_TO_CART;
 }
 
-export interface ShowAddCartToCartMoadlAction {
-  type: CartActionTypes.SHOW_ADD_CAR_TO_CART_MODAL;
-}
-export interface HideAddCartToCartMoadlAction {
-  type: CartActionTypes.HIDE_ADD_CAR_TO_CART_MODAL;
+export interface EditCartAction {
+  type: CartActionTypes.EDIT_CART;
+  payload: Array<any>;
 }
 
+export interface EditCartItemInServerAction {
+  type: CartActionTypes.EDIT_CART_ITEM_IN_SERVER;
+}
 
+export interface DeleteCartItemAction {
+  type: CartActionTypes.DELETE_CART_ITEM;
+  payload: Array<any>;
+}
 
 export type CartAction =
   | ShowCartAction
   | HideCartAction
   | DownloadDataToCartAction
   | AddCartToCartAction
-  | ShowAddCartToCartMoadlAction
-  | HideAddCartToCartMoadlAction;
+  | EditCartAction
+  | EditCartItemInServerAction
+  | DeleteCartItemAction

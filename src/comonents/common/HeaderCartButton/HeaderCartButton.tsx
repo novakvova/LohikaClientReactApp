@@ -11,10 +11,8 @@ const HeaderCartButton: React.FC = () => {
   const { showCart} = useActions();
   const {cartData} = useTypedSelector(store => store.cart)
  
- 
   const totalQuantity = cartData.length
     
-  
   return (
     <button
       className={classes.button}

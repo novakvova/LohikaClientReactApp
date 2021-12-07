@@ -52,8 +52,6 @@ const RegisterPage = () => {
 
     const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
   
-
-  
   return (
     <div className="row">
       <div className="col-3"></div>

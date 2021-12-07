@@ -1,5 +1,4 @@
 import CartIcon from "../common/HeaderCartButton/CartIcon";
-import EclipseWidget from "../common/eclipse";
 
 import classes from "./CarCard.module.css";
 import classesIcon from "../common/HeaderCartButton/HeaderCartButton.module.css";
@@ -25,14 +24,14 @@ const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
 
   const uploadItemToCartHandler = async () => {
     setShowLoader(true);
-    await uploadDataToCart(id, +count); // dispatch(uploadDataToCart(id, +count));
+    await uploadDataToCart(id, +count); 
     downloadDataToCart();
     setShowLoader(false);
   };
 
   return (
     <div className={`card ${classes.carCard} mt-3`}>
-      {/* {showLoader && <EclipseWidget />} */}
+
       <img
         src={`https://vovalohika.tk${image}`}
         className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}

@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { CartAction, CartActionTypes } from "../../types/cart";
+import { CarAction } from "../CarsList/types";
+import { CartAction, CartActionTypes } from "./types";
 
 interface IRespData {
   id: number;
@@ -9,6 +10,7 @@ interface IRespData {
   productPrice: number;
   quantity: number;
 }
+
 
 export const showCart = () => {
   return (dispatch: Dispatch<CartAction>) => {
@@ -45,11 +47,42 @@ export const uploadDataToCart =
       console.log("What returns", responseAdd.data);
       dispatch({ type: CartActionTypes.ADD_CAR_TO_CART });
 
-      downloadDataToCart();
-
       return new Promise((resolve) => {
         resolve(responseAdd.data);
       });
+    } catch {
+      Promise.reject();
+    }
+  };
+
+export const editCartItem =
+  (newCartData: Array<any>) => (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionTypes.EDIT_CART, payload: newCartData });
+  };
+
+export const updateCartInServer =
+  (id: number, quantity: number) => async (dispatch: Dispatch<CartAction>) => {
+    try {
+      console.log("request send");
+      const response = await http.put("api/Carts/edit", {
+        id: id,
+        quantity: quantity,
+      });
+      // dispatch({type: CartActionTypes.EDIT_CART_ITEM_IN_SERVER})
+      console.log("responce: ", response.data);
+      return Promise.resolve();
+    } catch {
+      Promise.reject();
+    }
+  };
+
+export const deleteCartItem =
+  (id: number, prevCart:Array<any>) => async (dispatch: Dispatch<CartAction>) => {
+    try {
+      const responce = await http.delete<number>(`api/Carts/delete/${id}`);
+      const updatedCartData = prevCart.filter(item => item.id != id);
+      dispatch({type: CartActionTypes.DELETE_CART_ITEM, payload:updatedCartData})
+      return Promise.resolve();
     } catch {
       Promise.reject();
     }
