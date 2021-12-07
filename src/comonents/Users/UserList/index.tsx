@@ -14,6 +14,8 @@ const [toggleAdd, setToggleAdd] = useState<boolean>(false);
   const { fetchUsers, deleteUser, getUserById } = useActions();
   const navigator = useNavigate();
 
+  const setToggle = (val:boolean) => setToggleAdd(!val)
+
   const modalClick = (bool: boolean) => {
     if (bool) deleteUser(idDel);    
   }
@@ -30,11 +32,11 @@ const handlerInfo = (id:number) => {
     <div className="contgainer">
       <button
         className="btn btn-primary m-3 "
-        onClick={() => setToggleAdd(!toggleAdd)}
+        onClick={() => setToggle(toggleAdd)}
       >
         Добавати користувача
       </button>
-      {toggleAdd && <CreateUser />}
+      {toggleAdd && <CreateUser toggle={setToggle} />}
       <h1 className="text-center m-4">Користувачі</h1>
       <Modal text="Дійсно видалити" click={modalClick} />
       <table className="table align-middle table-striped table-hover">

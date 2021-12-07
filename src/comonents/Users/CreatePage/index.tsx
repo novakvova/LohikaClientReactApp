@@ -8,8 +8,12 @@ import EclipseWidget from "../../common/eclipse";
 import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 
+interface prop {
+  toggle(val:boolean):void
+}
 
-const CreateUser = () => {
+const CreateUser = (props:prop) => {
+  const { toggle } = props;
   const { CreateUser } = useActions();
   const { loading } = useTypedSelector(store => store.userCrud)
   const [load, setLoad] = useState<boolean>(false)
@@ -34,10 +38,11 @@ const CreateUser = () => {
   ) => {
     
     try {
-		setLoad(true);
-      const res = await CreateUser(values);
-	  navigator("/users");
-		setLoad(false);
+		 setLoad(true);
+     const res = await CreateUser(values);
+	   navigator("/users");
+		 setLoad(false);
+     toggle(true);
     } catch (err) {
 	  setLoad(false);
       const serverErrors = err as ICreateUserError;

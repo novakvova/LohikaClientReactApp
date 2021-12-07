@@ -82,6 +82,7 @@ export const usersReducer = (
 
     case UpdateUserActionTypes.UPDATE_USER_ERROR:
       return { ...state, loading: false, error: action.payload };
+      
     case CreateUserActionTypes.CREATE_USER_SUCCESS:
       return {...state}
 
