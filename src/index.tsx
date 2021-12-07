@@ -13,6 +13,7 @@ import { setAuthUserByToken } from "./comonents/auth/Login/action";
 let token = localStorage.token;
 if (token) {
   setAuthUserByToken(token, store.dispatch);
+  
 }
 
 ReactDOM.render(
