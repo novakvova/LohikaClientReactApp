@@ -1,21 +1,59 @@
-import { CartState, CartActionTypes, CartAction } from "../../types/cart";
+import { CartState, CartActionTypes, CartAction, ICartData } from "./types";
 
 const initialState: CartState = {
   cartIsShow: false,
-  cartData: [],
+  cartData:[],
   carAddedToCart: false,
-  cartModalIsShow: false
+  cartModalIsShow: false,
+  cartUpdated: false,
+  totalCount: 0
 };
 
-export const cartReducer = (state = initialState, action: CartAction) : CartState => {
+
+export const cartReducer = (
+  state = initialState,
+  action: CartAction
+): CartState => {
   switch (action.type) {
     case CartActionTypes.SHOW_CART:
       return { ...state, cartIsShow: true };
     case CartActionTypes.HIDE_CART:
       return { ...state, cartIsShow: false };
-    case CartActionTypes.FETCH_DATA_TO_CART : return {
-      ...state, cartData: action.payload
-    }
+    case CartActionTypes.FETCH_DATA_TO_CART:
+      return {
+        ...state,
+        cartData: action.payload,
+      };
+    case CartActionTypes.UPDATE_CART_ITEM:
+      return {
+        ...state,
+        cartData: state.cartData.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, quantity: action.payload.quantity };
+          } else {
+            return item;
+          }
+          // return {
+          //   id:item.id,
+          //   productImage: 'img',
+          //   productName:item.productName,
+          //   productPrice: item.productPrice,
+          //   quantity: action.payload.quantity
+          // }
+        }),
+      };
+
+    case CartActionTypes.DELETE_CART_ITEM:
+      console.log("actionPayload", action.payload);
+      return {
+        ...state,
+        cartData: state.cartData.filter((item) => item.id != action.payload),
+      };
+     
+    case CartActionTypes.UPDATE_COUNT: return {
+      ...state, totalCount: state.cartData.length
+    } 
+
     default:
       return state;
   }

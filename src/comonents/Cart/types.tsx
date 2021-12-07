@@ -3,22 +3,32 @@ export enum CartActionTypes {
   HIDE_CART = "HIDE_CART",
   FETCH_DATA_TO_CART = "DOWNLOAD_DATA_TO_CART",
   ADD_CAR_TO_CART = "ADD_CAR_TO_CART",
-  SHOW_ADD_CAR_TO_CART_MODAL = "SHOW_ADD_CAR_TO_CART_MODAL",
-  HIDE_ADD_CAR_TO_CART_MODAL = "HIDE_ADD_CAR_TO_CART_MODAL",
+  UPDATE_CART_ITEM = "UPDATE_CART_ITEM",
+  DELETE_CART_ITEM = "DELETE_CART_ITEM",
+  UPDATE_COUNT = "UPDATE_COUNT",
 }
 
 export interface ICarToAdd {
-  id: number | null;
-  quantity: number | null;
+  id: number ;
+  quantity: number ;
+}
+
+export interface ICartData {
+  id: number;
+  productName: string;
+  productImage: string;
+  productPrice: number;
+  quantity: number;
 }
 
 export interface CartState {
   cartIsShow: boolean;
-  cartData: Array<any>;
+  cartData: ICartData[];
   carAddedToCart: boolean;
   cartModalIsShow: boolean;
+  cartUpdated: boolean;
+  totalCount: number;
 }
-
 
 export interface ShowCartAction {
   type: CartActionTypes.SHOW_CART;
@@ -36,19 +46,25 @@ export interface AddCartToCartAction {
   type: CartActionTypes.ADD_CAR_TO_CART;
 }
 
-export interface ShowAddCartToCartMoadlAction {
-  type: CartActionTypes.SHOW_ADD_CAR_TO_CART_MODAL;
-}
-export interface HideAddCartToCartMoadlAction {
-  type: CartActionTypes.HIDE_ADD_CAR_TO_CART_MODAL;
+export interface UpdateCartItemAction {
+  type: CartActionTypes.UPDATE_CART_ITEM;
+  payload: ICarToAdd;
 }
 
+export interface DeleteCartItemAction {
+  type: CartActionTypes.DELETE_CART_ITEM;
+  payload: number;
+}
 
+export interface UpdateTotalCount {
+  type: CartActionTypes.UPDATE_COUNT;
+}
 
 export type CartAction =
   | ShowCartAction
   | HideCartAction
   | DownloadDataToCartAction
   | AddCartToCartAction
-  | ShowAddCartToCartMoadlAction
-  | HideAddCartToCartMoadlAction;
+  | UpdateCartItemAction
+  | DeleteCartItemAction
+  | UpdateTotalCount;

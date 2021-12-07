@@ -67,8 +67,6 @@ const RegisterPage = () => {
       setFieldValue
     } = formik;
   
-
-  
   return (
     <div className="row">
       <div className="col-3">
