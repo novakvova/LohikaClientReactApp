@@ -5,7 +5,8 @@ const initialState: CartState = {
   cartData: [],
   carAddedToCart: false,
   cartModalIsShow: false,
-  cartUpdated: false
+  cartUpdated: false,
+  totalCount: 0
 };
 
 export const cartReducer = (
@@ -22,17 +23,29 @@ export const cartReducer = (
         ...state,
         cartData: action.payload,
       };
-    case CartActionTypes.EDIT_CART:
+    case CartActionTypes.UPDATE_CART_ITEM:
       return {
         ...state,
-        cartData: action.payload,
+        cartData: state.cartData.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, quantity: action.payload.quantity };
+          } else {
+            return item;
+          }
+        }),
       };
-    case CartActionTypes.EDIT_CART_ITEM_IN_SERVER : 
-    return  {...state, cartUpdated: true}
 
-    case CartActionTypes.DELETE_CART_ITEM : 
-    return {...state, cartData: action.payload}
-    
+    case CartActionTypes.DELETE_CART_ITEM:
+      console.log("actionPayload", action.payload);
+      return {
+        ...state,
+        cartData: state.cartData.filter((item) => item.id != action.payload),
+      };
+     
+    case CartActionTypes.UPDATE_COUNT: return {
+      ...state, totalCount: state.cartData.length
+    } 
+
     default:
       return state;
   }

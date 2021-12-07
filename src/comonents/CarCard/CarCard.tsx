@@ -24,14 +24,14 @@ const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
 
   const uploadItemToCartHandler = async () => {
     setShowLoader(true);
-    await uploadDataToCart(id, +count); 
-    downloadDataToCart();
+    await uploadDataToCart(id, +count);
+    downloadDataToCart()
     setShowLoader(false);
   };
 
+  
   return (
     <div className={`card ${classes.carCard} mt-3`}>
-
       <img
         src={`https://vovalohika.tk${image}`}
         className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
@@ -65,9 +65,11 @@ const CarCard: React.FC<CarCArdProps> = ({ id, name, price, image }) => {
               </div>
 
               {!showLoader && <div>В кошик</div>}
-              {showLoader && <div className="spinner-border spinner-border-sm" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>}
+              {showLoader && (
+                <div className="spinner-border spinner-border-sm" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+              )}
             </button>
           </div>
         </div>

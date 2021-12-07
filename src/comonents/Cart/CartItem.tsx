@@ -19,33 +19,21 @@ const CartItem: React.FC<ICartItem> = ({
   productPrice,
   quantity,
 }) => {
-  const { editCartItem, updateCartInServer, deleteCartItem } = useActions();
-  const { cartData } = useTypedSelector((store) => store.cart);
+  const { updateCartItem, deleteCartItem } = useActions();
 
   const [inputValue, setInputValue] = useState(quantity);
 
-  const [showLoader, setShowLoader] = useState(false)
-
-  useEffect(() => {
-    const newCartData = cartData.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: inputValue };
-      } else {
-        return item;
-      }
-    });
-    editCartItem(newCartData);
-  }, [inputValue]);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     const identifier = setTimeout(() => {
-      updateCartInServer(id, inputValue)
+      console.log(id, 'id component')
+  updateCartItem(id, inputValue);
     }, 1000);
     return () => {
       clearTimeout(identifier);
     };
   }, [inputValue]);
-
 
   const onChangeQuantityHandler = (value: string) => {
     setInputValue(+value);
@@ -63,16 +51,12 @@ const CartItem: React.FC<ICartItem> = ({
   };
 
   const onDeleteHandler = async () => {
-    try{
-      await setShowLoader(true)
-      await deleteCartItem(id, cartData)
-      await setShowLoader(false)
-    }
-    catch{
-
-    }
-    
-  }
+    try {
+      setShowLoader(true);
+      await deleteCartItem(id);
+      setShowLoader(false);
+    } catch {}
+  };
 
   return (
     <li className={`${classes["cart-item"]} row border-bottom mb-2 `} key={id}>
@@ -119,10 +103,12 @@ const CartItem: React.FC<ICartItem> = ({
           type="button"
           className=" w-50 h-50 btn btn-outline-danger btn-number btn-sm"
         >
-          {!showLoader &&<i className="fa fa-trash fa-3x"></i>}
-          {showLoader && <div className="spinner-border spinner-border-sm" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>}
+          {!showLoader && <i className="fa fa-trash fa-3x"></i>}
+          {showLoader && (
+            <div className="spinner-border spinner-border-sm" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          )}
         </button>
       </div>
     </li>
