@@ -7,7 +7,7 @@ import './index.css'
 
 const ProfilePage = () => {
   const { GetProfileData } = useActions();
-  const { profile : {email, phone, image, firstName}, loading } = useTypedSelector( store => store.profile);
+  const { profile : {email, phone, photo, firstName}, loading } = useTypedSelector( store => store.profile);
 useEffect(() => {
   GetProfileData();
 }, [])
@@ -24,9 +24,9 @@ useEffect(() => {
                 <div className="card-body text-center">
                   <img
                     src={
-                      image.endsWith("image/")
-                        ? "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
-                        : `https://vovalohika.tk${image}`
+                      photo && photo.endsWith("image/")
+                        ? `https://vovalohika.tk${photo}`
+                        : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
                     }
                     alt="avatar"
                     className="rounded-circle img-fluid"
