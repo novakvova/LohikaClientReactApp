@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import Loader from '../../assets/Loader';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import EclipseWidget from '../common/eclipse';
 
 import './index.css'
 
@@ -16,11 +16,7 @@ useEffect(() => {
     <section>
       <div className="container py-5 mt-3 ">
         <h2 className="text-center pb-5">Мій профіль</h2>
-        {loading && (
-          <h2 className="text-center">
-            <Loader />
-          </h2>
-        )}
+        {loading && <EclipseWidget />}
         {!loading && (
           <div className="row">
             <div className="col-lg-4">

@@ -35,20 +35,10 @@ export interface IRegister {
 }
 
 export type RegisterError = {
-  firstName?: Array<string>,
-  lastName?: Array<string>,
-  photo?: Array<string>,
-  phone?: Array<string>,
-  email?: Array<string>, 
-  password?: Array<string>, 
-  confirmPassword?: Array<string>, 
-  error?: string 
+  email: Array<string>, 
+  password: Array<string>, 
+  confirmPassword: Array<string>, 
 };
-
-export interface Pasword {
-  key: string;
-  value: string;
-}
 
 export type RegisterErrors = {
   errors: RegisterError,

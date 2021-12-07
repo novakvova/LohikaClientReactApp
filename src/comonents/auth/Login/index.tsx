@@ -5,7 +5,7 @@ import { useActions } from "../../../hooks/useActions";
 import { LoginSchema } from "./validation";
 import { ILogin, ILoginError } from "./types";
 import EclipseWidget from "../../common/eclipse";
-import { useFormik, Form, FormikProvider, FormikHelpers, ErrorMessage, Field } from "formik";
+import { useFormik, Form, FormikProvider, FormikHelpers, ErrorMessage } from "formik";
 
 const LoginPage: React.FC = () => {
 
@@ -27,22 +27,18 @@ const LoginPage: React.FC = () => {
     } catch (errors) {
       setLoading(false);
       const serverErrors = errors as ILoginError;
-      console.log(serverErrors);
+      const { password, invalid } = serverErrors;
+      console.log("passwword", password);
+      console.log("invalid", invalid);
+
+      if (password !== undefined) {
+        setFieldError("password", password[0]);
+      }
+      console.log(invalid.length);
       
-      console.log("tewst1 ");
-      if (serverErrors.password.length !== 0) {
-        setFieldError("password", serverErrors.password[0]);
+      if (invalid !== undefined){
+        setFieldError("invalid", invalid[0]);
       }
-      console.log("tewst2 ");
-      if (serverErrors.invalid.length !== 0) {
-        setFieldError("invalid", serverErrors.invalid[0]);
-      }
-      else {
-        console.log('else');
-        
-      }
-      console.log('tewst3');
-      
     }
   };
 const formik = useFormik({
@@ -50,12 +46,8 @@ const formik = useFormik({
   validationSchema: LoginSchema,
   onSubmit: onHandleSubmit,
 });
-const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
+const { errors, touched, handleChange, handleSubmit } = formik;
   
-console.log(errors);
-
-
-
   return (
     <>
       <div className="row">
@@ -64,8 +56,10 @@ console.log(errors);
           <h1 className="text-center mt-4">Вхід</h1>
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
-              <Field field="invalid" type="hidden"/>
-              {errors.invalid ? <div>{errors.invalid}</div> : null}
+              {errors.invalid !== undefined && <div className="alert alert-danger text-center" role="alert">
+                <ErrorMessage name="invalid" />
+              </div>}
+
               <InputGroup
                 field="email"
                 label="Email"

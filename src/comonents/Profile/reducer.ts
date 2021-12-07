@@ -1,12 +1,12 @@
-import {ProfileState, ProfileActions, ProfileActionTypes} from '../../types/profile';
+import {ProfileState, ProfileActions, ProfileActionTypes} from './types';
 
 const intialState: ProfileState = {
   profile: {
-	id: null,
-	email: '',
-	firstName:'',
-	image: '',
-	phone: ''
+	  id: null,
+	  email: '',
+	  firstName:'',
+	  image: '',
+	  phone: ''
   },
   loading: false,
   error: "",

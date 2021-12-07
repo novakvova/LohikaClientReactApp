@@ -38,9 +38,9 @@ export type AuthAction =
   | LogoutAuth;
 
 export interface ILogin {
-  email?: string;
-  password?: string;
-  invalid?:string
+  email: string;
+  password: string;
+  invalid:string
 }
 
 export interface ILoginError {
