@@ -1,12 +1,12 @@
 import * as yup from "yup"
 
 export const CreateUserSchema = yup.object({
+  firstName: yup.string().required("Поле не повинне бути пустим"),
+  secondName: yup.string().required("Поле не повинне бути пустим"),
   email: yup
     .string()
     .email("Введіть коректний Email")
     .required("Поле не повинне бути пустим"),
-  firstName: yup.string().required("Поле не повинне бути пустим"),
-  lastName: yup.string().required("Поле не повинне бути пустим"),
   photo: yup.array().min(1, "Виберіть аватар").nullable(),
   phone: yup
     .string()

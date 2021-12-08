@@ -1,0 +1,6 @@
+.flesh {
+	position: fixed;
+    top: 15rem;
+    left: 26rem;
+    z-index: 50
+}

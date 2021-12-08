@@ -38,7 +38,7 @@ export interface UpdateErrors {
 }
 export interface ICreateUser {
   firstName?: string;
-  lastName?: string;
+  secondName?: string;
   email?: string;
   photo?: FileList[];
   phone?: string;

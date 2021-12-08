@@ -9,7 +9,7 @@ const UserDetailPage = () => {
 	let { id } = useParams() as any; 
   const { userData, loading } = useTypedSelector(strore => strore.userCrud);
   const { getUserById } = useActions();
-  const { firstName, phone, photo, email } = userData;
+  const { firstName, phone, photo, email, secondName } = userData;
 
   useEffect(() => {
     getUserById(id);
@@ -47,6 +47,14 @@ const UserDetailPage = () => {
                       </div>
                       <div className="col-sm-9">
                         <p className="text-muted mb-0">{firstName}</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <p className="mb-0">Прізвище</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">{secondName}</p>
                       </div>
                     </div>
                     <div className="row">

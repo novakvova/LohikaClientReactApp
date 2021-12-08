@@ -11,13 +11,13 @@ import { ICreateUserResponse } from "../actions";
 
 
 const CreateUser = () => {
-  const { CreateUser } = useActions();
+  const { CreateUser, addFlashMessage, deleteFlashMessage } = useActions();
   const { loading } = useTypedSelector((store) => store.userCrud);
   const [load, setLoad] = useState<boolean>(false);
   const navigator = useNavigate();
   const initialValues: ICreateUser = {
     firstName: "",
-    lastName: "",
+    secondName: "",
     email: "",
     photo: [],
     phone: "",
@@ -36,12 +36,16 @@ const CreateUser = () => {
     try {
       setLoad(true);
       const res = await CreateUser(values);
-      const result = res as ICreateUserResponse;
-      if (result.status == 200) {
-        console.log("res", res);
-      }
+      const result = await res as ICreateUserResponse;
       navigator("/users");
       setLoad(false);
+      if (result.status === 200) {
+        addFlashMessage({
+          type: "success",
+          message: "Користувача створено",
+        });
+        setTimeout(() => deleteFlashMessage, 2000);
+      }
     } catch (err) {
       setLoad(false);
       const serverErrors = err as ICreateUserError;
@@ -77,11 +81,11 @@ const CreateUser = () => {
               />
 
               <InputGroup
-                field="lastName"
+                field="secondName"
                 label="Прізвище"
-                error={errors.lastName}
+                error={errors.secondName}
                 onChange={handleChange}
-                touched={touched.firstName}
+                touched={touched.secondName}
               />
 
               <InputGroup

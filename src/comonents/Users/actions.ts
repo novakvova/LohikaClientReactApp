@@ -102,7 +102,7 @@ export const updateUser = (data:UserInfo, formData:FormData) => {
       dispatch({
         type: UpdateUserActionTypes.UPDATE_USER
       });
-
+      
       const response = await http.put<UserInfo>("/api/Users/edit", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -145,7 +145,7 @@ export const CreateUser = (data: ICreateUser) : any => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      const result = response.data;
+      const result = response;
       
       dispatch({
         type: CreateUserActionTypes.CREATE_USER_SUCCESS,

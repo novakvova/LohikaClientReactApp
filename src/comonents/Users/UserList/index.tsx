@@ -4,18 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import Modal from '../../common/Modal';
 import './index.css';
+import { v4 as uuid } from "uuid";
 import EclipseWidget from '../../common/eclipse';
-import CreateUser from '../CreatePage';
 
 const Users = () => {
   const { users, loading } = useTypedSelector( store => store.userCrud)
   const [idDel, setIdDel]  = useState<number>(0)
-  const { fetchUsers, deleteUser, getUserById } = useActions();
+  const { fetchUsers, deleteUser, getUserById, deleteFlashMessage, addFlashMessage } = useActions();
   const navigator = useNavigate();
 
 
-  const modalClick = (bool: boolean) => {
-    if (bool) deleteUser(idDel);    
+  const modalClick = async (bool: boolean) => {
+    if (bool) {
+      await deleteUser(idDel);
+      await addFlashMessage({
+        type:"success",
+        message:"Користувача видалено"
+      });
+      setTimeout(() => {deleteFlashMessage()}, 2000)
+    };    
   }
   
   useEffect(() => {
@@ -58,7 +65,7 @@ const handlerInfo = (id:number) => {
               <td>
                 <div className="size">
                   <img
-                    src={`https://vovalohika.tk${photo}`}
+                    src={`https://vovalohika.tk${photo}?t=${uuid()}`}
                     alt="Avatar"
                   />
                 </div>
