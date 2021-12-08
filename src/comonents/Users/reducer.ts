@@ -28,7 +28,6 @@ const initialState: UsersState = {
   loading: false,
   error: null,
 };
-
 export const usersReducer = (
   state = initialState,
   action:

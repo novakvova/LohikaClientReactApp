@@ -7,7 +7,7 @@ import './index.css'
 
 const ProfilePage = () => {
   const { GetProfileData } = useActions();
-  const { profile : {email, phone, photo, firstName}, loading } = useTypedSelector( store => store.profile);
+  const { profile : {email, phone, photo, firstName, secondName}, loading } = useTypedSelector( store => store.profile);
 useEffect(() => {
   GetProfileData();
 }, [])
@@ -31,7 +31,10 @@ useEffect(() => {
                     alt="avatar"
                     className="rounded-circle img-fluid"
                   />
-                  <h5 className="my-3">{firstName}</h5>
+                  <h5 className="my-3">
+                    {firstName}
+                    {secondName}
+                  </h5>
                 </div>
               </div>
             </div>
@@ -44,6 +47,14 @@ useEffect(() => {
                     </div>
                     <div className="col-sm-9">
                       <p className="text-muted mb-0">{firstName}</p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0">Прізвище</p>
+                    </div>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{secondName}</p>
                     </div>
                   </div>
                   <div className="row">

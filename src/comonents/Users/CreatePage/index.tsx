@@ -9,12 +9,8 @@ import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import { ICreateUserResponse } from "../actions";
 
-interface prop {
-  toggle(val: boolean): void;
-}
 
-const CreateUser = (props: prop) => {
-  const { toggle } = props;
+const CreateUser = () => {
   const { CreateUser } = useActions();
   const { loading } = useTypedSelector((store) => store.userCrud);
   const [load, setLoad] = useState<boolean>(false);
@@ -46,7 +42,6 @@ const CreateUser = (props: prop) => {
       }
       navigator("/users");
       setLoad(false);
-      toggle(true);
     } catch (err) {
       setLoad(false);
       const serverErrors = err as ICreateUserError;
@@ -70,7 +65,7 @@ const CreateUser = (props: prop) => {
     <>
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
-          <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-3">
+          <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-4 m-5">
             <h1 className="text-center">Додати користувача</h1>
             <div className="col-6">
               <InputGroup

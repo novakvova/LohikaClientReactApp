@@ -7,6 +7,7 @@ export interface IProfile {
   id: number | null;
   email: string;
   firstName:string;
+  secondName: string
   photo: string;
   phone: string
 }
