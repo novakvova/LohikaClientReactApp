@@ -10,17 +10,17 @@ import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 const RegisterPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [img, setImg] = useState<string>();
-  const { RegisterUser} = useActions();
+  const { RegisterUser } = useActions();
   const navigator = useNavigate();
-  const initialValues:IRegister = {
+  const initialValues: IRegister = {
     firstName: "",
-    lastName: "",
+    secondName: "",
     email: "",
     photo: [],
     phone: "",
     password: "",
-    confirmPassword: ""
-  }
+    confirmPassword: "",
+  };
 
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setFieldValue("photo", (e.target as any).files[0]);
@@ -35,6 +35,7 @@ const RegisterPage = () => {
     Object.entries(values).forEach(([key, value]) =>
       formData.append(key, value)
     );
+    
       try {
         setLoading(true);
         await RegisterUser(formData);
@@ -91,11 +92,11 @@ const RegisterPage = () => {
             />
 
             <InputGroup
-              field="lastName"
+              field="secondName"
               label="Прізвище"
-              error={errors.lastName}
+              error={errors.secondName}
               onChange={handleChange}
-              touched={touched.firstName}
+              touched={touched.secondName}
             />
 
             <InputGroup

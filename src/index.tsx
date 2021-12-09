@@ -9,6 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { setAuthUserByToken } from "./comonents/auth/Login/action";
+import FleshMessages from './comonents/FleshMessages';
 
 let token = localStorage.token;
 if (token) {
@@ -19,6 +20,7 @@ if (token) {
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
+      <FleshMessages />
       <App />
     </BrowserRouter>
   </Provider>,

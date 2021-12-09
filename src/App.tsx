@@ -14,6 +14,7 @@ import UsersPage from './comonents/Users/UserList/index'
 import UserDetailPage from "./comonents/Users/UserPage";
 import NoMatch from './comonents/NoMatch';
 import EditPage from './comonents/Users/EditPage';
+import CreatePage from './comonents/Users/CreatePage';
 
 function App() {
   const {cartIsShow} = useTypedSelector(store => store.cart);
@@ -31,6 +32,7 @@ function App() {
           <Route path="/users" element={<UsersPage />} />
           <Route path="/users/:id" element={<UserDetailPage />} />
           <Route path="/users/edit/:id" element={<EditPage />} />
+          <Route path="/users/create" element={<CreatePage />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

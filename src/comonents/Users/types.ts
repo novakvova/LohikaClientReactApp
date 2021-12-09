@@ -38,12 +38,20 @@ export interface UpdateErrors {
 }
 export interface ICreateUser {
   firstName?: string;
-  lastName?: string;
+  secondName?: string;
   email?: string;
   photo?: FileList[];
   phone?: string;
   password?: string;
   confirmPassword?: string;
+}
+export interface IStatus {
+  status: number
+}
+
+export interface IGetUser {
+  data: UserInfo,
+  status: number
 }
 
 export type ICreateUserError = {

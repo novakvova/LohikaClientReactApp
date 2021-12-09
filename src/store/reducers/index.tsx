@@ -6,6 +6,7 @@ import { profileReducer } from '../../comonents/Profile/reducer';
 import { usersReducer } from "../../comonents/Users/reducer";
 import { sendingCarReducer } from "../../comonents/AddNewCar/addCar-reducer";
 import { cartReducer } from "../../comonents/Cart/cart-reduser";
+import { fleshMessagesReducer } from '../../comonents/FleshMessages/reducer';
 
 export const rootReducer = combineReducers({
   car: carReducer,
@@ -14,7 +15,8 @@ export const rootReducer = combineReducers({
   sendingCar: sendingCarReducer,
   cart: cartReducer,
   profile: profileReducer,
-  userCrud: usersReducer
+  userCrud: usersReducer,
+  fleshMessages: fleshMessagesReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

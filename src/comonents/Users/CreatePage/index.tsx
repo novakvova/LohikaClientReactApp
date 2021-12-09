@@ -3,25 +3,20 @@ import InputGroup from "../../common/InputGroup";
 import { useActions } from "../../../hooks/useActions";
 import { useNavigate } from "react-router";
 import { CreateUserSchema } from "./validation";
-import { ICreateUser, ICreateUserError } from "../types";
+import { ICreateUser, ICreateUserError, IStatus } from "../types";
 import EclipseWidget from "../../common/eclipse";
 import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { ICreateUserResponse } from "../actions";
 
-interface prop {
-  toggle(val: boolean): void;
-}
 
-const CreateUser = (props: prop) => {
-  const { toggle } = props;
-  const { CreateUser } = useActions();
+const CreateUser = () => {
+  const { CreateUser, addFlashMessage, deleteFlashMessage } = useActions();
   const { loading } = useTypedSelector((store) => store.userCrud);
   const [load, setLoad] = useState<boolean>(false);
   const navigator = useNavigate();
   const initialValues: ICreateUser = {
     firstName: "",
-    lastName: "",
+    secondName: "",
     email: "",
     photo: [],
     phone: "",
@@ -40,13 +35,16 @@ const CreateUser = (props: prop) => {
     try {
       setLoad(true);
       const res = await CreateUser(values);
-      const result = res as ICreateUserResponse;
-      if (result.status == 200) {
-        console.log("res", res);
-      }
+      const result = await res as IStatus;
       navigator("/users");
       setLoad(false);
-      toggle(true);
+      if (result.status === 200) {
+        addFlashMessage({
+          type: "success",
+          message: "Користувача створено",
+        });
+        setTimeout(() => deleteFlashMessage(), 2000);
+      }
     } catch (err) {
       setLoad(false);
       const serverErrors = err as ICreateUserError;
@@ -70,7 +68,7 @@ const CreateUser = (props: prop) => {
     <>
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
-          <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-3">
+          <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-4 m-5">
             <h1 className="text-center">Додати користувача</h1>
             <div className="col-6">
               <InputGroup
@@ -82,11 +80,11 @@ const CreateUser = (props: prop) => {
               />
 
               <InputGroup
-                field="lastName"
+                field="secondName"
                 label="Прізвище"
-                error={errors.lastName}
+                error={errors.secondName}
                 onChange={handleChange}
-                touched={touched.firstName}
+                touched={touched.secondName}
               />
 
               <InputGroup

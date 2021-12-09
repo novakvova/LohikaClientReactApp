@@ -25,8 +25,8 @@ export type RegisterAction =
 
 
 export interface IRegister {
-  firstName?: string ;
-  lastName?: string ;
+  firstName?: string;
+  secondName?: string;
   email?: string;
   photo?: FileList[];
   phone?: string;

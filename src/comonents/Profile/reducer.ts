@@ -5,6 +5,7 @@ const intialState: ProfileState = {
 	  id: null,
 	  email: '',
 	  firstName:'',
+    secondName: '',
 	  photo: '',
 	  phone: ''
   },
