@@ -6,7 +6,6 @@ import Modal from '../../common/Modal';
 import './index.css';
 import { v4 as uuid } from "uuid";
 import EclipseWidget from '../../common/eclipse';
-import { IStatus } from '../types';
 
 const Users = () => {
   const { users, loading } = useTypedSelector( store => store.userCrud)
@@ -53,10 +52,16 @@ const handlerInfo = (id:number) => {
 	return (
     <div className="contgainer">
       <button
-        className="btn btn-primary mt-3"
+        className="btn btn-primary m-3"
         onClick={() => navigator("/users/create")}
       >
         Добавати користувача
+      </button>
+      <button
+        className="btn btn-primary m-3"
+        onClick={() => navigator("/users/search")}
+      >
+        Пошук
       </button>
       <h1 className="text-center m-2">Користувачі</h1>
       <Modal text="Дійсно видалити" click={modalClick} />
