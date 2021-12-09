@@ -13,7 +13,7 @@ const DefaultHeader = () => {
   const { LogoutUser } = useActions();
 
   return (
-    <nav className="fixed-top navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">
           Продаж авто
