@@ -1,24 +1,31 @@
-
-import { Route, Routes } from 'react-router';
-import './App.css';
-import Home from './comonents/Home';
-import Register from './comonents/auth/Register/index';
-import DefaultLayout from './comonents/containers/DefaultLayout';
-import AddNewCar from './comonents/AddNewCar';
-import LoginPage from './comonents/auth/Login';
-import ProfilePage from './comonents/Profile';
-import "../node_modules/font-awesome/css/font-awesome.css"; 
-import { useTypedSelector } from './hooks/useTypedSelector';
-import Cart from './comonents/Cart/Cart';
-import UsersPage from './comonents/Users/UserList/index'
+import { Route, Routes } from "react-router";
+import "./App.css";
+import Home from "./comonents/Home";
+import Register from "./comonents/auth/Register/index";
+import DefaultLayout from "./comonents/containers/DefaultLayout";
+import AddNewCar from "./comonents/AddNewCar";
+import LoginPage from "./comonents/auth/Login";
+import ProfilePage from "./comonents/Profile";
+import "../node_modules/font-awesome/css/font-awesome.css";
+import { useTypedSelector } from "./hooks/useTypedSelector";
+import Cart from "./comonents/Cart/Cart";
+import UsersPage from "./comonents/Users/UserList/index";
 import UserDetailPage from "./comonents/Users/UserPage";
-import NoMatch from './comonents/NoMatch';
-import EditPage from './comonents/Users/EditPage';
+import NoMatch from "./comonents/NoMatch";
+import EditPage from "./comonents/Users/EditPage";
+import { useActions } from "./hooks/useActions";
+import { useEffect } from "react";
 import CreatePage from './comonents/Users/CreatePage';
 
+
 function App() {
-  const {cartIsShow} = useTypedSelector(store => store.cart);
-  
+  const { cartIsShow } = useTypedSelector((store) => store.cart);
+
+  const { downloadCartData } = useActions();
+  useEffect(() => {
+    downloadCartData();
+  }, []);
+
   return (
     <>
       {cartIsShow && <Cart />}

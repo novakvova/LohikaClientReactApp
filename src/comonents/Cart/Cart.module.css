@@ -1,4 +1,7 @@
 .cart-items {
+  max-height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   list-style: none;
   margin: 0;
   padding: 0;
