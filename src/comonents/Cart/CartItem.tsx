@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useActions } from "../../hooks/useActions";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
+
 
 import classes from "./Cart.module.css";
 
@@ -27,7 +27,7 @@ const CartItem: React.FC<ICartItem> = ({
 
   useEffect(() => {
     const identifier = setTimeout(() => {
-      console.log(id, 'id component')
+      
   updateCartItem(id, inputValue);
     }, 1000);
     return () => {
@@ -60,7 +60,7 @@ const CartItem: React.FC<ICartItem> = ({
 
   return (
     <li className={`${classes["cart-item"]} row border-bottom mb-2 `} key={id}>
-      <div className="col-3 rounded">
+      <div className="col-3 rounded ">
         <img
           className="rounded"
           src={`https://vovalohika.tk${productImage}`}

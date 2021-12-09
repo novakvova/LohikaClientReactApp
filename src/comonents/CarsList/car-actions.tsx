@@ -1,22 +1,24 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
+import { ICartData } from "../Cart/types";
 import { CarAction, CarActionTypes, ICarSearchList } from "./types";
 
 export const fetchCars = () => {
   return async (dispatch: Dispatch<CarAction>) => {
     try {
       dispatch({ type: CarActionTypes.FETCH_CARS });
-      const responce = await http.get("api/Products/list");
+      const response = await http.get<Array<ICartData>>("api/Products/list");
+      
       dispatch({
         type: CarActionTypes.FETCH_CARS_SUCCESS,
-        payload: responce.data,
+        payload: response.data,
       });
     } catch (error) {
+      
       dispatch({ type: CarActionTypes.FETCH_CARS_ERROR, payload: "Error" });
     }
   };
 };
-
 
 export const fetchCarsSearch =
   (searchStr: string) => async (dispatch: Dispatch<CarAction>) => {
@@ -31,11 +33,10 @@ export const fetchCarsSearch =
         payload: response.data,
       });
 
-      console.log("response search" , response);
+      console.log("response search", response);
       return Promise.resolve();
-      
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return Promise.reject();
     }
   };

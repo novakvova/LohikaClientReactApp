@@ -12,14 +12,23 @@ export interface ISearchCar {
   price: number;
 }
 
+export interface ICarItem {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  inCart?: boolean
+}
+
 export interface ICarSearchList {
   products: Array<ISearchCar>;
   pages: number;
   total: number;
 }
 
+
 export interface CarState {
-  cars: Array<any>;
+  cars: Array<ICarItem>;
   carsSearchList: ICarSearchList;
   loading: boolean;
   error: null | string;

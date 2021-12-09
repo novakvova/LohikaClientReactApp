@@ -1,14 +1,13 @@
-import { CartState, CartActionTypes, CartAction, ICartData } from "./types";
+import { CartState, CartActionTypes, CartAction } from "./types";
 
 const initialState: CartState = {
   cartIsShow: false,
-  cartData:[],
+  cartData: [],
   carAddedToCart: false,
   cartModalIsShow: false,
   cartUpdated: false,
-  totalCount: 0
+  totalCount: 0,
 };
-
 
 export const cartReducer = (
   state = initialState,
@@ -23,7 +22,14 @@ export const cartReducer = (
       return {
         ...state,
         cartData: action.payload,
+        totalCount: action.payload.length,
       };
+    case CartActionTypes.ADD_ITEM_TO_CART : 
+    return {
+      ...state, cartData: [...state.cartData, action.payload],
+      totalCount: state.totalCount+=1
+    }  
+
     case CartActionTypes.UPDATE_CART_ITEM:
       return {
         ...state,
@@ -33,26 +39,15 @@ export const cartReducer = (
           } else {
             return item;
           }
-          // return {
-          //   id:item.id,
-          //   productImage: 'img',
-          //   productName:item.productName,
-          //   productPrice: item.productPrice,
-          //   quantity: action.payload.quantity
-          // }
         }),
       };
 
     case CartActionTypes.DELETE_CART_ITEM:
-      console.log("actionPayload", action.payload);
       return {
         ...state,
-        cartData: state.cartData.filter((item) => item.id != action.payload),
+        cartData: state.cartData.filter((item) => item.id !== action.payload),
+        totalCount: state.totalCount-=1,
       };
-     
-    case CartActionTypes.UPDATE_COUNT: return {
-      ...state, totalCount: state.cartData.length
-    } 
 
     default:
       return state;

@@ -2,7 +2,7 @@ export enum CartActionTypes {
   SHOW_CART = "SHOW_CART",
   HIDE_CART = "HIDE_CART",
   FETCH_DATA_TO_CART = "DOWNLOAD_DATA_TO_CART",
-  ADD_CAR_TO_CART = "ADD_CAR_TO_CART",
+  ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART",
   UPDATE_CART_ITEM = "UPDATE_CART_ITEM",
   DELETE_CART_ITEM = "DELETE_CART_ITEM",
   UPDATE_COUNT = "UPDATE_COUNT",
@@ -15,6 +15,7 @@ export interface ICarToAdd {
 
 export interface ICartData {
   id: number;
+  productId: number;
   productName: string;
   productImage: string;
   productPrice: number;
@@ -42,8 +43,9 @@ export interface DownloadDataToCartAction {
   payload: Array<any>;
 }
 
-export interface AddCartToCartAction {
-  type: CartActionTypes.ADD_CAR_TO_CART;
+export interface AddItemToCartAction {
+  type: CartActionTypes.ADD_ITEM_TO_CART;
+  payload: ICartData
 }
 
 export interface UpdateCartItemAction {
@@ -64,7 +66,9 @@ export type CartAction =
   | ShowCartAction
   | HideCartAction
   | DownloadDataToCartAction
-  | AddCartToCartAction
+  | AddItemToCartAction
   | UpdateCartItemAction
   | DeleteCartItemAction
   | UpdateTotalCount;
+
+  
