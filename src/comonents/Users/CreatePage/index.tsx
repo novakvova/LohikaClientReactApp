@@ -3,11 +3,10 @@ import InputGroup from "../../common/InputGroup";
 import { useActions } from "../../../hooks/useActions";
 import { useNavigate } from "react-router";
 import { CreateUserSchema } from "./validation";
-import { ICreateUser, ICreateUserError } from "../types";
+import { ICreateUser, ICreateUserError, IStatus } from "../types";
 import EclipseWidget from "../../common/eclipse";
 import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { ICreateUserResponse } from "../actions";
 
 
 const CreateUser = () => {
@@ -36,7 +35,7 @@ const CreateUser = () => {
     try {
       setLoad(true);
       const res = await CreateUser(values);
-      const result = await res as ICreateUserResponse;
+      const result = await res as IStatus;
       navigator("/users");
       setLoad(false);
       if (result.status === 200) {
@@ -44,7 +43,7 @@ const CreateUser = () => {
           type: "success",
           message: "Користувача створено",
         });
-        setTimeout(() => deleteFlashMessage, 2000);
+        setTimeout(() => deleteFlashMessage(), 2000);
       }
     } catch (err) {
       setLoad(false);

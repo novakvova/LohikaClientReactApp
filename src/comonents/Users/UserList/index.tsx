@@ -6,6 +6,7 @@ import Modal from '../../common/Modal';
 import './index.css';
 import { v4 as uuid } from "uuid";
 import EclipseWidget from '../../common/eclipse';
+import { IStatus } from '../types';
 
 const Users = () => {
   const { users, loading } = useTypedSelector( store => store.userCrud)
@@ -16,11 +17,27 @@ const Users = () => {
 
   const modalClick = async (bool: boolean) => {
     if (bool) {
-      await deleteUser(idDel);
-      await addFlashMessage({
-        type:"success",
-        message:"Користувача видалено"
-      });
+      const response = await deleteUser(idDel);
+      const status = response as number;
+      
+      if (status === 404){
+        await addFlashMessage({
+          type: "error",
+          message: "Даного користувача не знайдено",
+        });
+      }
+      else if (status === 200){
+        await addFlashMessage({
+          type: "success",
+          message: "Користувача видалено",
+        });
+      }
+      else {
+        await addFlashMessage({
+          type: "error",
+          message: "Щось пішло не так",
+        });
+      }
       setTimeout(() => {deleteFlashMessage()}, 2000)
     };    
   }

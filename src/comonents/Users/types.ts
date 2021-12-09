@@ -45,6 +45,14 @@ export interface ICreateUser {
   password?: string;
   confirmPassword?: string;
 }
+export interface IStatus {
+  status: number
+}
+
+export interface IGetUser {
+  data: UserInfo,
+  status: number
+}
 
 export type ICreateUserError = {
   email: Array<string>;

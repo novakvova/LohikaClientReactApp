@@ -16,6 +16,8 @@ import {
   ICreateUserErrors,
   CreateUserActions,
   ICreateUser,
+  IStatus,
+  IGetUser,
 } from "./types";
 
 export const fetchUsers = () => {
@@ -40,30 +42,37 @@ export const fetchUsers = () => {
   };
 }
 
-export const deleteUser = (id: number) => {
+export const deleteUser = (id: number): any => {
   return async (dispatch: Dispatch<DeleteUserActions>) => {
     try {
-      dispatch({ 
-        type: DeleteUserActionTypes.DELETE_USER
-      })
+      dispatch({
+        type: DeleteUserActionTypes.DELETE_USER,
+      });
       const response = await http.delete(`api/Users/delete/${id}`);
-      if (response.status === 200){
+      if (response.status === 200) {
         dispatch({
           type: DeleteUserActionTypes.DELETE_USER_SUCCESS,
-          payload: id
-        })
+          payload: id,
+        });
+        return Promise.resolve<number>(response.status);
       }
-      else throw Error('Щось пішло не так')
-    } catch ( error ) {
+    } catch (error:any ) {
       dispatch({
         type: DeleteUserActionTypes.DELETE_USER_ERROR,
-        payload: "Error"});
+        payload: "Error",
+      });
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<IStatus>;
+        if (serverError && serverError.response) {
+          const { status } = serverError.response;
+          return Promise.resolve(status);
+        }
+      }
     }
-
   }
 };
 
-export const getUserById = (id:number) => {
+export const getUserById = (id:number): any => {
   return async (dispatch: Dispatch<GetUserActions>) => {
     try {
       dispatch({
@@ -71,27 +80,24 @@ export const getUserById = (id:number) => {
       });
       const response = await http.get<UserInfo>(`api/Users/get/${id}`);
       const { data } = response;
-
+      
       dispatch({
         type: GetUserActionTypes.GET_USER_SUCCESS,
         payload: data,
       });
 
-      return Promise.resolve<UserInfo>({...data});
+      return Promise.resolve<IGetUser>(response);
     } catch (error: any) {
       dispatch({
         type: GetUserActionTypes.GET_USER_ERROR,
         payload: error,
       });
-            // if (axios.isAxiosError(error)) {
-            //   const serverError = error as AxiosError<UpdateErrors>;
-            //   if (serverError && serverError.response) {
-            //     const { errors } = serverError.response.data;
-            //     console.log(errors);
-                
-            //     return Promise.reject(errors);
-            //   }
-            // }
+            if (axios.isAxiosError(error)) {
+              const serverError = error as AxiosError<IStatus>;
+              if (serverError && serverError.response) {
+                return Promise.reject(serverError.response);
+              }
+            }
     }
   };
 };
@@ -127,9 +133,7 @@ export const updateUser = (data:UserInfo, formData:FormData) => {
     }
   }
 }; 
-export interface ICreateUserResponse {
-  status: number
-}
+
 
 export const CreateUser = (data: ICreateUser) : any => {
   return async (dispatch: Dispatch<CreateUserActions>) => {
@@ -138,7 +142,7 @@ export const CreateUser = (data: ICreateUser) : any => {
        Object.entries(data).forEach(([key, value]) =>
          formData.append(key, value)
        );
-      const response = await http.post<ICreateUserResponse>(
+      const response = await http.post<IStatus>(
         "api/users/create",
         formData,
         {
@@ -150,7 +154,7 @@ export const CreateUser = (data: ICreateUser) : any => {
       dispatch({
         type: CreateUserActionTypes.CREATE_USER_SUCCESS,
       });
-      return Promise.resolve<ICreateUserResponse>(result);
+      return Promise.resolve<IStatus>(result);
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
         const serverError = err as AxiosError<ICreateUserErrors>;

@@ -1,18 +1,40 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import EclipseWidget from '../../common/eclipse';
 import NoMatch from '../../NoMatch';
+import { IGetUser } from '../types';
 
 const UserDetailPage = () => {
 	let { id } = useParams() as any; 
+  const navigator = useNavigate();
   const { userData, loading } = useTypedSelector(strore => strore.userCrud);
-  const { getUserById } = useActions();
+  const { getUserById, addFlashMessage, deleteFlashMessage } = useActions();
   const { firstName, phone, photo, email, secondName } = userData;
 
-  useEffect(() => {
-    getUserById(id);
+   const getUser = async () => {
+    try {
+      const response: IGetUser = await getUserById(id);
+      const { status } = response;
+      console.log(status);
+
+      if (status === 204) {
+        navigator("/users");
+        await addFlashMessage({
+          type: "error",
+          message: "Даного користувача не знайдено",
+        });
+        setTimeout(() => {
+          deleteFlashMessage();
+        }, 2000);
+      }
+    } catch (error) {}
+      }
+
+  useEffect( () => {
+    getUser();
+   
   }, []);
 
   if (!id) {
