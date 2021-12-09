@@ -9,6 +9,7 @@ export enum UsersActionTypes {
   FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS",
   FETCH_USERS_ERROR = "FETCH_USERS_ERROR",
 }
+
 export enum GetUserActionTypes {
   GET_USER = "GET_USER",
   GET_USER_SUCCESS = "GET_USER_SUCCESS",
