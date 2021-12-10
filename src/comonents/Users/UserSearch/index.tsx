@@ -1,21 +1,29 @@
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { Form, FormikProvider, useFormik } from 'formik';
 import InputGroup from '../../common/InputGroup';
 import { IUserSearch } from './types';
-
+import { useQueryParam } from '../../../hooks/useQueryParam';
+import { useActions } from '../../../hooks/useActions';
+import SearchResult from './SearchResult';
 const UserSearch = () => {
+
+  const { getSearchResult } = useActions();
+  let [search, setSearch] = useQueryParam<IUserSearch>("search");
+   if (!search) {
+     search = { id: undefined, firstName: "", secondName: "", email: "", phone: "", page:1 };
+   }
+  
   const initialValues: IUserSearch = {
-	id:undefined, 
-    firstName: "",
-    secondName: "",
-    email: "",
-    phone: "",
+    id: search?.id,
+    firstName: search?.firstName,
+    secondName: search?.secondName,
+    email: search?.email,
+    phone: search?.phone,
+    page: search?.page
   };
   
-  const onHandleSubmit = async (
-    values: IUserSearch,
-    { setFieldError }: FormikHelpers<IUserSearch>
-  ) => {
-   
+  const onHandleSubmit = async ( values: IUserSearch ) => {
+    await setSearch(values, {replace: true});
+    await getSearchResult(values);
   };
 
   const formik = useFormik({
@@ -23,7 +31,7 @@ const UserSearch = () => {
     onSubmit: onHandleSubmit,
   });
 
-  const { errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
+  const { handleChange, handleSubmit, values } = formik;
 
   return (
     <>
@@ -35,50 +43,47 @@ const UserSearch = () => {
               <InputGroup
                 field="id"
                 label="Id"
-                error={errors.id}
+                type="number"
                 onChange={handleChange}
-                touched={touched.id}
+                value={values?.id as number}
               />
 
               <InputGroup
                 field="firstName"
                 label="Ім'я"
-                error={errors.firstName}
                 onChange={handleChange}
-                touched={touched.firstName}
+                value={values?.firstName}
               />
 
               <InputGroup
                 field="secondName"
                 label="Прізвище"
-                error={errors.secondName}
                 onChange={handleChange}
-                touched={touched.secondName}
-              />
-
-              <InputGroup
-                field="email"
-                label="Email"
-                error={errors.email}
-                onChange={handleChange}
-                touched={touched.email}
+                value={values?.secondName}
               />
             </div>
             <div className="col-6">
               <InputGroup
+                field="email"
+                label="Email"
+                onChange={handleChange}
+                value={values?.email}
+              />
+
+              <InputGroup
                 field="phone"
                 label="Телефон"
-                error={errors.phone}
                 onChange={handleChange}
-                touched={touched.phone}
+                value={values?.phone}
               />
+              <button type="submit" className="btn btn-primary text-center">
+                Пошук
+              </button>
             </div>
-            <button type="submit" className="btn btn-primary text-center">
-              Пошук
-            </button>
           </div>
         </Form>
       </FormikProvider>
+      <SearchResult />
     </>
   );
 };

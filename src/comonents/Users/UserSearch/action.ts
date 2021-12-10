@@ -2,12 +2,18 @@ import { IUserActionTypes, IUserSearch, IUserSearchAction, IUserSearchState } fr
 import { Dispatch } from 'react';
 import http from "../../../http_common";
 
-export const getSearchResult = (searchReques:IUserSearch) => {
+export const getSearchResult = (searchRequest:IUserSearch) => {
 	return async (dispatch: Dispatch<IUserSearchAction>) => {
+		const param = Object.fromEntries(Object.entries(searchRequest).filter(([key,value]) => {
+			if (value) return [key,value]
+			return
+		}));
+		
 		try {
 			const responce = await http.get<IUserSearchState>("api/Users/search", {
-        	params: searchReques,
+        	params: param,
       });
+	  
 			dispatch({
 				type: IUserActionTypes.FETCH_USERS,
 				payload: responce.data

@@ -14,12 +14,12 @@ export interface IUserSearchState {
 }
 
 export interface IUserSearch {
-	id?: number,
-	firstName?: string,
-	secondName?: string,
-	phone?: string,
-	email?: string,
-	page?: number
+	id: number | undefined,
+	firstName: string,
+	secondName: string,
+	phone: string,
+	email: string,
+	page:number
 }
 
 export type IUserSearchAction = FetchResults;
