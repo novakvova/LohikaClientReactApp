@@ -1,16 +1,44 @@
 import { Form, FormikProvider, useFormik } from 'formik';
 import InputGroup from '../../common/InputGroup';
-import { IUserSearch } from './types';
+import { IUrlSearch, IUserSearch } from './types';
 import { useQueryParam } from '../../../hooks/useQueryParam';
 import { useActions } from '../../../hooks/useActions';
 import SearchResult from './SearchResult';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { useEffect } from 'react';
 const UserSearch = () => {
-
+	
+  const {  data:{pages} } = useTypedSelector((store) => store.userSearch);
   const { getSearchResult } = useActions();
-  let [search, setSearch] = useQueryParam<IUserSearch>("search");
-   if (!search) {
-     search = { id: undefined, firstName: "", secondName: "", email: "", phone: "", page:1 };
-   }
+  let [search, setSearch] = useQueryParam<IUrlSearch>("search");
+  useEffect(() => {
+    if (!search) {
+      search = {
+        id: undefined,
+        firstName: "",
+        secondName: "",
+        email: "",
+        phone: "",
+        page: 1,
+      };
+    } else {
+      getSearchResult(search, search.page);
+    }
+  }, []);
+   
+
+   const countPage = (): Array<number> => {
+     let page: Array<number> = [];
+     for (let i = 0; i < pages; i++) {
+       page[i] = i + 1;
+     }
+     return page;
+   };
+
+   const handlePagination = (page: number) => {
+      setSearch({ ...values, page }, { replace: true });
+      getSearchResult(values, page);
+   };
   
   const initialValues: IUserSearch = {
     id: search?.id,
@@ -18,12 +46,11 @@ const UserSearch = () => {
     secondName: search?.secondName,
     email: search?.email,
     phone: search?.phone,
-    page: search?.page
   };
   
-  const onHandleSubmit = async ( values: IUserSearch ) => {
-    await setSearch(values, {replace: true});
-    await getSearchResult(values);
+  const onHandleSubmit = ( values: IUserSearch ) => {
+    setSearch({ ...values, page:1}, { replace: true });
+    getSearchResult(values, 1);
   };
 
   const formik = useFormik({
@@ -31,13 +58,14 @@ const UserSearch = () => {
     onSubmit: onHandleSubmit,
   });
 
-  const { handleChange, handleSubmit, values } = formik;
+  const { handleChange, handleSubmit, values} =
+    formik;
 
   return (
     <>
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
-          <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-4 m-5">
+          <div className="row d-flex justify-content-center border border-secondary border-3 rounded-4 p-4 m-5">
             <h1 className="text-center">Пошук</h1>
             <div className="col-6">
               <InputGroup
@@ -76,16 +104,39 @@ const UserSearch = () => {
                 onChange={handleChange}
                 value={values?.phone}
               />
-              <button type="submit" className="btn btn-primary text-center">
+
+              <button
+                type="submit"
+                className="btn btn-primary align-self-center"
+              >
                 Пошук
               </button>
             </div>
           </div>
         </Form>
       </FormikProvider>
+      {}
       <SearchResult />
+      <div className="d-flex justify-content-center">
+        <ul className="pagination">
+          {countPage().map((el) => (
+            <li key={el} className="page-item active">
+              <button
+                className="page-link"
+                onClick={() => {
+                  handlePagination(el);
+                }}
+              >
+                {el}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
 
 export default UserSearch;
+
+

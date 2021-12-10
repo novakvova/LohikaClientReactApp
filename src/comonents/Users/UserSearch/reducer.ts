@@ -1,13 +1,17 @@
 import {
   IUserActionTypes,
-  IUserSearch,
   IUserSearchState,
   IUserSearchAction,
 } from "./types";
+
+
 const initState: IUserSearchState = {
-	users:[],
-	pages: 0,
-	total:0
+	data:  {
+    users:[],
+	  pages: 1,
+	  total:0,
+  },
+  currentPage:1
 };
 
 export const userSearchReducer = (state = initState, action: IUserSearchAction) => {
