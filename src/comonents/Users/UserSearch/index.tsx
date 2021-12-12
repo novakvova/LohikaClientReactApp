@@ -12,6 +12,7 @@ const UserSearch = () => {
   const { getSearchResult } = useActions();
   let [search, setSearch] = useQueryParam<IUrlSearch>("search");
   useEffect(() => {
+    //setFormikState()
     if (!search) {
       search = {
         id: undefined,
@@ -22,7 +23,9 @@ const UserSearch = () => {
         page: 1,
       };
     } else {
+      setSearch(search, {replace: true})
       getSearchResult(search, search.page);
+      setSubmitting(true);
     }
   }, []);
    
@@ -58,7 +61,8 @@ const UserSearch = () => {
     onSubmit: onHandleSubmit,
   });
 
-  const { handleChange, handleSubmit, values, isSubmitting } = formik;
+  const { handleChange, handleSubmit, values, isSubmitting, setSubmitting } =
+    formik;
 
   return (
     <>
