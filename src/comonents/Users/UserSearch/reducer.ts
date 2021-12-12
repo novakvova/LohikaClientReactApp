@@ -17,7 +17,7 @@ const initState: IUserSearchState = {
 export const userSearchReducer = (state = initState, action: IUserSearchAction) => {
   switch (action.type) {
     case IUserActionTypes.FETCH_USERS:
-      return { ...action.payload };
+      return { ...state, ...action.payload };
 
     default:
       return state;

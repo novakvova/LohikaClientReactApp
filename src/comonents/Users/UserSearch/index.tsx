@@ -8,7 +8,7 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useEffect } from 'react';
 const UserSearch = () => {
 	
-  const {  data:{pages} } = useTypedSelector((store) => store.userSearch);
+  const {  data:{ pages, users} } = useTypedSelector((store) => store.userSearch);
   const { getSearchResult } = useActions();
   let [search, setSearch] = useQueryParam<IUrlSearch>("search");
   useEffect(() => {
@@ -58,8 +58,7 @@ const UserSearch = () => {
     onSubmit: onHandleSubmit,
   });
 
-  const { handleChange, handleSubmit, values} =
-    formik;
+  const { handleChange, handleSubmit, values, isSubmitting } = formik;
 
   return (
     <>
@@ -115,11 +114,12 @@ const UserSearch = () => {
           </div>
         </Form>
       </FormikProvider>
-      {}
-      <SearchResult />
+      {isSubmitting && users.length > 0 && (
+        <>
+        <SearchResult />
       <div className="d-flex justify-content-center">
         <ul className="pagination">
-          {countPage().map((el) => (
+          {pages > 1 && countPage().map((el) => (
             <li key={el} className="page-item active">
               <button
                 className="page-link"
@@ -133,6 +133,9 @@ const UserSearch = () => {
           ))}
         </ul>
       </div>
+      </>
+      )}
+      
     </>
   );
 };
