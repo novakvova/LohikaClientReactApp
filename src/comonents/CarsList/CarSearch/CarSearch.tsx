@@ -49,7 +49,7 @@ const CarSearch = () => {
     setSearchParams(params);
     fetchCarsSearch(params);
   };
-
+  
   const handlePageClick = (data: IClickedButtonData) => {
     setCurrentPage(`${data.selected + 1}`);
     searchParams.set("page", `${data.selected + 1}`);
