@@ -4,9 +4,10 @@ import { useTypedSelector } from "../../hooks/useTypedSelector";
 import EclipseWidget from "../common/eclipse";
 import { useActions } from "../../hooks/useActions";
 
+
 const CarsList: React.FC = () => {
   const { fetchCars } = useActions();
-  const { cars, loading } = useTypedSelector((store) => store.car);
+  const { cars, loading, carsSearchList } = useTypedSelector((store) => store.car);
   const { cartData } = useTypedSelector((store) => store.cart);
 
   React.useEffect(() => {
@@ -21,7 +22,7 @@ const CarsList: React.FC = () => {
     <div className="row d-flex justify-content-around flex-wrap">
       {loading && <EclipseWidget />}
       {!loading &&
-        cars.map(({ id, name, price, image }) => (
+        carsSearchList.products.map(({ id, name, price, image }) => (
           <CarCard
             id={id}
             key={id}
