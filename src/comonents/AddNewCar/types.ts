@@ -18,6 +18,13 @@ export interface SendingCarState {
   nav: boolean;
 }
 
+export interface IAddCar {
+  name: string;
+  priority: string;
+  price: string ;
+  image: string;
+}
+
 export interface SendingCarAction {
   type: SendingCarTypes.SENDING_CAR;
 }
@@ -41,9 +48,4 @@ export type SendingAction =
   | SendingCarErrorAction
   | SendingCarSuccsessStopNavAction;
 
-export interface IAddCar {
-  name: string;
-  priority: string | null;
-  price: string | null;
-  image: string;
-}
+

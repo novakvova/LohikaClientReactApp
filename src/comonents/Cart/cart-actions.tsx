@@ -28,7 +28,6 @@ export const hideCart = () => {
 export const downloadCartData = () => {
   return async (dispatch: Dispatch<CartAction>) => {
     try {
-      console.log('fetch cart data')
       const response = await http.get("api/Carts/list");
       dispatch({
         type: CartActionTypes.FETCH_DATA_TO_CART,

@@ -19,7 +19,7 @@ export const carReducer = (state=initialState, action: CarAction) : CarState => 
         case CarActionTypes.FETCH_CARS_ERROR:
             return { ...state, loading: false, error: action.payload};
         
-        case CarActionTypes.FETCH_SEARCH_CARS: 
+        case CarActionTypes.SEARCH_CARS: 
             return {...state, carsSearchList: {...action.payload}}
 
         default:
