@@ -7,7 +7,7 @@ import { useActions } from "../../hooks/useActions";
 
 const CarsList: React.FC = () => {
   const { fetchCars } = useActions();
-  const { cars, loading, carsSearchList } = useTypedSelector((store) => store.car);
+  const { cars, loading, products } = useTypedSelector((store) => store.car);
   const { cartData } = useTypedSelector((store) => store.cart);
 
   React.useEffect(() => {
@@ -22,7 +22,7 @@ const CarsList: React.FC = () => {
     <div className="row d-flex justify-content-around flex-wrap">
       {loading && <EclipseWidget />}
       {!loading &&
-        carsSearchList.products.map(({ id, name, price, image }) => (
+        products.map(({ id, name, price, image }) => (
           <CarCard
             id={id}
             key={id}

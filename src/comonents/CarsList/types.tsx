@@ -28,6 +28,7 @@ export interface ICarSearchList {
   products: Array<ISearchCar>;
   pages: number;
   total: number;
+  currentPage: number;
 }
 
 export interface ISearchProduct {
@@ -35,13 +36,17 @@ export interface ISearchProduct {
   name?: string;
   price?: string;
   priority?: string;
-  page?: string | null;
+  page?: number|string | null;
 }
 
 export interface CarState {
   cars: Array<ICarItem>;
-  carsSearchList: ICarSearchList;
+  //carsSearchList: ICarSearchList;
+  products: Array<ISearchCar>;
+  pages: number;
+  total: number;
   loading: boolean;
+  currentPage: number;
   error: null | string;
 }
 
