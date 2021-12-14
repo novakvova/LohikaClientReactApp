@@ -12,7 +12,6 @@ const UserSearch = () => {
   const { getSearchResult } = useActions();
   let [search, setSearch] = useQueryParam<IUrlSearch>("search");
   useEffect(() => {
-    //setFormikState()
     if (!search) {
       search = {
         id: undefined,
