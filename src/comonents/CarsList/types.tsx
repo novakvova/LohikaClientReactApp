@@ -2,12 +2,16 @@ export enum CarActionTypes {
   FETCH_CARS = "FETCH_CARS",
   FETCH_CARS_SUCCESS = "FETCH_CARS_SUCCESS",
   FETCH_CARS_ERROR = "FETCH_CARS_ERROR",
-  FETCH_SEARCH_CARS = "FETCH_SEARCH_CARS",
+  SEARCH_CARS = "SEARCH_CARS",
+}
+export interface IClickedButtonData {
+  selected: number;
 }
 
 export interface ISearchCar {
   id: number;
   name: string;
+  priority: number;
   image: string;
   price: number;
 }
@@ -17,20 +21,32 @@ export interface ICarItem {
   name: string;
   price: number;
   image: string;
-  inCart?: boolean
+  inCart?: boolean;
 }
 
 export interface ICarSearchList {
   products: Array<ISearchCar>;
   pages: number;
   total: number;
+  currentPage: number;
 }
 
+export interface ISearchProduct {
+  id?: string;
+  name?: string;
+  price?: string;
+  priority?: string;
+  page?: number|string | null;
+}
 
 export interface CarState {
   cars: Array<ICarItem>;
-  carsSearchList: ICarSearchList;
+  //carsSearchList: ICarSearchList;
+  products: Array<ISearchCar>;
+  pages: number;
+  total: number;
   loading: boolean;
+  currentPage: number;
   error: null | string;
 }
 
@@ -49,7 +65,7 @@ export interface FetchErrorsCarAction {
 }
 
 export interface FetchCarsSearchAction {
-  type: CarActionTypes.FETCH_SEARCH_CARS;
+  type: CarActionTypes.SEARCH_CARS;
   payload: ICarSearchList;
 }
 

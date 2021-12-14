@@ -1,10 +1,7 @@
 import * as React from "react";
-
 import { useNavigate } from "react-router-dom";
 import InputGroup from "../common/InputGroup";
-
 import { useActions } from "../../hooks/useActions";
-
 import { IAddCar } from "./types";
 import { useFormik, FormikHelpers } from "formik";
 import { AddCarSchema as validationSchema } from "./validation";

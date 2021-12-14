@@ -1,42 +1,44 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
 import { ICartData } from "../Cart/types";
-import { CarAction, CarActionTypes, ICarSearchList } from "./types";
+import {
+  CarAction,
+  CarActionTypes,
+  ICarSearchList,
+  ISearchProduct,
+} from "./types";
 
 export const fetchCars = () => {
   return async (dispatch: Dispatch<CarAction>) => {
     try {
       dispatch({ type: CarActionTypes.FETCH_CARS });
       const response = await http.get<Array<ICartData>>("api/Products/list");
-      
+
       dispatch({
         type: CarActionTypes.FETCH_CARS_SUCCESS,
         payload: response.data,
       });
     } catch (error) {
-      
       dispatch({ type: CarActionTypes.FETCH_CARS_ERROR, payload: "Error" });
     }
   };
 };
 
 export const fetchCarsSearch =
-  (searchStr: string) => async (dispatch: Dispatch<CarAction>) => {
+  (searchParams: ISearchProduct) => async (dispatch: Dispatch<CarAction>) => {
+    // console.log(searchParams);
     try {
-      const response = await http.post<ICarSearchList>(
-        "api/Products/search",
-        searchStr
-      );
-
+      const response = await http.get<ICarSearchList>("api/Products/search", {
+        params: searchParams,
+      });
+      // console.log(response.data);
       dispatch({
-        type: CarActionTypes.FETCH_SEARCH_CARS,
+        type: CarActionTypes.SEARCH_CARS,
         payload: response.data,
       });
 
-      console.log("response search", response);
       return Promise.resolve();
     } catch (error) {
-      console.log(error);
       return Promise.reject();
     }
   };
