@@ -2,52 +2,25 @@ import { useEffect, useState } from 'react';
 import { useActions } from '../../../hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { v4 as uuid } from "uuid";
 import Modal from '../../common/Modal';
 import './index.css';
-import { v4 as uuid } from "uuid";
 import EclipseWidget from '../../common/eclipse';
+import UserItem from './userItem';
+import { UserInfo } from '../types';
 
 const Users = () => {
   const { users, loading } = useTypedSelector( store => store.userCrud)
-  const [idDel, setIdDel]  = useState<number>(0)
   const { fetchUsers, deleteUser, getUserById, deleteFlashMessage, addFlashMessage } = useActions();
   const navigator = useNavigate();
 
 
-  const modalClick = async (bool: boolean) => {
-    if (bool) {
-      const response = await deleteUser(idDel);
-      const status = response as number;
-      
-      if (status === 404){
-        await addFlashMessage({
-          type: "error",
-          message: "Даного користувача не знайдено",
-        });
-      }
-      else if (status === 200){
-        await addFlashMessage({
-          type: "success",
-          message: "Користувача видалено",
-        });
-      }
-      else {
-        await addFlashMessage({
-          type: "error",
-          message: "Щось пішло не так",
-        });
-      }
-      setTimeout(() => {deleteFlashMessage()}, 2000)
-    };    
-  }
   
   useEffect(() => {
     fetchUsers();
   }, []);
 
-const handlerInfo = (id:number) => {
-  navigator(`${id}`);
-}
+
 
 	return (
     <div className="contgainer">
@@ -64,7 +37,6 @@ const handlerInfo = (id:number) => {
         Пошук
       </button>
       <h1 className="text-center m-2">Користувачі</h1>
-      <Modal text="Дійсно видалити" click={modalClick} />
       <table className="table align-middle table-striped table-hover">
         <thead>
           <tr>
@@ -79,51 +51,15 @@ const handlerInfo = (id:number) => {
           </tr>
         </thead>
 
+
         <tbody>
-          {users.map(({ id, firstName, photo, phone, email }) => (
-            <tr key={id}>
-              <th scope="row">{id}</th>
-              <td>{firstName}</td>
-              <td>
-                <div className="size">
-                  <img
-                    src={`https://vovalohika.tk${photo}?t=${uuid()}`}
-                    alt="Avatar"
-                  />
-                </div>
-              </td>
-              <td>{phone}</td>
-              <td>{email}</td>
-              <td>
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handlerInfo(id)}
-                >
-                  Інформація
-                </button>
-              </td>
-              <td>
-                <button
-                  className="btn btn-success btn-sm"
-                  onClick={async () => {
-                    await getUserById(id);
-                    await navigator(`edit/${id}`);
-                  }}
-                >
-                  Змінити
-                </button>
-              </td>
-              <td>
-                <button
-                  className="btn btn-danger btn-sm"
-                  data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
-                  onClick={() => setIdDel(id)}
-                >
-                  Видалити
-                </button>
-              </td>
-            </tr>
+          {users.map((userItem: UserInfo, idx) => (
+            <>
+              <UserItem key={uuid()} userItem={userItem} />
+              {console.log(userItem.id)}
+
+              <Modal key={idx} text="Дійсно видалити" id={userItem.id} />
+            </>
           ))}
         </tbody>
       </table>

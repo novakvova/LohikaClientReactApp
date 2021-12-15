@@ -1,10 +1,14 @@
+import { useActions } from '../../../hooks/useActions';
 
 interface Props {
   text: string;
-  click: (response: boolean) => void;
+  //click: (response: boolean) => void;
+  id: number
 }
 
-const Modal: React.FC<Props> = ({ text, click }) => {
+const Modal: React.FC<Props> = ({ text, id }) => {
+  const { deleteUser } = useActions();
+  
 
 return (
   <div className="addEmployee">
@@ -28,7 +32,7 @@ return (
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              onClick={() => click(false)}
+              onClick={() => {}}
             ></button>
           </div>
           <div className="modal-footer">
@@ -36,7 +40,7 @@ return (
               type="button"
               className="btn btn-danger"
               data-bs-dismiss="modal"
-              onClick={() => click(true)}
+              onClick={() => console.log(id)}
             >
               Так
             </button>
@@ -44,7 +48,7 @@ return (
               type="button"
               className="btn btn-primary"
               data-bs-dismiss="modal"
-              onClick={() => click(false)}
+              onClick={() => {}}
             >
               Ні
             </button>

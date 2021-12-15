@@ -49,6 +49,7 @@ export const deleteUser = (id: number): any => {
         type: DeleteUserActionTypes.DELETE_USER,
       });
       const response = await http.delete(`api/Users/delete/${id}`);
+      
       if (response.status === 200) {
         dispatch({
           type: DeleteUserActionTypes.DELETE_USER_SUCCESS,
