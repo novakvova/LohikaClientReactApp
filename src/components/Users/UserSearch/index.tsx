@@ -42,6 +42,7 @@ const UserSearch = () => {
  const filterNonNull = (obj: ISearchUser) => {
    return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
  };
+ 
   const onHandleSubmit = (values: ISearchUser) => {
     const searchData: ISearchUser = {
       ...values,

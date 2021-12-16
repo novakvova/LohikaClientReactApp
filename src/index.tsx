@@ -8,9 +8,9 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { setAuthUserByToken } from "./comonents/auth/Login/action";
-import { downloadCartData } from "./comonents/Cart/cart-actions";
-import FleshMessages from './comonents/FleshMessages';
+import { setAuthUserByToken } from "./components/auth/Login/action";
+import { downloadCartData } from "./components/Cart/cart-actions";
+import FleshMessages from './components/FleshMessages';
 
 
 
