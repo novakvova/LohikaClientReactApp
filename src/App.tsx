@@ -16,7 +16,7 @@ import EditPage from "./comonents/Users/EditPage";
 import { useActions } from "./hooks/useActions";
 import { useEffect } from "react";
 import CreatePage from './comonents/Users/CreatePage';
-
+import UserSearch from './comonents/Users/UserSearch';
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -40,6 +40,7 @@ function App() {
           <Route path="/users/:id" element={<UserDetailPage />} />
           <Route path="/users/edit/:id" element={<EditPage />} />
           <Route path="/users/create" element={<CreatePage />} />
+          <Route path="/users/search" element={<UserSearch />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

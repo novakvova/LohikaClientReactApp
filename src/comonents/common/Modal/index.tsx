@@ -34,7 +34,7 @@ return (
           <div className="modal-footer">
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-danger"
               data-bs-dismiss="modal"
               onClick={() => click(true)}
             >

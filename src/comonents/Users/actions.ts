@@ -109,7 +109,7 @@ export const updateUser = (data:UserInfo, formData:FormData) => {
         type: UpdateUserActionTypes.UPDATE_USER
       });
       
-      const response = await http.put<UserInfo>("/api/Users/edit", formData, {
+      await http.put<UserInfo>("/api/Users/edit", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
