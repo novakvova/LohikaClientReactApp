@@ -1,144 +1,179 @@
 import { Form, FormikProvider, useFormik } from 'formik';
 import InputGroup from '../../common/InputGroup';
-import { IUrlSearch, IUserSearch } from './types';
-import { useQueryParam } from '../../../hooks/useQueryParam';
+import {  ISearchUser } from "../types/SearchUsers";
 import { useActions } from '../../../hooks/useActions';
-import SearchResult from './SearchResult';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import qs from 'qs';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { useEffect } from 'react';
+import classNames from 'classnames';
+import Users from '../UserList';
+import EclipseWidget from '../../common/eclipse';
+import { Helmet } from 'react-helmet';
+//import Pag from '../pag';
+
 const UserSearch = () => {
-	
-  const {  data:{ pages, users} } = useTypedSelector((store) => store.userSearch);
   const { getSearchResult } = useActions();
-  let [search, setSearch] = useQueryParam<IUrlSearch>("search");
+  const { pages, loading } = useTypedSelector( store => store.userCrud)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [toogleSearch, setToggleSearch] = useState(false);
+  const navigator = useNavigate();
+
+  const [search, setSearch] = useState<ISearchUser>({
+    id: searchParams.get("id") || "",
+    firstName: searchParams.get("firstName") || "",
+    secondName: searchParams.get("secondName") || "",
+    phone: searchParams.get("phone") || "",
+    email: searchParams.get("email") || "" ,
+    page: searchParams.get("page"),
+  });
+
   useEffect(() => {
-    if (!search) {
-      search = {
-        id: undefined,
-        firstName: "",
-        secondName: "",
-        email: "",
-        phone: "",
-        page: 1,
-      };
-    } else {
-      setSearch(search, {replace: true})
-      getSearchResult(search, search.page);
-      setSubmitting(true);
-    }
-  }, []);
+    getSearchResult(search);
+    console.log(search);
+    if (Object.keys(filterNonNull(search)).length !== 0) setToggleSearch(true);
+  }, [search]);
+
+  const buttons = [];
+  for (var i = 1; i <= pages; i++) {
+    buttons.push(i);
+  }
    
-
-   const countPage = (): Array<number> => {
-     let page: Array<number> = [];
-     for (let i = 0; i < pages; i++) {
-       page[i] = i + 1;
-     }
-     return page;
-   };
-
-   const handlePagination = (page: number) => {
-      setSearch({ ...values, page }, { replace: true });
-      getSearchResult(values, page);
-   };
-  
-  const initialValues: IUserSearch = {
-    id: search?.id,
-    firstName: search?.firstName,
-    secondName: search?.secondName,
-    email: search?.email,
-    phone: search?.phone,
-  };
-  
-  const onHandleSubmit = ( values: IUserSearch ) => {
-    setSearch({ ...values, page:1}, { replace: true });
-    getSearchResult(values, 1);
+ const filterNonNull = (obj: ISearchUser) => {
+   return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
+ };
+  const onHandleSubmit = (values: ISearchUser) => {
+    const searchData: ISearchUser = {
+      ...values,
+      page: 1,
+    };
+    setSearchParams(qs.stringify(filterNonNull(searchData)));
+    setSearch(searchData);
   };
 
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues: search,
     onSubmit: onHandleSubmit,
   });
 
-  const { handleChange, handleSubmit, values, isSubmitting, setSubmitting } =
+  const { handleChange, handleSubmit, values } =
     formik;
 
   return (
     <>
-      <FormikProvider value={formik}>
-        <Form onSubmit={handleSubmit}>
-          <div className="row d-flex justify-content-center border border-secondary border-3 rounded-4 p-4 m-5">
-            <h1 className="text-center">Пошук</h1>
-            <div className="col-6">
-              <InputGroup
-                field="id"
-                label="Id"
-                type="number"
-                onChange={handleChange}
-                value={values?.id as number}
-              />
+      <Helmet>
+        <title>Користувачі</title>
+      </Helmet>
+      {/* <Pag /> */}
+      <button
+        className="btn btn-primary m-3"
+        onClick={() => navigator("/users/create")}
+      >
+        Добавати користувача
+      </button>
+      <button
+        className="btn btn-primary m-3"
+        onClick={() => setToggleSearch((prev) => !prev)}
+      >
+        Пошук
+      </button>
+      {toogleSearch && (
+        <FormikProvider value={formik}>
+          <Form onSubmit={handleSubmit}>
+            <div className="row d-flex justify-content-center border border-secondary border-3 rounded-4 p-4 m-5">
+              <h1 className="text-center">Пошук</h1>
+              <div className="col-4">
+                <InputGroup
+                  field="id"
+                  label="Id"
+                  type="number"
+                  onChange={handleChange}
+                  value={values?.id}
+                />
 
-              <InputGroup
-                field="firstName"
-                label="Ім'я"
-                onChange={handleChange}
-                value={values?.firstName}
-              />
+                <InputGroup
+                  field="firstName"
+                  label="Ім'я"
+                  onChange={handleChange}
+                  value={values?.firstName}
+                />
+              </div>
+              <div className="col-4">
+                <InputGroup
+                  field="secondName"
+                  label="Прізвище"
+                  onChange={handleChange}
+                  value={values?.secondName}
+                />
 
-              <InputGroup
-                field="secondName"
-                label="Прізвище"
-                onChange={handleChange}
-                value={values?.secondName}
-              />
+                <InputGroup
+                  field="email"
+                  label="Email"
+                  onChange={handleChange}
+                  value={values?.email}
+                />
+              </div>
+              <div className="col-4">
+                <InputGroup
+                  field="phone"
+                  label="Телефон"
+                  onChange={handleChange}
+                  value={values?.phone}
+                />
+
+                <button
+                  type="submit"
+                  className="btn btn-primary align-self-center"
+                >
+                  Пошук
+                </button>
+              </div>
             </div>
-            <div className="col-6">
-              <InputGroup
-                field="email"
-                label="Email"
-                onChange={handleChange}
-                value={values?.email}
-              />
-
-              <InputGroup
-                field="phone"
-                label="Телефон"
-                onChange={handleChange}
-                value={values?.phone}
-              />
-
-              <button
-                type="submit"
-                className="btn btn-primary align-self-center"
-              >
-                Пошук
-              </button>
-            </div>
-          </div>
-        </Form>
-      </FormikProvider>
-      {isSubmitting && users.length > 0 && (
-        <>
-        <SearchResult />
-      <div className="d-flex justify-content-center">
-        <ul className="pagination">
-          {pages > 1 && countPage().map((el) => (
-            <li key={el} className="page-item active">
-              <button
-                className="page-link"
-                onClick={() => {
-                  handlePagination(el);
-                }}
-              >
-                {el}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      </>
+          </Form>
+        </FormikProvider>
       )}
-      
+      <Users />
+      <ul className="pagination d-flex justify-content-center">
+        <li className="page-item">
+          <Link
+            className="page-link"
+            to={"?" + qs.stringify(filterNonNull({}))}
+          >
+            &laquo;
+          </Link>
+        </li>
+        {buttons.map((item, key) => {
+          const page: ISearchUser = {
+            ...search,
+            page: item,
+          };
+          return (
+            <li
+              key={key}
+              onClick={() => setSearch(page)}
+              className={classNames("page-item", {
+                // active: item == currentPage,
+              })}
+            >
+              <Link
+                className="page-link"
+                to={"?" + qs.stringify(filterNonNull(page))}
+              >
+                {item}
+              </Link>
+            </li>
+          );
+        })}
+        <li className="page-item">
+          <Link
+            className="page-link"
+            to={"?" + qs.stringify(filterNonNull({}))}
+          >
+            &raquo;
+          </Link>
+        </li>
+      </ul>
+      {loading && <EclipseWidget />}
     </>
   );
 };

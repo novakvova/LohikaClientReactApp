@@ -2,8 +2,7 @@ import { useActions } from '../../../hooks/useActions';
 import { v4 as uuid } from "uuid";
 import { UserInfo } from '../types';
 import { useNavigate } from 'react-router-dom';
-import { addFlashMessage, deleteFlashMessage } from '../../FleshMessages/actions';
-import Modal from '../../common/Modal';
+import Modals from '../../common/Modal';
 
 interface Props {
   userItem: UserInfo;
@@ -11,40 +10,8 @@ interface Props {
 
 
 const UserItem: React.FC<Props> = ({userItem:{id,firstName, photo, phone, email}}) => {
-  const { fetchUsers, deleteUser, getUserById } = useActions();
+  const { deleteUser, getUserById } = useActions();
   const navigator = useNavigate();
-
-
-  // const modalClick = async (bool: boolean) => {
-  //   // if (bool) {
-  //   //   const response = await deleteUser(id);
-  //   //   const status = response as number;
-
-  //   //   if (status === 404){
-  //   //     await addFlashMessage({
-  //   //       type: "error",
-  //   //       message: "Даного користувача не знайдено",
-  //   //     });
-  //   //   }
-  //   //   else if (status === 200){
-  //   //     await addFlashMessage({
-  //   //       type: "success",
-  //   //       message: "Користувача видалено",
-  //   //     });
-  //   //   }
-  //   //   else {
-  //   //     await addFlashMessage({
-  //   //       type: "error",
-  //   //       message: "Щось пішло не так",
-  //   //     });
-  //   //   }
-  //   //   setTimeout(() => {deleteFlashMessage()}, 2000)
-  //   // };
-	// console.log(bool);
-	
-	// return bool
-  // };
-
 
   const handlerInfo = (id: number) => {
     navigator(`${id}`);
@@ -80,13 +47,11 @@ const UserItem: React.FC<Props> = ({userItem:{id,firstName, photo, phone, email}
         </button>
       </td>
       <td>
-        <button
-          className="btn btn-danger btn-sm"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-       >
-          Видалити
-        </button>
+        <Modals
+          id={id}
+          text={"Підтвердіть видалення"}
+          deleteFunc={deleteUser}
+        />
       </td>
     </tr>
   );

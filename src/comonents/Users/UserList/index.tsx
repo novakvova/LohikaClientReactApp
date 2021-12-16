@@ -1,41 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useActions } from '../../../hooks/useActions';
-import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { v4 as uuid } from "uuid";
-import Modal from '../../common/Modal';
 import './index.css';
-import EclipseWidget from '../../common/eclipse';
 import UserItem from './userItem';
 import { UserInfo } from '../types';
 
 const Users = () => {
-  const { users, loading } = useTypedSelector( store => store.userCrud)
-  const { fetchUsers, deleteUser, getUserById, deleteFlashMessage, addFlashMessage } = useActions();
-  const navigator = useNavigate();
-
-
+  const { users } = useTypedSelector( store => store.userCrud)
+  const { getSearchResult } = useActions();
   
   useEffect(() => {
-    fetchUsers();
+    getSearchResult({});
   }, []);
 
-
-
 	return (
-    <div className="contgainer">
-      <button
-        className="btn btn-primary m-3"
-        onClick={() => navigator("/users/create")}
-      >
-        Добавати користувача
-      </button>
-      <button
-        className="btn btn-primary m-3"
-        onClick={() => navigator("/users/search")}
-      >
-        Пошук
-      </button>
+    <div className="container">
       <h1 className="text-center m-2">Користувачі</h1>
       <table className="table align-middle table-striped table-hover">
         <thead>
@@ -51,19 +30,12 @@ const Users = () => {
           </tr>
         </thead>
 
-
         <tbody>
           {users.map((userItem: UserInfo, idx) => (
-            <>
-              <UserItem key={uuid()} userItem={userItem} />
-              {console.log(userItem.id)}
-
-              <Modal key={idx} text="Дійсно видалити" id={userItem.id} />
-            </>
+              <UserItem key={idx} userItem={userItem} />
           ))}
         </tbody>
       </table>
-      {loading && <EclipseWidget />}
     </div>
   );
 }

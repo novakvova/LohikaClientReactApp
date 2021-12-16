@@ -5,8 +5,10 @@ import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import EclipseWidget from '../../common/eclipse';
 import InputGroup from '../../common/InputGroup';
-import {  UpdateErrors, UserInfo } from '../types';
+import { UserInfo } from '../types';
 import { EditUserSchema } from './validation';
+import { UpdateErrors } from "../types/UpdateUser"
+import { Helmet } from 'react-helmet';
 
 
 const EditPage = () => {
@@ -69,6 +71,9 @@ const EditPage = () => {
 
 	return (
     <div className="row">
+      <Helmet>
+        <title>Редагувати користувача</title>
+      </Helmet>
       {loading && <EclipseWidget />}
       {!loading && (
         <>
