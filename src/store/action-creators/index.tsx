@@ -6,7 +6,6 @@ import * as UsersActionCreators from '../../comonents/Users/actions'
 import * as SendingCarActionCreators from "../../comonents/AddNewCar/addCar";
 import * as CartActionCreators from "../../comonents/Cart/cart-actions";
 import * as FleshMessagesActionCreator from "../../comonents/FleshMessages/actions"
-import * as UserSearchActionCreator from "../../comonents/Users/UserSearch/action"
 
 const actions = {
   ...CarActionCreators,
@@ -17,7 +16,6 @@ const actions = {
   ...ProfileActionCreators,
   ...UsersActionCreators,
   ...FleshMessagesActionCreator,
-  ...UserSearchActionCreator,
 };
  
 export default  actions;
