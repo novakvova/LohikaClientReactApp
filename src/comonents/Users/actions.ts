@@ -9,22 +9,26 @@ import {
   CreateUserActions,
   ICreateUser,
 } from "./types/CreateUser";
+
 import {
   GetUserActionTypes,
   GetUserActions,
   IGetUser,
 } from "./types/GetUserById";
+
 import {
   UpdateUserActions,
   UpdateUserActionTypes,
   UpdateErrors,
 } from "./types/UpdateUser";
+
 import {
   ISearchUserAction,
   ISearchData,
   ISearchUserActionTypes,
   ISearchUser,
 } from "./types/SearchUsers";
+
 import { UserInfo, IStatus } from "./types";
 
 export const fetchUsers = () => {
