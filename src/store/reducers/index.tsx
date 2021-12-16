@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
-import { carReducer } from "../../comonents/CarsList/car-reducer";
-import { authReducer } from "../../comonents/auth/Login/reducer";
-import { registerReducer } from "../../comonents/auth/Register/reducer";
-import { profileReducer } from '../../comonents/Profile/reducer';
-import { usersReducer } from "../../comonents/Users/reducer";
-import { sendingCarReducer } from "../../comonents/AddNewCar/addCar-reducer";
-import { cartReducer } from "../../comonents/Cart/cart-reduser";
-import { fleshMessagesReducer } from '../../comonents/FleshMessages/reducer';
+import { carReducer } from "../../components/CarsList/car-reducer";
+import { authReducer } from "../../components/auth/Login/reducer";
+import { registerReducer } from "../../components/auth/Register/reducer";
+import { profileReducer } from '../../components/Profile/reducer';
+import { usersReducer } from "../../components/Users/reducer";
+import { sendingCarReducer } from "../../components/AddNewCar/addCar-reducer";
+import { cartReducer } from "../../components/Cart/cart-reduser";
+import { fleshMessagesReducer } from '../../components/FleshMessages/reducer';
 
 export const rootReducer = combineReducers({
   car: carReducer,

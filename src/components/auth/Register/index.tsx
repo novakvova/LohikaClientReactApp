@@ -23,11 +23,11 @@ const RegisterPage = () => {
     confirmPassword: "",
   };
 
-  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setFieldValue("photo", (e.target as any).files[0]);
-    const file = (e.target as any).files[0]
-    setImg( URL.createObjectURL(file));
-  }
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.item(0);
+      setFieldValue("photo", file);
+      setImg(URL.createObjectURL(file as Blob));
+  };
     
   const onHandleSubmit = async (values: IRegister,
     { setFieldError }: FormikHelpers<IRegister>
@@ -37,11 +37,11 @@ const RegisterPage = () => {
       formData.append(key, value)
     );
     
+      setLoading(true);
       try {
-        setLoading(true);
         await RegisterUser(formData);
         await navigator("/");
-        await setLoading(false);
+        setLoading(false);
       } catch (err) {
         setLoading(false);
         const serverErrors = err as RegisterError;
