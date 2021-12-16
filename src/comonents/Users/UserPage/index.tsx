@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { useNavigate, useParams } from 'react-router';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import EclipseWidget from '../../common/eclipse';
 import NoMatch from '../../NoMatch';
-import { IGetUser } from '../types';
+import { IGetUser } from '../types/GetUserById';
 
 const UserDetailPage = () => {
 	let { id } = useParams() as any; 
@@ -43,6 +44,9 @@ const UserDetailPage = () => {
 
     return (
       <section>
+        <Helmet>
+          <title>Інформація про користувача</title>
+        </Helmet>
         <div className="container py-5 mt-3 ">
           <h2 className="text-center pb-5">Інформація</h2>
           {loading && <EclipseWidget />}

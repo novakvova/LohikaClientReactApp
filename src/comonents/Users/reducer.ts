@@ -1,17 +1,10 @@
-import { 
-  UsersState, 
-  UsersActions, 
-  UsersActionTypes, 
-  DeleteUserActions, 
-  DeleteUserActionTypes, 
-  GetUserActionTypes, 
-  GetUserActions,
-  UserInfo,
-  UpdateUserActionTypes,
-  UpdateUserActions,
-  CreateUserActionTypes,
-  CreateUserActions} from "./types";
-
+import { UsersState, UserInfo } from "./types";
+import { CreateUserActionTypes, CreateUserActions } from "./types/CreateUser"
+import { UsersActions, UsersActionTypes } from "./types/GetAllUser";
+import { DeleteUserActions, DeleteUserActionTypes } from "./types/DeleteUser"
+import { UpdateUserActionTypes, UpdateUserActions } from "./types/UpdateUser";
+import { GetUserActionTypes, GetUserActions } from "./types/GetUserById"
+import { ISearchUserAction, ISearchUserActionTypes } from './types/SearchUsers';
 
   const user: UserInfo = {
     id: 0,
@@ -27,6 +20,9 @@ const initialState: UsersState = {
   userData: user,
   loading: false,
   error: null,
+  currentPage: 1,
+  pages: 1,
+  total: 0
 };
 export const usersReducer = (
   state = initialState,
@@ -36,6 +32,7 @@ export const usersReducer = (
     | GetUserActions
     | UpdateUserActions
     | CreateUserActions
+    | ISearchUserAction
 ) => {
   switch (action.type) {
     case UsersActionTypes.FETCH_USERS:
@@ -81,9 +78,18 @@ export const usersReducer = (
 
     case UpdateUserActionTypes.UPDATE_USER_ERROR:
       return { ...state, loading: false, error: action.payload };
-      
+
     case CreateUserActionTypes.CREATE_USER_SUCCESS:
-      return {...state}
+      return { ...state };
+
+    case ISearchUserActionTypes.SEARCH_USERS:
+      return { ...state, loading: true };
+
+    case ISearchUserActionTypes.SEARCH_USERS_SUCCESS:
+      return { ...state, ...action.payload, loading: false };
+
+    case ISearchUserActionTypes.SEARCH_USERS_ERROR:
+      return { ...state, loading: false };
 
     default:
       return state;

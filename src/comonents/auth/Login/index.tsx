@@ -6,6 +6,7 @@ import { LoginSchema } from "./validation";
 import { ILogin, ILoginError } from "./types";
 import EclipseWidget from "../../common/eclipse";
 import { useFormik, Form, FormikProvider, FormikHelpers, ErrorMessage } from "formik";
+import { Helmet } from 'react-helmet';
 
 const LoginPage: React.FC = () => {
 
@@ -50,15 +51,20 @@ const { errors, touched, handleChange, handleSubmit } = formik;
   
   return (
     <>
+      <Helmet>
+        <title>Вхід</title>
+      </Helmet>
       <div className="row">
         <div className="col-3"></div>
         <div className="col-6">
           <h1 className="text-center mt-4">Вхід</h1>
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
-              {errors.invalid !== undefined && <div className="alert alert-danger text-center" role="alert">
-                <ErrorMessage name="invalid" />
-              </div>}
+              {errors.invalid !== undefined && (
+                <div className="alert alert-danger text-center" role="alert">
+                  <ErrorMessage name="invalid" />
+                </div>
+              )}
 
               <InputGroup
                 field="email"

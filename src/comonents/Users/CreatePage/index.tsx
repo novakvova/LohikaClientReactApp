@@ -3,11 +3,12 @@ import InputGroup from "../../common/InputGroup";
 import { useActions } from "../../../hooks/useActions";
 import { useNavigate } from "react-router";
 import { CreateUserSchema } from "./validation";
-import { ICreateUser, ICreateUserError, IStatus } from "../types";
+import { ICreateUser, ICreateUserError } from "../types/CreateUser";
+import { IStatus } from "../types" 
 import EclipseWidget from "../../common/eclipse";
 import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-
+import { Helmet } from 'react-helmet';
 
 const CreateUser = () => {
   const { CreateUser, addFlashMessage, deleteFlashMessage } = useActions();
@@ -66,6 +67,9 @@ const CreateUser = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Добавити користувача</title>
+      </Helmet>
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
           <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-4 m-5">

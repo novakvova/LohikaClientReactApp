@@ -6,6 +6,7 @@ import { RegisterSchema } from './validation';
 import { IRegister, RegisterError } from './types';
 import EclipseWidget from '../../common/eclipse';
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { Helmet } from 'react-helmet';
 
 const RegisterPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -70,6 +71,9 @@ const RegisterPage = () => {
   
   return (
     <div className="row">
+      <Helmet>
+        <title>Реєстрація</title>
+      </Helmet>
       <div className="col-3">
         {img && (
           <div className="card mt-5">
