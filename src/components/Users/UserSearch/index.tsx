@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Users from '../UserList';
 import EclipseWidget from '../../common/eclipse';
 import { Helmet } from 'react-helmet';
+import { cpuUsage } from 'process';
 
 const UserSearch = () => {
   const { getSearchResult } = useActions();
@@ -161,42 +162,60 @@ const UserSearch = () => {
           </Link>
         </li>
         {currentPage > 3 && (
-          <li className="page-item m-1">
+          <li
+            className="page-item m-1"
+            onClick={() => setSearch({ ...search, page: currentPage - 3 })}
+          >
             <Link
               className="page-link"
-              to={"?" +qs.stringify(filterNonNull({ ...search, page: currentPage + 3 }))}
+              to={
+                "?" +
+                qs.stringify(
+                  filterNonNull({ ...search, page: currentPage - 3 })
+                )
+              }
             >
               ...
             </Link>
           </li>
         )}
-        {buttons.map((item, key) => {
-          const page: ISearchUser = {
-            ...search,
-            page: item,
-          };
-          return (
-            <li
-              key={key}
-              onClick={() => setSearch(page)}
-              className={classNames("page-item m-1", {
-                active: item == currentPage,
-              })}
-            >
-              <Link
-                className="page-link"
-                to={"?" +qs.stringify(filterNonNull({ ...search, page: item }))}
+        {buttons
+          .filter((el) => el > currentPage - 3 && el < currentPage + 3)
+          .map((item, key) => {
+            const page: ISearchUser = {
+              ...search,
+              page: item,
+            };
+            return (
+              <li
+                key={key}
+                onClick={() => setSearch(page)}
+                className={classNames("page-item m-1", {
+                  active: item == currentPage,
+                })}
               >
-                {item}
-              </Link>
-            </li>
-          );
-        })}
+                <Link
+                  className="page-link"
+                  to={
+                    "?" + qs.stringify(filterNonNull({ ...search, page: item }))
+                  }
+                >
+                  {item}
+                </Link>
+              </li>
+            );
+          })}
         {currentPage < pages - 3 && (
-          <li className="page-item m-1">
+          <li
+            className="page-item m-1"
+            onClick={() => setSearch({ ...search, page: currentPage + 3 })}
+          >
             <Link
               className="page-link"
-              to={"?" + qs.stringify(filterNonNull({ ...search, page: currentPage - 3 })
+              to={
+                "?" +
+                qs.stringify(
+                  filterNonNull({ ...search, page: currentPage + 3 })
                 )
               }
             >
@@ -232,7 +251,7 @@ const UserSearch = () => {
             className="page-link"
             to={
               "?" +
-              qs.stringify(filterNonNull({ ...search, page: currentPage+1 }))
+              qs.stringify(filterNonNull({ ...search, page: currentPage + 1 }))
             }
           >
             &raquo;
