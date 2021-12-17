@@ -25,6 +25,7 @@ export interface ISearchData {
   users: UserInfo[];
   pages: number;
   total: number;
+  currentPage: number;
 };
 
 export interface ISearchUser {
