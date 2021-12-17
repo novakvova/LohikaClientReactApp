@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import Users from '../UserList';
 import EclipseWidget from '../../common/eclipse';
 import { Helmet } from 'react-helmet';
-import { cpuUsage } from 'process';
 
 const UserSearch = () => {
   const { getSearchResult } = useActions();
@@ -191,7 +190,7 @@ const UserSearch = () => {
                 key={key}
                 onClick={() => setSearch(page)}
                 className={classNames("page-item m-1", {
-                  active: item == currentPage,
+                  active: item === currentPage,
                 })}
               >
                 <Link

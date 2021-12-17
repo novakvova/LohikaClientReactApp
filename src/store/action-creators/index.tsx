@@ -6,6 +6,7 @@ import * as UsersActionCreators from '../../components/Users/actions'
 import * as SendingCarActionCreators from "../../components/AddNewCar/addCar";
 import * as CartActionCreators from "../../components/Cart/cart-actions";
 import * as FleshMessagesActionCreator from "../../components/FleshMessages/actions"
+import * as RecoverPasswordActionCreator from "../../components/auth/recoverPassword/action"
 
 const actions = {
   ...CarActionCreators,
@@ -16,6 +17,7 @@ const actions = {
   ...ProfileActionCreators,
   ...UsersActionCreators,
   ...FleshMessagesActionCreator,
+  ...RecoverPasswordActionCreator,
 };
  
 export default  actions;

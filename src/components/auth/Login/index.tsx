@@ -7,6 +7,7 @@ import { ILogin, ILoginError } from "./types";
 import EclipseWidget from "../../common/eclipse";
 import { useFormik, Form, FormikProvider, FormikHelpers, ErrorMessage } from "formik";
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
 
@@ -83,7 +84,7 @@ const { errors, touched, handleChange, handleSubmit } = formik;
                 touched={touched.password}
                 onChange={handleChange}
               />
-
+              <Link to="/recoverPassword">Забув пароль?</Link>
               <div className="text-center">
                 <button
                   type="submit"
