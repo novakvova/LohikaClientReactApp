@@ -1,12 +1,11 @@
-import * as CarActionCreators from "../../comonents/CarsList/car-actions";
-import * as AuthActionCreators from "../../comonents/auth/Login/action";
-import * as RegActionCreators from "../../comonents/auth/Register/actions";
-import * as ProfileActionCreators from '../../comonents/Profile/actions';
-import * as UsersActionCreators from '../../comonents/Users/actions'
-import * as SendingCarActionCreators from "../../comonents/AddNewCar/addCar";
-import * as CartActionCreators from "../../comonents/Cart/cart-actions";
-import * as FleshMessagesActionCreator from "../../comonents/FleshMessages/actions"
-import * as UserSearchActionCreator from "../../comonents/Users/UserSearch/action"
+import * as CarActionCreators from "../../components/CarsList/car-actions";
+import * as AuthActionCreators from "../../components/auth/Login/action";
+import * as RegActionCreators from "../../components/auth/Register/actions";
+import * as ProfileActionCreators from '../../components/Profile/actions';
+import * as UsersActionCreators from '../../components/Users/actions'
+import * as SendingCarActionCreators from "../../components/AddNewCar/addCar";
+import * as CartActionCreators from "../../components/Cart/cart-actions";
+import * as FleshMessagesActionCreator from "../../components/FleshMessages/actions"
 
 const actions = {
   ...CarActionCreators,
@@ -17,7 +16,6 @@ const actions = {
   ...ProfileActionCreators,
   ...UsersActionCreators,
   ...FleshMessagesActionCreator,
-  ...UserSearchActionCreator,
 };
  
 export default  actions;

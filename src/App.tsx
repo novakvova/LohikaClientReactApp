@@ -1,22 +1,22 @@
 import { Route, Routes } from "react-router";
 import "./App.css";
-import Home from "./comonents/Home";
-import Register from "./comonents/auth/Register/index";
-import DefaultLayout from "./comonents/containers/DefaultLayout";
-import AddNewCar from "./comonents/AddNewCar";
-import LoginPage from "./comonents/auth/Login";
-import ProfilePage from "./comonents/Profile";
+import Home from "./components/Home";
+import Register from "./components/auth/Register/index";
+import DefaultLayout from "./components/containers/DefaultLayout";
+import AddNewCar from "./components/AddNewCar";
+import LoginPage from "./components/auth/Login";
+import ProfilePage from "./components/Profile";
 import "../node_modules/font-awesome/css/font-awesome.css";
 import { useTypedSelector } from "./hooks/useTypedSelector";
-import Cart from "./comonents/Cart/Cart";
-import UsersPage from "./comonents/Users/UserList/index";
-import UserDetailPage from "./comonents/Users/UserPage";
-import NoMatch from "./comonents/NoMatch";
-import EditPage from "./comonents/Users/EditPage";
+import Cart from "./components/Cart/Cart";
+import UserDetailPage from "./components/Users/UserPage";
+import NoMatch from "./components/NoMatch";
+import EditPage from "./components/Users/EditPage";
 import { useActions } from "./hooks/useActions";
 import { useEffect } from "react";
-import CreatePage from './comonents/Users/CreatePage';
-import UserSearch from './comonents/Users/UserSearch';
+import CreatePage from './components/Users/CreatePage';
+import UserSearch from './components/Users/UserSearch';
+import CarsListAdmin from "./components/CarsList/CarListAdmin/CarListAdmin";
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -36,11 +36,11 @@ function App() {
           <Route path="/products/add" element={<AddNewCar />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/users" element={<UsersPage />} />
+          <Route path="/users" element={<UserSearch />} />
           <Route path="/users/:id" element={<UserDetailPage />} />
           <Route path="/users/edit/:id" element={<EditPage />} />
           <Route path="/users/create" element={<CreatePage />} />
-          <Route path="/users/search" element={<UserSearch />} />
+          <Route path="/cars" element={<CarsListAdmin/>} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

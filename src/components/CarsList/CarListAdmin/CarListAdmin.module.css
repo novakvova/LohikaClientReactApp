@@ -1,0 +1,9 @@
+.item img {
+    
+    height: 100px;
+    width: auto;
+}
+
+.item td, th {
+    vertical-align: super;
+}
