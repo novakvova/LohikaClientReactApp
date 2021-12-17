@@ -7,9 +7,9 @@ import { ISearchProduct } from "../types";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import qs from "qs";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const CarSearch = () => {
+const CarSearch: React.FC = (props) => {
   const { fetchCarsSearch } = useActions();
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState<ISearchProduct>({
@@ -26,7 +26,7 @@ const CarSearch = () => {
       !!searchParams.get("price") ||
       !!searchParams.get("priority")
   );
-  const { pages, currentPage } = useTypedSelector((store) => store.car);
+  const { pages, currentPage, total } = useTypedSelector((store) => store.car);
 
   const buttons = [];
   for (let i = 2; i < pages; i++) {
@@ -78,7 +78,6 @@ const CarSearch = () => {
           </button>
         </div>
       )}
-
       {showSearchForm && (
         <form
           className=" w-100 d-flex flex-wrap border border-secondary rounded-3 position-relative"
@@ -154,7 +153,8 @@ const CarSearch = () => {
           </button>
         </form>
       )}
-
+      <div className="text-center mt-1">Знайдено {total}</div>
+      <div>{props.children}</div>
       <div className="w-100 mt-3  d-flex justify-content-center">
         <ul className="pagination">
           {currentPage > 1 && (
@@ -187,7 +187,7 @@ const CarSearch = () => {
             </Link>
           </li>
           {currentPage > 3 && <span>...</span>}
-          
+
           {buttons
             .filter(
               (item) =>
@@ -219,19 +219,23 @@ const CarSearch = () => {
               );
             })}
           {currentPage + 2 < pages && <span>...</span>}
-          <li
-            className={classNames("page-item", {
-              active: pages == currentPage,
-            })}
-            onClick={() => setSearch({ ...search, page: pages })}
-          >
-            <Link
-              className="page-link"
-              to={"?" + qs.stringify(filterNonNull({ ...search, page: pages }))}
+          {pages !== 1   && (
+            <li
+              className={classNames("page-item", {
+                active: pages == currentPage,
+              })}
+              onClick={() => setSearch({ ...search, page: pages })}
             >
-              {pages}
-            </Link>
-          </li>
+              <Link
+                className="page-link"
+                to={
+                  "?" + qs.stringify(filterNonNull({ ...search, page: pages }))
+                }
+              >
+                {pages}
+              </Link>
+            </li>
+          )}
           {currentPage < pages && (
             <li className={classNames("page-item ")}>
               <Link

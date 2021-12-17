@@ -5,6 +5,8 @@ import { useActions } from "../../../hooks/useActions";
 import CardButtonToCart from "./CardButtonToCart";
 import CartButtonAdd from "./CardButtonAdd";
 import { CarCardProps } from "./types";
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import { store } from "../../../store";
 
 const CarCard: React.FC<CarCardProps> = ({
   id,
@@ -15,6 +17,7 @@ const CarCard: React.FC<CarCardProps> = ({
 }) => {
   const [count, setCount] = useState("1");
   const { addItemToCart, showCart } = useActions();
+  const {isAuth} = useTypedSelector(store=> store.auth)
 
   const countHandler = (value: string) => {
     setCount(value);

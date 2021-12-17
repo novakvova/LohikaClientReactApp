@@ -41,7 +41,6 @@ export interface ISearchProduct {
 
 export interface CarState {
   cars: Array<ICarItem>;
-  //carsSearchList: ICarSearchList;
   products: Array<ISearchCar>;
   pages: number;
   total: number;
