@@ -1,43 +1,46 @@
 import axios, { AxiosError } from 'axios';
 import { Dispatch } from 'react';
 import http from '../../../http_common';
-import { InitValues, RecoverUserActionTypes, ResetPasswordRequest, SuccessRequest } from './types';
+import {
+  InitValues,
+  ResetPasswordRequest,
+  RequestStatus,
+} from "./types";
 
 
-export const recoverPassword = (data: InitValues) => async (dispatch: Dispatch<RecoverUserActionTypes>) => {
+export const recoverPassword = (data: InitValues):any => async () => {
     try {
-      const response = await http.post<SuccessRequest>("/api/Account/forgotPassword", data);
-    } catch (error) {
+      const response = await http.post<RequestStatus>(
+        "/api/Account/forgotPassword",
+        data
+      );
+    const { status } = response;
+    return Promise.resolve<RequestStatus>({ status });
+    } catch (error: any) {
 		if (axios.isAxiosError(error)) {
-			console.log(error);
-			
-    //   const serverError = error as AxiosError<ErrorReques>;
-    //   if (serverError && serverError.response) {
-        // const { errors } = serverError.response.data;
-        // return Promise.reject(errors);
-     // }
+      const serverError = error as AxiosError<RequestStatus>;
+       if (serverError && serverError.response) {
+         const { status } = serverError.response;
+         return Promise.reject<RequestStatus>({status});
+      }
     }
 	}
   };
 
   export const resetPassword = (data: ResetPasswordRequest): any =>
-    async (dispatch: Dispatch<RecoverUserActionTypes>) => {
+    async () => {
       try {
-        const response = await http.post<SuccessRequest>(
+        await http.post<RequestStatus>(
           "/api/Account/changePassword",
           data
         );
-		const { status } = response;
-		Promise.resolve(status)
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.log(error);
-
-          //   const serverError = error as AxiosError<ErrorReques>;
-          //   if (serverError && serverError.response) {
-          // const { errors } = serverError.response.data;
-          // return Promise.reject(errors);
-          // }
-        }
+       if (axios.isAxiosError(error)) {
+         const serverError = error as AxiosError<RequestStatus>;
+         if (serverError && serverError.response) {
+           const { status } = serverError.response;
+           return Promise.reject<RequestStatus>({ status });
+         }
+       }
       }
     };

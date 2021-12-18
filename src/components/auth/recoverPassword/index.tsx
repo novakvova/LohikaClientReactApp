@@ -1,8 +1,8 @@
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { useActions } from '../../../hooks/useActions';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import EclipseWidget from '../../common/eclipse';
 import InputGroup from '../../common/InputGroup';
 import { InitValues } from './types';
@@ -10,19 +10,22 @@ import { RecoverPasswordSchema } from './validate';
 
 const RecoverPassword = () => {
   const { recoverPassword } = useActions();
-  const { loading } = useTypedSelector(store => store.recover);
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<boolean>(false)
 	const initialValues: InitValues = {
     email: "",
   };
 
 	 const onHandleSubmit = async () => {
+     setLoading(true);
      try {
-        recoverPassword(values);
+        await recoverPassword(values);
         navigate("/recoverPassword/sendEmail");
+        setLoading(false);
      } catch (error) {
-       
+       setError(true);
+       setLoading(false);
      }
 	 }
 	const formik = useFormik({
@@ -40,6 +43,11 @@ const RecoverPassword = () => {
       <div className="row">
         <div className="col-4"></div>
         <div className="col-4">
+          {error && (
+            <div className="alert alert-dismissible alert-danger text-center">
+              Щось пішло не так
+            </div>
+          )}
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
               <InputGroup
