@@ -81,7 +81,7 @@ const ResetPassword = () => {
                   className="btn btn-secondary"
                   disabled={loading}
                 >
-                  Реєстрація
+                  Відновити
                 </button>
               </div>
             </Form>
