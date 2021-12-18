@@ -16,6 +16,9 @@ import { useActions } from "./hooks/useActions";
 import { useEffect } from "react";
 import CreatePage from './components/Users/CreatePage';
 import UserSearch from './components/Users/UserSearch';
+import RecoverPassword from './components/auth/recoverPassword';
+import SendEmail from './components/auth/recoverPassword/recoverSuccess';
+import ResetPassword from './components/auth/recoverPassword/resetPassword';
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -34,6 +37,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/products/add" element={<AddNewCar />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/recoverPassword" element={<RecoverPassword />} />
+          <Route path="/recoverPassword/sendEmail" element={<SendEmail />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/users" element={<UserSearch />} />
           <Route path="/users/:id" element={<UserDetailPage />} />
