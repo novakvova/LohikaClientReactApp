@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-
 import { useActions } from "../../../hooks/useActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
-
+import { faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
 import HeaderSearch from "../../common/HeaderSearch/HeaderSearch";
 
+import "./headers.css"
+
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
+  const { profile: { photo } } = useTypedSelector(store => store.profile)
   const { LogoutUser } = useActions();
 
   return (
@@ -52,7 +53,15 @@ const DefaultHeader = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
-                  <FontAwesomeIcon icon={faUser} size={"2x"} className="mx-2" />
+                  <img
+                    src={
+                      !photo.endsWith("image/")
+                        ? `https://vovalohika.tk${photo}`
+                        : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
+                    }
+                    alt="avatar"
+                    className="rounded-circle img-fluid imgNavbar"
+                  />
                 </Link>
               </li>
               <li className="nav-item">

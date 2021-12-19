@@ -11,6 +11,8 @@ const ProfilePage = () => {
   const { profile : {email, phone, photo, firstName, secondName}, loading } = useTypedSelector( store => store.profile);
 useEffect(() => {
   GetProfileData();
+  console.log(photo);
+  
 }, [])
 
   return (
@@ -28,7 +30,7 @@ useEffect(() => {
                 <div className="card-body text-center">
                   <img
                     src={
-                      photo && photo.endsWith("image/")
+                      !photo.endsWith("image/")
                         ? `https://vovalohika.tk${photo}`
                         : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
                     }
@@ -36,8 +38,8 @@ useEffect(() => {
                     className="rounded-circle img-fluid"
                   />
                   <h5 className="my-3">
-                    {firstName}
-                    {secondName}
+                    <span>{firstName}</span>
+                    <span> {secondName}</span>
                   </h5>
                 </div>
               </div>
