@@ -5,16 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
 import HeaderSearch from "../../common/HeaderSearch/HeaderSearch";
+import { v4 as uuid } from "uuid";
+
 
 import "./headers.css"
+import { useEffect } from 'react';
 
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
-  const { profile: { photo } } = useTypedSelector(store => store.profile)
+  const { user: { image } } = useTypedSelector(store => store.auth)
   const { LogoutUser } = useActions();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav className="navbar navbar-default fixed-top navbar-expand navbar-dark bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">
           Продаж авто
@@ -55,9 +58,9 @@ const DefaultHeader = () => {
                 <Link className="nav-link" to="/profile">
                   <img
                     src={
-                      !photo.endsWith("image/")
-                        ? `https://vovalohika.tk${photo}`
-                        : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
+                      !image.endsWith("image/")
+                        ? `https://vovalohika.tk${image}?t=${uuid()}`
+                        : `https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png?t=${uuid()}`
                     }
                     alt="avatar"
                     className="rounded-circle img-fluid imgNavbar"
@@ -66,7 +69,7 @@ const DefaultHeader = () => {
               </li>
               <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/" onClick={LogoutUser}>
-                    <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
+                  <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
                 </Link>
               </li>
             </ul>
@@ -91,3 +94,4 @@ const DefaultHeader = () => {
 };
 
 export default DefaultHeader;
+

@@ -20,7 +20,7 @@ useEffect(() => {
       <Helmet>
         <title>Профіль</title>
       </Helmet>
-      <div className="container py-5 mt-3 ">
+      <div className="container py-5 ">
         <h2 className="text-center pb-5">Мій профіль</h2>
         {loading && <EclipseWidget />}
         {!loading && (
