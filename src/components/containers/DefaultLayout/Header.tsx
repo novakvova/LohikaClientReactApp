@@ -14,7 +14,7 @@ const DefaultHeader = () => {
   const { LogoutUser } = useActions();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container">
         <Link className="navbar-brand" to="/">
           Продаж авто
@@ -46,12 +46,12 @@ const DefaultHeader = () => {
               <li className="nav-item d-flex align-items-center">
                 <HeaderCartButton />
               </li>
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/users">
                   Юзери
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/profile">
                   <img
                     src={
@@ -64,9 +64,9 @@ const DefaultHeader = () => {
                   />
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/" onClick={LogoutUser}>
-                  <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
+                    <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
                 </Link>
               </li>
             </ul>
