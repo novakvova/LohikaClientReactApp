@@ -1,25 +1,20 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useActions } from '../../../hooks/useActions';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import EclipseWidget from '../../common/eclipse';
 import InputGroup from '../../common/InputGroup';
-import { InitResetValues, ResetPasswordRequest, SuccessRequest } from './types';
+import { InitResetValues, ResetPasswordRequest, RequestStatus } from "./types";
 import { ResetPasswordSchema } from './validate';
 
 
 const ResetPassword = () => {
-  const { loading } = useTypedSelector((store) => store.recover);
-  const { resetPassword } = useActions();
+  const { resetPassword, addFlashMessage, deleteFlashMessage } = useActions();
   const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-	  console.log(searchParams.get("userId"));
-	  console.log(searchParams.get("code"));
-  }, [])
+  const [loading, setLoading] =  useState(false);
+  const [error, setError] = useState<boolean>(false);
 
   const initialValues: InitResetValues = {
   password: "",
@@ -27,19 +22,23 @@ const ResetPassword = () => {
 };
 
   const onHandleSubmit = async () => {
+    setLoading(true);
+    setError(false);
 	  const requestData: ResetPasswordRequest = {
       userId: searchParams.get("userId"),
       token: searchParams.get("code"),
 	  ...values
     };
-	try {
-		const res:SuccessRequest = resetPassword(requestData);
-		const { status } = res;
-          navigate("/login");
-	} catch (error) {
-		
-	}
-
+      try {
+         await resetPassword(requestData);
+         addFlashMessage({type: "success", message: "Пароль успішно змінено"});
+         setTimeout(deleteFlashMessage, 4000)
+        navigate("/login");
+        setLoading(false);
+      } catch (error) {
+        setError(true)
+        setLoading(false);
+      }
   };
   const formik = useFormik({
     initialValues: initialValues,
@@ -56,6 +55,11 @@ const ResetPassword = () => {
       <div className="row">
         <div className="col-4"></div>
         <div className="col-4">
+          {error && (
+            <div className="alert alert-dismissible alert-danger text-center">
+              Щось пішло не так
+            </div>
+          )}
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
               <InputGroup
@@ -81,7 +85,7 @@ const ResetPassword = () => {
                   className="btn btn-secondary"
                   disabled={loading}
                 >
-                  Реєстрація
+                  Відновити
                 </button>
               </div>
             </Form>
