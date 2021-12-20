@@ -3,7 +3,7 @@ import { CarState, CarAction, CarActionTypes } from './types';
 const initialState: CarState = {
     cars: [],
     loading: false,
-    //carsSearchList:{ },
+    carSearchedById: null,
     products: [], 
     currentPage: 1,
     pages: 0, 
@@ -24,7 +24,10 @@ export const carReducer = (state=initialState, action: CarAction) : CarState => 
             return { ...state, loading: false, error: action.payload};
         
         case CarActionTypes.SEARCH_CARS: 
-            return {...state, ...action.payload}
+            return {...state, ...action.payload};
+
+        case CarActionTypes.GET_CAR_BY_ID: 
+        return {...state, carSearchedById: action.payload}   
 
         default:
             return state;

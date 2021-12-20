@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import CarSearch from "../CarSearch/CarSearch";
@@ -11,6 +12,15 @@ const CarsListAdmin = () => {
   useEffect(() => {
     fetchCarsSearch({});
   }, []);
+  const navigator = useNavigate()
+  const wievCar = (id: number) => {
+    console.log(id)
+    navigator(`${id}`)
+  }
+  const editCar = (id: number) => {
+    console.log(id)
+    navigator(`/cars/edit/${id}`)
+  }
 
   return (
     <CarSearch>
@@ -29,7 +39,6 @@ const CarsListAdmin = () => {
         </thead>
         <tbody>
           {products.map((car) => {
-            console.log(car.image);
             return (
               <tr key={car.id} className={`table-secondary ${classes.item}`}>
                 <th scope="row">{car.id}</th>
@@ -44,12 +53,16 @@ const CarsListAdmin = () => {
                 <td>{car.price}</td>
                 <td>{car.priority}</td>
                 <td>
-                  <button type="button" className="btn btn btn-secondary">
+                  <button
+                  onClick={() => {wievCar(car.id)}}
+                  type="button" className="btn btn btn-secondary">
                     Переглянути
                   </button>
                 </td>
                 <td>
-                  <button type="button" className="btn btn-info">
+                  <button
+                  onClick={()=> {editCar(car.id)}}
+                  type="button" className="btn btn-info">
                     Редагувати
                   </button>
                 </td>

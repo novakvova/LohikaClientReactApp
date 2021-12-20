@@ -3,6 +3,7 @@ export enum CarActionTypes {
   FETCH_CARS_SUCCESS = "FETCH_CARS_SUCCESS",
   FETCH_CARS_ERROR = "FETCH_CARS_ERROR",
   SEARCH_CARS = "SEARCH_CARS",
+  GET_CAR_BY_ID= "GET_CAR_BY_ID"
 }
 export interface IClickedButtonData {
   selected: number;
@@ -40,6 +41,7 @@ export interface ISearchProduct {
 }
 
 export interface CarState {
+  carSearchedById: ISearchCar | null;
   cars: Array<ICarItem>;
   products: Array<ISearchCar>;
   pages: number;
@@ -68,8 +70,14 @@ export interface FetchCarsSearchAction {
   payload: ICarSearchList;
 }
 
+export interface GetCarByIdAction {
+  type: CarActionTypes.GET_CAR_BY_ID;
+  payload: ISearchCar;
+}
+
 export type CarAction =
   | FetchCarAction
   | FetchSuccessCarAction
   | FetchErrorsCarAction
-  | FetchCarsSearchAction;
+  | FetchCarsSearchAction
+  | GetCarByIdAction;

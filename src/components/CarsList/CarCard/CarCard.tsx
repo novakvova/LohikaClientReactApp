@@ -7,6 +7,8 @@ import CartButtonAdd from "./CardButtonAdd";
 import { CarCardProps } from "./types";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
+import { useNavigate } from "react-router-dom";
+
 
 const CarCard: React.FC<CarCardProps> = ({
   id,
@@ -18,6 +20,10 @@ const CarCard: React.FC<CarCardProps> = ({
   const [count, setCount] = useState("1");
   const { addItemToCart, showCart } = useActions();
   // const { isAuth } = useTypedSelector((store) => store.auth);
+  const navigator = useNavigate()
+  const wievCar = (id: number) => {
+    navigator(`${id}`)
+  }
 
   const countHandler = (value: string) => {
     setCount(value);
@@ -61,7 +67,7 @@ const CarCard: React.FC<CarCardProps> = ({
           <div className="col-6 input-group mb-3 ">
             <button
               onClick={() => {
-                console.log("product id =>", id);
+                navigator(`/cars/${id}`)
               }}
               type="button"
               className="w-100 btn btn-outline-success d-flex justify-content-around align-items-center fw-bold"
