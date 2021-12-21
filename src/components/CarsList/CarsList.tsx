@@ -7,7 +7,7 @@ import { useActions } from "../../hooks/useActions";
 
 const CarsList: React.FC = () => {
   const { fetchCars } = useActions();
-  const { cars, loading, products } = useTypedSelector((store) => store.car);
+  const { loading, products } = useTypedSelector((store) => store.car);
   const { cartData } = useTypedSelector((store) => store.cart);
 
   React.useEffect(() => {

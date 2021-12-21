@@ -6,6 +6,10 @@ import CardButtonToCart from "./CardButtonToCart";
 import CartButtonAdd from "./CardButtonAdd";
 import { CarCardProps } from "./types";
 
+
+import { useNavigate } from "react-router-dom";
+
+
 const CarCard: React.FC<CarCardProps> = ({
   id,
   name,
@@ -15,6 +19,8 @@ const CarCard: React.FC<CarCardProps> = ({
 }) => {
   const [count, setCount] = useState("1");
   const { addItemToCart, showCart } = useActions();
+  // const { isAuth } = useTypedSelector((store) => store.auth);
+  const navigator = useNavigate()
 
   const countHandler = (value: string) => {
     setCount(value);
@@ -52,6 +58,19 @@ const CarCard: React.FC<CarCardProps> = ({
               </>
             )}
             {inCart && <CardButtonToCart onClick={showCart} />}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6 input-group mb-3 ">
+            <button
+              onClick={() => {
+                navigator(`/cars/${id}`)
+              }}
+              type="button"
+              className="w-100 btn btn-outline-success d-flex justify-content-around align-items-center fw-bold"
+            >
+              Докладніше про товар
+            </button>
           </div>
         </div>
       </div>

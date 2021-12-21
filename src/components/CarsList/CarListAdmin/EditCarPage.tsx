@@ -1,34 +1,37 @@
+import { FormikHelpers, useFormik } from "formik";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import InputGroup from "../common/InputGroup";
-import { useActions } from "../../hooks/useActions";
-import { IAddCar } from "./types";
-import { useFormik, FormikHelpers } from "formik";
 import { AddCarSchema as validationSchema } from "./validation";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
-import EclipseWidget from "../common/eclipse/index";
 import { Helmet } from "react-helmet";
+import { useNavigate, useParams } from "react-router-dom";
+import { useActions } from "../../../hooks/useActions";
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import EclipseWidget from "../../common/eclipse";
+import InputGroup from "../../common/InputGroup";
+import { ICarUpdate } from "../types";
 
-const initialValues: IAddCar = {
-  name: "",
-  priority: "",
-  price: "",
-  image: "",
-};
+const EditCarPage = () => {
+  const { updateCar } = useActions();
 
-const AddNewCar: React.FC = () => {
-  const { addNewCar } = useActions();
-  const {
-    nav,
-    error: serverError,
-    loading,
-  } = useTypedSelector((store) => store.sendingCar);
+  const [showLoader, setShowLoader] = React.useState(false);
+  const { id } = useParams();
+  const { carSearchedById } = useTypedSelector((store) => store.car);
+  const [img, setImg] = React.useState<string>(
+    `https://vovalohika.tk${carSearchedById?.image}`
+  );
+  const initialValues = {
+    id: `${id}`,
+    name: `${carSearchedById?.name}`,
+    priority: `${carSearchedById?.priority}`,
+    price: `${carSearchedById?.price}`,
+    image: `${carSearchedById?.image}`,
+  };
+
   const navigate = useNavigate();
-
-  const [img, setImg] = React.useState<string>();
-
-  const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    addNewCar(values);
+  const onSubmit = async (values: ICarUpdate) => {
+    setShowLoader(true);
+    await updateCar(values);
+    setShowLoader(false);
+    await navigate("/cars");
   };
 
   const formik = useFormik({
@@ -48,26 +51,19 @@ const AddNewCar: React.FC = () => {
     []
   );
 
-  React.useEffect(() => {
-    if (nav) {
-      navigate("/");
-    }
-  }, [nav, serverError]);
-
   return (
     <>
       <Helmet>
-        <title>Додати машину</title>
+        <title>Редагувати</title>
       </Helmet>
       <div className="row">
-        <h1 className="text-center">Додати автомобіль</h1>
-        {serverError && <h2>{serverError}</h2>}
-        {loading && <EclipseWidget />}
+        <h1 className="text-center">Редагувати запис</h1>
+        {showLoader && <EclipseWidget />}
         <div className="col-4">
           {img && (
-            <div className="card mt-1 h-100">
+            <div className="card mt-1">
               <div className="card-body text-center">
-                <img className="h-100 w-100" src={img} alt="asdasd" />
+                <img className="w-100" src={img} alt="asdasd" />
               </div>
             </div>
           )}
@@ -118,7 +114,7 @@ const AddNewCar: React.FC = () => {
 
           <div className="text-center">
             <button type="submit" className="btn btn-primary">
-              Додати машину
+              Зберегти зміни
             </button>
           </div>
         </form>
@@ -128,4 +124,4 @@ const AddNewCar: React.FC = () => {
   );
 };
 
-export default AddNewCar;
+export default EditCarPage;

@@ -2,18 +2,18 @@ import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import { useActions } from "../../../hooks/useActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
 import HeaderSearch from "../../common/HeaderSearch/HeaderSearch";
 import { v4 as uuid } from "uuid";
 
-
-import "./headers.css"
-
+import "./headers.css";
 
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
-  const { user: { image } } = useTypedSelector(store => store.auth)
+  const {
+    user: { image },
+  } = useTypedSelector((store) => store.auth);
   const { LogoutUser } = useActions();
 
   return (
@@ -54,6 +54,13 @@ const DefaultHeader = () => {
                   Юзери
                 </Link>
               </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/cars">
+                  Машини
+                </Link>
+              </li>
+
               <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/profile">
                   <img
@@ -94,4 +101,3 @@ const DefaultHeader = () => {
 };
 
 export default DefaultHeader;
-
