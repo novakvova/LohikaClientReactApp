@@ -67,7 +67,6 @@ const CarSearch: React.FC = (props) => {
 
   return (
     <div>
-      <h1 className="text-center">Автомобілі</h1>
       {!showSearchForm && (
         <div className="w-100 mt-3  d-flex justify-content-center">
           <button
