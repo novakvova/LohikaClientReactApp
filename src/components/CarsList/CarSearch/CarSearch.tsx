@@ -67,6 +67,7 @@ const CarSearch: React.FC = (props) => {
 
   return (
     <div>
+      <h1 className="text-center">Автомобілі</h1>
       {!showSearchForm && (
         <div className="w-100 mt-3  d-flex justify-content-center">
           <button
@@ -80,7 +81,7 @@ const CarSearch: React.FC = (props) => {
       )}
       {showSearchForm && (
         <form
-          className=" w-100 d-flex flex-wrap border border-secondary rounded-3 position-relative"
+          className=" w-100 mt-3 d-flex flex-wrap border border-secondary rounded-3 position-relative"
           onSubmit={formik.handleSubmit}
         >
           <button
@@ -219,7 +220,7 @@ const CarSearch: React.FC = (props) => {
               );
             })}
           {currentPage + 2 < pages && <span>...</span>}
-          {pages !== 1   && (
+          {pages !== 1 && (
             <li
               className={classNames("page-item", {
                 active: pages === currentPage,
