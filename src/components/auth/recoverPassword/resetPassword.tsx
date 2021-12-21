@@ -1,11 +1,11 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useActions } from '../../../hooks/useActions';
 import EclipseWidget from '../../common/eclipse';
 import InputGroup from '../../common/InputGroup';
-import { InitResetValues, ResetPasswordRequest, RequestStatus } from "./types";
+import { InitResetValues, ResetPasswordRequest } from "./types";
 import { ResetPasswordSchema } from './validate';
 
 

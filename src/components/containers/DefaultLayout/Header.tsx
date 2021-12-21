@@ -9,7 +9,7 @@ import { v4 as uuid } from "uuid";
 
 
 import "./headers.css"
-import { useEffect } from 'react';
+
 
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);

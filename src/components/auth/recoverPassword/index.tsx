@@ -1,5 +1,6 @@
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useState } from 'react';
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { useActions } from '../../../hooks/useActions';
@@ -9,6 +10,7 @@ import { InitValues } from './types';
 import { RecoverPasswordSchema } from './validate';
 
 const RecoverPassword = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const { recoverPassword } = useActions();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -19,6 +21,11 @@ const RecoverPassword = () => {
 
 	 const onHandleSubmit = async () => {
      setLoading(true);
+     if (!executeRecaptcha) {
+       console.log("Execute recaptcha not yet available");
+       
+       return;
+     }
      try {
         await recoverPassword(values);
         navigate("/recoverPassword/sendEmail");
