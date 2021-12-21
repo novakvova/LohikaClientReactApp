@@ -1,15 +1,16 @@
-import { useActions } from '../../../hooks/useActions';
+import { useActions } from "../../../hooks/useActions";
 import { v4 as uuid } from "uuid";
-import { UserInfo } from '../types';
-import { useNavigate } from 'react-router-dom';
-import Modals from '../../common/Modal';
+import { UserInfo } from "../types";
+import { useNavigate } from "react-router-dom";
+import Modals from "../../common/Modal";
 
 interface Props {
   userItem: UserInfo;
 }
 
-
-const UserItem: React.FC<Props> = ({userItem:{id,firstName, photo, phone, email}}) => {
+const UserItem: React.FC<Props> = ({
+  userItem: { id, firstName, photo, phone, email },
+}) => {
   const { deleteUser, getUserById } = useActions();
   const navigator = useNavigate();
 

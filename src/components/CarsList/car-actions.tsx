@@ -1,14 +1,16 @@
-import { AxiosError } from "axios";
+
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { IAddCar, SendingAction, SendingCarTypes } from "../AddNewCar/types";
+import { IAddCar } from "../AddNewCar/types";
 import { ICartData } from "../Cart/types";
 import {
   CarAction,
   CarActionTypes,
+  DeleteCarAction,
   ICarSearchList,
   ISearchCar,
   ISearchProduct,
+  UpdateCarAction,
 } from "./types";
 
 export const fetchCars = () => {
@@ -44,49 +46,48 @@ export const fetchCarsSearch =
     }
   };
 
-  export const fetchCarById = (id: string) => async (dispatch: Dispatch<CarAction>) => {
+export const fetchCarById =
+  (id: number) => async (dispatch: Dispatch<CarAction>) => {
     try {
       const response = await http.get<ISearchCar>(`api/Products/get/${id}`);
       dispatch({
-        type:CarActionTypes.GET_CAR_BY_ID,
-        payload: response.data
+        type: CarActionTypes.GET_CAR_BY_ID,
+        payload: response.data,
       });
-
+    } catch (error) {
+      console.log("action => ", error);
     }
-
-    catch(error) {
-      console.log('action => ', error)
-    }
-  }
-
-
-  export const sendEditedCarToServer = (data: IAddCar) => {
-    return (dispatch: Dispatch<SendingAction>) => {
-      const formData = new FormData();
-      
-      Object.entries(data).forEach(([key, value]) =>
-        formData.append(key, value as string)
-      );
-  
-      dispatch({ type: SendingCarTypes.SENDING_CAR });
-      http
-        .post("api/Products/add", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          dispatch({
-            type: SendingCarTypes.SENDING_CAR_SUCCESS,
-            payload: response.status,
-          });
-          dispatch({ type: SendingCarTypes.SENDING_CAR_SUCCESS_STOP_NAV });
-        })
-        .catch((error) => {
-          dispatch({
-            type: SendingCarTypes.SENDING_CAR_ERROR,
-            payload: (error as AxiosError).message,
-          });
-        });
-    };
   };
+
+export const updateCar = (data: IAddCar) => {
+  return (dispatch: Dispatch<UpdateCarAction>) => {
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) =>
+      formData.append(key, value as string)
+    );
+    http
+      .put("api/Products/edit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => {
+        dispatch({ type: CarActionTypes.UPDATE_CAR });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const deleteCar = (id: number) => {
+  return (dispatch: Dispatch<DeleteCarAction>) => {
+    http
+      .delete(`api/Products/delete/${id}`)
+      .then(() => {
+        dispatch({ type: CarActionTypes.DELETE_CAR, payload: id});
+      })
+      .catch((error) => console.log(error));
+  };
+};

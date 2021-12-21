@@ -5,57 +5,33 @@ import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { IAddCar } from "../../AddNewCar/types";
 import EclipseWidget from "../../common/eclipse";
 import InputGroup from "../../common/InputGroup";
-
-
+import { ICarUpdate } from "../types";
 
 const EditCarPage = () => {
-    const { sendEditedCarToServer } = useActions();
-  const {
-    nav,
-    error: serverError,
-    loading,
-  } = useTypedSelector((store) => store.sendingCar);
+  const { updateCar } = useActions();
 
-
-  const [showLoader, setShowLoader]= React.useState(false)
-  const {id} = useParams()
-  const {fetchCarById} = useActions()
-  const {carSearchedById} = useTypedSelector(store=> store.car)
-  
-  const getCarById = async () => 
-   { try {
-       setShowLoader(true);
-     await fetchCarById(id as string);
-     setShowLoader(false)
-   } catch(error) {
-       console.log("err = > ", error)
-   }   
-  }
-   React.useEffect(()=> {
-      getCarById()
-   }, [])
-
-  const navigate = useNavigate();
-  const initialValues: IAddCar = {
-    name: "",
-    priority: "",
-    price: "",
-    image: "",
+  const [showLoader, setShowLoader] = React.useState(false);
+  const { id } = useParams();
+  const { carSearchedById } = useTypedSelector((store) => store.car);
+  const [img, setImg] = React.useState<string>(
+    `https://vovalohika.tk${carSearchedById?.image}`
+  );
+  const initialValues = {
+    id: `${id}`,
+    name: `${carSearchedById?.name}`,
+    priority: `${carSearchedById?.priority}`,
+    price: `${carSearchedById?.price}`,
+    image: `${carSearchedById?.image}`,
   };
 
-//   const initialValues: IAddCar = {
-//     name: carSearchedById?.name ,
-//     priority: carSearchedById?.priority,
-//     price: carSearchedById?.price ,
-//     image: carSearchedById?.image ,
-//   };
-  const [img, setImg] = React.useState<string>();
-
-  const onSubmit = (values: IAddCar) => {
-    sendEditedCarToServer(values);
+  const navigate = useNavigate();
+  const onSubmit = async (values: ICarUpdate) => {
+    setShowLoader(true);
+    await updateCar(values);
+    setShowLoader(false);
+    await navigate("/cars");
   };
 
   const formik = useFormik({
@@ -75,12 +51,6 @@ const EditCarPage = () => {
     []
   );
 
-  React.useEffect(() => {
-    if (nav) {
-      navigate("/");
-    }
-  }, [nav, serverError]);
-
   return (
     <>
       <Helmet>
@@ -88,13 +58,12 @@ const EditCarPage = () => {
       </Helmet>
       <div className="row">
         <h1 className="text-center">Редагувати запис</h1>
-        {serverError && <h2>{serverError}</h2>}
-        {loading && <EclipseWidget />}
+        {showLoader && <EclipseWidget />}
         <div className="col-4">
           {img && (
-            <div className="card mt-1 h-100">
+            <div className="card mt-1">
               <div className="card-body text-center">
-                <img className="h-100 w-100" src={img} alt="asdasd" />
+                <img className="w-100" src={img} alt="asdasd" />
               </div>
             </div>
           )}
@@ -153,8 +122,6 @@ const EditCarPage = () => {
       </div>
     </>
   );
-}
+};
 
 export default EditCarPage;
-
-

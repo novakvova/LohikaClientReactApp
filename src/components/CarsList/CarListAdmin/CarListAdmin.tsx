@@ -1,33 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router-dom";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import EclipseWidget from "../../common/eclipse";
 import CarSearch from "../CarSearch/CarSearch";
-import classes from "./CarListAdmin.module.css";
+
+import CarAdminItem from "./CarAdminItem";
+import { ISearchCar } from "../types";
 
 const CarsListAdmin = () => {
+  const [showLoader, setShowLoader] = useState(false);
   const { products } = useTypedSelector((store) => store.car);
   const { fetchCarsSearch } = useActions();
   useEffect(() => {
-    fetchCarsSearch({});
+    downloadCarList()
   }, []);
-  const navigator = useNavigate()
-  const wievCar = (id: number) => {
-    console.log(id)
-    navigator(`${id}`)
-  }
-  const editCar = (id: number) => {
-    console.log(id)
-    navigator(`/cars/edit/${id}`)
-  }
+
+  const downloadCarList = async () => {
+    setShowLoader(true)
+    await fetchCarsSearch({});
+    setShowLoader(false)
+  };
 
   return (
     <CarSearch>
+      {showLoader && <EclipseWidget />}
       <Helmet>
         <title>Admin-пошук машин</title>
       </Helmet>
-      <table className="table table-hover">
+      <table className="table table-striped table-hover">
         <thead>
           <tr>
             <th scope="col">Id</th>
@@ -38,41 +39,8 @@ const CarsListAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((car) => {
-            return (
-              <tr key={car.id} className={`table-secondary ${classes.item}`}>
-                <th scope="row">{car.id}</th>
-                <td>
-                  <img
-                    className="h"
-                    src={`https://vovalohika.tk${car.image}`}
-                    alt=""
-                  />
-                </td>
-                <td>{car.name}</td>
-                <td>{car.price}</td>
-                <td>{car.priority}</td>
-                <td>
-                  <button
-                  onClick={() => {wievCar(car.id)}}
-                  type="button" className="btn btn btn-secondary">
-                    Переглянути
-                  </button>
-                </td>
-                <td>
-                  <button
-                  onClick={()=> {editCar(car.id)}}
-                  type="button" className="btn btn-info">
-                    Редагувати
-                  </button>
-                </td>
-                <td>
-                  <button type="button" className="btn btn-danger">
-                    Видалити
-                  </button>
-                </td>
-              </tr>
-            );
+          {products.map((car: ISearchCar, index) => {
+            return <CarAdminItem key={index} car={car} />;
           })}
         </tbody>
       </table>

@@ -27,7 +27,10 @@ export const carReducer = (state=initialState, action: CarAction) : CarState => 
             return {...state, ...action.payload};
 
         case CarActionTypes.GET_CAR_BY_ID: 
-        return {...state, carSearchedById: action.payload}   
+        return {...state, carSearchedById: action.payload}  
+        
+        case CarActionTypes.DELETE_CAR: 
+        return {...state, products: state.products.filter(item => item.id !== action.payload)}
 
         default:
             return state;
