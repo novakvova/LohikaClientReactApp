@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet';
 
 const UserSearch = () => {
   const { getSearchResult } = useActions();
-  const { pages, loading, currentPage } = useTypedSelector( store => store.userCrud)
+  const { pages, loading, currentPage, total } = useTypedSelector( store => store.userCrud)
   const [searchParams, setSearchParams] = useSearchParams();
   const [toogleSearch, setToggleSearch] = useState(false);
   const navigator = useNavigate();
@@ -130,6 +130,7 @@ const UserSearch = () => {
         </FormikProvider>
       )}
       <Users />
+      <h5>Всього: {total}</h5>
       <ul className="pagination d-flex justify-content-center">
         <li
           onClick={() => setSearch({ ...search, page: currentPage - 1 })}
@@ -160,7 +161,7 @@ const UserSearch = () => {
             1
           </Link>
         </li>
-        {currentPage > 3 && (
+        {currentPage > 4 && (
           <li
             className="page-item m-1"
             onClick={() => setSearch({ ...search, page: currentPage - 3 })}
