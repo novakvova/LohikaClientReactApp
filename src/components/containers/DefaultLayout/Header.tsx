@@ -1,19 +1,23 @@
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-
 import { useActions } from "../../../hooks/useActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
-
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
 import HeaderSearch from "../../common/HeaderSearch/HeaderSearch";
+import { v4 as uuid } from "uuid";
+
+import "./headers.css";
 
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
+  const {
+    user: { image },
+  } = useTypedSelector((store) => store.auth);
   const { LogoutUser } = useActions();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-default fixed-top navbar-expand navbar-dark bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">
           Продаж авто
@@ -45,22 +49,32 @@ const DefaultHeader = () => {
               <li className="nav-item d-flex align-items-center">
                 <HeaderCartButton />
               </li>
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/users">
                   Юзери
                 </Link>
               </li>
+
               <li className="nav-item">
                 <Link className="nav-link" to="/cars">
                   Машини
                 </Link>
               </li>
-              <li className="nav-item">
+
+              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/profile">
-                  <FontAwesomeIcon icon={faUser} size={"2x"} className="mx-2" />
+                  <img
+                    src={
+                      !image.endsWith("image/")
+                        ? `https://vovalohika.tk${image}?t=${uuid()}`
+                        : `https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png?t=${uuid()}`
+                    }
+                    alt="avatar"
+                    className="rounded-circle img-fluid imgNavbar"
+                  />
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/" onClick={LogoutUser}>
                   <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
                 </Link>
