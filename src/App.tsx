@@ -45,22 +45,22 @@ function App() {
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
           {/* AuthRoutes */}
-          <Route
-            path="/register"
-            element={
-              <Suspense fallback={null}>
-                <Register />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <Suspense fallback={null}>
-                <Login />
-              </Suspense>
-            }
-          />
+            <Route
+              path="/register"
+              element={
+                <Suspense fallback={null}>
+                  <Register />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <Suspense fallback={null}>
+                  <Login />
+                </Suspense>
+              }
+            />
 
           {/* RcoverPasswordRoutes */}
           <Route path="/recoverPassword" element={<RecoverPassword />} />
@@ -69,7 +69,9 @@ function App() {
 
           {/* UserCrud Routes */}
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/users" element={
+          <Route
+            path="/users"
+            element={
               <Suspense fallback={null}>
                 <UserSearch />
               </Suspense>
