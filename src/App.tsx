@@ -22,7 +22,7 @@ import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
-
+import AddNewCategory from "./components/Categories/AddNewCategory/AddNewCategory";
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
 
@@ -39,6 +39,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/products/add" element={<AddNewCar />} />
+          <Route path="/categories/add" element={<AddNewCategory />}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/recoverPassword" element={<RecoverPassword />} />
           <Route path="/recoverPassword/sendEmail" element={<SendEmail />} />
