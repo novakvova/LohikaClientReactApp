@@ -28,7 +28,8 @@ import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 //Import lazyLoading
 const Register = React.lazy(() => import("./components/auth/Register/index"));
 const Login = React.lazy(() => import("./components/auth/Login/index"));
-const UserSearch = lazy(() => import("./components/Users/UserSearch/index"))
+const UserSearch = lazy(() => import("./components/Users/UserSearch/index"));
+const AdminPanel = lazy(() => import("./components/containers/adminPanelLayout/index"))
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -45,22 +46,32 @@ function App() {
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
           {/* AuthRoutes */}
-            <Route
-              path="/register"
-              element={
-                <Suspense fallback={null}>
-                  <Register />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <Suspense fallback={null}>
-                  <Login />
-                </Suspense>
-              }
-            />
+          <Route
+            path="/register"
+            element={
+              <Suspense fallback={null}>
+                <Register />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={null}>
+                <Login />
+              </Suspense>
+            }
+          />
+
+          {/* AdminPanel   */}
+          <Route
+            path="/adminpanel"
+            element={
+              <Suspense fallback={null}>
+                <AdminPanel />
+              </Suspense>
+            }
+          />
 
           {/* RcoverPasswordRoutes */}
           <Route path="/recoverPassword" element={<RecoverPassword />} />

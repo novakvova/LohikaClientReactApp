@@ -12,6 +12,10 @@ import { setAuthUserByToken } from "./components/auth/Login/action";
 import { downloadCartData } from "./components/Cart/cart-actions";
 import FleshMessages from './components/FleshMessages';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import "primereact/resources/themes/bootstrap4-dark-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+//import "primeflex/primeflex.css";
 
 
 

@@ -12,7 +12,7 @@ import { ResetPasswordSchema } from './validate';
 const ResetPassword = () => {
   const { resetPassword, addFlashMessage, deleteFlashMessage } = useActions();
   const navigate = useNavigate();
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
   const [loading, setLoading] =  useState(false);
   const [error, setError] = useState<boolean>(false);
 
