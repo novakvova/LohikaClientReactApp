@@ -24,6 +24,9 @@ import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
+
+import AddNewCategory from "./components/Categories/AddNewCategory/AddNewCategory";
+
 import AdminPanelLayout from './components/containers/adminPanelLayout';
 import UserSearch from './components/adminPanel/Users/UserSearch';
 import CropperComponent from "./components/CropperComponent/CropperComponent";
@@ -31,6 +34,7 @@ import CropperComponent from "./components/CropperComponent/CropperComponent";
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
 const Login = lazy(() => import("./components/auth/Login/index"));
+
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -46,6 +50,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
+          <Route path="/categories/add" element={<AddNewCategory />}/>
           {/* AuthRoutes */}
           <Route
             path="/register"
@@ -65,6 +70,7 @@ function App() {
           />
 
           {/* RcoverPasswordRoutes */}
+
           <Route path="/recoverPassword" element={<RecoverPassword />} />
           <Route path="/recoverPassword/sendEmail" element={<SendEmail />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
