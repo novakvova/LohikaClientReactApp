@@ -7,8 +7,11 @@ import { IRegister, RegisterError } from './types';
 import EclipseWidget from '../../common/eclipse';
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
-const RegisterPage = () => {
+const RegisterPage = (props:any) => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [bot, setBot] = useState<boolean>();
   const [loading, setLoading] = useState<boolean>(false);
   const [img, setImg] = useState<string>();
   const { RegisterUser } = useActions();
@@ -39,8 +42,16 @@ const RegisterPage = () => {
     
       setLoading(true);
       try {
+         if (!executeRecaptcha) {
+           setBot(true)
+           return;
+         }
+        const recapchaToken = await executeRecaptcha();
+        formData.append("RecaptchaToken", recapchaToken);
         await RegisterUser(formData);
         await navigator("/");
+        
+        
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -82,6 +93,9 @@ const RegisterPage = () => {
       </div>
       <div className="col-6 mb-4">
         <h1 className="text-center mt-4">Реєстрація</h1>
+        {bot && <div className="alert alert-dismissible alert-danger">
+          <strong>Ви Бот</strong>
+        </div>}
         <FormikProvider value={formik}>
           <Form onSubmit={handleSubmit}>
             <InputGroup

@@ -87,6 +87,11 @@ const DefaultHeader = () => {
           ) : (
             <ul className="navbar-nav">
               <li className="nav-item">
+                <Link className="nav-link" to="/adminPanel">
+                  Адмінка
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/register">
                   Реєстрація
                 </Link>

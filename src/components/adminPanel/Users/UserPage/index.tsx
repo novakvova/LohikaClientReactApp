@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useParams } from 'react-router';
-import { useActions } from '../../../hooks/useActions';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import EclipseWidget from '../../common/eclipse';
-import NoMatch from '../../NoMatch';
+import { useActions } from '../../../../hooks/useActions';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import EclipseWidget from '../../../common/eclipse';
+import NoMatch from '../../../NoMatch';
 import { IGetUser } from '../types/GetUserById';
 
 const UserDetailPage = () => {

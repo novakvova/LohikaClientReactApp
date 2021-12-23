@@ -1,10 +1,10 @@
 import { Form,  FormikProvider, useFormik } from 'formik';
 import {  useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { useActions } from '../../../hooks/useActions';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import EclipseWidget from '../../common/eclipse';
-import InputGroup from '../../common/InputGroup';
+import { useActions } from '../../../../hooks/useActions';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import EclipseWidget from '../../../common/eclipse';
+import InputGroup from '../../../common/InputGroup';
 import { UserInfo } from '../types';
 import { EditUserSchema } from './validation';
 import { UpdateErrors } from "../types/UpdateUser"
@@ -46,7 +46,7 @@ const EditPage = () => {
           );
     try {
       await updateUser(values, formData);
-      navigator('/users')
+      navigator('/adminPanel/users')
     } catch (error) {
       const serverErrors = error as UpdateErrors;
 

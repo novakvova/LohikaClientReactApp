@@ -1,14 +1,14 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import InputGroup from '../../common/InputGroup';
+import InputGroup from '../../../common/InputGroup';
 import {  ISearchUser } from "../types/SearchUsers";
-import { useActions } from '../../../hooks/useActions';
+import { useActions } from '../../../../hooks/useActions';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import qs from 'qs';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import classNames from 'classnames';
 import Users from '../UserList';
-import EclipseWidget from '../../common/eclipse';
+import EclipseWidget from '../../../common/eclipse';
 import { Helmet } from 'react-helmet';
 
 const UserSearch = () => {
@@ -16,7 +16,6 @@ const UserSearch = () => {
   const { pages, loading, currentPage, total } = useTypedSelector( store => store.userCrud)
   const [searchParams, setSearchParams] = useSearchParams();
   const [toogleSearch, setToggleSearch] = useState(false);
-  const navigator = useNavigate();
 
   const [search, setSearch] = useState<ISearchUser>({
     id: searchParams.get("id") || "",
@@ -62,12 +61,6 @@ const UserSearch = () => {
       <Helmet>
         <title>Користувачі</title>
       </Helmet>
-      <button
-        className="btn btn-primary m-3"
-        onClick={() => navigator("/users/create")}
-      >
-        Добавати користувача
-      </button>
       <button
         className="btn btn-primary m-3"
         onClick={() => setToggleSearch((prev) => !prev)}
