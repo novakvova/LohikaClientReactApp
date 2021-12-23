@@ -8,6 +8,7 @@ import { AddCarSchema as validationSchema } from "./validation";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import EclipseWidget from "../common/eclipse/index";
 import { Helmet } from "react-helmet";
+import CropperComponent from "../CropperComponent/CropperComponent";
 
 const initialValues: IAddCar = {
   name: "",
@@ -26,6 +27,11 @@ const AddNewCar: React.FC = () => {
   const navigate = useNavigate();
 
   const [img, setImg] = React.useState<string>();
+  const [showCropper, setShowCropper] = React.useState(false);
+
+  const cropperHandler = () => {
+    setShowCropper((prevState) => !prevState)
+  };
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
     addNewCar(values);
@@ -59,6 +65,7 @@ const AddNewCar: React.FC = () => {
       <Helmet>
         <title>Додати машину</title>
       </Helmet>
+      {showCropper&& <CropperComponent />}
       <div className="row">
         <h1 className="text-center">Додати автомобіль</h1>
         {serverError && <h2>{serverError}</h2>}
@@ -121,6 +128,13 @@ const AddNewCar: React.FC = () => {
               Додати машину
             </button>
           </div>
+          <button
+            onClick={cropperHandler}
+            type="button"
+            className="btn btn-primary"
+          >
+            Показати CROPPER
+          </button>
         </form>
         <div className="col-4"></div>
       </div>

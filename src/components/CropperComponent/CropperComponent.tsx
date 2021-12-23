@@ -1,6 +1,6 @@
 import Cropper from "cropperjs";
 import { useFormik } from "formik";
-import { LegacyRef, useCallback, useEffect, useRef, useState } from "react";
+import { LegacyRef, useEffect, useRef, useState } from "react";
 import Modal from "../containers/Modal/Modal";
 import classes from "./CropperComponent.module.css";
 import { ICropperImage } from "./types";
@@ -12,11 +12,12 @@ const CropperComponent: React.FC = () => {
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const handleImageChange = useCallback((e) => {
+  const handleImageChange = async (e: any) => {
     const file = (e.target.files as FileList)[0];
-    formik.setFieldValue("image", file);
-    setImg(URL.createObjectURL(file));
-  }, []);
+    const url = URL.createObjectURL(file);
+    await setImg(url);
+    cropperObj?.replace(url);
+  };
 
   const onSubmit = (values: ICropperImage) => {
     console.log(values);
@@ -29,42 +30,31 @@ const CropperComponent: React.FC = () => {
     onSubmit,
     validateOnBlur: true,
   });
-  console.log("img => ", img);
 
   useEffect(() => {
-    cropperFunc();
-  }, [img]);
-
-  const cropperFunc = () => {
     if (imgRef.current) {
       const cropper = new Cropper(imgRef.current as HTMLImageElement, {
         aspectRatio: 16 / 9,
-        ready() {
-        },
       });
+      cropper.replace(img);
       setCropperObj(cropper);
     }
-  };
-
-  
+  }, []);
 
   const rotateImg = () => {
     if (imgRef.current) {
-      const cropper = new Cropper(imgRef.current as HTMLImageElement, {
-        aspectRatio: 16 / 9,
-        ready() {
-          cropper.rotate(90)
-        },
-      });
-      setCropperObj(cropper);
+      cropperObj?.rotate(90);
     }
+  };
+  const getBase64 = () => {
+    const base = cropperObj?.getCroppedCanvas().toDataURL();
+    console.log(base)
   };
 
   return (
     <>
       <Modal>
         <div className={classes.modalBody}>
-          {/* <img src={img} alt="" /> */}
           <div className={classes.image}>
             <img
               ref={imgRef as LegacyRef<HTMLImageElement>}
@@ -83,6 +73,9 @@ const CropperComponent: React.FC = () => {
             <div className="text-center">
               <button type="submit" className="btn btn-primary">
                 Зберегти фото
+              </button>
+              <button onClick={getBase64} type="button" className="btn btn-primary">
+                get base 64
               </button>
             </div>
           </form>
