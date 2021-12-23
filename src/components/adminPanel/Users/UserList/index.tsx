@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useActions } from '../../../hooks/useActions';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { useActions } from '../../../../hooks/useActions';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import './index.css';
 import UserItem from './userItem';
 import { UserInfo } from '../types';
