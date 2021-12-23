@@ -26,6 +26,8 @@ import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 import AdminPanelLayout from './components/containers/adminPanelLayout';
 import UserSearch from './components/adminPanel/Users/UserSearch';
+import CropperComponent from "./components/CropperComponent/CropperComponent";
+
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
 const Login = lazy(() => import("./components/auth/Login/index"));
@@ -75,6 +77,7 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
+          <Route path="cropper" element={<CropperComponent />}/>
           <Route path="*" element={<NoMatch />} />
         </Route>
 

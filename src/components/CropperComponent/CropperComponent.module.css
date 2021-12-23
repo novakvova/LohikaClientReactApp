@@ -1,0 +1,28 @@
+.modalBody {
+    height: 80vh;
+    width: 100%;
+    position: relative;
+}
+
+.image {
+    margin: 0 auto;
+    max-height: 60%;
+    height: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+.image img {
+    display: block;
+    max-width: 100%;
+
+}
+
+
+
+.formGroup {
+    width: 100%;
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
