@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import InputGroup from "../../common/InputGroup";
-import { useActions } from "../../../hooks/useActions";
+import InputGroup from "../../../common/InputGroup";
+import { useActions } from "../../../../hooks/useActions";
 import { useNavigate } from "react-router";
 import { CreateUserSchema } from "./validation";
 import { ICreateUser, ICreateUserError } from "../types/CreateUser";
 import { IStatus } from "../types" 
-import EclipseWidget from "../../common/eclipse";
+import EclipseWidget from "../../../common/eclipse";
 import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
-import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import { useTypedSelector } from "../../../../hooks/useTypedSelector";
 import { Helmet } from 'react-helmet';
 
 const CreateUser = () => {
