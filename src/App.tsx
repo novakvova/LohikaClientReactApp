@@ -24,6 +24,7 @@ import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
+import CropperComponent from "./components/CropperComponent/CropperComponent";
 
 //Import lazyLoading
 const Register = React.lazy(() => import("./components/auth/Register/index"));
@@ -97,6 +98,7 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
+          <Route path="cropper" element={<CropperComponent />}/>
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

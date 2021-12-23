@@ -24,12 +24,12 @@ const CarsListAdmin = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Admin-пошук машин</title>
+      </Helmet>
       <h1 className="text-center">Автомобілі</h1>
       <CarSearch>
         {showLoader && <EclipseWidget />}
-        <Helmet>
-          <title>Admin-пошук машин</title>
-        </Helmet>
         <table className="table table-striped table-hover">
           <thead>
             <tr>
