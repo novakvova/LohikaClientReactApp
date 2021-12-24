@@ -30,7 +30,7 @@ const CarCard: React.FC<CarCardProps> = ({
   return (
     <div className={`card ${classes.carCard} mt-3`}>
       <img
-        src={`https://vovalohika.tk${image}`}
+        src={`https://vovalohika.tk/images/600_${image}`}
         className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
         alt={name}
       />
