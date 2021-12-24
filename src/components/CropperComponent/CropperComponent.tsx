@@ -7,22 +7,32 @@ import { ICropperImage } from "./types";
 import carPhoto from "./auto_car-08.jpg";
 import "cropperjs/dist/cropper.css";
 
-const CropperComponent: React.FC = () => {
+export interface IGetCropperProps {
+  onGetImgData: (img: string) => void;
+  image?: string;
+}
+
+const CropperComponent: React.FC<IGetCropperProps> = ({ onGetImgData, image }) => {
   const [img, setImg] = useState<string>(carPhoto);
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
   const [base64, setBase64] = useState<any>();
+  const [showModal, setShowModal] = useState(false);
 
   const handleImageChange = async (e: any) => {
     const file = (e.target.files as FileList)[0];
-    const url = URL.createObjectURL(file);
-    await setImg(url);
-    cropperObj?.replace(url);
+    if (file) {
+      const url = URL.createObjectURL(file);
+      await setImg(url);
+      cropperObj?.replace(url);
+      if (!showModal) {
+        setShowModal(true);
+      } else {
+        setShowModal(false);
+      }
+    }
   };
-
-  const onSubmit = (values: ICropperImage) => {
-    
-  };
+  const onSubmit = (values: ICropperImage) => {};
 
   const initialValues: any = {
     image: img,
@@ -42,54 +52,94 @@ const CropperComponent: React.FC = () => {
       cropper.replace(img);
       setCropperObj(cropper);
     }
-  }, []);
+  }, [showModal]);
 
   const rotateImg = () => {
     if (imgRef.current) {
       cropperObj?.rotate(90);
     }
   };
+
   const getBase64 = () => {
     const base = cropperObj?.getCroppedCanvas().toDataURL();
     setBase64(base);
-    console.log(base);
+    setShowModal(false);
+    onGetImgData(base as string);
   };
 
   return (
     <>
-      <Modal>
-        <div className={classes.modalBody}>
-          <img src={base64} alt="2321" />
-          <div className={classes.image}>
-            <img
-              ref={imgRef as LegacyRef<HTMLImageElement>}
-              src={img}
-              alt="asdds"
-            />
+      <form
+        className={classes.formGroup}
+        onSubmit={(e) => formik.handleSubmit(e)}
+      >
+        <label htmlFor="inputImg">
+          <div className={classes.labelInput}>
+            {base64 && (
+              <img className={classes.bgImg} src={base64} alt="asdas" />
+            )}
+            {!base64 && (
+              <>
+                <i
+                  className="fa fa-image fa-5x"
+                  style={{ color: "silver" }}
+                ></i>
+                <span className="d-block">Виберіть фото</span>
+              </>
+            )}
           </div>
-          <button onClick={rotateImg} type="button" className="btn btn-primary">
-            Rotate
-          </button>
-          <form
-            className={classes.formGroup}
-            onSubmit={(e) => formik.handleSubmit(e)}
-          >
-            <input type="file" onChange={handleImageChange} />
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary">
-                Зберегти фото
-              </button>
-              <button
-                onClick={getBase64}
-                type="button"
-                className="btn btn-primary"
-              >
-                get base 64
-              </button>
+        </label>
+        <input
+          id="inputImg"
+          className="d-none"
+          type="file"
+          onChange={handleImageChange}
+        />
+        <div className="text-center"></div>
+      </form>
+      {showModal && (
+        <Modal>
+          <div className={classes.modalBody}>
+            <div className={classes.image}>
+              {image && <img
+                ref={imgRef as LegacyRef<HTMLImageElement>}
+                src={image}
+                alt="asdds"
+              />}
+              {!image &&<img
+                ref={imgRef as LegacyRef<HTMLImageElement>}
+                src={img}
+                alt="asdds"
+              />
+              }
+              
             </div>
-          </form>
-        </div>
-      </Modal>
+            <button
+              onClick={rotateImg}
+              type="button"
+              className="btn btn-primary"
+            >
+              Rotate
+            </button>
+            <button
+              onClick={getBase64}
+              type="button"
+              className="btn btn-primary"
+            >
+              Завершити
+            </button>
+            <button
+              onClick={() => {
+                setShowModal(false);
+              }}
+              type="button"
+              className="btn btn-primary"
+            >
+              Відмінити
+            </button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };

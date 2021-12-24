@@ -98,7 +98,7 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
-          <Route path="cropper" element={<CropperComponent />}/>
+          
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
