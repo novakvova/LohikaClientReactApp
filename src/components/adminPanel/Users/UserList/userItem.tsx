@@ -1,8 +1,8 @@
-import { useActions } from "../../../hooks/useActions";
+import { useActions } from "../../../../hooks/useActions";
 import { v4 as uuid } from "uuid";
 import { UserInfo } from "../types";
 import { useNavigate } from "react-router-dom";
-import Modals from "../../common/Modal";
+import Modals from "../../../common/Modal";
 
 interface Props {
   userItem: UserInfo;
@@ -15,7 +15,7 @@ const UserItem: React.FC<Props> = ({
   const navigator = useNavigate();
 
   const handlerInfo = (id: number) => {
-    navigator(`${id}`);
+    navigator(`/adminPanel/user/${id}`);
   };
   return (
     <tr>
@@ -41,7 +41,7 @@ const UserItem: React.FC<Props> = ({
           className="btn btn-success btn-sm"
           onClick={async () => {
             await getUserById(id);
-            await navigator(`edit/${id}`);
+            await navigator(`/adminPanel/users/edit/${id}`);
           }}
         >
           Змінити

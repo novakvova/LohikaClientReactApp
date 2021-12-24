@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
-import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { useActions } from "../../../hooks/useActions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import HeaderCartButton from "../../common/HeaderCartButton/HeaderCartButton";
-import HeaderSearch from "../../common/HeaderSearch/HeaderSearch";
-import { v4 as uuid } from "uuid";
+import { Link } from 'react-router-dom';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { useActions } from '../../../hooks/useActions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import HeaderCartButton from '../../common/HeaderCartButton/HeaderCartButton';
+import HeaderSearch from '../../common/HeaderSearch/HeaderSearch';
+import { v4 as uuid } from 'uuid';
 
-import "./headers.css";
+import './headers.css';
 
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
@@ -29,8 +29,7 @@ const DefaultHeader = () => {
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -42,6 +41,11 @@ const DefaultHeader = () => {
             </li>
             <li className="ms-3">
               <HeaderSearch />
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/categories/add">
+                Додати категорію
+              </Link>
             </li>
           </ul>
           {isAuth ? (
@@ -65,7 +69,7 @@ const DefaultHeader = () => {
                 <Link className="nav-link" to="/profile">
                   <img
                     src={
-                      !image.endsWith("image/")
+                      !image.endsWith('image/')
                         ? `https://vovalohika.tk${image}?t=${uuid()}`
                         : `https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png?t=${uuid()}`
                     }
@@ -76,14 +80,14 @@ const DefaultHeader = () => {
               </li>
               <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/" onClick={LogoutUser}>
-                  <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
+                  <FontAwesomeIcon icon={faSignOutAlt} size={'2x'} />
                 </Link>
               </li>
             </ul>
           ) : (
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/adminpanel">
+                <Link className="nav-link" to="/adminPanel">
                   Адмінка
                 </Link>
               </li>

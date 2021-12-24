@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { Dispatch } from "react";
-import http from "../../http_common";
+import http from "../../../http_common";
 import { UsersActionTypes, UsersActions } from "./types/GetAllUser";
 import { DeleteUserActions, DeleteUserActionTypes } from "./types/DeleteUser";
 import {
