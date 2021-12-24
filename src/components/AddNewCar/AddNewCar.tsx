@@ -26,10 +26,10 @@ const AddNewCar: React.FC = () => {
   } = useTypedSelector((store) => store.sendingCar);
   const navigate = useNavigate();
 
-  const [img, setImg] = React.useState<string>();
   
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
+    console.log("values", values);
     addNewCar(values);
   };
 
@@ -40,25 +40,13 @@ const AddNewCar: React.FC = () => {
     validateOnBlur: true,
   });
 
-  // const handleImageChange = React.useCallback(
-  //   (e) => {
-  //     const file = (e.target.files as FileList)[0];
-  //     formik.setFieldValue("image", file);
-  //     setImg(URL.createObjectURL(file));
-  //   },
-  //   []
-  // );
-
   React.useEffect(() => {
     if (nav) {
       navigate("/");
     }
   }, [nav, serverError]);
 
-  const getImg = (img : string) => {
-    
-    formik.setFieldValue("image", img)
-  }
+  const {setFieldValue} = formik;
 
   return (
     <>
@@ -79,7 +67,9 @@ const AddNewCar: React.FC = () => {
             </div>
           )} */}
           <div className="rounded">
-            <CropperComponent onGetImgData = {getImg}/>
+            <CropperComponent
+              field="image"
+              onChange = {setFieldValue}/>
           </div>
           
         </div>

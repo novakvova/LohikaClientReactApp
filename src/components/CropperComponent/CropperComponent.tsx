@@ -8,11 +8,12 @@ import carPhoto from "./auto_car-08.jpg";
 import "cropperjs/dist/cropper.css";
 
 export interface IGetCropperProps {
-  onGetImgData: (img: string) => void;
-  image?: string;
+  onChange: (field: string, value: string) => void;
+  field: string;
+  value?: string;
 }
 
-const CropperComponent: React.FC<IGetCropperProps> = ({ onGetImgData, image }) => {
+const CropperComponent: React.FC<IGetCropperProps> = ({ onChange, field, value=carPhoto }) => {
   const [img, setImg] = useState<string>(carPhoto);
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
@@ -61,10 +62,10 @@ const CropperComponent: React.FC<IGetCropperProps> = ({ onGetImgData, image }) =
   };
 
   const getBase64 = () => {
-    const base = cropperObj?.getCroppedCanvas().toDataURL();
+    const base = cropperObj?.getCroppedCanvas().toDataURL() as string;
     setBase64(base);
     setShowModal(false);
-    onGetImgData(base as string);
+    onChange(field, base);
   };
 
   return (
@@ -73,24 +74,21 @@ const CropperComponent: React.FC<IGetCropperProps> = ({ onGetImgData, image }) =
         className={classes.formGroup}
         onSubmit={(e) => formik.handleSubmit(e)}
       >
-        <label htmlFor="inputImg">
+        <label htmlFor={field}>
           <div className={classes.labelInput}>
             {base64 && (
               <img className={classes.bgImg} src={base64} alt="asdas" />
             )}
             {!base64 && (
               <>
-                <i
-                  className="fa fa-image fa-5x"
-                  style={{ color: "silver" }}
-                ></i>
+                <img src={value}/>
                 <span className="d-block">Виберіть фото</span>
               </>
             )}
           </div>
         </label>
         <input
-          id="inputImg"
+          id={field}
           className="d-none"
           type="file"
           onChange={handleImageChange}
@@ -101,14 +99,9 @@ const CropperComponent: React.FC<IGetCropperProps> = ({ onGetImgData, image }) =
         <Modal>
           <div className={classes.modalBody}>
             <div className={classes.image}>
-              {image && <img
+              {<img
                 ref={imgRef as LegacyRef<HTMLImageElement>}
-                src={image}
-                alt="asdds"
-              />}
-              {!image &&<img
-                ref={imgRef as LegacyRef<HTMLImageElement>}
-                src={img}
+                src={value}
                 alt="asdds"
               />
               }
