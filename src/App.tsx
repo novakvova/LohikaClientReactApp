@@ -27,6 +27,9 @@ import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 import AdminPanelLayout from './components/containers/adminPanelLayout';
 import UserSearch from './components/adminPanel/Users/UserSearch';
 import CropperComponent from "./components/CropperComponent/CropperComponent";
+import UserListTEst from './components/adminPanel/Users/testCrud';
+import UserInfo from './components/adminPanel/Users/testCrud/UserInfo';
+import EditUser from './components/adminPanel/Users/testCrud/UserEdit';
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
@@ -77,7 +80,7 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
-          <Route path="cropper" element={<CropperComponent />}/>
+          <Route path="cropper" element={<CropperComponent />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
 
@@ -87,6 +90,11 @@ function App() {
           <Route path="/adminPanel/user/:id" element={<UserDetailPage />} />
           <Route path="/adminPanel/users/edit/:id" element={<EditPage />} />
           <Route path="/adminPanel/users/create" element={<CreatePage />} />
+          <Route path="/adminPanel/users/testCrud" element={<UserListTEst />} />
+          <Route path="/adminPanel/users/testCrud/userInfo/:id" element={<UserInfo />} />
+          <Route path="/adminPanel/users/testCrud/edit/:id" element={<EditUser />} />
+
+
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

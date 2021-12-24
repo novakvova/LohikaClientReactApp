@@ -3,20 +3,24 @@ import SideBar from '../../adminPanel/sideBar/sideBar';
 
 const AdminPanelLayout = () => {
 	
+
 	return (
     <>
-      <div className="container">
-        <div className="p-grid">
-          <div className="p-col-3"></div>
-          <div className="col-9">
+      <div
+        className="container-fluid card"
+        style={{ background: "#20262e", height: "100vh"}}
+      >
+        <div className="row">
+          <div className="col-2"></div>
+          <div className="col-10">
             <h1 className="text-center">Адміністрування</h1>
           </div>
         </div>
-        <div className="p-grid">
-          <div className="p-col-3">
+        <div className="row">
+          <div className="col-2">
             <SideBar />
           </div>
-          <div className="p-col-9">
+          <div className="col-10">
             <Outlet />
           </div>
         </div>

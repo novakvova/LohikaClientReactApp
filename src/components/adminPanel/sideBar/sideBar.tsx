@@ -19,6 +19,11 @@ const SideBar = () => {
           icon: "pi pi-fw pi-user-plus",
           command: () => navigate("/adminPanel/users/create"),
         },
+        {
+          label: "Список новий",
+          icon: "pi pi-fw pi-list",
+          command: () => navigate("/adminPanel/users/testCrud"),
+        },
       ],
     },
     {
@@ -40,7 +45,11 @@ const SideBar = () => {
     <>
       <div>
         <div className="card">
-          <PanelMenu model={items} style={{ width: "auto" }} />
+          <PanelMenu
+            model={items}
+            className="p-panelmenu"
+            style={{ background: "#353b42" }}
+          />
         </div>
       </div>
     </>

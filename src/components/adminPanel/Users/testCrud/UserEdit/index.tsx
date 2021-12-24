@@ -1,89 +1,76 @@
-import { Form,  FormikProvider, useFormik } from 'formik';
-import {  useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
-import { useActions } from '../../../../hooks/useActions';
-import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import EclipseWidget from '../../../common/eclipse';
-import InputGroup from '../../../common/InputGroup';
-import { UserInfo } from '../types';
+import { Form, FormikProvider, useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useActions } from '../../../../../hooks/useActions';
+import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
+import { UserInfo } from '../../types';
+import { UpdateErrors } from '../../types/UpdateUser';
 import { EditUserSchema } from './validation';
-import { UpdateErrors } from "../types/UpdateUser"
+import { Card } from "primereact/card" 
 import { Helmet } from 'react-helmet';
+import EclipseWidget from '../../../../common/eclipse';
+import InputGroup from '../../../../common/InputGroup';
 
 
-const EditPage = () => {
-	const { userData, loading } = useTypedSelector(store => store.userCrud);
-  const { updateUser } = useActions();
+const EditUser = () => {
+  const { userData, loading } = useTypedSelector((store) => store.userCrud);
+  const { updateUser, getUserById } = useActions();
   const navigator = useNavigate();
   const { id } = useParams();
-	const _id = Number(id);
+  const _id = Number(id);
+
+  useEffect(() => {
+	 getUserById(_id)
+  }, [])
 
   const [img, setImg] = useState<string>(
     `https://vovalohika.tk${userData?.photo}`
   );
-
-	let initValues: UserInfo = {
-    id: _id,
-    firstName: userData.firstName,
-    secondName: userData.secondName,
-    phone: userData.phone,
-    email: userData.email,
-    photo: userData.photo,
-  };
+  
+  	let initValues: UserInfo = {
+      id: _id,
+      firstName: userData.firstName,
+      secondName: userData.secondName,
+      phone: userData.phone,
+      email: userData.email,
+      photo: userData.photo,
+    };
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    
 		setFieldValue("photo", (e.target as any).files[0]);
 		const file = (e.target as any).files[0];
-        setImg(URL.createObjectURL(file));
+		setImg(URL.createObjectURL(file));
 	};
-
-
-	const onHandleSubmit = async (values: UserInfo ) => {
-          const formData = new FormData();
-          Object.entries(values).forEach(([key, value]) =>
-            formData.append(key, value)
-          );
-    try {
-      await updateUser(values, formData);
-      navigator('/adminPanel/users')
-    } catch (error) {
-      const serverErrors = error as UpdateErrors;
-    }
-  };
-
+	const onHandleSubmit = async (values: UserInfo) => {
+	const formData = new FormData();
+	Object.entries(values).forEach(([key, value]) => formData.append(key, value));
+	try {
+		await updateUser(values, formData);
+		navigator("/adminPanel/users");
+	} catch (error) {
+		const serverErrors = error as UpdateErrors;
+	}
+	};
 	const formik = useFormik({
     initialValues: initValues,
     validationSchema: EditUserSchema,
     onSubmit: onHandleSubmit,
   });
 
-	const {
-    errors,
-    touched,
-    handleChange,
-    handleSubmit,
-    setFieldValue,
-    values,
-  } = formik;
-
+  const { errors, touched, handleChange, handleSubmit, setFieldValue, values } =
+    formik;
 	return (
-    <div className="row">
+    <>
       <Helmet>
         <title>Редагувати користувача</title>
       </Helmet>
       {loading && <EclipseWidget />}
-      {!loading && (
-        <>
-          <div className="col-3">
-            <div className="card mt-5">
-              <div className="card-body text-center">
-                <img src={img} alt="asdasd" />
-              </div>
-            </div>
-          </div>
-          <div className="col-6 mb-4">
-            <h1 className="text-center mt-4">Редагувати</h1>
+      <div className="row">
+        <div className="col-3 text-center">
+          <img src={img} alt="asdasd" />
+        </div>
+        <div className="col-6">
+          <Card title="Редагування">
             <FormikProvider value={formik}>
               <Form onSubmit={handleSubmit}>
                 <InputGroup
@@ -138,11 +125,11 @@ const EditPage = () => {
                 </div>
               </Form>
             </FormikProvider>
-          </div>
-        </>
-      )}
-    </div>
+          </Card>
+        </div>
+      </div>
+    </>
   );
 };
-export default EditPage;
 
+export default EditUser;
