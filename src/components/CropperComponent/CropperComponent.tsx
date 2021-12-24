@@ -11,6 +11,7 @@ const CropperComponent: React.FC = () => {
   const [img, setImg] = useState<string>(carPhoto);
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
+  const [base64, setBase64] = useState<any>();
 
   const handleImageChange = async (e: any) => {
     const file = (e.target.files as FileList)[0];
@@ -20,11 +21,13 @@ const CropperComponent: React.FC = () => {
   };
 
   const onSubmit = (values: ICropperImage) => {
-    console.log(values);
+    
   };
+
   const initialValues: any = {
     image: img,
   };
+
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -48,13 +51,15 @@ const CropperComponent: React.FC = () => {
   };
   const getBase64 = () => {
     const base = cropperObj?.getCroppedCanvas().toDataURL();
-    console.log(base)
+    setBase64(base);
+    console.log(base);
   };
 
   return (
     <>
       <Modal>
         <div className={classes.modalBody}>
+          <img src={base64} alt="2321" />
           <div className={classes.image}>
             <img
               ref={imgRef as LegacyRef<HTMLImageElement>}
@@ -74,7 +79,11 @@ const CropperComponent: React.FC = () => {
               <button type="submit" className="btn btn-primary">
                 Зберегти фото
               </button>
-              <button onClick={getBase64} type="button" className="btn btn-primary">
+              <button
+                onClick={getBase64}
+                type="button"
+                className="btn btn-primary"
+              >
                 get base 64
               </button>
             </div>
