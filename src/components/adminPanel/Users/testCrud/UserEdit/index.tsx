@@ -4,24 +4,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useActions } from '../../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { UserInfo } from '../../types';
-import { UpdateErrors } from '../../types/UpdateUser';
 import { EditUserSchema } from './validation';
 import { Card } from "primereact/card" 
 import { Helmet } from 'react-helmet';
 import EclipseWidget from '../../../../common/eclipse';
 import InputGroup from '../../../../common/InputGroup';
+import { Button } from 'primereact/button';
 
 
 const EditUser = () => {
   const { userData, loading } = useTypedSelector((store) => store.userCrud);
-  const { updateUser, getUserById } = useActions();
+  const { updateUser} = useActions();
   const navigator = useNavigate();
   const { id } = useParams();
   const _id = Number(id);
-
-  useEffect(() => {
-	 getUserById(_id)
-  }, [])
 
   const [img, setImg] = useState<string>(
     `https://vovalohika.tk${userData?.photo}`
@@ -48,7 +44,6 @@ const EditUser = () => {
 		await updateUser(values, formData);
 		navigator("/adminPanel/users");
 	} catch (error) {
-		const serverErrors = error as UpdateErrors;
 	}
 	};
 	const formik = useFormik({
@@ -119,9 +114,7 @@ const EditUser = () => {
                 />
 
                 <div className="text-center">
-                  <button type="submit" className="btn btn-primary">
-                    Редагувати
-                  </button>
+                  <Button type="submit" label="Редагувати" icon="pi pi-check" />
                 </div>
               </Form>
             </FormikProvider>

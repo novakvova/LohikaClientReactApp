@@ -2,9 +2,11 @@ import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 import { UserInfo } from "../../types";
 import { v4 as uuid } from "uuid";
+import { useActions } from '../../../../../hooks/useActions';
 
 
 export const ActionBodyTemplate = (rowData: UserInfo) => {
+  const {getUserById} = useActions();
   return (
     <>
       <Link to={`userinfo/${rowData.id}`}>
@@ -17,12 +19,13 @@ export const ActionBodyTemplate = (rowData: UserInfo) => {
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success p-mr-2"
+          onClick={() => {}}
         />
       </Link>
       <Button
         icon="pi pi-trash"
         className="p-button-rounded p-button-warning p-mr-2"
-        onClick={() => {}}
+        onClick={() => {getUserById(rowData.id)}}
       />
     </>
   );

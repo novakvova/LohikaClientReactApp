@@ -65,6 +65,7 @@ const EditPage = () => {
     handleSubmit,
     setFieldValue,
     values,
+    setFormikState
   } = formik;
 
 	return (

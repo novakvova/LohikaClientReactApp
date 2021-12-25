@@ -23,15 +23,12 @@ if (token) {
 }
 
 ReactDOM.render(
-  <GoogleReCaptchaProvider reCaptchaKey="6LdXS7cdAAAAAKpzlFA5oHnaB8tPUF2ZtAIqVCRc">
     <Provider store={store}>
       <BrowserRouter>
         <FleshMessages />
         <App />
       </BrowserRouter>
-    </Provider>
-  </GoogleReCaptchaProvider>,
-
+    </Provider>,
   document.getElementById("root")
 );
 
