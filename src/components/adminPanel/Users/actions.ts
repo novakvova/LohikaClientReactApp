@@ -97,7 +97,7 @@ export const getUserById = (id: number): any => {
         payload: data,
       });
 
-      return Promise.resolve<IGetUser>(response);
+      return Promise.resolve<UserInfo>(data);
     } catch (error: any) {
       dispatch({
         type: GetUserActionTypes.GET_USER_ERROR,

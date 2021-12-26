@@ -1,5 +1,5 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useActions } from '../../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
@@ -14,15 +14,21 @@ import { Button } from 'primereact/button';
 
 const EditUser = () => {
   const { userData, loading } = useTypedSelector((store) => store.userCrud);
-  const { updateUser} = useActions();
+  const { updateUser , getUserById} = useActions();
   const navigator = useNavigate();
   const { id } = useParams();
   const _id = Number(id);
 
+  useEffect(() => {
+    getUserById(_id);
+  }, [getUserById, _id]);
+
+  
+
   const [img, setImg] = useState<string>(
     `https://vovalohika.tk${userData?.photo}`
   );
-  
+
   	let initValues: UserInfo = {
       id: _id,
       firstName: userData.firstName,
@@ -33,7 +39,7 @@ const EditUser = () => {
     };
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setFieldValue("photo", (e.target as any).files[0]);
+		setFieldValue("photo", (e.target.files as FileList)[0]);
 		const file = (e.target as any).files[0];
 		setImg(URL.createObjectURL(file));
 	};
@@ -47,13 +53,19 @@ const EditUser = () => {
 	}
 	};
 	const formik = useFormik({
-    initialValues: initValues,
+    initialValues: userData,
     validationSchema: EditUserSchema,
     onSubmit: onHandleSubmit,
   });
 
-  const { errors, touched, handleChange, handleSubmit, setFieldValue, values } =
-    formik;
+  const {
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    values,
+  } = formik;
 	return (
     <>
       <Helmet>

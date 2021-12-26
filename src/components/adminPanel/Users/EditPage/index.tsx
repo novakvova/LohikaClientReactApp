@@ -48,7 +48,6 @@ const EditPage = () => {
       await updateUser(values, formData);
       navigator('/adminPanel/users')
     } catch (error) {
-      const serverErrors = error as UpdateErrors;
     }
   };
 
@@ -65,7 +64,6 @@ const EditPage = () => {
     handleSubmit,
     setFieldValue,
     values,
-    setFormikState
   } = formik;
 
 	return (

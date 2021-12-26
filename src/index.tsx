@@ -14,7 +14,6 @@ import { store } from "./store";
 import { setAuthUserByToken } from "./components/auth/Login/action";
 import { downloadCartData } from "./components/Cart/cart-actions";
 import FleshMessages from "./components/FleshMessages";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 let token = localStorage.token;
 if (token) {

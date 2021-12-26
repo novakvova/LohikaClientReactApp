@@ -14,7 +14,6 @@ import { Button } from 'primereact/button';
 
 const CreateUser = () => {
   const { CreateUser, addFlashMessage, deleteFlashMessage } = useActions();
-  const { loading } = useTypedSelector((store) => store.userCrud);
   const [load, setLoad] = useState<boolean>(false);
   const navigator = useNavigate();
   const initialValues: ICreateUser = {
@@ -137,7 +136,7 @@ const CreateUser = () => {
                   onChange={handleChange}
                   touched={touched.confirmPassword}
                 />
-                <div className=" mt-auto p-3 align-self-end">
+                <div className="mt-auto p-3 align-self-end">
                   <Button type="submit" label="Додати" icon="pi pi-plus" />
                 </div>
               </div>

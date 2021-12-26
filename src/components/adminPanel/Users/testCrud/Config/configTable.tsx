@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { UserInfo } from "../../types";
 import { v4 as uuid } from "uuid";
 import { useActions } from '../../../../../hooks/useActions';
+import { useState } from 'react';
+import Search from '../SearchForm';
+
+
 
 
 export const ActionBodyTemplate = (rowData: UserInfo) => {
-  const {getUserById} = useActions();
   return (
     <>
       <Link to={`userinfo/${rowData.id}`}>
@@ -19,13 +22,12 @@ export const ActionBodyTemplate = (rowData: UserInfo) => {
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success p-mr-2"
-          onClick={() => {}}
         />
       </Link>
       <Button
         icon="pi pi-trash"
         className="p-button-rounded p-button-warning p-mr-2"
-        onClick={() => {getUserById(rowData.id)}}
+        onClick={() => {}}
       />
     </>
   );
@@ -47,6 +49,24 @@ export const ImageBodyTemplate = (rowData: UserInfo) => {
   );
 };
 
-export const Header = <div className="table-header">Користувачі</div>;
+
+
+export const Header = () => {
+    const [toogleSearch, setToogleSearch] = useState(false);
+
+  return (
+    <>
+      <div className="d-flex justify-content-between">
+        <div className="table-header">Користувачі</div>
+        <Button
+          label="Пошук"
+          icon="pi pi-search"
+          onClick={() => setToogleSearch((prev) => !prev)}
+        />
+      </div>
+      {toogleSearch && <Search />}
+    </>
+  );
+};
 
 

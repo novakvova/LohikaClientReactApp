@@ -33,10 +33,9 @@ const UserDetailPage = () => {
     } catch (error) {}
       }
 
-  useEffect( () => {
+  useEffect(() => {
     getUser();
-   
-  }, []);
+  }, [getUser]);
 
   if (!id) {
     return <NoMatch />;

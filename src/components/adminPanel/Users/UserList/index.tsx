@@ -11,7 +11,7 @@ const Users = () => {
   
   useEffect(() => {
     getSearchResult({});
-  }, []);
+  }, [getSearchResult]);
 
 	return (
     <div className="container">

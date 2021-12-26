@@ -16,8 +16,8 @@ const UserInfo = () => {
 	const { firstName, phone, photo, email, secondName } = userData;
 
 	useEffect(() => {
-		getUserById(_id);
-	}, [])
+    getUserById(_id);
+  }, [getUserById, _id]);
 
 	  if (!id) {
       return <NoMatch />;
