@@ -1,28 +1,23 @@
-import { Form, FormikProvider, useFormik } from 'formik';
-import InputGroup from '../../../common/InputGroup';
-import {  ISearchUser } from "../types/SearchUsers";
+import { Form, FormikProvider, useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import qs from "qs";
 import { useActions } from '../../../../hooks/useActions';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import qs from 'qs';
-import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import Users from '../UserList';
-import EclipseWidget from '../../../common/eclipse';
-import { Helmet } from 'react-helmet';
-import  Paginator  from '../Paginator/index';
+import { ISearchUser } from '../types/SearchUsers';
+import InputGroup from '../../../common/InputGroup';
+import { Card } from 'primereact/card';
+import { Button } from 'primereact/button';
 
-const UserSearch = () => {
+const Search = () => {
   const { getSearchResult } = useActions();
-  const { loading } = useTypedSelector( store => store.userCrud)
   const [searchParams, setSearchParams] = useSearchParams();
-  const [toogleSearch, setToggleSearch] = useState(false);
 
   const [search, setSearch] = useState<ISearchUser>({
     id: searchParams.get("id") || "",
     firstName: searchParams.get("firstName") || "",
     secondName: searchParams.get("secondName") || "",
     phone: searchParams.get("phone") || "",
-    email: searchParams.get("email") || "" ,
+    email: searchParams.get("email") || "",
     page: searchParams.get("page"),
   });
 
@@ -30,11 +25,10 @@ const UserSearch = () => {
     getSearchResult(search);
   }, [getSearchResult, search]);
 
-   
- const filterNonNull = (obj: ISearchUser) => {
-   return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
- };
- 
+  const filterNonNull = (obj: ISearchUser) => {
+    return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
+  };
+
   const onHandleSubmit = (values: ISearchUser) => {
     const searchData: ISearchUser = {
       ...values,
@@ -53,21 +47,11 @@ const UserSearch = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Користувачі</title>
-      </Helmet>
-      <button
-        className="btn btn-primary m-3"
-        onClick={() => setToggleSearch((prev) => !prev)}
-      >
-        Пошук
-      </button>
-      {toogleSearch && (
+      <Card>
         <FormikProvider value={formik}>
           <Form onSubmit={handleSubmit}>
-            <div className="row d-flex justify-content-center border border-secondary border-3 rounded-4 p-4 m-5">
-              <h1 className="text-center">Пошук</h1>
-              <div className="col-4">
+            <div className="row">
+              <div className="col-4 d-flex flex-column">
                 <InputGroup
                   field="id"
                   label="Id"
@@ -83,7 +67,7 @@ const UserSearch = () => {
                   value={values?.firstName}
                 />
               </div>
-              <div className="col-4">
+              <div className="col-4 d-flex flex-column">
                 <InputGroup
                   field="secondName"
                   label="Прізвище"
@@ -98,31 +82,23 @@ const UserSearch = () => {
                   value={values?.email}
                 />
               </div>
-              <div className="col-4">
+              <div className="col-4 d-flex flex-column">
                 <InputGroup
                   field="phone"
                   label="Телефон"
                   onChange={handleChange}
                   value={values?.phone}
                 />
-
-                <button
-                  type="submit"
-                  className="btn btn-primary align-self-center"
-                >
-                  Пошук
-                </button>
+                <div className="mt-auto p-3 align-self-end">
+                  <Button type="submit" label="Шукати" icon="pi pi-search" />
+                </div>
               </div>
             </div>
           </Form>
         </FormikProvider>
-      )}
-      <Paginator />
-      {loading && <EclipseWidget />}
+      </Card>
     </>
   );
 };
 
-export default UserSearch;
-
-
+export default Search;

@@ -1,8 +1,8 @@
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
-import { UserInfo } from "../../types";
+import { UserInfo } from "../types";
 import { v4 as uuid } from "uuid";
-import { useActions } from '../../../../../hooks/useActions';
+import { useActions } from '../../../../hooks/useActions';
 import { useState } from 'react';
 import Search from '../SearchForm';
 

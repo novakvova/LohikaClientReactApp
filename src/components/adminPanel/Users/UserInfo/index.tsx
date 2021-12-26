@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { Card } from "primereact/card"
 import { Image } from "primereact/image"
-import { useActions } from '../../../../../hooks/useActions';
+import { useActions } from '../../../../hooks/useActions';
 import { useEffect } from 'react';
-import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { Helmet } from 'react-helmet';
-import EclipseWidget from '../../../../common/eclipse';
-import NoMatch from '../../../../NoMatch';
+import EclipseWidget from '../../../common/eclipse';
+import NoMatch from '../../../NoMatch';
 
 const UserInfo = () => {
 	const { id } = useParams();

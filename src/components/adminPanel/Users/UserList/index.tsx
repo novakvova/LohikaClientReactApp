@@ -1,43 +1,44 @@
-import { useEffect } from 'react';
+import { useEffect} from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import './table.css';
 import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import './index.css';
-import UserItem from './userItem';
-import { UserInfo } from '../types';
+import { ActionBodyTemplate, ImageBodyTemplate, Header } from "../Config/configTable";
+import Paginator from '../Paginator';
 
-const Users = () => {
-  const { users } = useTypedSelector( store => store.userCrud)
-  const { getSearchResult } = useActions();
+
+const UserListTEst = () => {
+	const { getSearchResult} = useActions();
+	const { users } = useTypedSelector(store => store.userCrud);
   
-  useEffect(() => {
-    getSearchResult({});
-  }, [getSearchResult]);
 
-	return (
-    <div className="container">
-      <h1 className="text-center m-2">Користувачі</h1>
-      <table className="table align-middle table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Ім'я</th>
-            <th scope="col">Фото</th>
-            <th scope="col">Телефон</th>
-            <th scope="col">Email</th>
-            <th scope="col">Інформація</th>
-            <th scope="col">Змінити</th>
-            <th scope="col">Видалити</th>
-          </tr>
-        </thead>
+    useEffect(() => {
+      getSearchResult({});
+    }, [getSearchResult]); 
 
-        <tbody>
-          {users.map((userItem: UserInfo, idx) => (
-              <UserItem key={idx} userItem={userItem} />
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+const footer = <Paginator />;
+
+    return (
+      <div className="card">
+        <DataTable
+          autoLayout={true}
+          value={users}
+          header={<Header />}
+          footer={footer}
+          responsiveLayout="stack"
+          className="p-datatable"
+        >
+          <Column field="id" header="Id"></Column>
+          <Column field="firstName" header="Імя"></Column>
+          <Column field="secondName" header="Прізвище"></Column>
+          <Column header="Фото" body={ImageBodyTemplate}></Column>
+          <Column field="phone" header="Телефон"></Column>
+          <Column field="email" header="Email"></Column>
+          <Column body={ActionBodyTemplate} header="Дії"></Column>
+        </DataTable>
+      </div>
+    );
 }
 
-export default Users;
+export default UserListTEst;
