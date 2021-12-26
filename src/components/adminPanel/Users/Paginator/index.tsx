@@ -22,6 +22,8 @@ const Paginator = () => {
 
   useEffect(() => {
     setSearchParams(qs.stringify(filterNonNull(search)));
+    console.log(search);
+    
   }, [search]);
 
 
@@ -35,12 +37,8 @@ const Paginator = () => {
   };
 
   const newPage = async (page: number) => {
-	   searchParams.forEach((value, key) => {
-		  setSearch((prev) => ({ ...prev, page: page }));
-	  })
+	setSearch((prev) => ({ ...prev, page: page }));
    
-	setSearch(prev => ({...prev, page:page}));
-
 	await setSearchParams(qs.stringify(filterNonNull(search)));
 	await getSearchResult({...search, page});
   }

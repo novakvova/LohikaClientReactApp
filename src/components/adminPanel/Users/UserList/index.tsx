@@ -9,13 +9,14 @@ import Paginator from '../Paginator';
 
 
 const UserListTEst = () => {
-	const { getSearchResult} = useActions();
-	const { users } = useTypedSelector(store => store.userCrud);
+	const { getSearchResult, paginateInit} = useActions();
+	const { users, total } = useTypedSelector(store => store.userCrud);
   
 
     useEffect(() => {
       getSearchResult({});
-    }, [getSearchResult]); 
+      paginateInit(total);
+    }, [getSearchResult, total, paginateInit]); 
 
 const footer = <Paginator />;
 

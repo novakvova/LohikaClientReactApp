@@ -9,7 +9,7 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 
 const Search = () => {
-  const { getSearchResult } = useActions();
+  const { getSearchResult, paginateInit } = useActions();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [search, setSearch] = useState<ISearchUser>({
