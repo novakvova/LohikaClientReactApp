@@ -1,5 +1,5 @@
 import { Form, FormikProvider, useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import qs from "qs";
 import { useActions } from '../../../../hooks/useActions';
@@ -9,7 +9,7 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 
 const Search = () => {
-  const { getSearchResult, paginateInit } = useActions();
+  const { getSearchResult } = useActions();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [search, setSearch] = useState<ISearchUser>({
@@ -20,11 +20,7 @@ const Search = () => {
     email: searchParams.get("email") || "",
     page: searchParams.get("page"),
   });
-
-  useEffect(() => {
-    getSearchResult(search);
-  }, [getSearchResult, search]);
-
+ 
   const filterNonNull = (obj: ISearchUser) => {
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
   };
@@ -36,6 +32,7 @@ const Search = () => {
     };
     setSearchParams(qs.stringify(filterNonNull(searchData)));
     setSearch(searchData);
+    getSearchResult(searchData);
   };
 
   const formik = useFormik({

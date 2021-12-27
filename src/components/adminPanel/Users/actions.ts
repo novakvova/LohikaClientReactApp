@@ -13,7 +13,6 @@ import {
 import {
   GetUserActionTypes,
   GetUserActions,
-  IGetUser,
 } from "./types/GetUserById";
 
 import {
@@ -91,13 +90,13 @@ export const getUserById = (id: number): any => {
       });
       const response = await http.get<UserInfo>(`api/Users/get/${id}`);
       const { data } = response;
-
+      
       dispatch({
         type: GetUserActionTypes.GET_USER_SUCCESS,
         payload: data,
       });
 
-      return Promise.resolve<UserInfo>(data);
+      return Promise.resolve<UserInfo>({...data});
     } catch (error: any) {
       dispatch({
         type: GetUserActionTypes.GET_USER_ERROR,
@@ -178,17 +177,9 @@ export const getSearchResult = (searchRequest: ISearchUser) => {
        type: ISearchUserActionTypes.SEARCH_USERS,
      });
     try {
-      let params = Object.fromEntries(
-        Object.entries(searchRequest).filter(([key, value]) => {
-          if (value) return [key, value];
-          return;
-        })
-      );
-      params = { ...params };
-      const responce = await http.get<ISearchData>("api/Users/search", {
-        params,
-      });
+      const responce = await http.get<ISearchData>("api/Users/search", {params: searchRequest} );
       const { data } = responce;
+     
       dispatch({
         type: ISearchUserActionTypes.SEARCH_USERS_SUCCESS,
         payload: { ...data },

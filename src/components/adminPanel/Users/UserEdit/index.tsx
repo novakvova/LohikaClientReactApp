@@ -21,7 +21,7 @@ const EditUser = () => {
 
   useEffect(() => {
     getUserById(_id);
-  }, [getUserById, _id]);
+   }, [getUserById, _id]);
 
   
 
@@ -35,19 +35,21 @@ const EditUser = () => {
 		const file = (e.target as any).files[0];
 		setImg(URL.createObjectURL(file));
 	};
+
 	const onHandleSubmit = async (values: UserInfo) => {
-	const formData = new FormData();
-	Object.entries(values).forEach(([key, value]) => formData.append(key, value));
-	try {
-		await updateUser(values, formData);
-		navigator("/adminPanel/users");
-	} catch (error) {
-	}
-	};
-	const formik = useFormik({
-    initialValues: userData,
-    validationSchema: EditUserSchema,
-    onSubmit: onHandleSubmit,
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => formData.append(key, value));
+    try {
+      await updateUser(values, formData);
+      navigator("/adminPanel/users");
+    } catch (error) {}
+  };
+
+    const formik = useFormik({
+      initialValues: userData,
+      validationSchema: EditUserSchema,
+      onSubmit: onHandleSubmit,
+      enableReinitialize:true
   });
 
   const {
@@ -64,9 +66,9 @@ const EditUser = () => {
         <title>Редагувати користувача</title>
       </Helmet>
       {loading && <EclipseWidget />}
-      <div className="row">
+      {!loading &&  <div className="row">
         <div className="col-3 text-center">
-          <img src={img} alt="asdasd" />
+          <img src={img} alt="avatar" />
         </div>
         <div className="col-6">
           <Card title="Редагування">
@@ -124,7 +126,7 @@ const EditUser = () => {
             </FormikProvider>
           </Card>
         </div>
-      </div>
+      </div>}
     </>
   );
 };

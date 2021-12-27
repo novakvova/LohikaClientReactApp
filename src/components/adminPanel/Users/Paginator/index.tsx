@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { Card } from 'primereact/card';
 import qs from 'qs';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -9,25 +8,24 @@ import { ISearchUser } from '../types/SearchUsers';
 
 const Paginator = () => {
 	const { getSearchResult } = useActions(); 
-	const { pages, currentPage, total } = useTypedSelector( (store) => store.userCrud);
+	const { pages,  total, currentPage } = useTypedSelector( (store) => store.userCrud);
 	const [searchParams, setSearchParams] = useSearchParams();
- 	const [search, setSearch] = useState<ISearchUser>({
+  
+  const [search, setSearch] = useState<ISearchUser>({
     id: searchParams.get("id") || "",
     firstName: searchParams.get("firstName") || "",
     secondName: searchParams.get("secondName") || "",
     phone: searchParams.get("phone") || "",
     email: searchParams.get("email") || "",
-    page: searchParams.get("page"),
+    page: searchParams.get("page") || "",
   });
 
   useEffect(() => {
-    setSearchParams(qs.stringify(filterNonNull(search)));
-    console.log(search);
-    
-  }, [search]);
+    getSearchResult(filterNonNull(search));
+  }, [getSearchResult, search]);
 
 
-  const filterNonNull = (obj: ISearchUser) => {
+  const filterNonNull = (obj: ISearchUser): ISearchUser => {
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
   };
 
@@ -36,11 +34,19 @@ const Paginator = () => {
     buttons.push(i);
   };
 
-  const newPage = async (page: number) => {
-	setSearch((prev) => ({ ...prev, page: page }));
-   
-	await setSearchParams(qs.stringify(filterNonNull(search)));
-	await getSearchResult({...search, page});
+  const newPage = (page: number) => {
+    let data: ISearchUser = {
+      id: searchParams.get("id") || "",
+      firstName: searchParams.get("firstName") || "",
+      secondName: searchParams.get("secondName") || "",
+      phone: searchParams.get("phone") || "",
+      email: searchParams.get("email") || "",
+      page,
+    }; 
+
+  setSearch(data);
+  setSearchParams(qs.stringify(filterNonNull(data)));
+	getSearchResult({...data});
   }
 
 	return (
@@ -59,12 +65,7 @@ const Paginator = () => {
             >
               <Link
                 className="page-link"
-                to={
-                  "?" +
-                  qs.stringify(
-                    filterNonNull({ ...search, page: currentPage - 1 })
-                  )
-                }
+                to={ "?" +qs.stringify(filterNonNull({ ...search, page: currentPage - 1 }))}
               >
                 &laquo;
               </Link>
@@ -89,12 +90,7 @@ const Paginator = () => {
               >
                 <Link
                   className="page-link"
-                  to={
-                    "?" +
-                    qs.stringify(
-                      filterNonNull({ ...search, page: currentPage - 3 })
-                    )
-                  }
+                  to={"?" + qs.stringify(filterNonNull({ ...search, page: currentPage - 3 }))}
                 >
                   ...
                 </Link>
@@ -103,11 +99,7 @@ const Paginator = () => {
             {buttons
               .filter((el) => el > currentPage - 3 && el < currentPage + 3)
               .map((item, key) => {
-                const page: ISearchUser = {
-                  ...search,
-                  page: item,
-                };
-                return (
+                 return (
                   <li
                     key={key}
                     onClick={() => newPage(item)}

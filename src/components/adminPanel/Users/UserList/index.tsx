@@ -1,22 +1,13 @@
-import { useEffect} from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import './table.css';
-import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { ActionBodyTemplate, ImageBodyTemplate, Header } from "../Config/configTable";
 import Paginator from '../Paginator';
 
 
-const UserListTEst = () => {
-	const { getSearchResult, paginateInit} = useActions();
-	const { users, total } = useTypedSelector(store => store.userCrud);
-  
-
-    useEffect(() => {
-      getSearchResult({});
-      paginateInit(total);
-    }, [getSearchResult, total, paginateInit]); 
+const UserList = () => {
+	const { users } = useTypedSelector(store => store.userCrud);
 
 const footer = <Paginator />;
 
@@ -42,4 +33,4 @@ const footer = <Paginator />;
     );
 }
 
-export default UserListTEst;
+export default UserList;

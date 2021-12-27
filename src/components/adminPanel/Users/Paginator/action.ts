@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import {  IPaginateState, PaginateActions, PaginateActionTypes } from './types';
+import {  PaginateActions, PaginateActionTypes } from './types';
 
 export const paginateInit = (total: number) => {
   return async (dispatch: Dispatch<PaginateActions>) => {

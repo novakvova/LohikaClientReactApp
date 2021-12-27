@@ -2,7 +2,6 @@ import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 import { UserInfo } from "../types";
 import { v4 as uuid } from "uuid";
-import { useActions } from '../../../../hooks/useActions';
 import { useState } from 'react';
 import Search from '../SearchForm';
 
@@ -61,7 +60,9 @@ export const Header = () => {
         <Button
           label="Пошук"
           icon="pi pi-search"
-          onClick={() => setToogleSearch((prev) => !prev)}
+          onClick={() => {
+            setToogleSearch((prev) => !prev)
+          }}
         />
       </div>
       {toogleSearch && <Search />}
