@@ -25,11 +25,12 @@ import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 
-import AddNewCategory from "./components/Categories/AddNewCategory/AddNewCategory";
+// import Categories from "./components/Categories/CategoriesList/Categories";
 
 import AdminPanelLayout from './components/containers/adminPanelLayout';
 import UserSearch from './components/adminPanel/Users/UserSearch';
 import CropperComponent from "./components/CropperComponent/CropperComponent";
+// import CategoriesAdminList from "./components/Categories/CategoriesList/CategoryListAdmin/CategoriesAdminList";
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
@@ -50,7 +51,11 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
-          <Route path="/categories/add" element={<AddNewCategory />}/>
+          {/* <Route path="/categories/add" element={<Categories />}/> */}
+          {/* <Route path="/categories" element={<CategoriesAdminList />} /> */}
+          
+          
+
           {/* AuthRoutes */}
           <Route
             path="/register"
@@ -69,13 +74,13 @@ function App() {
             }
           />
 
-          {/* RcoverPasswordRoutes */}
+          {/* RecoverPasswordRoutes */}
 
           <Route path="/recoverPassword" element={<RecoverPassword />} />
           <Route path="/recoverPassword/sendEmail" element={<SendEmail />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
 
-          {/* Prtofile Routes */}
+          {/* Profile Routes */}
           <Route path="/profile" element={<ProfilePage />} />
 
           {/* Products Routes */}

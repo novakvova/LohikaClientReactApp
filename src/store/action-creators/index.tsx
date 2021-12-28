@@ -7,7 +7,7 @@ import * as SendingCarActionCreators from "../../components/AddNewCar/addCar";
 import * as CartActionCreators from "../../components/Cart/cart-actions";
 import * as FleshMessagesActionCreator from "../../components/FleshMessages/actions"
 import * as RecoverPasswordActionCreator from "../../components/auth/recoverPassword/action"
-import * as CategoryActionCreators from "../../components/Categories/AddNewCategory/AddCategory";
+import * as CategoryActionCreators from "../../components/Categories/actions";
 
 const actions = {
   ...CarActionCreators,
