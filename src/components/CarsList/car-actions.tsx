@@ -1,7 +1,7 @@
 
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { IAddCar } from "../AddNewCar/types";
+import { IAddCar } from "./AddNewCar/types";
 import { ICartData } from "../Cart/types";
 import {
   CarAction,

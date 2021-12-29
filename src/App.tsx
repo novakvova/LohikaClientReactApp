@@ -11,7 +11,7 @@ import "../node_modules/font-awesome/css/font-awesome.css";
 //Impor components
 import Home from "./components/Home";
 import DefaultLayout from "./components/containers/DefaultLayout";
-import AddNewCar from "./components/AddNewCar";
+import AddNewCar from "./components/CarsList/AddNewCar";
 import ProfilePage from "./components/Profile";
 import Cart from "./components/Cart/Cart";
 import UserDetailPage from "./components/adminPanel/Users/UserPage";
@@ -24,12 +24,9 @@ import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
-
 import AddNewCategory from "./components/Categories/AddNewCategory/AddNewCategory";
-
 import AdminPanelLayout from './components/containers/adminPanelLayout';
 import UserSearch from './components/adminPanel/Users/UserSearch';
-import CropperComponent from "./components/CropperComponent/CropperComponent";
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));

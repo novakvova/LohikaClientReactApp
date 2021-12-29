@@ -15,6 +15,7 @@ const DefaultHeader = () => {
     user: { image },
   } = useTypedSelector((store) => store.auth);
   const { LogoutUser } = useActions();
+  const {clearCartData} = useActions()
 
   return (
     <nav className="navbar navbar-default fixed-top navbar-expand navbar-dark bg-dark">
@@ -79,7 +80,7 @@ const DefaultHeader = () => {
                 </Link>
               </li>
               <li className="nav-item d-flex align-items-center">
-                <Link className="nav-link" to="/" onClick={LogoutUser}>
+                <Link className="nav-link" to="/" onClick={()=> {LogoutUser(); clearCartData()}}>
                   <FontAwesomeIcon icon={faSignOutAlt} size={'2x'} />
                 </Link>
               </li>

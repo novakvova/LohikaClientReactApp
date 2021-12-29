@@ -1,19 +1,27 @@
 import Cropper from "cropperjs";
-import { useFormik } from "formik";
+
 import { LegacyRef, useEffect, useRef, useState } from "react";
-import Modal from "../containers/Modal/Modal";
+import Modal from "../Modal/Modal";
 import classes from "./CropperComponent.module.css";
-import { ICropperImage } from "./types";
 import carPhoto from "./auto_car-08.jpg";
 import "cropperjs/dist/cropper.css";
+import classNames from "classnames";
 
 export interface IGetCropperProps {
   onChange: (field: string, value: string) => void;
   field: string;
   value?: string;
+  error?: string;
+  touched?: boolean;
 }
 
-const CropperComponent: React.FC<IGetCropperProps> = ({ onChange, field, value=carPhoto }) => {
+const CropperComponent: React.FC<IGetCropperProps> = ({
+  onChange,
+  field,
+  error,
+  touched,
+  value = carPhoto,
+}) => {
   const [img, setImg] = useState<string>(carPhoto);
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
@@ -26,24 +34,9 @@ const CropperComponent: React.FC<IGetCropperProps> = ({ onChange, field, value=c
       const url = URL.createObjectURL(file);
       await setImg(url);
       cropperObj?.replace(url);
-      if (!showModal) {
-        setShowModal(true);
-      } else {
-        setShowModal(false);
-      }
+      setShowModal(true);
     }
   };
-  const onSubmit = (values: ICropperImage) => {};
-
-  const initialValues: any = {
-    image: img,
-  };
-
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    validateOnBlur: true,
-  });
 
   useEffect(() => {
     if (imgRef.current) {
@@ -67,45 +60,54 @@ const CropperComponent: React.FC<IGetCropperProps> = ({ onChange, field, value=c
     setShowModal(false);
     onChange(field, base);
   };
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
-      <form
-        className={classes.formGroup}
-        onSubmit={(e) => formik.handleSubmit(e)}
-      >
-        <label htmlFor={field}>
-          <div className={classes.labelInput}>
+      <form className={classes.formGroup}>
+        <label htmlFor={field} style={{ height: "100%", width: "100%" }}>
+          <div
+            className={classNames(
+              classes.labelInput,
+              { "text-danger border border-danger rounded": touched && error },
+              { "is-valid border border-success rounded": touched && !error }
+            )}
+          >
             {base64 && (
               <img className={classes.bgImg} src={base64} alt="asdas" />
             )}
             {!base64 && (
               <>
-                <img src={value}/>
+                {/* <img src={value} /> */}
+                <i className="fa fa-image fa-5x"></i>
                 <span className="d-block">Виберіть фото</span>
               </>
             )}
+            {error && <div>{error}</div>}
           </div>
         </label>
+
         <input
           id={field}
           className="d-none"
           type="file"
           onChange={handleImageChange}
         />
-        <div className="text-center"></div>
       </form>
+
       {showModal && (
-        <Modal>
+        <Modal onClose={closeModal}>
           <div className={classes.modalBody}>
             <div className={classes.image}>
-              {<img
-                ref={imgRef as LegacyRef<HTMLImageElement>}
-                src={value}
-                alt="asdds"
-              />
+              {
+                <img
+                  ref={imgRef as LegacyRef<HTMLImageElement>}
+                  src={value}
+                  alt="asdds"
+                />
               }
-              
             </div>
             <button
               onClick={rotateImg}
