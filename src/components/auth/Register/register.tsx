@@ -51,15 +51,12 @@ const RegisterPage = (props:any) => {
         await RegisterUser(formData);
         await navigator("/");
         
-        
         setLoading(false);
       } catch (err) {
         setLoading(false);
         const serverErrors = err as RegisterError;
-        const {email, password, confirmPassword} = serverErrors;
-        if (email?.length !== 0) setFieldError("email", email[0]);
-        if (password?.length !== 0) setFieldError("password", password[0]);
-        if (confirmPassword?.length !== 0) setFieldError("confirmPassword", confirmPassword[0]);
+        console.log(serverErrors);
+        Object.entries(serverErrors).map(([key, value]) => setFieldError(key, value.toString()));
       }
     } 
 

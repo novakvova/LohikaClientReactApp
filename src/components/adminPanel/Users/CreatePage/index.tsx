@@ -37,7 +37,7 @@ const CreateUser = () => {
       setLoad(true);
       const res = await CreateUser(values);
       const result = await res as IStatus;
-      navigator("/users");
+      navigator("/adminPanel/users");
       setLoad(false);
       if (result.status === 200) {
         addFlashMessage({

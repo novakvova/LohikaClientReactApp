@@ -1,8 +1,8 @@
-import UserListTEst from './UserList';
+import UserList from './UserList';
 
 const AdminMain = () => {
 	return (<>
-		<UserListTEst />
+		<UserList />
 	</>)
 
 };

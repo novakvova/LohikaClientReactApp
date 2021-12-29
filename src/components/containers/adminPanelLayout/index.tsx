@@ -7,8 +7,8 @@ const AdminPanelLayout = () => {
 	return (
     <>
       <div
-        className="container-fluid card"
-        style={{ background: "#20262e", height: "100vh"}}
+        className="container-fluid"
+        style={{ backgroundColor: "#20262e", minHeight: "100vh"}}
       >
         <div className="row">
           <div className="col-2"></div>

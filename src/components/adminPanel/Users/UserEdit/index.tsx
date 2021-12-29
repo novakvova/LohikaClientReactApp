@@ -1,5 +1,5 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import {  useEffect, useState } from 'react';
+import {  useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
@@ -19,15 +19,18 @@ const EditUser = () => {
   const { id } = useParams();
   const _id = Number(id);
 
+  const getData = useCallback(async () => {
+    const data = await getUserById(_id);
+    const { photo } = data;
+    await setImg(`https://vovalohika.tk${photo}`);
+  }, [getUserById, _id]);
+  
   useEffect(() => {
-    getUserById(_id);
-   }, [getUserById, _id]);
+    getData();
+  }, [getData]);
 
   
-
-  const [img, setImg] = useState<string>(
-    `https://vovalohika.tk${userData?.photo}`
-  );
+  const [img, setImg] = useState<string>();
 
   
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,36 +1,8 @@
 import { Button } from 'primereact/button';
-import { Link } from 'react-router-dom';
 import { UserInfo } from "../types";
 import { v4 as uuid } from "uuid";
-import { useState } from 'react';
+import {  useState } from 'react';
 import Search from '../SearchForm';
-
-
-
-
-export const ActionBodyTemplate = (rowData: UserInfo) => {
-  return (
-    <>
-      <Link to={`userinfo/${rowData.id}`}>
-        <Button
-          icon="pi pi-info"
-          className="p-button-rounded p-button-info p-mr-2"
-        />
-      </Link>
-      <Link to={`edit/${rowData.id}`}>
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success p-mr-2"
-        />
-      </Link>
-      <Button
-        icon="pi pi-trash"
-        className="p-button-rounded p-button-warning p-mr-2"
-        onClick={() => {}}
-      />
-    </>
-  );
-};
 
 export const ImageBodyTemplate = (rowData: UserInfo) => {
   return (

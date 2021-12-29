@@ -32,7 +32,7 @@ const Search = () => {
     };
     setSearchParams(qs.stringify(filterNonNull(searchData)));
     setSearch(searchData);
-    getSearchResult(searchData);
+    getSearchResult(filterNonNull(searchData));
   };
 
   const formik = useFormik({

@@ -35,6 +35,22 @@ const SideBar = () => {
         },
       ],
     },
+    {
+      label: "Категорії",
+      icon: "pi pi-fw pi-user",
+      items: [
+        {
+          label: "Список",
+          icon: "pi pi-fw pi-list",
+          command: () => navigate("/adminPanel/users"),
+        },
+        {
+          label: "Добавити",
+          icon: "pi pi-fw pi-user-plus",
+          command: () => navigate("/adminPanel/users/create"),
+        },
+      ],
+    },
   ];
   return (
     <>
