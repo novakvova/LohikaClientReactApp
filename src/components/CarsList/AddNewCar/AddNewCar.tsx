@@ -42,7 +42,7 @@ const AddNewCar: React.FC = () => {
     if (nav) {
       navigate("/");
     }
-  }, [nav, serverError]);
+  }, [nav, serverError, navigate]);
 
   const { setFieldValue, errors, touched, handleBlur, handleChange, values } =
     formik;

@@ -44,7 +44,7 @@ function App() {
   const { downloadCartData } = useActions();
   useEffect(() => {
     downloadCartData();
-  }, []);
+  }, [downloadCartData]);
 
   return (
     <>

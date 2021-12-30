@@ -46,13 +46,17 @@ export const fetchCarsSearch =
   };
 
 export const fetchCarById =
-  (id: number) => async (dispatch: Dispatch<CarAction>) => {
+  (id: number): any =>
+  async (dispatch: Dispatch<CarAction>) => {
     try {
       const response = await http.get<ISearchCar>(`api/Products/get/${id}`);
+      const { data } = response;
+      console.log("data => ", data);
       dispatch({
         type: CarActionTypes.GET_CAR_BY_ID,
         payload: response.data,
       });
+     return Promise.resolve<ISearchCar>(data);
     } catch (error) {
       console.log("action => ", error);
     }

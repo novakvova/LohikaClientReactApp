@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useActions } from "../../hooks/useActions";
 
-
 import classes from "./Cart.module.css";
 
 interface ICartItem {
@@ -27,13 +26,12 @@ const CartItem: React.FC<ICartItem> = ({
 
   useEffect(() => {
     const identifier = setTimeout(() => {
-      
-  updateCartItem(id, inputValue);
+      updateCartItem(id, inputValue);
     }, 1000);
     return () => {
       clearTimeout(identifier);
     };
-  }, [inputValue]);
+  }, [inputValue, id, updateCartItem]);
 
   const onChangeQuantityHandler = (value: string) => {
     setInputValue(+value);

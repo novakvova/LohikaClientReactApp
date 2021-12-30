@@ -27,6 +27,8 @@ const CarCard: React.FC<CarCardProps> = ({
     await addItemToCart(id, +count);
   };
 
+  console.log("image => ", image);
+
   return (
     <div className={`card ${classes.carCard} mt-3`}>
       <img
@@ -34,6 +36,7 @@ const CarCard: React.FC<CarCardProps> = ({
         className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
         alt={name}
       />
+
       <div className="card-body overflow-hidden">
         <h5 className="card-title">{name}</h5>
         <p className="card-text">Ціна: {price} $ </p>

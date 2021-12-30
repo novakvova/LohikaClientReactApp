@@ -49,12 +49,12 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
       const cropper = new Cropper(imgRef.current as HTMLImageElement, {
         aspectRatio: 16 / 9,
         viewMode: 1,
-        // preview: prevRef.current,
+        preview: prevRef.current,
       });
       cropper.replace(img);
       setCropperObj(cropper);
     }
-  }, [showModal]);
+  }, [showModal, img]);
 
   const rotateImg = () => {
     if (imgRef.current) {
@@ -85,7 +85,9 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
             )}
             {!base64 && (
               <>
-                {value && <img style={{ width: "100%" }} src={value} />}
+                {value && (
+                  <img style={{ width: "100%" }} src={value} alt="asdasda" />
+                )}
                 {!value && (
                   <>
                     <i className="fa fa-image fa-5x"></i>

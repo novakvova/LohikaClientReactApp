@@ -16,7 +16,7 @@ const EditCarPage = () => {
   const [showLoader, setShowLoader] = React.useState(false);
   const { id } = useParams();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-  const [img, setImg] = React.useState<string>(
+  const [img] = React.useState<string>(
     `https://vovalohika.tk/images/600_${carSearchedById?.image}`
   );
   const initialValues = {
