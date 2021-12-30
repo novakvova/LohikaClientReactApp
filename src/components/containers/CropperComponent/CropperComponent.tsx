@@ -2,7 +2,7 @@ import Cropper from "cropperjs";
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import Modal from "../Modal/Modal";
 import classes from "./CropperComponent.module.css";
-import carPhoto from "./auto_car-08.jpg";
+
 import "cropperjs/dist/cropper.css";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,9 +25,9 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   field,
   error,
   touched,
-  value = carPhoto,
+  value,
 }) => {
-  const [img, setImg] = useState<string>(carPhoto);
+  const [img, setImg] = useState<string>(value as string);
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
   const [base64, setBase64] = useState<any>();
@@ -47,6 +47,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
     if (imgRef.current) {
       const cropper = new Cropper(imgRef.current as HTMLImageElement, {
         aspectRatio: 16 / 9,
+        viewMode: 1,
       });
       cropper.replace(img);
       setCropperObj(cropper);
@@ -82,9 +83,13 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
             )}
             {!base64 && (
               <>
-                {/* <img src={value} /> */}
-                <i className="fa fa-image fa-5x"></i>
-                <span className="d-block">Виберіть фото</span>
+                {value && <img style={{ width: "100%" }} src={value} />}
+                {!value && (
+                  <>
+                    <i className="fa fa-image fa-5x"></i>
+                    <span className="d-block">Виберіть фото</span>
+                  </>
+                )}
               </>
             )}
             {error && <div>{error}</div>}

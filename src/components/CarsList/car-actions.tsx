@@ -1,4 +1,3 @@
-
 import { Dispatch } from "react";
 import http from "../../http_common";
 import { IAddCar } from "./AddNewCar/types";
@@ -61,13 +60,8 @@ export const fetchCarById =
 
 export const updateCar = (data: IAddCar) => {
   return (dispatch: Dispatch<UpdateCarAction>) => {
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) =>
-      formData.append(key, value as string)
-    );
     http
-      .put("api/Products/edit", formData, {
+      .put("api/Products/edit", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -86,7 +80,7 @@ export const deleteCar = (id: number) => {
     http
       .delete(`api/Products/delete/${id}`)
       .then(() => {
-        dispatch({ type: CarActionTypes.DELETE_CAR, payload: id});
+        dispatch({ type: CarActionTypes.DELETE_CAR, payload: id });
       })
       .catch((error) => console.log(error));
   };

@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse";
+import { v4 as uuid } from "uuid";
 
 const CarPage = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -37,7 +38,7 @@ const CarPage = () => {
             <div className="card mb-4">
                 <img
                   style={{width:'100%'}}
-                  src={`https://vovalohika.tk/images/600_${carSearchedById?.image}`}
+                  src={`https://vovalohika.tk/images/600_${carSearchedById?.image}??${uuid()}`}
                   alt="avatar"
                   className="rounded img-fluid"
                 />

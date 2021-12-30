@@ -17,7 +17,7 @@ const EditCarPage = () => {
   const { id } = useParams();
   const { carSearchedById } = useTypedSelector((store) => store.car);
   const [img, setImg] = React.useState<string>(
-    `https://vovalohika.tk${carSearchedById?.image}`
+    `https://vovalohika.tk/images/600_${carSearchedById?.image}`
   );
   const initialValues = {
     id: `${id}`,
@@ -51,8 +51,8 @@ const EditCarPage = () => {
 
   //   []
   // );
-  const { setFieldValue, errors, touched } =
-    formik;
+
+  const { setFieldValue, errors, touched } = formik;
 
   return (
     <>
@@ -75,6 +75,7 @@ const EditCarPage = () => {
             onChange={setFieldValue}
             error={errors.image}
             touched={touched.image}
+            value={img}
           />
         </div>
 
