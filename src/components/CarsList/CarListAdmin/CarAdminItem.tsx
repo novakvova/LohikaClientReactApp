@@ -52,7 +52,7 @@ const CarAdminItem: React.FC<Props> = ({
             Видалити <span className="text-dark">{name} ?</span>
           </h3>
           <div className="text-center">
-            <img className="rounded" src={`https://vovalohika.tk${image}?t=${uuid()}`} alt="" />
+            <img className="rounded" src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`} alt="" />
           </div>
           <div className="d-flex flex-row-reverse">
             <button

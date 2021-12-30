@@ -1,4 +1,4 @@
-import { FormikHelpers, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as React from "react";
 import { AddCarSchema as validationSchema } from "./validation";
 import { Helmet } from "react-helmet";
@@ -42,16 +42,16 @@ const EditCarPage = () => {
     validateOnBlur: true,
   });
 
-  const handleImageChange = React.useCallback(
-    (e) => {
-      const file = (e.target.files as FileList)[0];
-      formik.setFieldValue("image", file);
-      setImg(URL.createObjectURL(file));
-    },
+  // const handleImageChange = React.useCallback(
+  //   (e) => {
+  //     const file = (e.target.files as FileList)[0];
+  //     formik.setFieldValue("image", file);
+  //     setImg(URL.createObjectURL(file));
+  //   },
 
-    []
-  );
-  const { setFieldValue, errors, touched, handleBlur, handleChange, values } =
+  //   []
+  // );
+  const { setFieldValue, errors, touched } =
     formik;
 
   return (

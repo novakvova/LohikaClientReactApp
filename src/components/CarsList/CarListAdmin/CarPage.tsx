@@ -35,14 +35,12 @@ const CarPage = () => {
           <h1>{carSearchedById?.name}</h1>
           <div className="col-lg-4">
             <div className="card mb-4">
-              <div className="card-body text-center">
                 <img
-                  src={`https://vovalohika.tk${carSearchedById?.image}`}
+                  style={{width:'100%'}}
+                  src={`https://vovalohika.tk/images/600_${carSearchedById?.image}`}
                   alt="avatar"
                   className="rounded img-fluid"
                 />
-                <h5 className="my-3">{carSearchedById?.name}</h5>
-              </div>
             </div>
           </div>
           <div className="col-lg-8">

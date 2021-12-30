@@ -1,11 +1,16 @@
 import Cropper from "cropperjs";
-
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import Modal from "../Modal/Modal";
 import classes from "./CropperComponent.module.css";
 import carPhoto from "./auto_car-08.jpg";
 import "cropperjs/dist/cropper.css";
 import classNames from "classnames";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSync,
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 export interface IGetCropperProps {
   onChange: (field: string, value: string) => void;
@@ -60,9 +65,6 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
     setShowModal(false);
     onChange(field, base);
   };
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
   return (
     <>
@@ -98,7 +100,11 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
       </form>
 
       {showModal && (
-        <Modal onClose={closeModal}>
+        <Modal
+          onClose={() => {
+            setShowModal(false);
+          }}
+        >
           <div className={classes.modalBody}>
             <div className={classes.image}>
               {
@@ -109,29 +115,36 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
                 />
               }
             </div>
-            <button
-              onClick={rotateImg}
-              type="button"
-              className="btn btn-primary"
-            >
-              Rotate
-            </button>
-            <button
-              onClick={getBase64}
-              type="button"
-              className="btn btn-primary"
-            >
-              Завершити
-            </button>
-            <button
-              onClick={() => {
-                setShowModal(false);
-              }}
-              type="button"
-              className="btn btn-primary"
-            >
-              Відмінити
-            </button>
+            <div className="d-flex justify-content-around mt-2">
+              <button
+                onClick={rotateImg}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                <FontAwesomeIcon icon={faSync} size={"2x"} />
+              </button>
+              <div
+                className="d-flex justify-content-between"
+                style={{ width: "150px" }}
+              >
+                <button
+                  onClick={getBase64}
+                  type="button"
+                  className="btn btn-outline-success"
+                >
+                  <FontAwesomeIcon icon={faCheckCircle} size={"2x"} />
+                </button>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                  }}
+                  type="button"
+                  className="btn btn-outline-danger"
+                >
+                  <FontAwesomeIcon icon={faTimesCircle} size={"2x"} />
+                </button>
+              </div>
+            </div>
           </div>
         </Modal>
       )}

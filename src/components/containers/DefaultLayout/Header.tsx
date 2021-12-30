@@ -60,7 +60,7 @@ const DefaultHeader = () => {
                 </Link>
               </li>
 
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/cars">
                   Машини
                 </Link>
