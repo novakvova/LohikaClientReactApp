@@ -40,14 +40,14 @@ const SideBar = () => {
       icon: "pi pi-fw pi-user",
       items: [
         {
-          label: "Список",
+          label: "Список категорій",
           icon: "pi pi-fw pi-list",
-          command: () => navigate("/adminPanel/users"),
+          command: () => navigate("/categories/list"),
         },
         {
-          label: "Добавити",
+          label: "Додати",
           icon: "pi pi-fw pi-user-plus",
-          command: () => navigate("/adminPanel/users/create"),
+          command: () => navigate("/categories/add"),
         },
       ],
     },

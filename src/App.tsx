@@ -21,16 +21,23 @@ import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
+
+import CategoriesList from "./components/Categories/CategoriesList/Categories";
+import CategoryPage from './components/Categories/CategoryPage/CategoryPage';
+import CategorySearch from './components/Categories/CategorySearch/CategorySearch';
 import AdminPanelLayout from './components/containers/adminPanelLayout';
-import CropperComponent from "./components/CropperComponent/CropperComponent";
 import UserInfo from './components/adminPanel/Users/UserInfo';
 import EditUser from './components/adminPanel/Users/UserEdit';
 import AdminMain from './components/adminPanel/Users';
 import CreatePage from './components/adminPanel/Users/CreatePage';
+import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
+import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
+import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
 const Login = lazy(() => import("./components/auth/Login/index"));
+
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -46,6 +53,16 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
+          <Route path="/categories/list" element={<CategoriesList />}/>
+          <Route path="/categories/search" element={<CategorySearch />} />
+          <Route path="/category/:id" element={<CategoryDetailPage />} />
+          <Route path="/categories/edit" element={<EditCategoryPage />} />
+          <Route path="/categories/add" element={<CreateCategory />} />
+          <Route path="/categories/get/:id" element={<CategoryPage />} />
+          <Route path="*" element={<NoMatch />} />
+          
+          
+
           {/* AuthRoutes */}
           <Route
             path="/register"
@@ -64,12 +81,13 @@ function App() {
             }
           />
 
-          {/* RcoverPasswordRoutes */}
+          {/* RecoverPasswordRoutes */}
+
           <Route path="/recoverPassword" element={<RecoverPassword />} />
           <Route path="/recoverPassword/sendEmail" element={<SendEmail />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
 
-          {/* Prtofile Routes */}
+          {/* Profile Routes */}
           <Route path="/profile" element={<ProfilePage />} />
 
           {/* Products Routes */}
@@ -77,7 +95,6 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
-          <Route path="cropper" element={<CropperComponent />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
 

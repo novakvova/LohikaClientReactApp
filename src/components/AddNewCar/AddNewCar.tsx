@@ -8,6 +8,7 @@ import { AddCarSchema as validationSchema } from "./validation";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import EclipseWidget from "../common/eclipse/index";
 import { Helmet } from "react-helmet";
+import CropperComponent from "../CropperComponent/CropperComponent";
 
 const initialValues: IAddCar = {
   name: "",
@@ -25,9 +26,10 @@ const AddNewCar: React.FC = () => {
   } = useTypedSelector((store) => store.sendingCar);
   const navigate = useNavigate();
 
-  const [img, setImg] = React.useState<string>();
+  
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
+    console.log("values", values);
     addNewCar(values);
   };
 
@@ -38,39 +40,38 @@ const AddNewCar: React.FC = () => {
     validateOnBlur: true,
   });
 
-  const handleImageChange = React.useCallback(
-    (e) => {
-      const file = (e.target.files as FileList)[0];
-      formik.setFieldValue("image", file);
-      setImg(URL.createObjectURL(file));
-    },
-
-    []
-  );
-
   React.useEffect(() => {
     if (nav) {
       navigate("/");
     }
   }, [nav, serverError]);
 
+  const {setFieldValue} = formik;
+
   return (
     <>
       <Helmet>
         <title>Додати машину</title>
       </Helmet>
+      
       <div className="row">
         <h1 className="text-center">Додати автомобіль</h1>
         {serverError && <h2>{serverError}</h2>}
         {loading && <EclipseWidget />}
-        <div className="col-4">
-          {img && (
+        <div className="col-4 border border-secondary rounded">
+          {/* {img && (
             <div className="card mt-1 h-100">
               <div className="card-body text-center">
                 <img className="h-100 w-100" src={img} alt="asdasd" />
               </div>
             </div>
-          )}
+          )} */}
+          <div className="rounded">
+            <CropperComponent
+              field="image"
+              onChange = {setFieldValue}/>
+          </div>
+          
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
@@ -107,20 +108,21 @@ const AddNewCar: React.FC = () => {
             onBlur={formik.handleBlur}
           />
 
-          <InputGroup
+          {/* <InputGroup
             field="image"
             label="Фото"
             type="file"
             touched={formik.touched.image}
             error={formik.errors.image}
             onChange={handleImageChange}
-          />
+          /> */}
 
           <div className="text-center">
             <button type="submit" className="btn btn-primary">
               Додати машину
             </button>
           </div>
+          
         </form>
         <div className="col-4"></div>
       </div>
