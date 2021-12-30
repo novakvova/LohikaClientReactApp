@@ -18,7 +18,7 @@ export const rootReducer = combineReducers({
   profile: profileReducer,
   userCrud: usersReducer,
   fleshMessages: fleshMessagesReducer,
-  category: categoryReducer,
+  categoryCrud: categoryReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

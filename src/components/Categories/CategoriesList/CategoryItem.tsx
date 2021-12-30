@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import Modals from "../../common/Modal";
 
 interface Props {
-  userItem: CategoryInfo;
+  categoryItem: CategoryInfo;
 }
 
-const UserItem: React.FC<Props> = ({
-  userItem: { id, title, image, urlSlug, priority },
+const CategoryItem: React.FC<Props> = ({
+  categoryItem: { id, title, urlSlug, image, priority },
 }) => {
   const { deleteCategory, getCategoryById } = useActions();
   const navigator = useNavigate();
@@ -26,8 +26,8 @@ const UserItem: React.FC<Props> = ({
           <img src={`https://vovalohika.tk${image}?t=${uuid()}`} alt="Avatar" />
         </div>
       </td>
-      <td>{urlSlug}</td>
       <td>{priority}</td>
+      <td>{urlSlug}</td>
       <td>
         <button
           className="btn btn-primary btn-sm"
@@ -41,7 +41,7 @@ const UserItem: React.FC<Props> = ({
           className="btn btn-success btn-sm"
           onClick={async () => {
             await getCategoryById(id);
-            await navigator(`/admin/Categories/edit/${id}`);
+            await navigator(`/admin/categories/edit/${id}`);
           }}
         >
           Змінити
@@ -58,4 +58,4 @@ const UserItem: React.FC<Props> = ({
   );
 };
 
-export default UserItem;
+export default CategoryItem;

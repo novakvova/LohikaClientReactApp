@@ -35,6 +35,22 @@ const SideBar = () => {
         },
       ],
     },
+    {
+      label: "Категорії",
+      icon: "pi pi-fw pi-user",
+      items: [
+        {
+          label: "Список категорій",
+          icon: "pi pi-fw pi-list",
+          command: () => navigate("/categories/list"),
+        },
+        {
+          label: "Додати",
+          icon: "pi pi-fw pi-user-plus",
+          command: () => navigate("/categories/add"),
+        },
+      ],
+    },
   ];
   return (
     <>

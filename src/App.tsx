@@ -25,12 +25,15 @@ import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 
-// import Categories from "./components/Categories/CategoriesList/Categories";
-
+import CategoriesList from "./components/Categories/CategoriesList/Categories";
+import CategoryPage from './components/Categories/CategoryPage/CategoryPage';
+import CategorySearch from './components/Categories/CategorySearch/CategorySearch';
 import AdminPanelLayout from './components/containers/adminPanelLayout';
 import UserSearch from './components/adminPanel/Users/UserSearch';
 import CropperComponent from "./components/CropperComponent/CropperComponent";
-// import CategoriesAdminList from "./components/Categories/CategoriesList/CategoryListAdmin/CategoriesAdminList";
+import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
+import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
+import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
@@ -51,8 +54,13 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
-          {/* <Route path="/categories/add" element={<Categories />}/> */}
-          {/* <Route path="/categories" element={<CategoriesAdminList />} /> */}
+          <Route path="/categories/list" element={<CategoriesList />}/>
+          <Route path="/categories/search" element={<CategorySearch />} />
+          <Route path="/category/:id" element={<CategoryDetailPage />} />
+          <Route path="/categories/edit" element={<EditCategoryPage />} />
+          <Route path="/categories/add" element={<CreateCategory />} />
+          <Route path="/categories/get/:id" element={<CategoryPage />} />
+          <Route path="*" element={<NoMatch />} />
           
           
 
