@@ -166,21 +166,15 @@ export const CreateCategory = (data: ICreateCategory): any => {
   };
 };
 
-export const getSearchResult = (searchRequest: ISearchCategory) => {
+export const getSearchCategoryResult = (searchRequest: ISearchCategory) => {
   return async (dispatch: Dispatch<ISearchCategoryAction>) => {
     dispatch({
       type: ISearchCategoryActionTypes.SEARCH_CATEGORIES,
     });
     try {
-      let params = Object.fromEntries(
-        Object.entries(searchRequest).filter(([key, value]) => {
-          if (value) return [key, value];
-          return;
-        }),
-      );
-      params = { ...params };
-      const responce = await http.get<ISearchData>('api/Categories/search', {
-        params,
+      
+      const responce = await http.get<ISearchData>("api/Categories/search", {
+        params: searchRequest,
       });
       const { data } = responce;
       dispatch({

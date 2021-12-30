@@ -1,5 +1,5 @@
 import classes from "./CarCard.module.css";
-
+import { v4 as uuid } from "uuid";
 import { useState } from "react";
 import { useActions } from "../../../hooks/useActions";
 import CardButtonToCart from "./CardButtonToCart";
@@ -27,13 +27,16 @@ const CarCard: React.FC<CarCardProps> = ({
     await addItemToCart(id, +count);
   };
 
+  console.log("image => ", image);
+
   return (
     <div className={`card ${classes.carCard} mt-3`}>
       <img
-        src={`https://vovalohika.tk/images/600_${image}`}
+        src={`https://vovalohika.tk/images/600_${image}?${uuid()}`}
         className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
         alt={name}
       />
+
       <div className="card-body overflow-hidden">
         <h5 className="card-title">{name}</h5>
         <p className="card-text">Ціна: {price} $ </p>

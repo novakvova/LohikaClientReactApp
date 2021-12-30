@@ -1,13 +1,14 @@
-import { PanelMenu } from "primereact/panelmenu";
+import { Menu } from "primereact/menu";
 import { useNavigate } from 'react-router-dom';
+import { useActions } from '../../../hooks/useActions';
 
 
 const SideBar = () => {
   const navigate = useNavigate();
+  const { LogoutUser } = useActions();
   const items = [
     {
       label: "Користувачі",
-      icon: "pi pi-fw pi-user",
       items: [
         {
           label: "Список",
@@ -23,7 +24,6 @@ const SideBar = () => {
     },
     {
       label: "Продукти",
-      icon: "pi pi-fw pi-car",
       items: [
         {
           label: "Список",
@@ -37,7 +37,6 @@ const SideBar = () => {
     },
     {
       label: "Категорії",
-      icon: "pi pi-fw pi-user",
       items: [
         {
           label: "Список категорій",
@@ -51,12 +50,34 @@ const SideBar = () => {
         },
       ],
     },
+    {
+      label: "Навігація",
+      items: [
+        {
+          label: "На головну",
+          icon: "pi pi-arrow-right",
+          command: () => navigate("/"),
+        },
+        {
+          label: "Вийти",
+          icon: "pi pi-arrow-right",
+          command: () => {
+            LogoutUser();
+            navigate("/");
+          },
+        },
+      ],
+    },
   ];
   return (
     <>
       <div>
         <div className="card">
-          <PanelMenu model={items} style={{ width: "auto" }} />
+          <Menu
+            model={items}
+            className="p-panelmenu"
+            style={{ background: "#353b42", width: "auto" }}
+          />
         </div>
       </div>
     </>

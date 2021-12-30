@@ -15,7 +15,7 @@ const CategoryItem: React.FC<Props> = ({
   const navigator = useNavigate();
 
   const handlerInfo = (id: number) => {
-    navigator(`/admin/category/${id}`);
+    navigator(`/categories/get/${id}`);
   };
   return (
     <tr>
@@ -41,7 +41,7 @@ const CategoryItem: React.FC<Props> = ({
           className="btn btn-success btn-sm"
           onClick={async () => {
             await getCategoryById(id);
-            await navigator(`/admin/categories/edit/${id}`);
+            await navigator(`/categories/edit/${id}`);
           }}
         >
           Змінити

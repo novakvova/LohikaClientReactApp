@@ -1,4 +1,4 @@
-import { FormikHelpers, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as React from "react";
 import { AddCarSchema as validationSchema } from "./validation";
 import { Helmet } from "react-helmet";
@@ -8,6 +8,7 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse";
 import InputGroup from "../../common/InputGroup";
 import { ICarUpdate } from "../types";
+import CropperComponent from "../../containers/CropperComponent/CropperComponent";
 
 const EditCarPage = () => {
   const { updateCar } = useActions();
@@ -15,8 +16,8 @@ const EditCarPage = () => {
   const [showLoader, setShowLoader] = React.useState(false);
   const { id } = useParams();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-  const [img, setImg] = React.useState<string>(
-    `https://vovalohika.tk${carSearchedById?.image}`
+  const [img] = React.useState<string>(
+    `https://vovalohika.tk/images/600_${carSearchedById?.image}`
   );
   const initialValues = {
     id: `${id}`,
@@ -41,15 +42,17 @@ const EditCarPage = () => {
     validateOnBlur: true,
   });
 
-  const handleImageChange = React.useCallback(
-    (e) => {
-      const file = (e.target.files as FileList)[0];
-      formik.setFieldValue("image", file);
-      setImg(URL.createObjectURL(file));
-    },
+  // const handleImageChange = React.useCallback(
+  //   (e) => {
+  //     const file = (e.target.files as FileList)[0];
+  //     formik.setFieldValue("image", file);
+  //     setImg(URL.createObjectURL(file));
+  //   },
 
-    []
-  );
+  //   []
+  // );
+
+  const { setFieldValue, errors, touched } = formik;
 
   return (
     <>
@@ -60,13 +63,20 @@ const EditCarPage = () => {
         <h1 className="text-center">Редагувати запис</h1>
         {showLoader && <EclipseWidget />}
         <div className="col-4">
-          {img && (
+          {/* {img && (
             <div className="card mt-1">
               <div className="card-body text-center">
                 <img className="w-100" src={img} alt="asdasd" />
               </div>
             </div>
-          )}
+          )} */}
+          <CropperComponent
+            field="image"
+            onChange={setFieldValue}
+            error={errors.image}
+            touched={touched.image}
+            value={img}
+          />
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
@@ -103,14 +113,14 @@ const EditCarPage = () => {
             onBlur={formik.handleBlur}
           />
 
-          <InputGroup
+          {/* <InputGroup
             field="image"
             label="Фото"
             type="file"
             touched={formik.touched.image}
             error={formik.errors.image}
             onChange={handleImageChange}
-          />
+          /> */}
 
           <div className="text-center">
             <button type="submit" className="btn btn-primary">

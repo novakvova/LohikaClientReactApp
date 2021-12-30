@@ -35,7 +35,7 @@ const CarSearch: React.FC = (props) => {
 
   useEffect(() => {
     fetchCarsSearch(search);
-  }, [search]);
+  }, [search, fetchCarsSearch]);
 
   function filterNonNull(obj: ISearchProduct) {
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));

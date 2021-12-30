@@ -1,4 +1,4 @@
-import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
+import "primereact/resources/themes/bootstrap4-dark-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
@@ -14,7 +14,6 @@ import { store } from "./store";
 import { setAuthUserByToken } from "./components/auth/Login/action";
 import { downloadCartData } from "./components/Cart/cart-actions";
 import FleshMessages from "./components/FleshMessages";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 let token = localStorage.token;
 if (token) {
@@ -23,15 +22,12 @@ if (token) {
 }
 
 ReactDOM.render(
-  <GoogleReCaptchaProvider reCaptchaKey="6LdXS7cdAAAAAKpzlFA5oHnaB8tPUF2ZtAIqVCRc">
     <Provider store={store}>
       <BrowserRouter>
         <FleshMessages />
         <App />
       </BrowserRouter>
-    </Provider>
-  </GoogleReCaptchaProvider>,
-
+    </Provider>,
   document.getElementById("root")
 );
 

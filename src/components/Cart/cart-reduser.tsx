@@ -49,6 +49,12 @@ export const cartReducer = (
         totalCount: state.totalCount-=1,
       };
 
+    case CartActionTypes.CLEAR_CART_DATA : {
+      return {
+        ...state, cartData: [], totalCount: 0
+      }
+    }  
+
     default:
       return state;
   }

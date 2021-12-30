@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
@@ -12,15 +12,16 @@ const CarsListAdmin = () => {
   const [showLoader, setShowLoader] = useState(false);
   const { products } = useTypedSelector((store) => store.car);
   const { fetchCarsSearch } = useActions();
-  useEffect(() => {
-    downloadCarList();
-  }, []);
 
-  const downloadCarList = async () => {
+  const downloadCarList = useCallback(async () => {
     setShowLoader(true);
     await fetchCarsSearch({});
     setShowLoader(false);
-  };
+  }, [fetchCarsSearch]);
+
+  useEffect(() => {
+    downloadCarList();
+  }, [downloadCarList]);
 
   return (
     <>
