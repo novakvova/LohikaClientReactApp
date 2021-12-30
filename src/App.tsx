@@ -57,7 +57,7 @@ function App() {
           <Route path="/categories/list" element={<CategoriesList />}/>
           <Route path="/categories/search" element={<CategorySearch />} />
           <Route path="/category/:id" element={<CategoryDetailPage />} />
-          <Route path="/categories/edit" element={<EditCategoryPage />} />
+          <Route path="/categories/edit/:id" element={<EditCategoryPage />} />
           <Route path="/categories/add" element={<CreateCategory />} />
           <Route path="/categories/get/:id" element={<CategoryPage />} />
           <Route path="*" element={<NoMatch />} />

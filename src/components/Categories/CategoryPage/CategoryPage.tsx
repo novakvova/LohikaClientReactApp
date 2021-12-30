@@ -70,7 +70,7 @@ const CategoryDetailPage = () => {
                   <div className="card-body">
                     <div className="row">
                       <div className="col-sm-3">
-                        <p className="mb-0">Ім'я</p>
+                        <p className="mb-0">Назва категорії</p>
                       </div>
                       <div className="col-sm-9">
                         <p className="text-muted mb-0">{priority}</p>

@@ -4,12 +4,12 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import CategoryItem from './CategoryItem';
 import { CategoryInfo } from '../types';
 
-const Categories = () => {
+const CategoriesList = () => {
   const { categories } = useTypedSelector( store => store.categoryCrud)
-  const { getSearchResult } = useActions();
+  const { getSearchCategoryResult } = useActions();
   
   useEffect(() => {
-    getSearchResult({});
+    getSearchCategoryResult({});
   }, []);
 
 	return (
@@ -19,7 +19,7 @@ const Categories = () => {
         <thead>
           <tr>
             <th scope="col">Id</th>
-            <th scope="col">Назва категоріх</th>
+            <th scope="col">Назва категорії</th>
             <th scope="col">Зображення</th>
             <th scope="col">Пріорітет</th>
             <th scope="col">UrlSlug</th>
@@ -38,4 +38,4 @@ const Categories = () => {
   );
 }
 
-export default Categories;
+export default CategoriesList;

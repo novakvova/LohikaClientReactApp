@@ -1,5 +1,5 @@
 import { Form,  FormikProvider, useFormik } from 'formik';
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
@@ -13,7 +13,11 @@ import { Helmet } from 'react-helmet';
 
 const EditCategoryPage = () => {
 	const { categoryData, loading } = useTypedSelector(store => store.categoryCrud);
-  const { updateCategory } = useActions();
+  const { updateCategory, getCategoryById } = useActions();
+  useEffect(() => {
+    getCategoryById(_id)
+  }, [])
+  
   const navigator = useNavigate();
   const { id } = useParams();
 	const _id = Number(id);
@@ -97,8 +101,11 @@ const EditCategoryPage = () => {
                 />
 
                 <InputGroup
-                  field="priopity"
+                  field="priority"
                   label="Пріорітет"
+                  error={errors.priority}
+                  touched={touched.priority}
+                  value={values.priority}
                   onChange={handleChange}
                 />
 
