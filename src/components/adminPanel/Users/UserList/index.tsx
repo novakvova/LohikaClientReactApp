@@ -32,7 +32,7 @@ const ActionBodyTemplate = (rowData: UserInfo) => {
       <ConfirmDialog
         visible={visible}
         onHide={() => setVisible(false)}
-        message="Are you sure you want to proceed?"
+        message="Точно видалити?"
         header="Confirmation"
         icon="pi pi-exclamation-triangle"
         accept={() => {
