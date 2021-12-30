@@ -25,11 +25,15 @@ import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 
-import AddNewCategory from "./components/Categories/AddNewCategory/AddNewCategory";
-
+import CategoriesList from "./components/Categories/CategoriesList/Categories";
+import CategoryPage from './components/Categories/CategoryPage/CategoryPage';
+import CategorySearch from './components/Categories/CategorySearch/CategorySearch';
 import AdminPanelLayout from './components/containers/adminPanelLayout';
 import UserSearch from './components/adminPanel/Users/UserSearch';
 import CropperComponent from "./components/CropperComponent/CropperComponent";
+import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
+import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
+import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
@@ -50,7 +54,16 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
-          <Route path="/categories/add" element={<AddNewCategory />}/>
+          <Route path="/categories/list" element={<CategoriesList />}/>
+          <Route path="/categories/search" element={<CategorySearch />} />
+          <Route path="/category/:id" element={<CategoryDetailPage />} />
+          <Route path="/categories/edit" element={<EditCategoryPage />} />
+          <Route path="/categories/add" element={<CreateCategory />} />
+          <Route path="/categories/get/:id" element={<CategoryPage />} />
+          <Route path="*" element={<NoMatch />} />
+          
+          
+
           {/* AuthRoutes */}
           <Route
             path="/register"
@@ -69,13 +82,13 @@ function App() {
             }
           />
 
-          {/* RcoverPasswordRoutes */}
+          {/* RecoverPasswordRoutes */}
 
           <Route path="/recoverPassword" element={<RecoverPassword />} />
           <Route path="/recoverPassword/sendEmail" element={<SendEmail />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
 
-          {/* Prtofile Routes */}
+          {/* Profile Routes */}
           <Route path="/profile" element={<ProfilePage />} />
 
           {/* Products Routes */}
