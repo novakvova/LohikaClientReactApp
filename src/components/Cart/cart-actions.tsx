@@ -12,7 +12,6 @@ interface IRespData {
   quantity: number;
 }
 
-
 export const showCart = () => {
   return (dispatch: Dispatch<CartAction>) => {
     dispatch({ type: CartActionTypes.SHOW_CART });
@@ -44,7 +43,10 @@ export const addItemToCart =
         productId: id,
         quantity: quantity,
       });
-      dispatch({ type: CartActionTypes.ADD_ITEM_TO_CART, payload: response.data });
+      dispatch({
+        type: CartActionTypes.ADD_ITEM_TO_CART,
+        payload: response.data,
+      });
       return Promise.resolve(response.data);
     } catch (error) {
       Promise.reject(error);
@@ -60,7 +62,7 @@ export const updateCartItem =
       });
       dispatch({
         type: CartActionTypes.UPDATE_CART_ITEM,
-        payload: { id , quantity },
+        payload: { id, quantity },
       });
       return Promise.resolve(response.data);
     } catch (error) {
@@ -72,10 +74,14 @@ export const deleteCartItem =
   (id: number) => async (dispatch: Dispatch<CartAction>) => {
     try {
       const responce = await http.delete<number>(`api/Carts/delete/${id}`);
-      
+
       dispatch({ type: CartActionTypes.DELETE_CART_ITEM, payload: id });
       return Promise.resolve(responce.data);
     } catch (error) {
       Promise.reject(error);
     }
   };
+
+export const clearCartData = () => (dispatch: Dispatch<CartAction>) => {
+  dispatch({ type: CartActionTypes.CLEAR_CART_DATA });
+};

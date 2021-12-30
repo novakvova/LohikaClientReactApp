@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import http from "../../http_common";
+import http from "../../../http_common";
 import { AxiosError } from "axios";
 import { SendingAction, SendingCarTypes, IAddCar } from "./types";
 

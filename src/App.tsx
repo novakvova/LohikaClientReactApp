@@ -11,7 +11,7 @@ import "../node_modules/font-awesome/css/font-awesome.css";
 //Import components
 import Home from "./components/Home";
 import DefaultLayout from "./components/containers/DefaultLayout";
-import AddNewCar from "./components/AddNewCar";
+import AddNewCar from "./components/CarsList/AddNewCar";
 import ProfilePage from "./components/Profile";
 import Cart from "./components/Cart/Cart";
 import NoMatch from "./components/NoMatch";
@@ -23,13 +23,13 @@ import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 
 import CategoriesList from "./components/Categories/CategoriesList/Categories";
-import CategoryPage from './components/Categories/CategoryPage/CategoryPage';
-import CategorySearch from './components/Categories/CategorySearch/CategorySearch';
-import AdminPanelLayout from './components/containers/adminPanelLayout';
-import UserInfo from './components/adminPanel/Users/UserInfo';
-import EditUser from './components/adminPanel/Users/UserEdit';
-import AdminMain from './components/adminPanel/Users';
-import CreatePage from './components/adminPanel/Users/CreatePage';
+import CategoryPage from "./components/Categories/CategoryPage/CategoryPage";
+import CategorySearch from "./components/Categories/CategorySearch/CategorySearch";
+import AdminPanelLayout from "./components/containers/adminPanelLayout";
+import UserInfo from "./components/adminPanel/Users/UserInfo";
+import EditUser from "./components/adminPanel/Users/UserEdit";
+import AdminMain from "./components/adminPanel/Users";
+import CreatePage from "./components/adminPanel/Users/CreatePage";
 import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
 import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
 import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
@@ -38,7 +38,6 @@ import CreateCategory from "./components/Categories/CreateCategory/CreateCategor
 const Register = lazy(() => import("./components/auth/Register/index"));
 const Login = lazy(() => import("./components/auth/Login/index"));
 
-
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
   const { isAuth, user: {roles} } = useTypedSelector((store) => store.auth);
@@ -46,7 +45,7 @@ function App() {
   const { downloadCartData } = useActions();
   useEffect(() => {
     downloadCartData();
-  }, []);
+  }, [downloadCartData]);
 
   return (
     <>
@@ -54,7 +53,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
-          <Route path="/categories/list" element={<CategoriesList />}/>
+          <Route path="/categories/list" element={<CategoriesList />} />
           <Route path="/categories/search" element={<CategorySearch />} />
           <Route path="/category/:id" element={<CategoryDetailPage />} />
           <Route path="/categories/edit" element={<EditCategoryPage />} />
