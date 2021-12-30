@@ -26,7 +26,7 @@ const CategorySearch = () => {
 
   useEffect(() => {
     getSearchCategoryResult(search);
-  }, [search]);
+  }, [getSearchCategoryResult, search]);
 
   const buttons = [];
   for (var i = 2; i < pages; i++) {

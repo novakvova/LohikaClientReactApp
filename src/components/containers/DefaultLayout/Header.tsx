@@ -55,10 +55,8 @@ const DefaultHeader = () => {
               <li className="nav-item ">
                 <HeaderCartButton />
               </li>
-<<<<<<< HEAD
   
-              <li className="nav-item">
-=======
+              
               <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/users">
                   Юзери
@@ -66,7 +64,6 @@ const DefaultHeader = () => {
               </li>
 
               <li className="nav-item d-flex align-items-center">
->>>>>>> 8d7c90157fa8a8a968addf123ae1eb01cd81b42c
                 <Link className="nav-link" to="/cars">
                   Машини
                 </Link>
@@ -76,7 +73,6 @@ const DefaultHeader = () => {
                   Адмінка
                 </Link>
               </li>
-
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                   <img
@@ -90,15 +86,9 @@ const DefaultHeader = () => {
                   />
                 </Link>
               </li>
-<<<<<<< HEAD
-              <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={LogoutUser}>
-                  <FontAwesomeIcon icon={faSignOutAlt} size={"2x"} />
-=======
               <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/" onClick={()=> {LogoutUser(); clearCartData()}}>
                   <FontAwesomeIcon icon={faSignOutAlt} size={'2x'} />
->>>>>>> 8d7c90157fa8a8a968addf123ae1eb01cd81b42c
                 </Link>
               </li>
             </ul>

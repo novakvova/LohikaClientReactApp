@@ -10,7 +10,7 @@ const Categories = () => {
   
   useEffect(() => {
     getSearchCategoryResult({});
-  }, []);
+  }, [getSearchCategoryResult]);
 
 	return (
     <div className="container">

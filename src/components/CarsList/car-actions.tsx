@@ -51,7 +51,6 @@ export const fetchCarById =
     try {
       const response = await http.get<ISearchCar>(`api/Products/get/${id}`);
       const { data } = response;
-      console.log("data => ", data);
       dispatch({
         type: CarActionTypes.GET_CAR_BY_ID,
         payload: response.data,
