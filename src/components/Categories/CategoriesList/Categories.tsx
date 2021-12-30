@@ -6,10 +6,10 @@ import { CategoryInfo } from '../types';
 
 const Categories = () => {
   const { categories } = useTypedSelector( store => store.categoryCrud)
-  const { getSearchResult } = useActions();
+  const { getSearchCategoryResult} = useActions();
   
   useEffect(() => {
-    getSearchResult({});
+    getSearchCategoryResult({});
   }, []);
 
 	return (

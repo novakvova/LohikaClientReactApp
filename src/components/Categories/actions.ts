@@ -166,7 +166,7 @@ export const CreateCategory = (data: ICreateCategory): any => {
   };
 };
 
-export const getSearchResults = (searchRequest: ISearchCategory) => {
+export const getSearchCategoryResult = (searchRequest: ISearchCategory) => {
   return async (dispatch: Dispatch<ISearchCategoryAction>) => {
     dispatch({
       type: ISearchCategoryActionTypes.SEARCH_CATEGORIES,

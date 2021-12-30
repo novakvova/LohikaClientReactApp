@@ -41,7 +41,7 @@ const CategoryItem: React.FC<Props> = ({
           className="btn btn-success btn-sm"
           onClick={async () => {
             await getCategoryById(id);
-            await navigator(`/admin/categories/edit/${id}`);
+            await navigator(`/categories/edit/${id}`);
           }}
         >
           Змінити

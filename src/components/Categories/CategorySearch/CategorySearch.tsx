@@ -12,7 +12,7 @@ import EclipseWidget from '../../common/eclipse';
 import { Helmet } from 'react-helmet';
 
 const CategorySearch = () => {
-  const { getSearchResults } = useActions();
+  const { getSearchCategoryResult } = useActions();
   const { pages, loading, currentPage, total } = useTypedSelector( store => store.userCrud)
   const [searchParams, setSearchParams] = useSearchParams();
   const [toogleSearch, setToggleSearch] = useState(false);
@@ -25,7 +25,7 @@ const CategorySearch = () => {
   });
 
   useEffect(() => {
-    getSearchResults(search);
+    getSearchCategoryResult(search);
   }, [search]);
 
   const buttons = [];
