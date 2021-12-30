@@ -30,6 +30,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   const [img, setImg] = useState<string>(value as string);
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
+  const prevRef = useRef<HTMLDivElement>();
   const [base64, setBase64] = useState<any>();
   const [showModal, setShowModal] = useState(false);
 
@@ -48,6 +49,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
       const cropper = new Cropper(imgRef.current as HTMLImageElement, {
         aspectRatio: 16 / 9,
         viewMode: 1,
+        // preview: prevRef.current,
       });
       cropper.replace(img);
       setCropperObj(cropper);
@@ -150,6 +152,14 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
                 </button>
               </div>
             </div>
+            <div
+              ref={prevRef as LegacyRef<HTMLDivElement>}
+              style={{
+                height: "100px",
+                width: "100px",
+                border: "1px solid silver",
+              }}
+            ></div>
           </div>
         </Modal>
       )}

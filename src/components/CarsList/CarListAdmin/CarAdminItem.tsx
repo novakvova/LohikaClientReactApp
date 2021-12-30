@@ -43,6 +43,7 @@ const CarAdminItem: React.FC<Props> = ({
   const openModal = () => {
     setShowModal(true);
   };
+
   return (
     <>
       {showLoader && <EclipseWidget />}
@@ -52,7 +53,11 @@ const CarAdminItem: React.FC<Props> = ({
             Видалити <span className="text-dark">{name} ?</span>
           </h3>
           <div className="text-center">
-            <img className="rounded" src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`} alt="" />
+            <img
+              className="rounded"
+              src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`}
+              alt=""
+            />
           </div>
           <div className="d-flex flex-row-reverse">
             <button
@@ -79,7 +84,7 @@ const CarAdminItem: React.FC<Props> = ({
         <td>
           <img
             className="h"
-            src={`https://vovalohika.tk${image}?t=${uuid()}`}
+            src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`}
             alt=""
           />
         </td>
