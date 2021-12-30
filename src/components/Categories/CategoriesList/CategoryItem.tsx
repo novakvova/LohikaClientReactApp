@@ -1,33 +1,33 @@
-import { useActions } from "../../../../hooks/useActions";
+import { useActions } from "../../../hooks/useActions";
 import { v4 as uuid } from "uuid";
-import { UserInfo } from "../types";
+import { CategoryInfo } from "../types";
 import { useNavigate } from "react-router-dom";
-import Modals from "../../../common/Modal";
+import Modals from "../../common/Modal";
 
 interface Props {
-  userItem: UserInfo;
+  categoryItem: CategoryInfo;
 }
 
-const UserItem: React.FC<Props> = ({
-  userItem: { id, firstName, photo, phone, email },
+const CategoryItem: React.FC<Props> = ({
+  categoryItem: { id, title, urlSlug, image, priority },
 }) => {
-  const { deleteUser, getUserById } = useActions();
+  const { deleteCategory, getCategoryById } = useActions();
   const navigator = useNavigate();
 
   const handlerInfo = (id: number) => {
-    navigator(`/adminPanel/user/${id}`);
+    navigator(`/categories/get/${id}`);
   };
   return (
     <tr>
       <th scope="row">{id}</th>
-      <td>{firstName}</td>
+      <td>{title}</td>
       <td>
         <div className="size">
-          <img src={`https://vovalohika.tk${photo}?t=${uuid()}`} alt="Avatar" />
+          <img src={`https://vovalohika.tk${image}?t=${uuid()}`} alt="Avatar" />
         </div>
       </td>
-      <td>{phone}</td>
-      <td>{email}</td>
+      <td>{priority}</td>
+      <td>{urlSlug}</td>
       <td>
         <button
           className="btn btn-primary btn-sm"
@@ -40,8 +40,8 @@ const UserItem: React.FC<Props> = ({
         <button
           className="btn btn-success btn-sm"
           onClick={async () => {
-            await getUserById(id);
-            await navigator(`/adminPanel/users/edit/${id}`);
+            await getCategoryById(id);
+            await navigator(`/admin/categories/edit/${id}`);
           }}
         >
           Змінити
@@ -51,11 +51,11 @@ const UserItem: React.FC<Props> = ({
         <Modals
           id={id}
           text={"Підтвердіть видалення"}
-          deleteFunc={deleteUser}
+          deleteFunc={deleteCategory}
         />
       </td>
     </tr>
   );
 };
 
-export default UserItem;
+export default CategoryItem;

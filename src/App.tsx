@@ -14,24 +14,29 @@ import DefaultLayout from "./components/containers/DefaultLayout";
 import AddNewCar from "./components/CarsList/AddNewCar";
 import ProfilePage from "./components/Profile";
 import Cart from "./components/Cart/Cart";
-import UserDetailPage from "./components/adminPanel/Users/UserPage";
 import NoMatch from "./components/NoMatch";
-import EditPage from "./components/adminPanel/Users/EditPage";
-import CreatePage from "./components/adminPanel/Users/CreatePage";
 import CarsListAdmin from "./components/CarsList/CarListAdmin/CarListAdmin";
 import CarPage from "./components/CarsList/CarListAdmin/CarPage";
 import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
-import AddNewCategory from "./components/Categories/AddNewCategory/AddNewCategory";
-import AdminPanelLayout from './components/containers/adminPanelLayout';
-import UserSearch from './components/adminPanel/Users/UserSearch';
+
+import CategoriesList from "./components/Categories/CategoriesList/Categories";
+import CategoryPage from "./components/Categories/CategoryPage/CategoryPage";
+import CategorySearch from "./components/Categories/CategorySearch/CategorySearch";
+import AdminPanelLayout from "./components/containers/adminPanelLayout";
+import UserInfo from "./components/adminPanel/Users/UserInfo";
+import EditUser from "./components/adminPanel/Users/UserEdit";
+import AdminMain from "./components/adminPanel/Users";
+import CreatePage from "./components/adminPanel/Users/CreatePage";
+import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
+import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
+import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
 const Login = lazy(() => import("./components/auth/Login/index"));
-
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -47,7 +52,14 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
-          <Route path="/categories/add" element={<AddNewCategory />}/>
+          <Route path="/categories/list" element={<CategoriesList />} />
+          <Route path="/categories/search" element={<CategorySearch />} />
+          <Route path="/category/:id" element={<CategoryDetailPage />} />
+          <Route path="/categories/edit" element={<EditCategoryPage />} />
+          <Route path="/categories/add" element={<CreateCategory />} />
+          <Route path="/categories/get/:id" element={<CategoryPage />} />
+          <Route path="*" element={<NoMatch />} />
+
           {/* AuthRoutes */}
           <Route
             path="/register"
@@ -66,13 +78,13 @@ function App() {
             }
           />
 
-          {/* RcoverPasswordRoutes */}
+          {/* RecoverPasswordRoutes */}
 
           <Route path="/recoverPassword" element={<RecoverPassword />} />
           <Route path="/recoverPassword/sendEmail" element={<SendEmail />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
 
-          {/* Prtofile Routes */}
+          {/* Profile Routes */}
           <Route path="/profile" element={<ProfilePage />} />
 
           {/* Products Routes */}
@@ -80,16 +92,19 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
-          
           <Route path="*" element={<NoMatch />} />
         </Route>
 
         {/* AdminPanelRoutes */}
         <Route path="/adminPanel" element={<AdminPanelLayout />}>
-          <Route path="/adminPanel/users" element={<UserSearch />} />
+          {/* <Route path="/adminPanel/users" element={<UserSearch />} />
           <Route path="/adminPanel/user/:id" element={<UserDetailPage />} />
-          <Route path="/adminPanel/users/edit/:id" element={<EditPage />} />
+          <Route path="/adminPanel/users/edit/:id" element={<EditPage />} />*/}
           <Route path="/adminPanel/users/create" element={<CreatePage />} />
+          <Route path="/adminPanel/users" element={<AdminMain />} />
+          <Route path="/adminPanel/users/userInfo/:id" element={<UserInfo />} />
+          <Route path="/adminPanel/users/edit/:id" element={<EditUser />} />
+
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

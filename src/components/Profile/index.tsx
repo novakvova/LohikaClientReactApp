@@ -11,9 +11,7 @@ const ProfilePage = () => {
   const { profile : {email, phone, photo, firstName, secondName}, loading } = useTypedSelector( store => store.profile);
 useEffect(() => {
   GetProfileData();
-  console.log(photo);
-  
-}, [])
+}, [GetProfileData]);
 
   return (
     <section>

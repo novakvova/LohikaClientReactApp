@@ -1,30 +1,31 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useParams } from 'react-router';
-import { useActions } from '../../../../hooks/useActions';
-import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import EclipseWidget from '../../../common/eclipse';
-import NoMatch from '../../../NoMatch';
-import { IGetUser } from '../types/GetUserById';
+import { useActions } from '../../../hooks/useActions';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { store } from '../../../store';
+import EclipseWidget from '../../common/eclipse';
+import NoMatch from '../../NoMatch';
+import { IGetCategory } from '../types/GetCategoryByID';
 
-const UserDetailPage = () => {
+const CategoryDetailPage = () => {
 	let { id } = useParams() as any; 
   const navigator = useNavigate();
-  const { userData, loading } = useTypedSelector(strore => strore.userCrud);
-  const { getUserById, addFlashMessage, deleteFlashMessage } = useActions();
-  const { firstName, phone, photo, email, secondName } = userData;
+  const { categoryData, loading } = useTypedSelector(store => store.categoryCrud);
+  const { getCategoryById, addFlashMessage, deleteFlashMessage } = useActions();
+  const { title, urlSlug, image, priority } = categoryData;
 
-   const getUser = async () => {
+   const getCategory = async () => {
     try {
-      const response: IGetUser = await getUserById(id);
+      const response: IGetCategory = await getCategoryById(id);
       const { status } = response;
       console.log(status);
 
       if (status === 204) {
-        navigator("/users");
+        navigator("/categories");
         await addFlashMessage({
           type: "error",
-          message: "Даного користувача не знайдено",
+          message: " Категорію не знайдено",
         });
         setTimeout(() => {
           deleteFlashMessage();
@@ -34,7 +35,7 @@ const UserDetailPage = () => {
       }
 
   useEffect( () => {
-    getUser();
+    getCategory();
    
   }, []);
 
@@ -45,7 +46,7 @@ const UserDetailPage = () => {
     return (
       <section>
         <Helmet>
-          <title>Інформація про користувача</title>
+          <title>Інформація про категорію</title>
         </Helmet>
         <div className="container py-5 mt-3 ">
           <h2 className="text-center pb-5">Інформація</h2>
@@ -56,11 +57,11 @@ const UserDetailPage = () => {
                 <div className="card mb-4">
                   <div className="card-body text-center">
                     <img
-                      src={`https://vovalohika.tk${photo}`}
+                      src={`https://vovalohika.tk${image}`}
                       alt="avatar"
                       className="rounded-circle img-fluid"
                     />
-                    <h5 className="my-3">{firstName}</h5>
+                    <h5 className="my-3">{title}</h5>
                   </div>
                 </div>
               </div>
@@ -72,31 +73,15 @@ const UserDetailPage = () => {
                         <p className="mb-0">Ім'я</p>
                       </div>
                       <div className="col-sm-9">
-                        <p className="text-muted mb-0">{firstName}</p>
+                        <p className="text-muted mb-0">{priority}</p>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-sm-3">
-                        <p className="mb-0">Прізвище</p>
+                        <p className="mb-0">urlSlug</p>
                       </div>
                       <div className="col-sm-9">
-                        <p className="text-muted mb-0">{secondName}</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-3">
-                        <p className="mb-0">Email</p>
-                      </div>
-                      <div className="col-sm-9">
-                        <p className="text-muted mb-0">{email}</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-3">
-                        <p className="mb-0">Телефон</p>
-                      </div>
-                      <div className="col-sm-9">
-                        <p className="text-muted mb-0">{phone}</p>
+                        <p className="text-muted mb-0">{urlSlug}</p>
                       </div>
                     </div>
                   </div>
@@ -109,4 +94,4 @@ const UserDetailPage = () => {
     );
 };
 
-export default UserDetailPage;
+export default CategoryDetailPage;

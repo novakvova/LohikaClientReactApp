@@ -7,7 +7,9 @@ import { usersReducer } from "../../components/adminPanel/Users/reducer";
 import { sendingCarReducer } from "../../components/CarsList/AddNewCar/addCar-reducer";
 import { cartReducer } from "../../components/Cart/cart-reduser";
 import { fleshMessagesReducer } from '../../components/FleshMessages/reducer';
-import {categoryReducer} from '../../components/Categories/AddNewCategory/AddCategory-reducer';
+import { paginateReducer } from '../../components/adminPanel/Users/Paginator/reducer';
+import { categoryReducer } from '../../components/Categories/reducer';
+
 export const rootReducer = combineReducers({
   car: carReducer,
   auth: authReducer,
@@ -17,7 +19,8 @@ export const rootReducer = combineReducers({
   profile: profileReducer,
   userCrud: usersReducer,
   fleshMessages: fleshMessagesReducer,
-  category: categoryReducer,
+  paginate: paginateReducer,
+  categoryCrud: categoryReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

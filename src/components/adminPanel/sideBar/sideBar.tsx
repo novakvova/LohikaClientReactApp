@@ -35,12 +35,32 @@ const SideBar = () => {
         },
       ],
     },
+    {
+      label: "Категорії",
+      icon: "pi pi-fw pi-user",
+      items: [
+        {
+          label: "Список категорій",
+          icon: "pi pi-fw pi-list",
+          command: () => navigate("/categories/list"),
+        },
+        {
+          label: "Додати",
+          icon: "pi pi-fw pi-user-plus",
+          command: () => navigate("/categories/add"),
+        },
+      ],
+    },
   ];
   return (
     <>
       <div>
         <div className="card">
-          <PanelMenu model={items} style={{ width: "auto" }} />
+          <PanelMenu
+            model={items}
+            className="p-panelmenu"
+            style={{ background: "#353b42" }}
+          />
         </div>
       </div>
     </>

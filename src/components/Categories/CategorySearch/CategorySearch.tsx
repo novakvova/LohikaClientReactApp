@@ -1,33 +1,31 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import InputGroup from '../../../common/InputGroup';
-import {  ISearchUser } from "../types/SearchUsers";
-import { useActions } from '../../../../hooks/useActions';
+import InputGroup from '../../common/InputGroup';
+import {  ISearchCategory } from "../types/SearchCategories";
+import { useActions } from '../../../hooks/useActions';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import qs from 'qs';
-import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import classNames from 'classnames';
-import Users from '../UserList';
-import EclipseWidget from '../../../common/eclipse';
+import Categories from '../CategoriesList/Categories';
+import EclipseWidget from '../../common/eclipse';
 import { Helmet } from 'react-helmet';
 
-const UserSearch = () => {
-  const { getSearchResult } = useActions();
+const CategorySearch = () => {
+  const { getSearchResults } = useActions();
   const { pages, loading, currentPage, total } = useTypedSelector( store => store.userCrud)
   const [searchParams, setSearchParams] = useSearchParams();
   const [toogleSearch, setToggleSearch] = useState(false);
 
-  const [search, setSearch] = useState<ISearchUser>({
+  const [search, setSearch] = useState<ISearchCategory>({
     id: searchParams.get("id") || "",
-    firstName: searchParams.get("firstName") || "",
-    secondName: searchParams.get("secondName") || "",
-    phone: searchParams.get("phone") || "",
-    email: searchParams.get("email") || "" ,
-    page: searchParams.get("page"),
+    title: searchParams.get("title") || "",
+    urlSlug: searchParams.get("urlSlug") || "",
+    priority: searchParams.get("priority") || "",
   });
 
   useEffect(() => {
-    getSearchResult(search);
+    getSearchResults(search);
   }, [search]);
 
   const buttons = [];
@@ -35,12 +33,12 @@ const UserSearch = () => {
     buttons.push(i);
   }
    
- const filterNonNull = (obj: ISearchUser) => {
+ const filterNonNull = (obj: ISearchCategory) => {
    return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
  };
  
-  const onHandleSubmit = (values: ISearchUser) => {
-    const searchData: ISearchUser = {
+  const onHandleSubmit = (values: ISearchCategory) => {
+    const searchData: ISearchCategory = {
       ...values,
       page: 1,
     };
@@ -59,7 +57,7 @@ const UserSearch = () => {
   return (
     <>
       <Helmet>
-        <title>Користувачі</title>
+        <title>Категорії</title>
       </Helmet>
       <button
         className="btn btn-primary m-3"
@@ -73,42 +71,35 @@ const UserSearch = () => {
             <div className="row d-flex justify-content-center border border-secondary border-3 rounded-4 p-4 m-5">
               <h1 className="text-center">Пошук</h1>
               <div className="col-4">
+
+                <InputGroup
+                  field="title"
+                  label="Назва категорії"
+                  onChange={handleChange}
+                  value={values?.title}
+                />
+              </div>
+              <div className="col-4">
+                <InputGroup
+                  field="urlSlug"
+                  label="urlSlug"
+                  onChange={handleChange}
+                  value={values?.urlSlug}
+                />
+
+                <InputGroup
+                  field="priority"
+                  label="priority"
+                  onChange={handleChange}
+                  value={values?.priority}
+                />
+              </div>
+              <div className="col-4">
                 <InputGroup
                   field="id"
-                  label="Id"
-                  type="number"
+                  label="id"
                   onChange={handleChange}
                   value={values?.id}
-                />
-
-                <InputGroup
-                  field="firstName"
-                  label="Ім'я"
-                  onChange={handleChange}
-                  value={values?.firstName}
-                />
-              </div>
-              <div className="col-4">
-                <InputGroup
-                  field="secondName"
-                  label="Прізвище"
-                  onChange={handleChange}
-                  value={values?.secondName}
-                />
-
-                <InputGroup
-                  field="email"
-                  label="Email"
-                  onChange={handleChange}
-                  value={values?.email}
-                />
-              </div>
-              <div className="col-4">
-                <InputGroup
-                  field="phone"
-                  label="Телефон"
-                  onChange={handleChange}
-                  value={values?.phone}
                 />
 
                 <button
@@ -122,7 +113,7 @@ const UserSearch = () => {
           </Form>
         </FormikProvider>
       )}
-      <Users />
+      <Categories />
       <h5>Всього: {total}</h5>
       <ul className="pagination d-flex justify-content-center">
         <li
@@ -175,7 +166,7 @@ const UserSearch = () => {
         {buttons
           .filter((el) => el > currentPage - 3 && el < currentPage + 3)
           .map((item, key) => {
-            const page: ISearchUser = {
+            const page: ISearchCategory = {
               ...search,
               page: item,
             };
@@ -252,10 +243,11 @@ const UserSearch = () => {
         </li>
       </ul>
       {loading && <EclipseWidget />}
+    <Categories/>
     </>
   );
 };
 
-export default UserSearch;
+export default CategorySearch;
 
 
