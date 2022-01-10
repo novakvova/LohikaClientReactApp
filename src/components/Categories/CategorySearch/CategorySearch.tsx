@@ -15,13 +15,13 @@ const CategorySearch = () => {
   const { getSearchCategoryResult } = useActions();
   const { pages, loading, currentPage, total } = useTypedSelector( store => store.userCrud)
   const [searchParams, setSearchParams] = useSearchParams();
-  const [toogleSearch, setToggleSearch] = useState(false);
+  const [toggleSearch, setToggleSearch] = useState(false);
 
   const [search, setSearch] = useState<ISearchCategory>({
     id: searchParams.get("id") || "",
     title: searchParams.get("title") || "",
     urlSlug: searchParams.get("urlSlug") || "",
-    priority: searchParams.get("priority") || "",
+    // priority: searchParams.get("priority") || "",
   });
 
   useEffect(() => {
@@ -65,11 +65,11 @@ const CategorySearch = () => {
       >
         Пошук
       </button>
-      {toogleSearch && (
+      {toggleSearch && (
         <FormikProvider value={formik}>
           <Form onSubmit={handleSubmit}>
             <div className="row d-flex justify-content-center border border-secondary border-3 rounded-4 p-4 m-5">
-              <h1 className="text-center">Пошук</h1>
+              {/* <h1 className="text-center">Пошук</h1> */}
               <div className="col-4">
 
                 <InputGroup
@@ -87,12 +87,12 @@ const CategorySearch = () => {
                   value={values?.urlSlug}
                 />
 
-                <InputGroup
+                {/* <InputGroup
                   field="priority"
                   label="priority"
                   onChange={handleChange}
                   value={values?.priority}
-                />
+                /> */}
               </div>
               <div className="col-4">
                 <InputGroup
@@ -243,7 +243,7 @@ const CategorySearch = () => {
         </li>
       </ul>
       {loading && <EclipseWidget />}
-    <Categories/>
+   
     </>
   );
 };
