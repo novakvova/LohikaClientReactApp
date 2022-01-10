@@ -42,12 +42,12 @@ const SideBar = () => {
         {
           label: "Список категорій",
           icon: "pi pi-fw pi-list",
-          command: () => navigate("/categories/list"),
+          command: () => navigate("/adminPanel/categories"),
         },
         {
           label: "Додати",
           icon: "pi pi-fw pi-user-plus",
-          command: () => navigate("/categories/add"),
+          command: () => navigate("/adminPanel/categories/add"),
         },
       ],
     },

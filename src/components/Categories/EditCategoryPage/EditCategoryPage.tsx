@@ -49,7 +49,7 @@ const EditCategoryPage = () => {
           );
     try {
       await updateCategory(values, formData);
-      navigator('/admin/categories')
+      navigator('/adminPanel/categories')
     } catch (error) {
       const serverErrors = error as UpdateErrors;
 

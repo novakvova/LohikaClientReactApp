@@ -42,11 +42,6 @@ const DefaultHeader = () => {
             <li className="ms-3">
               <HeaderSearch />
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/categories/add">
-                Додати категорію
-              </Link>
-            </li>
           </ul>
           {isAuth ? (
             <ul className="navbar-nav">
