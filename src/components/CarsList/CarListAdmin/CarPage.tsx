@@ -18,7 +18,6 @@ const CarPage = () => {
     try {
       setShowLoader(true);
       const data = await fetchCarById(Number(id));
-      console.log(data);
       setShowLoader(false);
       const { image } = data;
       setImg(`https://vovalohika.tk/images/600_${image}?t=${uuid()}`);

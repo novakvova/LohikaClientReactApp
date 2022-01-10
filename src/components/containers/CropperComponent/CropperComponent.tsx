@@ -35,6 +35,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   const [showModal, setShowModal] = useState(false);
 
   const handleImageChange = async (e: any) => {
+    console.log(e.target.files);
     const file = (e.target.files as FileList)[0];
     if (file) {
       const url = URL.createObjectURL(file);
@@ -42,6 +43,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
       cropperObj?.replace(url);
       setShowModal(true);
     }
+    e.target.value = "";
   };
 
   useEffect(() => {
@@ -124,6 +126,15 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
                 />
               }
             </div>
+            <div
+              ref={prevRef as LegacyRef<HTMLDivElement>}
+              style={{
+                height: "150px",
+                width: "150px",
+                border: "1px solid silver",
+                overflow: "hidden",
+              }}
+            ></div>
             <div className="d-flex justify-content-around mt-2">
               <button
                 onClick={rotateImg}
@@ -154,14 +165,6 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
                 </button>
               </div>
             </div>
-            <div
-              ref={prevRef as LegacyRef<HTMLDivElement>}
-              style={{
-                height: "100px",
-                width: "100px",
-                border: "1px solid silver",
-              }}
-            ></div>
           </div>
         </Modal>
       )}
