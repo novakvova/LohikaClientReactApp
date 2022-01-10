@@ -54,14 +54,15 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
-          <Route path="/categories/list" element={<CategoriesList />}/>
-          <Route path="/categories/search" element={<CategorySearch />} />
-          <Route path="/category/:id" element={<CategoryDetailPage />} />
-          <Route path="/categories/edit/:id" element={<EditCategoryPage />} />
-          <Route path="/categories/add" element={<CreateCategory />} />
-          <Route path="/categories/get/:id" element={<CategoryPage />} />
+
+        <Route path="/adminPanel" element={<AdminPanelLayout />}>
+          <Route path="/adminPanel/categories" element={<CategorySearch />} />
+          <Route path="/adminPanel/category/:id" element={<CategoryDetailPage />} />
+          <Route path="/adminPanel/categories/edit/:id" element={<EditCategoryPage />} />
+          <Route path="/adminPanel/categories/add" element={<CreateCategory />} />
+          <Route path="/adminPanel/categories/get/:id" element={<CategoryPage />} />
           <Route path="*" element={<NoMatch />} />
-          
+        </Route>
           
 
           {/* AuthRoutes */}
