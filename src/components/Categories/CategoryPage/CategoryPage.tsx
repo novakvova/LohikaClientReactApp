@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useParams } from 'react-router';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-// import { store } from '../../../store';
 import EclipseWidget from '../../common/eclipse';
 import NoMatch from '../../NoMatch';
 import { IGetCategory } from '../types/GetCategoryByID';
@@ -16,29 +15,28 @@ const CategoryDetailPage = () => {
   const { getCategoryById, addFlashMessage, deleteFlashMessage } = useActions();
   const { title, urlSlug, image, priority } = categoryData;
 
-   const getCategory = async () => {
-    try {
-      const response: IGetCategory = await getCategoryById(id);
-      const { status } = response;
-      console.log(status);
+   const getCategory = useCallback(async () => {
+     try {
+       const response: IGetCategory = await getCategoryById(id);
+       const { status } = response;
+       console.log(status);
 
-      if (status === 204) {
-        navigator("/categories");
-        await addFlashMessage({
-          type: "error",
-          message: " Категорію не знайдено",
-        });
-        setTimeout(() => {
-          deleteFlashMessage();
-        }, 2000);
-      }
-    } catch (error) {}
-      }
+       if (status === 204) {
+         navigator("/categories");
+         await addFlashMessage({
+           type: "error",
+           message: " Категорію не знайдено",
+         });
+         setTimeout(() => {
+           deleteFlashMessage();
+         }, 2000);
+       }
+     } catch (error) {}
+   }, [getCategoryById, addFlashMessage, deleteFlashMessage, id, navigator]); 
 
-  useEffect( () => {
+  useEffect(() => {
     getCategory();
-   
-  }, []);
+  }, [getCategory]);
 
 
   if (!id) {

@@ -15,7 +15,9 @@ const CategoryItem: React.FC<Props> = ({
   const navigator = useNavigate();
 
   const handlerInfo = (id: number) => {
+
     navigator(`/adminPanel/categories/get/${id}`);
+
   };
   return (
     <tr>
@@ -42,6 +44,7 @@ const CategoryItem: React.FC<Props> = ({
           onClick={async () => {
             await getCategoryById(id);
             await navigator(`/adminPanel/categories/edit/${id}`);
+
           }}
         >
           Змінити

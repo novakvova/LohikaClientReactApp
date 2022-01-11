@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Categories from '../CategoriesList/Categories';
 import EclipseWidget from '../../common/eclipse';
 import { Helmet } from 'react-helmet';
+import "../category.css";
 
 const CategorySearch = () => {
   const { getSearchCategoryResult } = useActions();
@@ -26,7 +27,7 @@ const CategorySearch = () => {
 
   useEffect(() => {
     getSearchCategoryResult(search);
-  }, [search]);
+  }, [getSearchCategoryResult, search]);
 
   const buttons = [];
   for (var i = 2; i < pages; i++) {
@@ -55,7 +56,7 @@ const CategorySearch = () => {
     formik;
 
   return (
-    <>
+    <div className='team_dark'>
       <Helmet>
         <title>Категорії</title>
       </Helmet>
@@ -244,7 +245,7 @@ const CategorySearch = () => {
       </ul>
       {loading && <EclipseWidget />}
    
-    </>
+    </div>
   );
 };
 

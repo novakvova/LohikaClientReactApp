@@ -2,17 +2,13 @@ import * as React from "react";
 import CarCard from "./CarCard";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import EclipseWidget from "../common/eclipse";
-import { useActions } from "../../hooks/useActions";
+
 
 
 const CarsList: React.FC = () => {
-  const { fetchCars } = useActions();
+
   const { loading, products } = useTypedSelector((store) => store.car);
   const { cartData } = useTypedSelector((store) => store.cart);
-
-  React.useEffect(() => {
-    fetchCars();
-  }, []);
 
   const isCarInCart = (id: number): boolean => {
     return cartData.some((item) => item.productId === id);

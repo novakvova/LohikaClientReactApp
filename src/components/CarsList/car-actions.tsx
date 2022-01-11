@@ -1,7 +1,6 @@
-
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { IAddCar } from "../AddNewCar/types";
+import { IAddCar } from "./AddNewCar/types";
 import { ICartData } from "../Cart/types";
 import {
   CarAction,
@@ -47,13 +46,16 @@ export const fetchCarsSearch =
   };
 
 export const fetchCarById =
-  (id: number) => async (dispatch: Dispatch<CarAction>) => {
+  (id: number): any =>
+  async (dispatch: Dispatch<CarAction>) => {
     try {
       const response = await http.get<ISearchCar>(`api/Products/get/${id}`);
+      const { data } = response;
       dispatch({
         type: CarActionTypes.GET_CAR_BY_ID,
         payload: response.data,
       });
+     return Promise.resolve<ISearchCar>(data);
     } catch (error) {
       console.log("action => ", error);
     }
@@ -61,13 +63,8 @@ export const fetchCarById =
 
 export const updateCar = (data: IAddCar) => {
   return (dispatch: Dispatch<UpdateCarAction>) => {
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) =>
-      formData.append(key, value as string)
-    );
     http
-      .put("api/Products/edit", formData, {
+      .put("api/Products/edit", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -86,7 +83,7 @@ export const deleteCar = (id: number) => {
     http
       .delete(`api/Products/delete/${id}`)
       .then(() => {
-        dispatch({ type: CarActionTypes.DELETE_CAR, payload: id});
+        dispatch({ type: CarActionTypes.DELETE_CAR, payload: id });
       })
       .catch((error) => console.log(error));
   };

@@ -29,7 +29,6 @@ export interface UpdateErrorCategoryAction {
 };
 
 export type UpdateCategoryActions =
-  // | UpdateCategoryActionTypes
   | UpdateCategoryAction
   | UpdateSuccessCategoryAction
   | UpdateErrorCategoryAction

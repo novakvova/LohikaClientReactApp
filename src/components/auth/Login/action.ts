@@ -37,9 +37,11 @@ export const setAuthUserByToken = (token: string , dispatch: Dispatch<any>) => {
   localStorage.token = token;
 
   const dataUser = jwt.decode(token, { json: true });
+  
   const user: IUser = {
     email: dataUser!.name,
     image: dataUser!.image,
+    roles: dataUser!.roles,
   };
   
   dispatch({
