@@ -53,14 +53,6 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />} />
-          <Route path="/categories/list" element={<CategoriesList />} />
-          <Route path="/categories/search" element={<CategorySearch />} />
-          <Route path="/category/:id" element={<CategoryDetailPage />} />
-          <Route path="/categories/edit" element={<EditCategoryPage />} />
-          <Route path="/categories/add" element={<CreateCategory />} />
-          <Route path="/categories/get/:id" element={<CategoryPage />} />
-          <Route path="*" element={<NoMatch />} />
-
 
           {/* AuthRoutes */}
           <Route
@@ -99,17 +91,38 @@ function App() {
 
         {/* AdminPanelRoutes */}
 
-       {isAuth && roles==="user" && 
+        {isAuth && roles === "user" && (
           <Route path="/adminPanel" element={<AdminPanelLayout />}>
             <Route path="/adminPanel/users/create" element={<CreatePage />} />
             <Route path="/adminPanel/users" element={<AdminMain />} />
-            <Route path="/adminPanel/users/userInfo/:id" element={<UserInfo />} />
+            <Route
+              path="/adminPanel/users/userInfo/:id"
+              element={<UserInfo />}
+            />
             <Route path="/adminPanel/users/edit/:id" element={<EditUser />} />
+
+
+            <Route path="/adminPanel/categories" element={<CategorySearch />} />
+            <Route
+              path="/adminPanel/category/:id"
+              element={<CategoryDetailPage />}
+            />
+            <Route
+              path="/adminPanel/categories/edit/:id"
+              element={<EditCategoryPage />}
+            />
+            <Route
+              path="/adminPanel/categories/add"
+              element={<CreateCategory />}
+            />
+            <Route
+              path="/adminPanel/categories/get/:id"
+              element={<CategoryPage />}
+            />
 
             <Route path="*" element={<NoMatch />} />
           </Route>
-        }
-
+        )}
       </Routes>
     </>
   );

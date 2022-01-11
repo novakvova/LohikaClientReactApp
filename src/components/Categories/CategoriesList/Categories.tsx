@@ -3,23 +3,26 @@ import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import CategoryItem from './CategoryItem';
 import { CategoryInfo } from '../types';
+import "../category.css";
 
-const Categories = () => {
+const CategoriesList = () => {
   const { categories } = useTypedSelector( store => store.categoryCrud)
+
   const { getSearchCategoryResult} = useActions();
   
   useEffect(() => {
     getSearchCategoryResult({});
   }, [getSearchCategoryResult]);
 
+
 	return (
-    <div className="container">
+    <div className="container team_dark">
       <h1 className="text-center m-2">Категорії</h1>
-      <table className="table align-middle table-striped table-hover">
+      <table className="table align-middle team_dark">
         <thead>
-          <tr>
+          <tr className="team_dark">
             <th scope="col">Id</th>
-            <th scope="col">Назва категоріх</th>
+            <th scope="col">Назва категорії</th>
             <th scope="col">Зображення</th>
             <th scope="col">Пріорітет</th>
             <th scope="col">UrlSlug</th>
@@ -38,4 +41,4 @@ const Categories = () => {
   );
 }
 
-export default Categories;
+export default CategoriesList;

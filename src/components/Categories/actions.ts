@@ -87,7 +87,7 @@ export const getCategoryById = (id: number): any => {
       });
       const response = await http.get<CategoryInfo>(`api/Categories/get/${id}`);
       const { data } = response;
-
+      console.log(data)
       dispatch({
         type: GetCategoryActionTypes.GET_CATEGORY_SUCCESS,
         payload: data,
@@ -172,11 +172,17 @@ export const getSearchCategoryResult = (searchRequest: ISearchCategory) => {
       type: ISearchCategoryActionTypes.SEARCH_CATEGORIES,
     });
     try {
-      
-      const responce = await http.get<ISearchData>("api/Categories/search", {
-        params: searchRequest,
+      let params = Object.fromEntries(
+        Object.entries(searchRequest).filter(([key, value]) => {
+          if (value) return [key, value];
+          return;
+        }),
+      );
+      params = { ...params };
+      const response = await http.get<ISearchData>('api/Categories/search', {
+        params,
       });
-      const { data } = responce;
+      const { data } = response;
       dispatch({
         type: ISearchCategoryActionTypes.SEARCH_CATEGORIES_SUCCESS,
         payload: { ...data },

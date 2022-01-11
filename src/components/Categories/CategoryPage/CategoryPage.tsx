@@ -7,6 +7,7 @@ import EclipseWidget from '../../common/eclipse';
 import NoMatch from '../../NoMatch';
 import { IGetCategory } from '../types/GetCategoryByID';
 
+
 const CategoryDetailPage = () => {
 	let { id } = useParams() as any; 
   const navigator = useNavigate();
@@ -37,8 +38,10 @@ const CategoryDetailPage = () => {
     getCategory();
   }, [getCategory]);
 
+
   if (!id) {
     return <NoMatch />;
+
   }
 
     return (
@@ -68,7 +71,23 @@ const CategoryDetailPage = () => {
                   <div className="card-body">
                     <div className="row">
                       <div className="col-sm-3">
-                        <p className="mb-0">Ім'я</p>
+                        <p className="mb-0">Назва категорії</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">{title}</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <p className="mb-0">ID</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">{id}</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <p className="mb-0">Пріорітет</p>
                       </div>
                       <div className="col-sm-9">
                         <p className="text-muted mb-0">{priority}</p>
