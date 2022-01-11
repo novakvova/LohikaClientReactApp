@@ -30,7 +30,8 @@ const DefaultHeader = () => {
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          aria-label="Toggle navigation">
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -50,10 +51,12 @@ const DefaultHeader = () => {
             </li>
           </ul>
           {isAuth ? (
-            <ul className="navbar-nav">
-              <li className="nav-item d-flex align-items-center">
+            <ul className="navbar-nav d-flex align-items-center">
+              <li className="nav-item ">
                 <HeaderCartButton />
               </li>
+  
+              
               <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/users">
                   Юзери
@@ -65,12 +68,16 @@ const DefaultHeader = () => {
                   Машини
                 </Link>
               </li>
-
-              <li className="nav-item d-flex align-items-center">
+              <li className="nav-item">
+                <Link className="nav-link" to="/adminPanel">
+                  Адмінка
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                   <img
                     src={
-                      !image.endsWith('image/')
+                      !image.endsWith("image/")
                         ? `https://vovalohika.tk${image}?t=${uuid()}`
                         : `https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png?t=${uuid()}`
                     }
@@ -87,11 +94,6 @@ const DefaultHeader = () => {
             </ul>
           ) : (
             <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/adminPanel">
-                  Адмінка
-                </Link>
-              </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/register">
                   Реєстрація

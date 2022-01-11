@@ -8,7 +8,7 @@ import { useActions } from "./hooks/useActions";
 import "./App.css";
 import "../node_modules/font-awesome/css/font-awesome.css";
 
-//Impor components
+//Import components
 import Home from "./components/Home";
 import DefaultLayout from "./components/containers/DefaultLayout";
 import AddNewCar from "./components/CarsList/AddNewCar";
@@ -40,6 +40,7 @@ const Login = lazy(() => import("./components/auth/Login/index"));
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
+  const { isAuth, user: {roles} } = useTypedSelector((store) => store.auth);
 
   const { downloadCartData } = useActions();
   useEffect(() => {
@@ -59,6 +60,7 @@ function App() {
           <Route path="/categories/add" element={<CreateCategory />} />
           <Route path="/categories/get/:id" element={<CategoryPage />} />
           <Route path="*" element={<NoMatch />} />
+
 
           {/* AuthRoutes */}
           <Route
@@ -96,17 +98,18 @@ function App() {
         </Route>
 
         {/* AdminPanelRoutes */}
-        <Route path="/adminPanel" element={<AdminPanelLayout />}>
-          {/* <Route path="/adminPanel/users" element={<UserSearch />} />
-          <Route path="/adminPanel/user/:id" element={<UserDetailPage />} />
-          <Route path="/adminPanel/users/edit/:id" element={<EditPage />} />*/}
-          <Route path="/adminPanel/users/create" element={<CreatePage />} />
-          <Route path="/adminPanel/users" element={<AdminMain />} />
-          <Route path="/adminPanel/users/userInfo/:id" element={<UserInfo />} />
-          <Route path="/adminPanel/users/edit/:id" element={<EditUser />} />
 
-          <Route path="*" element={<NoMatch />} />
-        </Route>
+       {isAuth && roles==="user" && 
+          <Route path="/adminPanel" element={<AdminPanelLayout />}>
+            <Route path="/adminPanel/users/create" element={<CreatePage />} />
+            <Route path="/adminPanel/users" element={<AdminMain />} />
+            <Route path="/adminPanel/users/userInfo/:id" element={<UserInfo />} />
+            <Route path="/adminPanel/users/edit/:id" element={<EditUser />} />
+
+            <Route path="*" element={<NoMatch />} />
+          </Route>
+        }
+
       </Routes>
     </>
   );

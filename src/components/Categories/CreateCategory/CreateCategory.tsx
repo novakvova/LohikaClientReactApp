@@ -33,8 +33,10 @@ const CreateCategory = () => {
     try {
       setLoad(true);
       const res = await CreateCategory(values);
+      console.log(res);
+      
       const result = await res as IStatus;
-      navigator("/categories");
+      navigator("/categories/list");
       setLoad(false);
       if (result.status === 200) {
         addFlashMessage({
