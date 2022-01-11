@@ -17,7 +17,7 @@ const CarCard: React.FC<CarCardProps> = ({
 }) => {
   const [count, setCount] = useState("1");
   const { addItemToCart, showCart } = useActions();
-  // const { isAuth } = useTypedSelector((store) => store.auth);
+
   const navigator = useNavigate();
 
   const countHandler = (value: string) => {
@@ -27,7 +27,6 @@ const CarCard: React.FC<CarCardProps> = ({
     await addItemToCart(id, +count);
   };
 
-  console.log("image => ", image);
 
   return (
     <div className={`card ${classes.carCard} mt-3`}>
