@@ -116,16 +116,6 @@ const EditCarPage = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-
-          {/* <InputGroup
-            field="image"
-            label="Фото"
-            type="file"
-            touched={formik.touched.image}
-            error={formik.errors.image}
-            onChange={handleImageChange}
-          /> */}
-
           <div className="text-center">
             <button type="submit" className="btn btn-primary">
               Зберегти зміни
