@@ -51,6 +51,21 @@ const SideBar = () => {
       ],
     },
     {
+      label: "Новини",
+      items: [
+        {
+          label: "Добавити",
+          icon: "pi pi-fw pi-user-plus",
+          command: () => navigate("/adminPanel/editor/add"),
+        },
+        {
+          label: "Список",
+          icon: "pi pi-fw pi-list",
+          command: () => navigate("/adminPanel/users"),
+        },
+      ],
+    },
+    {
       label: "Навігація",
       items: [
         {

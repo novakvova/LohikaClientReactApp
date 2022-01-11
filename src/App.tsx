@@ -33,6 +33,7 @@ import CreatePage from "./components/adminPanel/Users/CreatePage";
 import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
 import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
 import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
+import TinyEditor from './components/adminPanel/TinyEditor';
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
@@ -100,7 +101,7 @@ function App() {
               element={<UserInfo />}
             />
             <Route path="/adminPanel/users/edit/:id" element={<EditUser />} />
-
+            <Route path="/adminPanel/editor/add" element={<TinyEditor />} />
 
             <Route path="/adminPanel/categories" element={<CategorySearch />} />
             <Route
