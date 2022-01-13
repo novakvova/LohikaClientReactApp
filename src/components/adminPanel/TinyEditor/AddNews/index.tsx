@@ -1,45 +1,42 @@
 import { Card } from 'primereact/card';
-import { useRef, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import { Editor as TinyMCEEditor } from "tinymce";
-import { config } from './editorConfig';
 import { IEditorValues } from '../types';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { EditorSchema } from '../validation';
 import InputGroup from '../../../common/InputGroup';
 import { Button } from 'primereact/button';
-import DatePicker from "react-datepicker";
-
+import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import "react-datepicker/dist/react-datepicker.css";
 import EditorTiny from '../../../common/EditorTiny/EditorTiny';
-import DateCalendar from '../../../common/EditorTiny/EditorTiny';
-import { EventHandler } from '@tinymce/tinymce-react/lib/cjs/main/ts/Events';
-import classNames from 'classnames';
 import Callendar from '../../../common/Callendar';
+import { useActions } from '../../../../hooks/useActions';
 
 const TinyEditor = () => {
-	const editorRef = useRef<any>(null);
-  const [date, setDate] = useState<Date>(new Date())
   const initialValues:IEditorValues = {
     name: "",
     text: "",
     image: "",
     slug: "",
     isShow: true,
-    dateTimePublish: "",
+    dateTimePublish: new Date().toLocaleDateString(),
   };  
 
-  const editorChange = (a: string, editor: TinyMCEEditor) => {
-    setFieldValue("text", a);
-  }
-
-  const onHandleSubmit = (values: IEditorValues) => {
-    console.log(values);
+  const { addNews, getNews } = useActions();
+  const cyr = new CyrillicToTranslit();
+  
+  const onHandleSubmit = async (values: IEditorValues) => {
+    try {
+      //await addNews(values);
+      console.log(addNews(values));
+       console.log(getNews());
+      
+    } catch (error) {
+      
+    }
   };
 
   const formik = useFormik({
     initialValues: initialValues,
-   // validationSchema: EditorSchema,
+    validationSchema: EditorSchema,
     onSubmit: onHandleSubmit,
   });
 
@@ -49,7 +46,7 @@ const TinyEditor = () => {
     handleChange,
     handleSubmit,
     setFieldValue,
-    values
+    values,
   } = formik;
  
 	return (
@@ -66,6 +63,7 @@ const TinyEditor = () => {
                   error={errors.name}
                   onChange={handleChange}
                   touched={touched.name}
+                  value={values.name}
                 />
                 <InputGroup
                   field="image"
@@ -73,13 +71,16 @@ const TinyEditor = () => {
                   error={errors.image}
                   onChange={handleChange}
                   touched={touched.image}
+                  value={values.image}
                 />
                 <InputGroup
                   field="slug"
                   label="Slug"
                   error={errors.slug}
                   onChange={handleChange}
+                  onBlur={() => setFieldValue("slug", cyr.transform(values.slug, "-"))}
                   touched={touched.slug}
+                  value={values.slug}
                 />
                 <Callendar
                   field="dateTimePublish"
@@ -88,25 +89,20 @@ const TinyEditor = () => {
                   touched={touched.dateTimePublish}
                   value={values.dateTimePublish}
                   onChange={(data: Date) => {
-                    setFieldValue("dateTimePublish", data.toLocaleDateString("en-GB", { day: "numeric", month: "numeric", year: "numeric" }), false);
-                    console.log(
-                      data.toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "numeric",
-                        year: "numeric",
-                      })
-                    );
+                    setFieldValue(
+                      "dateTimePublish",
+                      data.toLocaleDateString("uk-UA"))
                   }}
                 />
               </div>
               <div className="col-8">
                 <EditorTiny
                   field="text"
-                  label="Text"
+                  label="Текст новини"
                   error={errors.text}
                   touched={touched.text}
                   onEditorChange={(a: string) => {
-                    setFieldValue("text", a)
+                    setFieldValue("text", a);
                   }}
                 />
               </div>

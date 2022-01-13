@@ -1,6 +1,7 @@
-import { FC, InputHTMLAttributes } from "react";
+import { FC } from "react";
 import classNames from "classnames";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
+import uk from "date-fns/locale/uk"
 
 interface DatePickerProps extends ReactDatePickerProps {
   label: string;
@@ -25,13 +26,14 @@ const Callendar: FC<DatePickerProps> = ({
       </label>
       <DatePicker
         name={field}
-		dateFormat="dd-MM-yyyy"
+        autoComplete="off"
+        locale={uk}
+        dateFormat="dd.MM.yyyy"
         className={classNames(
           "form-control",
           { "is-invalid": touched && error },
           { "is-valid": touched && !error }
         )}
-       
         onChange={onChange}
         {...props}
       />
