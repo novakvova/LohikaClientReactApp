@@ -9,6 +9,7 @@ import { cartReducer } from "../../components/Cart/cart-reduser";
 import { fleshMessagesReducer } from '../../components/FleshMessages/reducer';
 import { paginateReducer } from '../../components/adminPanel/Users/Paginator/reducer';
 import { categoryReducer } from '../../components/Categories/reducer';
+import { newsReducer } from "../../components/adminPanel/TinyEditor/reducer";
 
 export const rootReducer = combineReducers({
   car: carReducer,
@@ -21,6 +22,7 @@ export const rootReducer = combineReducers({
   fleshMessages: fleshMessagesReducer,
   paginate: paginateReducer,
   categoryCrud: categoryReducer,
+  news: newsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
