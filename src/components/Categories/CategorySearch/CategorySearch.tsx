@@ -58,17 +58,6 @@ const CategorySearch = () => {
 
   return (
     <div className="team_dark">
-      <div className="d-flex justify-content-between">
-        <div className="table-header">Категорії</div>
-        <Button
-          label="Пошук"
-          icon="pi pi-search"
-          onClick={() => {
-            setToggleSearch((prev) => !prev);
-          }}
-        />
-      </div>
-      {toggleSearch && (
         <Card>
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
@@ -99,7 +88,6 @@ const CategorySearch = () => {
             </Form>
           </FormikProvider>
         </Card>
-      )}
       <Categories />
       <h5>Всього: {total}</h5>
       <ul className="pagination d-flex justify-content-center">
