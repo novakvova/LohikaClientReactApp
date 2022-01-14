@@ -9,6 +9,8 @@ import EclipseWidget from "../../common/eclipse";
 import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import { Helmet } from 'react-helmet';
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
 
 const CreateCategory = () => {
   const { CreateCategory, addFlashMessage, deleteFlashMessage } = useActions();
@@ -36,7 +38,7 @@ const CreateCategory = () => {
       console.log(res);
       
       const result = await res as IStatus;
-      navigator("/categories/list");
+      navigator("/adminPanel/categories/");
       setLoad(false);
       if (result.status === 200) {
         addFlashMessage({
@@ -67,6 +69,7 @@ const CreateCategory = () => {
       <Helmet>
         <title>Додати категорію</title>
       </Helmet>
+      <Card>
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
           <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-4 m-5">
@@ -103,17 +106,20 @@ const CreateCategory = () => {
                 onChange={handleFileChange}
               />
             </div>
-            
-            <button
+            <div>
+              <div className="p-d-flex p-jc-center">
+              <Button
               type="submit"
-              className="btn btn-primary text-center"
+              label="Додати категорію" 
+              icon="pi pi-plus"
               disabled={loading}
-            >
-              Додати
-            </button>
+            />
+              </div>
+            </div>  
           </div>
         </Form>
       </FormikProvider>
+      </Card>
       {load && <EclipseWidget />}
     </>
   );
