@@ -11,6 +11,7 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { Helmet } from 'react-helmet';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import CropperComponent from '../../containers/CropperComponent/CropperComponent';
 
 const CreateCategory = () => {
   const { CreateCategory, addFlashMessage, deleteFlashMessage } = useActions();
@@ -69,11 +70,18 @@ const CreateCategory = () => {
       <Helmet>
         <title>Додати категорію</title>
       </Helmet>
-      <Card>
+      <Card title="Додати категорію">
         <FormikProvider value={formik}>
           <Form onSubmit={handleSubmit}>
             <div className="row d-flex justify-content-around border border-secondary border-3 rounded-4 p-4 m-5">
-              <h1 className="text-center">Додати категорію</h1>
+              <div className="col-6">
+                <CropperComponent
+                  field="image"
+                  onChange={setFieldValue}
+                  error={errors.image}
+                  touched={touched.image}
+                />
+              </div>
               <div className="col-6">
                 <InputGroup
                   field="title"
@@ -98,10 +106,9 @@ const CreateCategory = () => {
                   onChange={handleChange}
                   touched={touched.urlSlug}
                 />
-
-                <InputGroup field="image" label="Аватар" type="file" onChange={handleFileChange} />
+                {/* <InputGroup field="image" label="Аватар" type="file" onChange={handleFileChange} /> */}
               </div>
-              <div>
+              
                 <div className="p-d-flex p-jc-center">
                   <Button
                     type="submit"
@@ -110,7 +117,7 @@ const CreateCategory = () => {
                     disabled={loading}
                   />
                 </div>
-              </div>
+             
             </div>
           </Form>
         </FormikProvider>
