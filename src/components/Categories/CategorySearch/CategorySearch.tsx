@@ -41,6 +41,9 @@ const CategorySearch = () => {
     };
     setSearchParams(qs.stringify(filterNonNull(searchData)));
     setSearch(searchData);
+    formik.resetForm();
+    console.log('reset');
+
   };
 
   const formik = useFormik({
@@ -73,7 +76,11 @@ const CategorySearch = () => {
                   />
                 </div>
                 <div className="col-4">
-                  <InputGroup field="id" label="id" onChange={handleChange} value={values?.id} />
+                  <InputGroup 
+                  field="id" 
+                  label="id" 
+                  onChange={handleChange} 
+                  value={values?.id} />
                 </div>
                 <div className="mt-auto p-3 align-self-end">
                   <Button type="submit" label="Пошук" icon="pi pi-search" />
