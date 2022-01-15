@@ -25,7 +25,7 @@ const EditCategoryPage = () => {
   const _id = Number(id);
 
   const [img, setImg] = useState<string>(`https://vovalohika.tk${categoryData?.image}`);
-
+  
   let initValues: CategoryInfo = {
     id: _id,
     title: categoryData.title,
@@ -34,11 +34,11 @@ const EditCategoryPage = () => {
     image: categoryData.image,
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFieldValue('image', (e.target as any).files[0]);
-    const file = (e.target as any).files[0];
-    setImg(URL.createObjectURL(file));
-  };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFieldValue('image', (e.target as any).files[0]);
+  //   const file = (e.target as any).files[0];
+  //   setImg(URL.createObjectURL(file));
+  // };
 
   const onHandleSubmit = async (values: CategoryInfo) => {
     const formData = new FormData();
@@ -78,6 +78,7 @@ const EditCategoryPage = () => {
                     onChange={setFieldValue}
                     error={errors.image}
                     touched={touched.image}
+                    value={img}
                   />
                 </div>
                 <div className="col-6">
@@ -108,14 +109,14 @@ const EditCategoryPage = () => {
                     value={values.urlSlug}
                   />
 
-                  <InputGroup
+                  {/* <InputGroup
                     field="image"
                     label="Аватар"
                     type="file"
                     error={errors.image}
                     onChange={handleFileChange}
                     touched={touched.image}
-                  />
+                  /> */}
                 </div>
 
                 <div className="p-d-flex p-jc-center">
@@ -127,6 +128,8 @@ const EditCategoryPage = () => {
                 </div>
               </div>
             </Form>
+        <div className="col-4"></div>
+
           </FormikProvider>
         </Card>
       )}
