@@ -4,7 +4,7 @@ export enum CreateCategoryActionTypes {
   
   export interface ICreateCategory {
     title: string;
-    image: FileList[] | string;
+    image: string;
     urlSlug: string;
     priority: string;
   };

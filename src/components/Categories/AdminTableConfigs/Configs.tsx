@@ -27,8 +27,8 @@ export const AdminSearch = () => {
       <div className="d-flex justify-content-between">
         <div className="table-header">Категорії</div>
         <Button
-          label="Пошук"
-          icon="pi pi-search"
+          label="Шукати категорію"
+          // icon="pi pi-search"
           onClick={() => {
             setToggleSearch((prev) => !prev);
           }}

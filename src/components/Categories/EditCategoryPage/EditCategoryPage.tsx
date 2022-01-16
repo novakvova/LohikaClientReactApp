@@ -24,7 +24,7 @@ const EditCategoryPage = () => {
   const { id } = useParams();
   const _id = Number(id);
 
-  const [img, setImg] = useState<string>(`https://vovalohika.tk${categoryData?.image}`);
+  // const [img, setImg] = useState<string>(`https://vovalohika.tk${categoryData?.image}`);
   
   let initValues: CategoryInfo = {
     id: _id,
@@ -78,7 +78,8 @@ const EditCategoryPage = () => {
                     onChange={setFieldValue}
                     error={errors.image}
                     touched={touched.image}
-                    value={img}
+                    // value={img}
+                    value={values.image}
                   />
                 </div>
                 <div className="col-6">

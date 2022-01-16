@@ -22,12 +22,12 @@ const CreateCategory = () => {
     title: '',
     priority: '',
     urlSlug: '',
-    image: [],
+    image: '',
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFieldValue('image', (e.target as any).files[0]);
-  };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFieldValue('image', (e.target as any).files[0]);
+  // };
 
   const onHandleSubmit = async (
     values: ICreateCategory,

@@ -18,7 +18,7 @@ const CategorySearch = () => {
   const [search, setSearch] = useState<ISearchCategory>({
     id: searchParams.get('id') || '',
     title: searchParams.get('title') || '',
-    urlSlug: searchParams.get('urlSlug') || '',
+    priority: searchParams.get('priority') || '',
   });
 
   useEffect(() => {
@@ -69,16 +69,16 @@ const CategorySearch = () => {
                 </div>
                 <div className="col-4">
                   <InputGroup
-                    field="urlSlug"
-                    label="urlSlug"
+                    field="priority"
+                    label="Пріорітет"
                     onChange={handleChange}
-                    value={values?.urlSlug}
+                    value={values?.priority}
                   />
                 </div>
                 <div className="col-4">
                   <InputGroup 
                   field="id" 
-                  label="id" 
+                  label="ID" 
                   onChange={handleChange} 
                   value={values?.id} />
                 </div>
