@@ -6,10 +6,14 @@ export enum CarActionTypes {
   GET_CAR_BY_ID = "GET_CAR_BY_ID",
   UPDATE_CAR = "UPDATE_CAR",
   DELETE_CAR = "DELETE_CAR",
+  UPLOAD_CAR_IMAGE = "UPLOAD_CAR_IMAGE",
+
 }
+
 export interface IClickedButtonData {
   selected: number;
 }
+
 export interface ICarUpdate {
   id?: string;
   name: string;
@@ -24,6 +28,7 @@ export interface ISearchCar {
   priority: number;
   image: string;
   price: number;
+  images: Array<string>;
 }
 
 export interface ICarItem {
@@ -51,13 +56,13 @@ export interface ISearchProduct {
 
 export interface CarState {
   carSearchedById: ISearchCar | null;
-  cars: Array<ICarItem>;
   products: Array<ISearchCar>;
   pages: number;
   total: number;
   loading: boolean;
   currentPage: number;
   error: null | string;
+  uploadCarImageId: Array<number>
 }
 
 export interface FetchCarAction {
@@ -90,8 +95,13 @@ export interface UpdateCarAction {
 
 export interface DeleteCarAction {
   type: CarActionTypes.DELETE_CAR;
-  payload: number
+  payload: number;
 }
+
+export interface UploadCarImageAction {
+  type: CarActionTypes.UPLOAD_CAR_IMAGE;
+}
+
 
 export type CarAction =
   | FetchCarAction
@@ -100,4 +110,5 @@ export type CarAction =
   | FetchCarsSearchAction
   | GetCarByIdAction
   | UpdateCarAction
-  | DeleteCarAction;
+  | DeleteCarAction
+  | UploadCarImageAction;

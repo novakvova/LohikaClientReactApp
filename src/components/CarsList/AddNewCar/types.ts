@@ -21,8 +21,9 @@ export interface SendingCarState {
 export interface IAddCar {
   name: string;
   priority: string;
-  price: string ;
-  image: string;
+  price: string;
+  image?: string;
+  ids?: Array<number>;
 }
 
 export interface SendingCarAction {
@@ -47,5 +48,3 @@ export type SendingAction =
   | SendingCarSuccsessAction
   | SendingCarErrorAction
   | SendingCarSuccsessStopNavAction;
-
-

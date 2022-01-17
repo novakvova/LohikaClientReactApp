@@ -17,17 +17,16 @@
 }
 
 .formGroup {
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 5px; */
+  
 }
 
 .labelInput {
-  /* height: 5rem;
-    max-height: 10rem   */
+  
   width: 100%;
   height: 100%;
   cursor: pointer;

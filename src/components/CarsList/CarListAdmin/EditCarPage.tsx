@@ -44,8 +44,7 @@ const EditCarPage = () => {
   React.useEffect(() => {
     getCarById();
   }, [getCarById]);
-
-
+  
   const navigate = useNavigate();
   const onSubmit = async (values: ICarUpdate) => {
     setShowLoader(true);

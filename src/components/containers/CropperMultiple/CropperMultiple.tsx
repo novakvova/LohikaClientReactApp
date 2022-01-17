@@ -1,8 +1,7 @@
 import Cropper from "cropperjs";
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import Modal from "../Modal/Modal";
-import classes from "./CropperComponent.module.css";
-
+import classes from "./CropperMultiple.module.css";
 import "cropperjs/dist/cropper.css";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,16 +10,17 @@ import {
   faCheckCircle,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { useActions } from "../../../hooks/useActions";
 
 export interface IGetCropperProps {
-  onChange: (field: string, value: string) => void;
+  onChange: (id: number) => void;
   field: string;
   value?: string;
   error?: string;
   touched?: boolean;
 }
 
-const CropperComponent: React.FC<IGetCropperProps> = ({
+const CropperMultiple: React.FC<IGetCropperProps> = ({
   onChange,
   field,
   error,
@@ -30,12 +30,12 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   const [img, setImg] = useState<string>(value as string);
   const [cropperObj, setCropperObj] = useState<Cropper>();
   const imgRef = useRef<HTMLImageElement>(null);
-  const prevRef = useRef<HTMLDivElement>();
+  const previewRef = useRef<HTMLDivElement>();
   const [base64, setBase64] = useState<any>();
   const [showModal, setShowModal] = useState(false);
+  const { uploadCarImage } = useActions();
 
   const handleImageChange = async (e: any) => {
-    console.log(e.target.files);
     const file = (e.target.files as FileList)[0];
     if (file) {
       const url = URL.createObjectURL(file);
@@ -51,7 +51,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
       const cropper = new Cropper(imgRef.current as HTMLImageElement, {
         aspectRatio: 16 / 9,
         viewMode: 1,
-        preview: prevRef.current,
+        preview: previewRef.current,
       });
       cropper.replace(img);
       setCropperObj(cropper);
@@ -64,11 +64,20 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
     }
   };
 
-  const getBase64 = () => {
-    const base = cropperObj?.getCroppedCanvas().toDataURL() as string;
-    setBase64(base);
-    setShowModal(false);
-    onChange(field as string, base);
+  const getBase64 = async () => {
+    try {
+      const base = (await cropperObj?.getCroppedCanvas().toDataURL()) as string;
+      setBase64(base);
+
+      const data = await uploadCarImage(base);
+      console.log(data);
+      
+      onChange(data.id);
+      
+      setShowModal(false);
+    } catch (err) {
+      console.log("err => ", err);
+    }
   };
 
   return (
@@ -127,7 +136,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
               }
             </div>
             <div
-              ref={prevRef as LegacyRef<HTMLDivElement>}
+              ref={previewRef as LegacyRef<HTMLDivElement>}
               style={{
                 height: "150px",
                 width: "150px",
@@ -172,4 +181,4 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   );
 };
 
-export default CropperComponent;
+export default CropperMultiple;

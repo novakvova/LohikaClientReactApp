@@ -9,13 +9,7 @@ export const addNewCar = (data: IAddCar) => {
 
     dispatch({ type: SendingCarTypes.SENDING_CAR });
     http
-      .post("api/Products/add", data
-      //  formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // }
-      )
+      .post("api/Products/add", data)
       .then((response) => {
         dispatch({
           type: SendingCarTypes.SENDING_CAR_SUCCESS,

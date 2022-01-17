@@ -8,5 +8,6 @@ export interface CarCardProps {
     name: string;
     price: number;
     image: string;
-    inCart?: boolean
+    inCart?: boolean;
+    images:Array<string>
   }

@@ -1,7 +1,6 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
 import { IAddCar } from "./AddNewCar/types";
-import { ICartData } from "../Cart/types";
 import {
   CarAction,
   CarActionTypes,
@@ -12,21 +11,7 @@ import {
   UpdateCarAction,
 } from "./types";
 
-export const fetchCars = () => {
-  return async (dispatch: Dispatch<CarAction>) => {
-    try {
-      dispatch({ type: CarActionTypes.FETCH_CARS });
-      const response = await http.get<Array<ICartData>>("api/Products/list");
 
-      dispatch({
-        type: CarActionTypes.FETCH_CARS_SUCCESS,
-        payload: response.data,
-      });
-    } catch (error) {
-      dispatch({ type: CarActionTypes.FETCH_CARS_ERROR, payload: "Error" });
-    }
-  };
-};
 
 export const fetchCarsSearch =
   (searchParams: ISearchProduct) => async (dispatch: Dispatch<CarAction>) => {
