@@ -87,7 +87,7 @@ export const getCategoryById = (id: number): any => {
       });
       const response = await http.get<CategoryInfo>(`api/Categories/get/${id}`);
       const { data } = response;
-      console.log(data)
+      // console.log(data)
       dispatch({
         type: GetCategoryActionTypes.GET_CATEGORY_SUCCESS,
         payload: data,
@@ -116,9 +116,10 @@ export const updateCategory = (data: CategoryInfo, formData: FormData) => {
         type: UpdateCategoryActionTypes.UPDATE_CATEGORY,
       });
 
-      await http.put<CategoryInfo>('/api/Categories/edit', formData, {
+      const response = await http.put<CategoryInfo>('/api/Categories/edit', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+// console.log(response.data);
 
       dispatch({
         type: UpdateCategoryActionTypes.UPDATE_CATEGORY_SUCCESS,

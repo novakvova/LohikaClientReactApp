@@ -5,9 +5,11 @@ import { useState } from 'react';
 import CategorySearch from '../CategorySearch/CategorySearch';
 
 export const TableImageTemplate = (rowData: CategoryInfo) => {
+  const imagesrc = `https://vovalohika.tk/images/${rowData.image}`
+  console.log(imagesrc);
   return (
     <img
-      src={`https://vovalohika.tk${rowData.image}?t=${uuid()}`}
+      src={imagesrc}
       height="70"
       onError={(event: React.SyntheticEvent<HTMLImageElement, Event>) =>
         ((event.target as HTMLImageElement).src =

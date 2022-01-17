@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { Card } from 'primereact/card';
 import CropperComponent from '../../containers/CropperComponent/CropperComponent';
 import { Button } from 'primereact/button';
+import { TableImageTemplate } from '../AdminTableConfigs/Configs';
 
 const EditCategoryPage = () => {
   const { categoryData, loading } = useTypedSelector((store) => store.categoryCrud);
@@ -60,6 +61,7 @@ const EditCategoryPage = () => {
   });
 
   const { errors, touched, handleChange, handleSubmit, setFieldValue, values } = formik;
+console.log(values);
 
   return (
     <>
@@ -78,8 +80,7 @@ const EditCategoryPage = () => {
                     onChange={setFieldValue}
                     error={errors.image}
                     touched={touched.image}
-                    // value={img}
-                    value={values.image}
+                    value={`https://vovalohika.tk/images/${values.image}`}
                   />
                 </div>
                 <div className="col-6">

@@ -53,7 +53,7 @@ const CategoryDetailPage = () => {
       <Card title="Інформація про категорію">
         <div className="row">
           <div className="col-2">
-            <Image src={`https://vovalohika.tk${image}`} alt="avatar"/>
+            <Image src={`https://vovalohika.tk/images/${image}`} alt="avatar"/>
           </div>
           <div className="col">
             <div className="row">
