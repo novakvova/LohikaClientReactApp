@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import InputGroup from '../../common/InputGroup';
 import { useActions } from '../../../hooks/useActions';
 import { useNavigate } from 'react-router';
@@ -6,7 +6,7 @@ import { CreateCategorySchema } from './validation';
 import { ICreateCategory, ICreateCategoryError } from '../types/CreateCategory';
 import { IStatus } from '../types';
 import EclipseWidget from '../../common/eclipse';
-import { Form, FormikHelpers, FormikProvider, useFormik, validateYupSchema } from 'formik';
+import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { Helmet } from 'react-helmet';
 import { Card } from 'primereact/card';
@@ -63,7 +63,7 @@ const CreateCategory = () => {
     onSubmit: onHandleSubmit,
   });
 
-  const { errors, touched, handleChange, handleSubmit, values, setFieldValue } = formik;
+  const { errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
@@ -13,20 +13,18 @@ import { Card } from 'primereact/card';
 import CropperComponent from '../../containers/CropperComponent/CropperComponent';
 import { Button } from 'primereact/button';
 import { v4 as uuid } from 'uuid';
-import { TableImageTemplate } from '../AdminTableConfigs/Configs';
 
 const EditCategoryPage = () => {
   const { categoryData, loading } = useTypedSelector((store) => store.categoryCrud);
   const { updateCategory, getCategoryById } = useActions();
+    const { id } = useParams();
+    const _id = Number(id);
   useEffect(() => {
     getCategoryById(_id);
-  }, []);
+  }, [getCategoryById, _id]);
 
   const navigator = useNavigate();
-  const { id } = useParams();
-  const _id = Number(id);
 
-  // const [img, setImg] = useState<string>(`https://vovalohika.tk${categoryData?.image}`);
   
   let initValues: CategoryInfo = {
     id: _id,

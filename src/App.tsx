@@ -22,9 +22,7 @@ import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 
-import CategoriesList from "./components/Categories/CategoriesList/Categories";
 import CategoryPage from "./components/Categories/CategoryPage/CategoryPage";
-import CategorySearch from "./components/Categories/CategorySearch/CategorySearch";
 import AdminPanelLayout from "./components/containers/adminPanelLayout";
 import UserInfo from "./components/adminPanel/Users/UserInfo";
 import EditUser from "./components/adminPanel/Users/UserEdit";
@@ -36,7 +34,7 @@ import CreateCategory from "./components/Categories/CreateCategory/CreateCategor
 
 import Categories from "./components/Categories/CategoriesList/Categories";
 
-import TinyEditor from './components/adminPanel/TinyEditor/AddNews';
+import TinyEditor from "./components/adminPanel/TinyEditor/AddNews";
 
 
 //Import lazyLoading

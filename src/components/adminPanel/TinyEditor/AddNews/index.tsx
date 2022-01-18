@@ -10,12 +10,12 @@ import EditorTiny from '../../../common/EditorTiny/EditorTiny';
 import Callendar from '../../../common/Callendar';
 import EclipseWidget from "../../../common/eclipse";
 
-import { useActions } from '../../../../hooks/useActions';
+//import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import CropperComponent from '../../../containers/CropperComponent/CropperComponent';
 
 const TinyEditor = () => {
-  const { addNews, getNews } = useActions();
+ // const { addNews, getNews } = useActions();
   const { loading } = useTypedSelector( store => store.news)
   const cyr = new CyrillicToTranslit();
   const initialValues:IEditorValues = {
