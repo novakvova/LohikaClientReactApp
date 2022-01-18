@@ -94,7 +94,7 @@ function App() {
 
         {/* AdminPanelRoutes */}
 
-        {isAuth && roles === "user" && (
+        {isAuth && roles === "admin" && (
           <Route path="/adminPanel" element={<AdminPanelLayout />}>
             <Route path="/adminPanel/users/create" element={<CreatePage />} />
             <Route path="/adminPanel/users" element={<AdminMain />} />
