@@ -25,7 +25,7 @@ const CategoryItem: React.FC<Props> = ({
       <td>{title}</td>
       <td>
         <div className="size">
-          <img src={`https://vovalohika.tk${image}?t=${uuid()}`} alt="Avatar" />
+          <img src={`https://vovalohika.tk/images/150_${image}?t=${uuid()}`} alt="Avatar" />
         </div>
       </td>
       <td>{priority}</td>

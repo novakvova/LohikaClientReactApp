@@ -80,7 +80,6 @@ const CreateCategory = () => {
                   onChange={setFieldValue}
                   error={errors.image}
                   touched={touched.image}
-                  value={`https://vovalohika.tk/images/${values.image}`}
                 />
               </div>
               <div className="col-6">
