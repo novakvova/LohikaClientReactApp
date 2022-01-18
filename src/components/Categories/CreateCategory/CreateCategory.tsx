@@ -6,7 +6,7 @@ import { CreateCategorySchema } from './validation';
 import { ICreateCategory, ICreateCategoryError } from '../types/CreateCategory';
 import { IStatus } from '../types';
 import EclipseWidget from '../../common/eclipse';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { Form, FormikHelpers, FormikProvider, useFormik, validateYupSchema } from 'formik';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { Helmet } from 'react-helmet';
 import { Card } from 'primereact/card';
@@ -63,7 +63,7 @@ const CreateCategory = () => {
     onSubmit: onHandleSubmit,
   });
 
-  const { errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
+  const { errors, touched, handleChange, handleSubmit, values, setFieldValue } = formik;
 
   return (
     <>
@@ -80,6 +80,7 @@ const CreateCategory = () => {
                   onChange={setFieldValue}
                   error={errors.image}
                   touched={touched.image}
+                  value={`https://vovalohika.tk/images/${values.image}`}
                 />
               </div>
               <div className="col-6">
@@ -106,11 +107,10 @@ const CreateCategory = () => {
                   onChange={handleChange}
                   touched={touched.urlSlug}
                 />
-                {/* <InputGroup field="image" label="Аватар" type="file" onChange={handleFileChange} /> */}
               </div>
               
                 <div className="p-d-flex p-jc-center">
-                  <Button
+                  <Button 
                     type="submit"
                     label="Додати категорію"
                     icon="pi pi-plus"
