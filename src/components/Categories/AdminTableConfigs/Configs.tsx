@@ -5,7 +5,7 @@ import { useState } from 'react';
 import CategorySearch from '../CategorySearch/CategorySearch';
 
 export const TableImageTemplate = (rowData: CategoryInfo) => {
-  const imagesrc = `https://vovalohika.tk/images/${rowData.image}`
+  const imagesrc = `https://vovalohika.tk/images/150_${rowData.image}?t=${uuid()}`
   console.log(imagesrc);
   return (
     <img

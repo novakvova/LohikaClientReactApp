@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { Card } from 'primereact/card';
 import CropperComponent from '../../containers/CropperComponent/CropperComponent';
 import { Button } from 'primereact/button';
+import { v4 as uuid } from 'uuid';
 import { TableImageTemplate } from '../AdminTableConfigs/Configs';
 
 const EditCategoryPage = () => {
@@ -42,10 +43,8 @@ const EditCategoryPage = () => {
   // };
 
   const onHandleSubmit = async (values: CategoryInfo) => {
-    const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => formData.append(key, value));
     try {
-      await updateCategory(values, formData);
+      await updateCategory(values);
       navigator('/adminPanel/categories');
     } catch (error) {
       const serverErrors = error as UpdateErrors;
@@ -58,6 +57,7 @@ const EditCategoryPage = () => {
     initialValues: initValues,
     validationSchema: EditCategorySchema,
     onSubmit: onHandleSubmit,
+    enableReinitialize: true
   });
 
   const { errors, touched, handleChange, handleSubmit, setFieldValue, values } = formik;
@@ -80,7 +80,7 @@ console.log(values);
                     onChange={setFieldValue}
                     error={errors.image}
                     touched={touched.image}
-                    value={`https://vovalohika.tk/images/${values.image}`}
+                    value={`https://vovalohika.tk/images/300_${values.image}?t=${uuid()}`}
                   />
                 </div>
                 <div className="col-6">

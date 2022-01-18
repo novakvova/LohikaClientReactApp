@@ -109,16 +109,14 @@ export const getCategoryById = (id: number): any => {
   };
 };
 
-export const updateCategory = (data: CategoryInfo, formData: FormData) => {
+export const updateCategory = (data: CategoryInfo) => {
   return async (dispatch: Dispatch<UpdateCategoryActions>) => {
     try {
       dispatch({
         type: UpdateCategoryActionTypes.UPDATE_CATEGORY,
       });
 
-      const response = await http.put<CategoryInfo>('/api/Categories/edit', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const response = await http.put<CategoryInfo>('/api/Categories/edit', data);
 // console.log(response.data);
 
       dispatch({
@@ -144,11 +142,9 @@ export const updateCategory = (data: CategoryInfo, formData: FormData) => {
 export const CreateCategory = (data: ICreateCategory): any => {
   return async (dispatch: Dispatch<CreateCategoryActions>) => {
     try {
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-      const response = await http.post<IStatus>('api/Categories/add', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      // const formData = new FormData();
+      // Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+      const response = await http.post<IStatus>('api/Categories/add', data);
       const result = response;
 
       dispatch({
