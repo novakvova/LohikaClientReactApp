@@ -6,7 +6,7 @@ export interface IStatus {
     id: number;
     title: string;
     urlSlug: string;
-    image: string | File;
+    image: string;
     priority: number | string;
   }
   
