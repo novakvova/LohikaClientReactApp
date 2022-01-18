@@ -115,10 +115,7 @@ export const updateCategory = (data: CategoryInfo) => {
       dispatch({
         type: UpdateCategoryActionTypes.UPDATE_CATEGORY,
       });
-
-      const response = await http.put<CategoryInfo>('/api/Categories/edit', data);
-// console.log(response.data);
-
+      await http.put<CategoryInfo>('/api/Categories/edit', data);
       dispatch({
         type: UpdateCategoryActionTypes.UPDATE_CATEGORY_SUCCESS,
         payload: data,
@@ -169,15 +166,8 @@ export const getSearchCategoryResult = (searchRequest: ISearchCategory) => {
       type: ISearchCategoryActionTypes.SEARCH_CATEGORIES,
     });
     try {
-      let params = Object.fromEntries(
-        Object.entries(searchRequest).filter(([key, value]) => {
-          if (value) return [key, value];
-          return;
-        }),
-      );
-      params = { ...params };
-      const response = await http.get<ISearchData>('api/Categories/search', {
-        params,
+      const response = await http.get<ISearchData>("api/Categories/search", {
+        params: searchRequest,
       });
       const { data } = response;
       dispatch({

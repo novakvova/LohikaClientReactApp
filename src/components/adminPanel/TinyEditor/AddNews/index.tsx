@@ -8,9 +8,16 @@ import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import "react-datepicker/dist/react-datepicker.css";
 import EditorTiny from '../../../common/EditorTiny/EditorTiny';
 import Callendar from '../../../common/Callendar';
-import { useActions } from '../../../../hooks/useActions';
+import EclipseWidget from "../../../common/eclipse";
+
+//import { useActions } from '../../../../hooks/useActions';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import CropperComponent from '../../../containers/CropperComponent/CropperComponent';
 
 const TinyEditor = () => {
+ // const { addNews, getNews } = useActions();
+  const { loading } = useTypedSelector( store => store.news)
+  const cyr = new CyrillicToTranslit();
   const initialValues:IEditorValues = {
     name: "",
     text: "",
@@ -19,16 +26,13 @@ const TinyEditor = () => {
     isShow: true,
     dateTimePublish: new Date().toLocaleDateString(),
   };  
-
-  const { addNews, getNews } = useActions();
-  const cyr = new CyrillicToTranslit();
   
   const onHandleSubmit = async (values: IEditorValues) => {
     try {
       //await addNews(values);
-      console.log(addNews(values));
-       console.log(getNews());
+      console.log(values);
       
+      resetForm();
     } catch (error) {
       
     }
@@ -47,6 +51,7 @@ const TinyEditor = () => {
     handleSubmit,
     setFieldValue,
     values,
+    resetForm
   } = formik;
  
 	return (
@@ -65,20 +70,25 @@ const TinyEditor = () => {
                   touched={touched.name}
                   value={values.name}
                 />
-                <InputGroup
-                  field="image"
-                  label="Картинка"
-                  error={errors.image}
-                  onChange={handleChange}
-                  touched={touched.image}
-                  value={values.image}
-                />
+               
+                <label htmlFor="image">Фото новини</label>
+                <div className="form-control mb-1">
+                  <CropperComponent
+                    field="image"
+                    onChange={setFieldValue}
+                    error={errors.image}
+                    touched={touched.image}
+                  />
+                </div>
+
                 <InputGroup
                   field="slug"
                   label="Slug"
                   error={errors.slug}
                   onChange={handleChange}
-                  onBlur={() => setFieldValue("slug", cyr.transform(values.slug, "-"))}
+                  onBlur={() =>
+                    setFieldValue("slug", cyr.transform(values.slug, "-"))
+                  }
                   touched={touched.slug}
                   value={values.slug}
                 />
@@ -91,7 +101,8 @@ const TinyEditor = () => {
                   onChange={(data: Date) => {
                     setFieldValue(
                       "dateTimePublish",
-                      data.toLocaleDateString("uk-UA"))
+                      data.toLocaleDateString("uk-UA")
+                    );
                   }}
                 />
               </div>
@@ -105,13 +116,22 @@ const TinyEditor = () => {
                     setFieldValue("text", a);
                   }}
                 />
+                <div className="form-control mb-1">
+                  <CropperComponent
+                    field="image"
+                    onChange={setFieldValue}
+                    error={errors.image}
+                    touched={touched.image}
+                  />
+                </div>
               </div>
             </div>
             <div className="d-flex">
-              <Button type="submit" label="Додати" icon="pi pi-plus" />
+              <Button type="submit" label="Додати новину" icon="pi pi-plus" />
             </div>
           </Form>
         </FormikProvider>
+        {loading && <EclipseWidget />}
       </Card>
     </>
   );
