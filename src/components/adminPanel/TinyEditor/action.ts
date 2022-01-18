@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { IEditorValues, NewsActions, NewsActionTypes, NewsResponse } from './types';
+import { IEditorValues, NewsActions, NewsActionTypes } from './types';
 import http from "../../../http_common";
 
 export const addNews = (data: IEditorValues) => {
