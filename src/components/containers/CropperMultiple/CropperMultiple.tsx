@@ -71,7 +71,6 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
 
       const data = await uploadCarImage(base);
       console.log("data", data);
-
       onChange(data);
 
       setShowModal(false);

@@ -9,7 +9,10 @@ import * as FleshMessagesActionCreator from "../../components/FleshMessages/acti
 import * as RecoverPasswordActionCreator from "../../components/auth/recoverPassword/action";
 import * as PaginateActionCreator from "../../components/adminPanel/Users/Paginator/action";
 import * as CategoryActionCreators from "../../components/Categories/actions";
+
 import * as CarImageActionCreators from "../../components/containers/CropperMultiple/actionCropperMultiple";
+
+import * as NewsActionCreators from "../../components/adminPanel/TinyEditor/action";
 
 const actions = {
   ...CarActionCreators,
@@ -23,7 +26,10 @@ const actions = {
   ...RecoverPasswordActionCreator,
   ...PaginateActionCreator,
   ...CategoryActionCreators,
+
   ...CarImageActionCreators,
+
+  ...NewsActionCreators,
 };
 
 export default actions;

@@ -87,7 +87,7 @@ export const getCategoryById = (id: number): any => {
       });
       const response = await http.get<CategoryInfo>(`api/Categories/get/${id}`);
       const { data } = response;
-      console.log(data)
+      // console.log(data)
       dispatch({
         type: GetCategoryActionTypes.GET_CATEGORY_SUCCESS,
         payload: data,
@@ -109,17 +109,13 @@ export const getCategoryById = (id: number): any => {
   };
 };
 
-export const updateCategory = (data: CategoryInfo, formData: FormData) => {
+export const updateCategory = (data: CategoryInfo) => {
   return async (dispatch: Dispatch<UpdateCategoryActions>) => {
     try {
       dispatch({
         type: UpdateCategoryActionTypes.UPDATE_CATEGORY,
       });
-
-      await http.put<CategoryInfo>('/api/Categories/edit', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-
+      await http.put<CategoryInfo>('/api/Categories/edit', data);
       dispatch({
         type: UpdateCategoryActionTypes.UPDATE_CATEGORY_SUCCESS,
         payload: data,
@@ -143,11 +139,9 @@ export const updateCategory = (data: CategoryInfo, formData: FormData) => {
 export const CreateCategory = (data: ICreateCategory): any => {
   return async (dispatch: Dispatch<CreateCategoryActions>) => {
     try {
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-      const response = await http.post<IStatus>('api/Categories/add', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      // const formData = new FormData();
+      // Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+      const response = await http.post<IStatus>('api/Categories/add', data);
       const result = response;
 
       dispatch({
@@ -172,15 +166,8 @@ export const getSearchCategoryResult = (searchRequest: ISearchCategory) => {
       type: ISearchCategoryActionTypes.SEARCH_CATEGORIES,
     });
     try {
-      let params = Object.fromEntries(
-        Object.entries(searchRequest).filter(([key, value]) => {
-          if (value) return [key, value];
-          return;
-        }),
-      );
-      params = { ...params };
-      const response = await http.get<ISearchData>('api/Categories/search', {
-        params,
+      const response = await http.get<ISearchData>("api/Categories/search", {
+        params: searchRequest,
       });
       const { data } = response;
       dispatch({

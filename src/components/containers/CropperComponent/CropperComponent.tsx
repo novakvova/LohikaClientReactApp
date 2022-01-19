@@ -93,7 +93,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
                 {!value && (
                   <>
                     <i className="fa fa-image fa-5x"></i>
-                    <span className="d-block">Виберіть фото</span>
+                    <span className="d-block">Для вибору фото натисніть</span>
                   </>
                 )}
               </>
@@ -165,6 +165,16 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
                 </button>
               </div>
             </div>
+
+            <div
+              ref={prevRef as LegacyRef<HTMLDivElement>}
+              style={{
+                overflow: "hidden",
+                height: "100px",
+                width: "100px",
+                border: "1px solid silver",
+              }}
+            ></div>
           </div>
         </Modal>
       )}

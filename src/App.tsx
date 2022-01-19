@@ -22,9 +22,7 @@ import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 
-import CategoriesList from "./components/Categories/CategoriesList/Categories";
 import CategoryPage from "./components/Categories/CategoryPage/CategoryPage";
-import CategorySearch from "./components/Categories/CategorySearch/CategorySearch";
 import AdminPanelLayout from "./components/containers/adminPanelLayout";
 import UserInfo from "./components/adminPanel/Users/UserInfo";
 import EditUser from "./components/adminPanel/Users/UserEdit";
@@ -33,6 +31,11 @@ import CreatePage from "./components/adminPanel/Users/CreatePage";
 import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
 import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
 import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
+
+import Categories from "./components/Categories/CategoriesList/Categories";
+
+import TinyEditor from "./components/adminPanel/TinyEditor/AddNews";
+
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
@@ -91,7 +94,7 @@ function App() {
 
         {/* AdminPanelRoutes */}
 
-        {isAuth && roles === "user" && (
+        {isAuth && roles === "admin" && (
           <Route path="/adminPanel" element={<AdminPanelLayout />}>
             <Route path="/adminPanel/users/create" element={<CreatePage />} />
             <Route path="/adminPanel/users" element={<AdminMain />} />
@@ -100,11 +103,11 @@ function App() {
               element={<UserInfo />}
             />
             <Route path="/adminPanel/users/edit/:id" element={<EditUser />} />
+            <Route path="/adminPanel/editor/add" element={<TinyEditor />} />
 
-
-            <Route path="/adminPanel/categories" element={<CategorySearch />} />
+            <Route path="/adminPanel/categories" element={<Categories />} />
             <Route
-              path="/adminPanel/category/:id"
+              path="/adminPanel/categories/categoryInfo/:id"
               element={<CategoryDetailPage />}
             />
             <Route
