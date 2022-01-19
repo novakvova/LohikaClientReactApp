@@ -16,16 +16,17 @@ const EditCarPage = () => {
 
   const [showLoader, setShowLoader] = React.useState(false);
   const { id } = useParams();
-  const { fetchCarById } = useActions()
+  const { fetchCarById } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-  const [img, setImg] = React.useState<string>(""); 
-  
+  const [img, setImg] = React.useState<string>("");
+
   const initialValues = {
     id: `${id}`,
     name: `${carSearchedById?.name}`,
     priority: `${carSearchedById?.priority}`,
     price: `${carSearchedById?.price}`,
     image: `${carSearchedById?.image}`,
+    categoryId: 85,
   };
 
   const getCarById = React.useCallback(async () => {
@@ -40,11 +41,10 @@ const EditCarPage = () => {
     }
   }, [fetchCarById, id]);
 
- 
   React.useEffect(() => {
     getCarById();
   }, [getCarById]);
-  
+
   const navigate = useNavigate();
   const onSubmit = async (values: ICarUpdate) => {
     setShowLoader(true);
@@ -59,8 +59,6 @@ const EditCarPage = () => {
     onSubmit,
     validateOnBlur: true,
   });
-
-  
 
   const { setFieldValue, errors, touched } = formik;
 

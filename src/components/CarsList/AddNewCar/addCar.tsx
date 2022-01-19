@@ -6,7 +6,7 @@ import { SendingAction, SendingCarTypes, IAddCar } from "./types";
 
 export const addNewCar = (data: IAddCar) => {
   return (dispatch: Dispatch<SendingAction>) => {
-
+    console.log(data)
     dispatch({ type: SendingCarTypes.SENDING_CAR });
     http
       .post("api/Products/add", data)

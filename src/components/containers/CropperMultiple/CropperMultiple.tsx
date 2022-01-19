@@ -70,10 +70,10 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
       setBase64(base);
 
       const data = await uploadCarImage(base);
-      console.log(data);
-      
-      onChange(data.id);
-      
+      console.log("data", data);
+
+      onChange(data);
+
       setShowModal(false);
     } catch (err) {
       console.log("err => ", err);

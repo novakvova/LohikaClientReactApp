@@ -6,27 +6,25 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse";
 import { v4 as uuid } from "uuid";
 
-
 const CarPage = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [img, setImg] = useState<string>("");
   const { id } = useParams();
   const { fetchCarById } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-
+  console.log(carSearchedById);
   const getCarById = useCallback(async () => {
     try {
       setShowLoader(true);
       const data = await fetchCarById(Number(id));
       setShowLoader(false);
-      const { image } = data;
-      setImg(`https://vovalohika.tk/images/600_${image}?t=${uuid()}`);
+      const { images } = data;
+      setImg(`https://vovalohika.tk/images/600_${images[0]}?t=${uuid()}`);
     } catch (error) {
       console.log("err = > ", error);
     }
   }, [fetchCarById, id]);
 
- 
   useEffect(() => {
     getCarById();
   }, [getCarById]);

@@ -7,7 +7,6 @@ export enum CarActionTypes {
   UPDATE_CAR = "UPDATE_CAR",
   DELETE_CAR = "DELETE_CAR",
   UPLOAD_CAR_IMAGE = "UPLOAD_CAR_IMAGE",
-
 }
 
 export interface IClickedButtonData {
@@ -20,6 +19,7 @@ export interface ICarUpdate {
   priority: string;
   price: string;
   image: string;
+  categoryId: number;
 }
 
 export interface ISearchCar {
@@ -62,7 +62,7 @@ export interface CarState {
   loading: boolean;
   currentPage: number;
   error: null | string;
-  uploadCarImageId: Array<number>
+  uploadCarImageId: Array<number>;
 }
 
 export interface FetchCarAction {
@@ -101,7 +101,6 @@ export interface DeleteCarAction {
 export interface UploadCarImageAction {
   type: CarActionTypes.UPLOAD_CAR_IMAGE;
 }
-
 
 export type CarAction =
   | FetchCarAction

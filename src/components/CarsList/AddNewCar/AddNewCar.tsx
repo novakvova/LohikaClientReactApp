@@ -15,6 +15,7 @@ const initialValues: IAddCar = {
   name: "",
   priority: "",
   price: "",
+  categoryId: 85,
 };
 
 const AddNewCar: React.FC = () => {
@@ -29,13 +30,14 @@ const AddNewCar: React.FC = () => {
   const [cropImages, setCropImages] = React.useState<Array<number>>([]);
 
   const changeImageHandler = (id: number) => {
+    console.log("id:", id);
+
     setCropImages((prevState) => [...prevState, id]);
   };
 
   console.log("cropImages", cropImages);
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    
-    console.log({ ...values, ids: cropImages })
+    console.log("data to upload", { ...values, ids: cropImages });
     addNewCar({ ...values, ids: cropImages });
   };
 
@@ -52,7 +54,7 @@ const AddNewCar: React.FC = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const {setFieldValue, errors, touched, handleBlur, handleChange, values } =
+  const { setFieldValue, errors, touched, handleBlur, handleChange, values } =
     formik;
 
   return (
@@ -66,13 +68,13 @@ const AddNewCar: React.FC = () => {
         {serverError && <h2>{serverError}</h2>}
         {loading && <EclipseWidget />}
         <div className="col-4 ">
-          <CropperComponent
+          {/* <CropperComponent
             field="image"
             onChange={setFieldValue}
             error={errors.image}
             touched={touched.image}
-          />
-          {/* <CropperMultiple
+          /> */}
+          <CropperMultiple
             field="image"
             onChange={changeImageHandler}
             error={errors.image}
@@ -83,7 +85,7 @@ const AddNewCar: React.FC = () => {
             onChange={changeImageHandler}
             error={errors.image}
             touched={touched.image}
-          /> */}
+          />
           {/* <CropperMultiple
             field="image3"
             onChange={changeImageHandler}

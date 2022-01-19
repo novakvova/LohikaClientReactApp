@@ -69,7 +69,7 @@ const DefaultHeader = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
-                  <img
+                  {/* <img
                     src={
                       !image.endsWith("image/")
                         ? `https://vovalohika.tk${image}?t=${uuid()}`
@@ -77,7 +77,7 @@ const DefaultHeader = () => {
                     }
                     alt="avatar"
                     className="rounded-circle img-fluid imgNavbar"
-                  />
+                  /> */}
                 </Link>
               </li>
               <li className="nav-item d-flex align-items-center">
