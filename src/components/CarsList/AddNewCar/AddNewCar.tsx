@@ -9,12 +9,13 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse/index";
 import { Helmet } from "react-helmet";
 import CropperComponent from "../../containers/CropperComponent/CropperComponent";
+import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
 
 const initialValues: IAddCar = {
   name: "",
   priority: "",
   price: "",
-  image: "",
+  categoryId: 85,
 };
 
 const AddNewCar: React.FC = () => {
@@ -26,14 +27,23 @@ const AddNewCar: React.FC = () => {
   } = useTypedSelector((store) => store.sendingCar);
   const navigate = useNavigate();
 
+  const [cropImages, setCropImages] = React.useState<Array<number>>([]);
+
+  const changeImageHandler = (id: number) => {
+    console.log("id:", id);
+
+    setCropImages((prevState) => [...prevState, id]);
+  };
+
+  console.log("cropImages", cropImages);
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    console.log("values", values);
-    addNewCar(values);
+    console.log("data to upload", { ...values, ids: cropImages });
+    addNewCar({ ...values, ids: cropImages });
   };
 
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    // validationSchema,
     onSubmit,
     validateOnBlur: true,
   });
@@ -58,12 +68,30 @@ const AddNewCar: React.FC = () => {
         {serverError && <h2>{serverError}</h2>}
         {loading && <EclipseWidget />}
         <div className="col-4 ">
-          <CropperComponent
+          {/* <CropperComponent
             field="image"
             onChange={setFieldValue}
             error={errors.image}
             touched={touched.image}
+          /> */}
+          <CropperMultiple
+            field="image"
+            onChange={changeImageHandler}
+            error={errors.image}
+            touched={touched.image}
           />
+          <CropperMultiple
+            field="image2"
+            onChange={changeImageHandler}
+            error={errors.image}
+            touched={touched.image}
+          />
+          {/* <CropperMultiple
+            field="image3"
+            onChange={changeImageHandler}
+            error={errors.image}
+            touched={touched.image}
+          /> */}
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>

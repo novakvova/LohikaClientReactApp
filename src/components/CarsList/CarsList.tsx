@@ -18,13 +18,14 @@ const CarsList: React.FC = () => {
     <div className="row d-flex justify-content-around flex-wrap">
       {loading && <EclipseWidget />}
       {!loading &&
-        products.map(({ id, name, price, image }) => (
+        products.map(({ id, name, price, image, images }) => (
           <CarCard
             id={id}
             key={id}
             name={name}
             price={price}
             image={image}
+            images={images}
             inCart={isCarInCart(id)}
           />
         ))}

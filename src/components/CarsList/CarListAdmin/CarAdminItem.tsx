@@ -46,40 +46,9 @@ const CarAdminItem: React.FC<Props> = ({
 
   return (
     <>
-      {showLoader && <EclipseWidget />}
-      {showModal && (
-        <Modal>
-          <h3 className="text-black-50">
-            Видалити <span className="text-dark">{name} ?</span>
-          </h3>
-          <div className="text-center">
-            <img
-              className="rounded"
-              src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`}
-              alt=""
-            />
-          </div>
-          <div className="d-flex flex-row-reverse">
-            <button
-              onClick={closeModal}
-              type="button"
-              className="me-5 btn btn-secondary"
-            >
-              Відмінити
-            </button>
-            <button
-              onClick={() => {
-                deleteCarFromList(id);
-              }}
-              type="button"
-              className="me-2 btn btn-danger"
-            >
-              Видалити
-            </button>
-          </div>
-        </Modal>
-      )}
+      
       <tr className={`table-secondary ${classes.item}`}>
+      
         <th scope="row">{id}</th>
         <td>
           <img
@@ -117,6 +86,39 @@ const CarAdminItem: React.FC<Props> = ({
           <button onClick={openModal} type="button" className="btn btn-danger">
             Видалити
           </button>
+          {showLoader && <EclipseWidget />}
+      {showModal && (
+        <Modal>
+          <h3 className="text-black-50">
+            Видалити <span className="text-dark">{name} ?</span>
+          </h3>
+          <div className="text-center">
+            <img
+              className="rounded"
+              src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`}
+              alt=""
+            />
+          </div>
+          <div className="d-flex flex-row-reverse">
+            <button
+              onClick={closeModal}
+              type="button"
+              className="me-5 btn btn-secondary"
+            >
+              Відмінити
+            </button>
+            <button
+              onClick={() => {
+                deleteCarFromList(id);
+              }}
+              type="button"
+              className="me-2 btn btn-danger"
+            >
+              Видалити
+            </button>
+          </div>
+        </Modal>
+      )}
         </td>
       </tr>
     </>

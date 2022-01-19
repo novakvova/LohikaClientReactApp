@@ -14,10 +14,11 @@ const CarCard: React.FC<CarCardProps> = ({
   price,
   image,
   inCart,
+  images,
 }) => {
   const [count, setCount] = useState("1");
   const { addItemToCart, showCart } = useActions();
-  // const { isAuth } = useTypedSelector((store) => store.auth);
+
   const navigator = useNavigate();
 
   const countHandler = (value: string) => {
@@ -27,12 +28,10 @@ const CarCard: React.FC<CarCardProps> = ({
     await addItemToCart(id, +count);
   };
 
-  console.log("image => ", image);
-
   return (
     <div className={`card ${classes.carCard} mt-3`}>
       <img
-        src={`https://vovalohika.tk/images/600_${image}?${uuid()}`}
+        src={`https://vovalohika.tk/images/600_${images[0]}?${uuid()}`}
         className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
         alt={name}
       />
