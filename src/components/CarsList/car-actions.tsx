@@ -11,8 +11,6 @@ import {
   UpdateCarAction,
 } from "./types";
 
-
-
 export const fetchCarsSearch =
   (searchParams: ISearchProduct) => async (dispatch: Dispatch<CarAction>) => {
     try {
@@ -40,7 +38,7 @@ export const fetchCarById =
         type: CarActionTypes.GET_CAR_BY_ID,
         payload: response.data,
       });
-     return Promise.resolve<ISearchCar>(data);
+      return Promise.resolve<ISearchCar>(data);
     } catch (error) {
       console.log("action => ", error);
     }
@@ -65,6 +63,7 @@ export const updateCar = (data: IAddCar) => {
 
 export const deleteCar = (id: number) => {
   return (dispatch: Dispatch<DeleteCarAction>) => {
+    console.log("id", id);
     http
       .delete(`api/Products/delete/${id}`)
       .then(() => {

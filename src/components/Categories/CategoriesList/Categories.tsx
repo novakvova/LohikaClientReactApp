@@ -19,9 +19,6 @@ const CategoriesList = () => {
   const { deleteCategory } = useActions();
 // console.log(categories);
 
-
-
-
   const ActionBodyTemplate = (rowData: CategoryInfo) => {
     const delCategory = async (id: number) => {
       await setVisible(true);

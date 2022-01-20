@@ -8,7 +8,6 @@ import { AddCarSchema as validationSchema } from "./validation";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse/index";
 import { Helmet } from "react-helmet";
-import CropperComponent from "../../containers/CropperComponent/CropperComponent";
 import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
 
 const initialValues: IAddCar = {
@@ -16,6 +15,7 @@ const initialValues: IAddCar = {
   priority: "",
   price: "",
   categoryId: 85,
+  
 };
 
 const AddNewCar: React.FC = () => {
@@ -68,15 +68,14 @@ const AddNewCar: React.FC = () => {
             uploadImageHandler={uploadCarImage}
             field="image"
             onChange={changeImageHandler}
-            error={errors.image}
-            touched={touched.image}
+            
           />
-          {/* <CropperMultiple
+
+          <CropperMultiple
+            uploadImageHandler={uploadCarImage}
             field="image2"
             onChange={changeImageHandler}
-            error={errors.image}
-            touched={touched.image}
-          /> */}
+          />
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>

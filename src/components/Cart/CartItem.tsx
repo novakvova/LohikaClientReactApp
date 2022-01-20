@@ -14,7 +14,6 @@ interface ICartItem {
 
 const CartItem: React.FC<ICartItem> = ({
   id,
-  productImage,
   productName,
   productPrice,
   quantity,

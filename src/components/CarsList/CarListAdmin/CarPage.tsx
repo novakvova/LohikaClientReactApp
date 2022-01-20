@@ -39,12 +39,14 @@ const CarPage = () => {
           <h1>{carSearchedById?.name}</h1>
           <div className="col-lg-4">
             <div className="card mb-4">
-              <img
-                style={{ width: "100%" }}
-                src={img}
-                alt="avatar"
-                className="rounded img-fluid"
-              />
+              {  (
+                <img
+                  style={{ width: "100%" }}
+                  src={img}
+                  alt="avatar"
+                  className="rounded img-fluid"
+                />
+              )}
             </div>
           </div>
           <div className="col-lg-8">
