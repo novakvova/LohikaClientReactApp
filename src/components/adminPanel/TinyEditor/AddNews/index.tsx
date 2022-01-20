@@ -16,6 +16,7 @@ import CropperComponent from '../../../containers/CropperComponent/CropperCompon
 import { useRef } from 'react';
 import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple"
 import { Toast } from "primereact/toast";
+import { Helmet } from 'react-helmet';
 
 const TinyEditor = () => {
   const { addNews, uploadImages } = useActions();
@@ -97,6 +98,9 @@ const TinyEditor = () => {
  
 	return (
     <>
+    <Helmet>
+      <title>Добавити новини</title>
+    </Helmet>
       <Toast ref={toast} />
       <Card>
         <h1 className="text-center">Добавити новину</h1>

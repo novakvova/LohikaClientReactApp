@@ -65,8 +65,8 @@ const DefaultHeader = () => {
                 <Link className="nav-link" to="/profile">
                   <img
                     src={
-                      !image.endsWith("images/")
-                        ? `https://vovalohika.tk${image}?t=${uuid()}`
+                      !image
+                        ? `https://vovalohika.tk/images/50_${image}?t=${uuid()}`
                         : `https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png?t=${uuid()}`
                     }
                     alt="avatar"

@@ -29,7 +29,7 @@ useEffect(() => {
                   <img
                     src={
                       !photo.endsWith("image/")
-                        ? `https://vovalohika.tk${photo}`
+                        ? `https://vovalohika.tk/images/300_${photo}`
                         : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
                     }
                     alt="avatar"
