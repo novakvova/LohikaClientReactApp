@@ -34,7 +34,7 @@ import CreateCategory from "./components/Categories/CreateCategory/CreateCategor
 
 import Categories from "./components/Categories/CategoriesList/Categories";
 
-import TinyEditor from "./components/adminPanel/TinyEditor/AddNews";
+import TinyEditor from "./components/adminPanel/News/AddNews";
 
 
 //Import lazyLoading
