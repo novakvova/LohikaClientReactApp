@@ -1,16 +1,9 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
 
-import { CartAction, CartActionTypes } from "./types";
+import { CartAction, CartActionTypes, ICartData } from "./types";
 
-interface IRespData {
-  id: number;
-  productId: number;
-  productName: string;
-  productImage: string;
-  productPrice: number;
-  quantity: number;
-}
+
 
 export const showCart = () => {
   return (dispatch: Dispatch<CartAction>) => {
@@ -39,7 +32,7 @@ export const downloadCartData = () => {
 export const addItemToCart =
   (id: number, quantity: number) => async (dispatch: Dispatch<CartAction>) => {
     try {
-      const response = await http.post<IRespData>("api/Carts/add", {
+      const response = await http.post<ICartData>("api/Carts/add", {
         productId: id,
         quantity: quantity,
       });

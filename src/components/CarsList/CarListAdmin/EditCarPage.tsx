@@ -20,6 +20,8 @@ const EditCarPage = () => {
   const { carSearchedById } = useTypedSelector((store) => store.car);
   const [img, setImg] = React.useState<string>("");
 
+  
+
   const initialValues = {
     id: `${id}`,
     name: `${carSearchedById?.name}`,

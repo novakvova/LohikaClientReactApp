@@ -12,7 +12,7 @@ interface Props {
 }
 
 const CarAdminItem: React.FC<Props> = ({
-  car: { id, name, price, priority, image },
+  car: { id, name, price, priority, image, images },
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -43,19 +43,27 @@ const CarAdminItem: React.FC<Props> = ({
   const openModal = () => {
     setShowModal(true);
   };
-
   return (
     <>
-      
       <tr className={`table-secondary ${classes.item}`}>
-      
         <th scope="row">{id}</th>
         <td>
-          <img
-            className="h"
-            src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`}
-            alt=""
-          />
+          {images.length > 0 && (
+            <img
+              className="h"
+              src={`https://vovalohika.tk/images/600_${images[0]}?t=${uuid()}`}
+              alt="carItem"
+            />
+          )}
+          {images.length === 0 && (
+            <i
+              className="fa fa-car"
+              style={{ color: "#606060", margin: "0 auto" }}
+            >
+              {" "}
+              no image
+            </i>
+          )}
         </td>
         <td>{name}</td>
         <td>{price}</td>
@@ -87,38 +95,42 @@ const CarAdminItem: React.FC<Props> = ({
             Видалити
           </button>
           {showLoader && <EclipseWidget />}
-      {showModal && (
-        <Modal>
-          <h3 className="text-black-50">
-            Видалити <span className="text-dark">{name} ?</span>
-          </h3>
-          <div className="text-center">
-            <img
-              className="rounded"
-              src={`https://vovalohika.tk/images/600_${image}?t=${uuid()}`}
-              alt=""
-            />
-          </div>
-          <div className="d-flex flex-row-reverse">
-            <button
-              onClick={closeModal}
-              type="button"
-              className="me-5 btn btn-secondary"
-            >
-              Відмінити
-            </button>
-            <button
-              onClick={() => {
-                deleteCarFromList(id);
-              }}
-              type="button"
-              className="me-2 btn btn-danger"
-            >
-              Видалити
-            </button>
-          </div>
-        </Modal>
-      )}
+          {showModal && (
+            <Modal>
+              <h3 className="text-black-50">
+                Видалити <span className="text-dark">{name} ?</span>
+              </h3>
+              <div className="text-center">
+                {images[0] && (
+                  <img
+                    className="rounded"
+                    src={`https://vovalohika.tk/images/600_${
+                      images[0]
+                    }?t=${uuid()}`}
+                    alt="car"
+                  />
+                )}
+              </div>
+              <div className="d-flex flex-row-reverse">
+                <button
+                  onClick={closeModal}
+                  type="button"
+                  className="me-5 btn btn-secondary"
+                >
+                  Відмінити
+                </button>
+                <button
+                  onClick={() => {
+                    deleteCarFromList(id);
+                  }}
+                  type="button"
+                  className="me-2 btn btn-danger"
+                >
+                  Видалити
+                </button>
+              </div>
+            </Modal>
+          )}
         </td>
       </tr>
     </>

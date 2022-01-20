@@ -12,7 +12,6 @@ const CarPage = () => {
   const { id } = useParams();
   const { fetchCarById } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-  console.log(carSearchedById);
   const getCarById = useCallback(async () => {
     try {
       setShowLoader(true);
@@ -40,12 +39,14 @@ const CarPage = () => {
           <h1>{carSearchedById?.name}</h1>
           <div className="col-lg-4">
             <div className="card mb-4">
-              <img
-                style={{ width: "100%" }}
-                src={img}
-                alt="avatar"
-                className="rounded img-fluid"
-              />
+              {  (
+                <img
+                  style={{ width: "100%" }}
+                  src={img}
+                  alt="avatar"
+                  className="rounded img-fluid"
+                />
+              )}
             </div>
           </div>
           <div className="col-lg-8">
@@ -81,9 +82,9 @@ const CarPage = () => {
             </div>
           </div>
 
-          <Link to="/cars/">
+          <Link to="/">
             <button type="button" className="btn btn-secondary">
-              Повернутись до списку
+              На головну
             </button>
           </Link>
         </div>
