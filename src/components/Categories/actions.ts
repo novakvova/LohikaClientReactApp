@@ -139,8 +139,6 @@ export const updateCategory = (data: CategoryInfo) => {
 export const CreateCategory = (data: ICreateCategory): any => {
   return async (dispatch: Dispatch<CreateCategoryActions>) => {
     try {
-      // const formData = new FormData();
-      // Object.entries(data).forEach(([key, value]) => formData.append(key, value));
       const response = await http.post<IStatus>('api/Categories/add', data);
       const result = response;
 
