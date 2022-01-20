@@ -26,24 +26,20 @@ const AddNewCar: React.FC = () => {
     loading,
   } = useTypedSelector((store) => store.sendingCar);
   const navigate = useNavigate();
-
+  const { uploadCarImage } = useActions();
   const [cropImages, setCropImages] = React.useState<Array<number>>([]);
 
   const changeImageHandler = (id: number) => {
-    console.log("id:", id);
-
     setCropImages((prevState) => [...prevState, id]);
   };
 
-  console.log("cropImages", cropImages);
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    console.log("data to upload", { ...values, ids: cropImages });
     addNewCar({ ...values, ids: cropImages });
   };
 
   const formik = useFormik({
     initialValues,
-    // validationSchema,
+    validationSchema,
     onSubmit,
     validateOnBlur: true,
   });
@@ -68,26 +64,15 @@ const AddNewCar: React.FC = () => {
         {serverError && <h2>{serverError}</h2>}
         {loading && <EclipseWidget />}
         <div className="col-4 ">
-          {/* <CropperComponent
-            field="image"
-            onChange={setFieldValue}
-            error={errors.image}
-            touched={touched.image}
-          /> */}
           <CropperMultiple
+            uploadImageHandler={uploadCarImage}
             field="image"
-            onChange={changeImageHandler}
-            error={errors.image}
-            touched={touched.image}
-          />
-          <CropperMultiple
-            field="image2"
             onChange={changeImageHandler}
             error={errors.image}
             touched={touched.image}
           />
           {/* <CropperMultiple
-            field="image3"
+            field="image2"
             onChange={changeImageHandler}
             error={errors.image}
             touched={touched.image}

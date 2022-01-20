@@ -21,6 +21,7 @@ export interface ICartData {
   productImage: string;
   productPrice: number;
   quantity: number;
+  images:Array<string>
 }
 
 export interface CartState {

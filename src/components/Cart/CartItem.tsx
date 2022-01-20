@@ -9,6 +9,7 @@ interface ICartItem {
   productName: string;
   productPrice: number;
   quantity: number;
+  images: Array<string>;
 }
 
 const CartItem: React.FC<ICartItem> = ({
@@ -17,6 +18,7 @@ const CartItem: React.FC<ICartItem> = ({
   productName,
   productPrice,
   quantity,
+  images,
 }) => {
   const { updateCartItem, deleteCartItem } = useActions();
 
@@ -61,7 +63,7 @@ const CartItem: React.FC<ICartItem> = ({
       <div className="col-3 rounded ">
         <img
           className="rounded"
-          src={`https://vovalohika.tk${productImage}`}
+          src={`https://vovalohika.tk/images/600_${images[0]}`}
           alt={productName}
         />
       </div>

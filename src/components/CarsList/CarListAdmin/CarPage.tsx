@@ -12,7 +12,6 @@ const CarPage = () => {
   const { id } = useParams();
   const { fetchCarById } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-  console.log(carSearchedById);
   const getCarById = useCallback(async () => {
     try {
       setShowLoader(true);
@@ -81,9 +80,9 @@ const CarPage = () => {
             </div>
           </div>
 
-          <Link to="/cars/">
+          <Link to="/">
             <button type="button" className="btn btn-secondary">
-              Повернутись до списку
+              На головну
             </button>
           </Link>
         </div>

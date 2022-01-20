@@ -10,10 +10,11 @@ import {
   faCheckCircle,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useActions } from "../../../hooks/useActions";
+
 
 export interface IGetCropperProps {
   onChange: (id: number) => void;
+  uploadImageHandler: (imageBase64: string) => any;
   field: string;
   value?: string;
   error?: string;
@@ -26,6 +27,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
   error,
   touched,
   value,
+  uploadImageHandler,
 }) => {
   const [img, setImg] = useState<string>(value as string);
   const [cropperObj, setCropperObj] = useState<Cropper>();
@@ -33,7 +35,6 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
   const previewRef = useRef<HTMLDivElement>();
   const [base64, setBase64] = useState<any>();
   const [showModal, setShowModal] = useState(false);
-  const { uploadCarImage } = useActions();
 
   const handleImageChange = async (e: any) => {
     const file = (e.target.files as FileList)[0];
@@ -68,11 +69,8 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
     try {
       const base = (await cropperObj?.getCroppedCanvas().toDataURL()) as string;
       setBase64(base);
-
-      const data = await uploadCarImage(base);
-      console.log("data", data);
-      onChange(data);
-
+        const data = await uploadImageHandler(base);
+        onChange(data);
       setShowModal(false);
     } catch (err) {
       console.log("err => ", err);
