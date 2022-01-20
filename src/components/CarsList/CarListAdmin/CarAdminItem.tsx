@@ -43,17 +43,27 @@ const CarAdminItem: React.FC<Props> = ({
   const openModal = () => {
     setShowModal(true);
   };
-
   return (
     <>
       <tr className={`table-secondary ${classes.item}`}>
         <th scope="row">{id}</th>
         <td>
-          <img
-            className="h"
-            src={`https://vovalohika.tk/images/600_${images[0]}?t=${uuid()}`}
-            alt=""
-          />
+          {images.length > 0 && (
+            <img
+              className="h"
+              src={`https://vovalohika.tk/images/600_${images[0]}?t=${uuid()}`}
+              alt="carItem"
+            />
+          )}
+          {images.length === 0 && (
+            <i
+              className="fa fa-car"
+              style={{ color: "#606060", margin: "0 auto" }}
+            >
+              {" "}
+              no image
+            </i>
+          )}
         </td>
         <td>{name}</td>
         <td>{price}</td>
@@ -91,13 +101,15 @@ const CarAdminItem: React.FC<Props> = ({
                 Видалити <span className="text-dark">{name} ?</span>
               </h3>
               <div className="text-center">
-                <img
-                  className="rounded"
-                  src={`https://vovalohika.tk/images/600_${
-                    images[0]
-                  }?t=${uuid()}`}
-                  alt=""
-                />
+                {images[0] && (
+                  <img
+                    className="rounded"
+                    src={`https://vovalohika.tk/images/600_${
+                      images[0]
+                    }?t=${uuid()}`}
+                    alt="car"
+                  />
+                )}
               </div>
               <div className="d-flex flex-row-reverse">
                 <button

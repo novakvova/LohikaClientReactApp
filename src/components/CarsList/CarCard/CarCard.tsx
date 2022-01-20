@@ -17,7 +17,7 @@ const CarCard: React.FC<CarCardProps> = ({
   images,
 }) => {
   const [count, setCount] = useState("1");
-  const { addItemToCart, showCart } = useActions();
+  const { addItemToCart, showCart, downloadCartData } = useActions();
 
   const navigator = useNavigate();
 
@@ -26,15 +26,24 @@ const CarCard: React.FC<CarCardProps> = ({
   };
   const addItemToCartHandler = async () => {
     await addItemToCart(id, +count);
+    downloadCartData();
   };
 
   return (
     <div className={`card ${classes.carCard} mt-3`}>
-      <img
-        src={`https://vovalohika.tk/images/600_${images[0]}?${uuid()}`}
-        className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
-        alt={name}
-      />
+      {images[0] && (
+        <img
+          src={`https://vovalohika.tk/images/600_${images[0]}?${uuid()}`}
+          className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
+          alt={name}
+        />
+      )}
+
+      {!images[0] && (
+        <div className={`${classes.cardImgMock}`}>
+          <i className={`fa fa-car fa-5x `}></i>
+        </div>
+      )}
 
       <div className="card-body overflow-hidden">
         <h5 className="card-title">{name}</h5>

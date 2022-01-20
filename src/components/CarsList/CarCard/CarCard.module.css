@@ -18,3 +18,11 @@
 .cardImg {
   height: 10rem;
 }
+
+.cardImgMock {
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: silver;
+}

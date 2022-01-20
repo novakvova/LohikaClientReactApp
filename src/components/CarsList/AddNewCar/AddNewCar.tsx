@@ -15,6 +15,7 @@ const initialValues: IAddCar = {
   priority: "",
   price: "",
   categoryId: 85,
+  
 };
 
 const AddNewCar: React.FC = () => {
@@ -49,7 +50,7 @@ const AddNewCar: React.FC = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const { errors, touched, handleBlur, handleChange, values } =
+  const {errors, touched, handleBlur, handleChange, values } =
     formik;
 
   return (
@@ -67,15 +68,14 @@ const AddNewCar: React.FC = () => {
             uploadImageHandler={uploadCarImage}
             field="image"
             onChange={changeImageHandler}
-            error={errors.image}
-            touched={touched.image}
+            
           />
-          {/* <CropperMultiple
+
+          <CropperMultiple
+            uploadImageHandler={uploadCarImage}
             field="image2"
             onChange={changeImageHandler}
-            error={errors.image}
-            touched={touched.image}
-          /> */}
+          />
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
