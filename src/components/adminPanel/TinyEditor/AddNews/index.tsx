@@ -1,5 +1,5 @@
 import { Card } from 'primereact/card';
-import { IEditorValues } from '../types';
+import { IEditorValues, PhotoObj } from '../types';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { EditorSchema } from '../validation';
 import InputGroup from '../../../common/InputGroup';
@@ -10,13 +10,18 @@ import EditorTiny from '../../../common/EditorTiny/EditorTiny';
 import Callendar from '../../../common/Callendar';
 import EclipseWidget from "../../../common/eclipse";
 
-//import { useActions } from '../../../../hooks/useActions';
+import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import CropperComponent from '../../../containers/CropperComponent/CropperComponent';
+import { useRef } from 'react';
+import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple"
+import { Toast } from "primereact/toast";
 
 const TinyEditor = () => {
- // const { addNews, getNews } = useActions();
-  const { loading } = useTypedSelector( store => store.news)
+  const { addNews, uploadImages } = useActions();
+  const { images } = useTypedSelector(store => store.news)
+  const toast = useRef<Toast>(null);
+  const { loading } = useTypedSelector( store => store.news);
   const cyr = new CyrillicToTranslit();
   const initialValues:IEditorValues = {
     name: "",
@@ -26,15 +31,51 @@ const TinyEditor = () => {
     isShow: true,
     dateTimePublish: new Date().toLocaleDateString(),
   };  
+
+  const uploadImng = async ( image:string ) => {
+    try {
+      await uploadImages(image);
+          if (toast.current !== null) {
+            toast.current.show({
+              severity: "info",
+              summary: "Виконано",
+              detail: "Фото додано",
+              life: 3000,
+            });
+          }
+    } catch (error) {
+      if (toast.current !== null) {
+        toast.current.show({
+          severity: "error",
+          summary: "Виконано",
+          detail: "Щось пішло не так",
+          life: 3000,
+        });
+      }
+    }
+  }
   
   const onHandleSubmit = async (values: IEditorValues) => {
     try {
-      //await addNews(values);
-      console.log(values);
-      
+      await addNews(values);
       resetForm();
+      if (toast.current !== null) {
+        toast.current.show({
+          severity: "info",
+          summary: "Виконано",
+          detail: "Новину додано",
+          life: 3000,
+        });
+      }
     } catch (error) {
-      
+            if (toast.current !== null) {
+              toast.current.show({
+                severity: "error",
+                summary: "Виконано",
+                detail: "Щось пішло не так",
+                life: 3000,
+              });
+            }
     }
   };
 
@@ -56,6 +97,7 @@ const TinyEditor = () => {
  
 	return (
     <>
+      <Toast ref={toast} />
       <Card>
         <h1 className="text-center">Добавити новину</h1>
         <FormikProvider value={formik}>
@@ -70,7 +112,7 @@ const TinyEditor = () => {
                   touched={touched.name}
                   value={values.name}
                 />
-               
+
                 <label htmlFor="image">Фото новини</label>
                 <div className="form-control mb-1">
                   <CropperComponent
@@ -116,13 +158,20 @@ const TinyEditor = () => {
                     setFieldValue("text", a);
                   }}
                 />
-                <div className="form-control mb-1">
-                  <CropperComponent
-                    field="image"
-                    onChange={setFieldValue}
-                    error={errors.image}
-                    touched={touched.image}
-                  />
+                <div className="row">
+                  <div className="col-3">
+                    <CropperMultiple
+                      field="addImage"
+                      uploadImageHandler={uploadImng}
+                    />
+                  </div>
+                  <div className="col-9">
+                    <p className="form-control h-100">
+                      {images.map((el: PhotoObj, i: number) => (
+                        <p key={i}>{el.name}</p>
+                      ))}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

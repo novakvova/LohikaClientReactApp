@@ -13,7 +13,7 @@ import {
 
 
 export interface IGetCropperProps {
-  onChange: (id: number) => void;
+  onChange?: (id: number) => void;
   uploadImageHandler: (imageBase64: string) => any;
   field: string;
   value?: string;
@@ -70,7 +70,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
       const base = (await cropperObj?.getCroppedCanvas().toDataURL()) as string;
       setBase64(base);
         const data = await uploadImageHandler(base);
-        onChange(data);
+       if (onChange) onChange(data);
       setShowModal(false);
     } catch (err) {
       console.log("err => ", err);

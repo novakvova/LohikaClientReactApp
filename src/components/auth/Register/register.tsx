@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
 import { useActions } from "../../../hooks/useActions";
 import { useNavigate } from "react-router";
@@ -9,39 +9,29 @@ import { Form, FormikHelpers, FormikProvider, useFormik } from "formik";
 import { Helmet } from "react-helmet";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import CropperComponent from "../../containers/CropperComponent/CropperComponent";
+import "../Register/register.css"
 
-const RegisterPage = (props: any) => {
+const RegisterPage = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [bot, setBot] = useState<boolean>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [img, setImg] = useState<string>();
   const { RegisterUser } = useActions();
   const navigator = useNavigate();
   const initialValues: IRegister = {
     firstName: "",
     secondName: "",
     email: "",
-    photo: [],
+    photo: "",
     phone: "",
     password: "",
     confirmPassword: "",
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.item(0);
-    setFieldValue("photo", file);
-    setImg(URL.createObjectURL(file as Blob));
   };
 
   const onHandleSubmit = async (
     values: IRegister,
     { setFieldError }: FormikHelpers<IRegister>
   ) => {
-    const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) =>
-      formData.append(key, value)
-    );
-
+   
     setLoading(true);
     try {
       if (!executeRecaptcha) {
@@ -49,8 +39,7 @@ const RegisterPage = (props: any) => {
         return;
       }
       const recapchaToken = await executeRecaptcha();
-      formData.append("RecaptchaToken", recapchaToken);
-      await RegisterUser(formData);
+      await RegisterUser({ ...values, RecaptchaToken: recapchaToken });
       await navigator("/");
 
       setLoading(false);
@@ -73,29 +62,23 @@ const RegisterPage = (props: any) => {
   const { errors, touched, handleChange, handleSubmit, setFieldValue } = formik;
 
   return (
-    <div className="row">
+    <div className="row d-flex flex-row justify-content-center">
       <Helmet>
         <title>Реєстрація</title>
       </Helmet>
+      <h1 className="text-center mt-4">Реєстрація</h1>
+
       <div className="col-3">
-        {/* {img && (
-          <div className="card mt-5">
-            <div className="card-body text-center">
-              <img src={img} alt="asdasd" />
-            </div>
-          </div>
-        )} */}
-       
+        <div className="height_cropper">
           <CropperComponent
             field="photo"
             error={errors.photo}
             onChange={setFieldValue}
             touched={touched.photo}
           />
-        
+        </div>
       </div>
       <div className="col-6 mb-4">
-        <h1 className="text-center mt-4">Реєстрація</h1>
         {bot && (
           <div className="alert alert-dismissible alert-danger">
             <strong>Ви Бот</strong>
@@ -126,15 +109,6 @@ const RegisterPage = (props: any) => {
               onChange={handleChange}
               touched={touched.email}
             />
-
-            {/* <InputGroup
-              field="photo"
-              label="Аватар"
-              type="file"
-              error={errors.photo}
-              onChange={handleFileChange}
-              touched={touched.photo}
-            /> */}
 
             <InputGroup
               field="phone"

@@ -28,10 +28,14 @@ export interface IRegister {
   firstName?: string;
   secondName?: string;
   email?: string;
-  photo?: FileList[];
+  photo?: string;
   phone?: string;
   password?: string;
   confirmPassword?: string;
+}
+
+export interface IRequest extends IRegister {
+  RecaptchaToken: string;
 }
 
 export type RegisterError = {

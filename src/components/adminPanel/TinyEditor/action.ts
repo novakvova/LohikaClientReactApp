@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { IEditorValues, NewsActions, NewsActionTypes } from './types';
+import { IEditorValues, NewsActions, NewsActionTypes, PhotoObj } from './types';
 import http from "../../../http_common";
 
 export const addNews = (data: IEditorValues) => {
@@ -35,6 +35,28 @@ export const getNews = () => {
 	  
       dispatch({
         type: NewsActionTypes.GET_NEWS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NewsActionTypes.GET_NEWS_ERROR,
+      });
+    }
+  };
+};
+
+export const uploadImages = (image: string) => {
+  return async (dispatch: Dispatch<NewsActions>) => {
+    try {
+      dispatch({
+        type: NewsActionTypes.SET_IMG,
+      });
+      const response = await http.post<Array<PhotoObj>>("api/Blogs/upload", {
+        image,
+      });
+      const { data } = response;
+      dispatch({
+        type: NewsActionTypes.SET_IMG_SUCCESS,
         payload: data,
       });
     } catch (error) {

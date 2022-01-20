@@ -8,7 +8,6 @@ import { AddCarSchema as validationSchema } from "./validation";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse/index";
 import { Helmet } from "react-helmet";
-import CropperComponent from "../../containers/CropperComponent/CropperComponent";
 import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
 
 const initialValues: IAddCar = {
@@ -50,7 +49,7 @@ const AddNewCar: React.FC = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const { setFieldValue, errors, touched, handleBlur, handleChange, values } =
+  const { errors, touched, handleBlur, handleChange, values } =
     formik;
 
   return (

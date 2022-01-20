@@ -9,9 +9,14 @@ export interface IEditorValues {
 };
 
 export interface NewsState {
-  news:Array<IEditorValues>
-  loading: boolean
+  news: Array<IEditorValues>;
+  images: Array<PhotoObj>;
+  loading: boolean;
 };
+
+export interface PhotoObj {
+  name: string
+}
 
 export interface NewsResponse {
   data: Array<IEditorValues>;
@@ -25,7 +30,23 @@ export enum NewsActionTypes {
   GET_NEWS = "GET_NEWS",
   GET_NEWS_SUCCESS = "GET_NEWS_SUCCESS",
   GET_NEWS_ERROR = "GET_NEWS_ERROR",
+  SET_IMG_SUCCESS = "SET_IMG_SUCCESS",
+  SET_IMG_ERROR = "SET_IMG_ERROR",
+  SET_IMG = "SET_IMG",
 };
+
+export interface SetImg {
+  type: NewsActionTypes.SET_IMG
+}
+
+export interface SetImgSuccess {
+  type: NewsActionTypes.SET_IMG_SUCCESS;
+  payload: Array<PhotoObj>;
+}
+
+export interface SetImgError {
+  type: NewsActionTypes.SET_IMG_ERROR;
+}
 
 export interface AddNews  {
   type: NewsActionTypes.ADD_NEWS
@@ -58,4 +79,7 @@ export type NewsActions =
   | AddNewsError
   | GetNews
   | GetNewsSuccess
-  | GetNewsError;
+  | GetNewsError
+  | SetImg
+  | SetImgSuccess
+  | SetImgError;
