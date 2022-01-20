@@ -50,7 +50,7 @@ const AddNewCar: React.FC = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const { setFieldValue, errors, touched, handleBlur, handleChange, values } =
+  const {errors, touched, handleBlur, handleChange, values } =
     formik;
 
   return (
