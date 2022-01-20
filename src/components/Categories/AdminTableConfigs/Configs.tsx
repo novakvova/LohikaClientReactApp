@@ -3,9 +3,13 @@ import { CategoryInfo } from '../types';
 import { v4 as uuid } from 'uuid';
 import { useState } from 'react';
 import CategorySearch from '../CategorySearch/CategorySearch';
+import { Link, useNavigate } from 'react-router-dom';
+import { CreateCategory } from '../actions';
+import { title } from 'process';
+// import { CreateCategory } from '../CreateCategory/CreateCategory';
 
 export const TableImageTemplate = (rowData: CategoryInfo) => {
-  const imagesrc = `https://vovalohika.tk/images/150_${rowData.image}?t=${uuid()}`
+  const imagesrc = `https://vovalohika.tk/images/150_${rowData.image}?t=${uuid()}`;
   console.log(imagesrc);
   return (
     <img
@@ -24,18 +28,32 @@ export const TableImageTemplate = (rowData: CategoryInfo) => {
 
 export const AdminSearch = () => {
   const [toggleSearch, setToggleSearch] = useState(false);
+
+  const navigator = useNavigate();
+
+  const handelAdd = () => {
+    navigator(`/adminPanel/categories/add`);
+  };
   return (
     <>
       <div className="d-flex justify-content-between">
         <div className="table-header">Категорії</div>
+        <Button 
+        className='p-button-raised p-button-secondary'
+        label="Додати категорію"
+        icon="pi pi-plus" 
+        onClick={() => handelAdd()} />
+
         <Button
+        className='p-button-raised p-button-secondary'
           label="Шукати категорію"
-          // icon="pi pi-search"
+          icon="pi pi-search"
           onClick={() => {
             setToggleSearch((prev) => !prev);
           }}
         />
       </div>
+
       {toggleSearch && <CategorySearch />}
     </>
   );
