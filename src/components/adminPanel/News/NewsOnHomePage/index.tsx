@@ -2,7 +2,6 @@ import { Carousel } from "primereact/carousel";
 import { useEffect } from 'react';
 import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import { store } from '../../../../store';
 import { productTemplate, responsiveOptions } from './congfig';
 
 const NewsHomePage = () => {

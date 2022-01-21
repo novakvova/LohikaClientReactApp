@@ -39,6 +39,7 @@ const RegisterPage = () => {
         return;
       }
       const recapchaToken = await executeRecaptcha();
+      
       await RegisterUser({ ...values, RecaptchaToken: recapchaToken });
       await navigator("/");
 

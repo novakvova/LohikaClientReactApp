@@ -98,16 +98,16 @@ const TinyEditor = () => {
  
 	return (
     <>
-    <Helmet>
-      <title>Добавити новини</title>
-    </Helmet>
+      <Helmet>
+        <title>Добавити новини</title>
+      </Helmet>
       <Toast ref={toast} />
-      <Card>
+      <Card style={{ padding: "1rem" }}>
         <h1 className="text-center">Добавити новину</h1>
         <FormikProvider value={formik}>
           <Form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="col-4">
+              <div className="col-3">
                 <InputGroup
                   field="name"
                   label="Заголовок"
@@ -152,8 +152,9 @@ const TinyEditor = () => {
                   }}
                 />
               </div>
-              <div className="col-8">
+              <div className="col-9">
                 <EditorTiny
+                  value={values.text}
                   field="text"
                   label="Текст новини"
                   error={errors.text}
@@ -164,12 +165,18 @@ const TinyEditor = () => {
                 />
                 <div className="row">
                   <div className="col-3">
+                    <label htmlFor="addImage" className=" p-2">
+                      Загрузити картинки
+                    </label>
                     <CropperMultiple
                       field="addImage"
                       uploadImageHandler={uploadImng}
                     />
                   </div>
                   <div className="col-9">
+                    <label htmlFor="addImage" className=" p-2">
+                      Адреси картинок
+                    </label>
                     <p className="form-control h-100">
                       {images.map((el: PhotoObj, i: number) => (
                         <p key={i}>{el.name}</p>

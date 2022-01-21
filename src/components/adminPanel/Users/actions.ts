@@ -7,7 +7,7 @@ import {
   CreateUserActionTypes,
   ICreateUserErrors,
   CreateUserActions,
-  ICreateUser,
+  IReaquestCreate,
 } from "./types/CreateUser";
 
 import {
@@ -143,16 +143,12 @@ export const updateUser = (data: UserInfo, formData: FormData) => {
   };
 };
 
-export const CreateUser = (data: ICreateUser): any => {
+export const CreateUser = (data: IReaquestCreate): any => {
   return async (dispatch: Dispatch<CreateUserActions>) => {
     try {
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) =>
-        formData.append(key, value)
-      );
-      const response = await http.post<IStatus>("api/users/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      console.log(data);
+      
+      const response = await http.post<IStatus>("api/users/create", data);
       const result = response;
 
       dispatch({

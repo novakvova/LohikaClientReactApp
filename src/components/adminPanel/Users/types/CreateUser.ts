@@ -6,7 +6,7 @@ export interface ICreateUser {
   firstName?: string;
   secondName?: string;
   email?: string;
-  photo?: FileList[];
+  photo?: string;
   phone?: string;
   password?: string;
   confirmPassword?: string;
@@ -17,6 +17,10 @@ export type ICreateUserError = {
   password: Array<string>;
   confirmPassword: Array<string>;
 };
+
+export interface IReaquestCreate extends ICreateUser {
+  RecaptchaToken: string;
+}
 
 export type ICreateUserErrors = {
   errors: ICreateUserError;

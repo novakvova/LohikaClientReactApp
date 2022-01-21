@@ -35,6 +35,7 @@ import CreateCategory from "./components/Categories/CreateCategory/CreateCategor
 import Categories from "./components/Categories/CategoriesList/Categories";
 
 import TinyEditor from "./components/adminPanel/News/AddNews";
+import NewsInfo from './components/adminPanel/News/NewsInfo';
 
 
 //Import lazyLoading
@@ -90,6 +91,8 @@ function App() {
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
           <Route path="*" element={<NoMatch />} />
+
+          <Route path="/news/:slug" element={<NewsInfo />}></Route>
         </Route>
 
         {/* AdminPanelRoutes */}

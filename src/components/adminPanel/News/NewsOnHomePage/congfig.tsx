@@ -1,5 +1,8 @@
 import { Card } from "primereact/card";
+import { Link } from 'react-router-dom';
 import { IEditorValues } from "../types";
+import "./newsCard.css"
+
 
 export const responsiveOptions = [
   {
@@ -26,12 +29,17 @@ export const productTemplate = (news: IEditorValues) => {
           src={`https://vovalohika.tk/images/600_${news.image}`}
         />
       );
+      const sub = (<h6 className='text-center'>{news.name}</h6>)
   return (
-    <Card
-      //title={news.name}
-      subTitle={news.name}
-      style={{ height: "15em", margin: "1rem" }}
-      header={header}
-    ></Card>
+    <>
+      <Link to={`/news/${news.slug}`} style={{ textDecoration: "none" }}>
+        <Card
+          className="card_setting"
+          subTitle={sub}
+          style={{ height: "15em", margin: "1rem", background: "#6c757d" }}
+          header={header}
+        ></Card>
+      </Link>
+    </>
   );
 };
