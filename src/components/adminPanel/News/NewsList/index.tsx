@@ -1,20 +1,21 @@
 import { Card } from 'primereact/card';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { IEditorValues } from '../types';
-
+import EclipseWidget from "../../../common/eclipse";
 import "./lastNewsList.css";
 
 const LastNewsList = () => {
   const { getNews } = useActions();
-  const { news } = useTypedSelector((store) => store.news);
+  const { news, loading } = useTypedSelector((store) => store.news);
   useEffect(() => {
     getNews();
   }, [getNews]);
   return (
     <>
+	{loading && <EclipseWidget />}
 		 <Card
               title="Останні новини"
               style={{ width: "100", textAlign: "center" }}
