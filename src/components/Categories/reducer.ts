@@ -49,10 +49,12 @@ export const categoryReducer = (
       return { ...state, loading: true };
 
     case DeleteCategoryActionTypes.DELETE_CATEGORY_SUCCESS:
+        const newCategoriesList = state.categories.filter(({ id }) => id !== action.payload)
       return {
         ...state,
         loading: false,
-        categories: state.categories.filter(({ id }) => id !== action.payload),
+        categories: newCategoriesList,
+        total: newCategoriesList.length
       };
 
     case DeleteCategoryActionTypes.DELETE_CATEGORY_ERROR:
