@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 import LastNewsList from '../NewsList';
 import EclipseWidget from '../../../common/eclipse';
 
@@ -17,7 +17,7 @@ const NewsInfo = () => {
   }, [getInfoNews, slug]);
 
 const content = (text: string) => {
-  return <>{ReactHtmlParser(text)}</>;
+  return <>{parse(text)}</>;
 };
 
 const publishDate = new Date(dateTimePublish).toLocaleDateString("uk-UA", {day: "2-digit", month:"long", year:"numeric"})
