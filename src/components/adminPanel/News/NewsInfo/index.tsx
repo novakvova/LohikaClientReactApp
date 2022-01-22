@@ -6,6 +6,7 @@ import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import parse from "html-react-parser";
 import LastNewsList from '../NewsList';
 import EclipseWidget from '../../../common/eclipse';
+import { Helmet } from 'react-helmet';
 
 const NewsInfo = () => {
 	let { slug } = useParams();
@@ -31,7 +32,10 @@ const title = (
 
 	return (
     <>
-	{loading && <EclipseWidget />}
+      <Helmet>
+        <title>{name}</title>
+      </Helmet>
+      {loading && <EclipseWidget />}
       <div className="row">
         <div className="col-8">
           <Card
@@ -42,8 +46,8 @@ const title = (
           </Card>
         </div>
         <div className="col-4">
-			<LastNewsList />
-		</div>
+          <LastNewsList />
+        </div>
       </div>
     </>
   );
