@@ -51,6 +51,7 @@ export const usersReducer = (
       return {
         ...state,
         loading: false,
+        total: state.total-1,
         users: state.users.filter(({ id }) => id !== action.payload),
       };
 

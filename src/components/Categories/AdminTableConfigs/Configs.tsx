@@ -3,9 +3,7 @@ import { CategoryInfo } from '../types';
 import { v4 as uuid } from 'uuid';
 import { useState } from 'react';
 import CategorySearch from '../CategorySearch/CategorySearch';
-import { Link, useNavigate } from 'react-router-dom';
-import { CreateCategory } from '../actions';
-import { title } from 'process';
+import {  useNavigate } from 'react-router-dom';
 // import { CreateCategory } from '../CreateCategory/CreateCategory';
 
 export const TableImageTemplate = (rowData: CategoryInfo) => {

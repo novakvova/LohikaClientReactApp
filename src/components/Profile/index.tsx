@@ -23,17 +23,17 @@ useEffect(() => {
         {loading && <EclipseWidget />}
         {!loading && (
           <div className="row">
-            <div className="col-lg-4">
+            <div className="col-lg-3">
               <div className="card mb-4">
                 <div className="card-body text-center">
                   <img
                     src={
                       !photo.endsWith("image/")
-                        ? `https://vovalohika.tk${photo}`
+                        ? `https://vovalohika.tk/images/300_${photo}`
                         : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
                     }
                     alt="avatar"
-                    className="rounded-circle img-fluid"
+                    className="img-fluid"
                   />
                   <h5 className="my-3">
                     <span>{firstName}</span>
@@ -42,7 +42,7 @@ useEffect(() => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-8">
+            <div className="col-lg-9">
               <div className="card mb-4">
                 <div className="card-body">
                   <div className="row">

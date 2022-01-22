@@ -12,7 +12,7 @@ import "./headers.css";
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
   const {
-    user: { image },
+    user: { image, roles },
   } = useTypedSelector((store) => store.auth);
   const { LogoutUser } = useActions();
   const { clearCartData } = useActions();
@@ -52,27 +52,21 @@ const DefaultHeader = () => {
               </li>
 
               <li className="nav-item d-flex align-items-center">
-                <Link className="nav-link" to="/users">
-                  Юзери
-                </Link>
-              </li>
-
-              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/cars">
                   Машини
                 </Link>
               </li>
-              <li className="nav-item">
+              {isAuth && roles==="admin" && (<li className="nav-item">
                 <Link className="nav-link" to="/adminPanel">
                   Адмінка
                 </Link>
-              </li>
+              </li>)}
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                   <img
                     src={
-                      !image.endsWith("image/")
-                        ? `https://vovalohika.tk${image}?t=${uuid()}`
+                      image
+                        ? `https://vovalohika.tk/images/50_${image}?t=${uuid()}`
                         : `https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png?t=${uuid()}`
                     }
                     alt="avatar"

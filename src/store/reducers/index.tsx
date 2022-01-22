@@ -9,7 +9,7 @@ import { cartReducer } from "../../components/Cart/cart-reduser";
 import { fleshMessagesReducer } from '../../components/FleshMessages/reducer';
 import { paginateReducer } from '../../components/adminPanel/Users/Paginator/reducer';
 import { categoryReducer } from '../../components/Categories/reducer';
-import { newsReducer } from "../../components/adminPanel/TinyEditor/reducer";
+import { newsReducer } from "../../components/adminPanel/News/reducer";
 
 export const rootReducer = combineReducers({
   car: carReducer,
