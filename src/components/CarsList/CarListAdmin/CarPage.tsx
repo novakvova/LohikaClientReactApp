@@ -8,7 +8,7 @@ import { v4 as uuid } from "uuid";
 
 const CarPage = () => {
   const [showLoader, setShowLoader] = useState(false);
-  const [img, setImg] = useState<string>("");
+  const [img, setImg] = useState<Array<string>>([]);
   const { id } = useParams();
   const { fetchCarById } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
@@ -18,7 +18,7 @@ const CarPage = () => {
       const data = await fetchCarById(Number(id));
       setShowLoader(false);
       const { images } = data;
-      setImg(`https://vovalohika.tk/images/600_${images[0]}?t=${uuid()}`);
+      setImg(images.map((item: { name: string }) => item.name));
     } catch (error) {
       console.log("err = > ", error);
     }
@@ -39,14 +39,29 @@ const CarPage = () => {
           <h1>{carSearchedById?.name}</h1>
           <div className="col-lg-4">
             <div className="card mb-4">
-              {  (
-                <img
-                  style={{ width: "100%" }}
-                  src={img}
-                  alt="avatar"
-                  className="rounded img-fluid"
-                />
-              )}
+              {
+                img.map((item) => {
+                  return (
+                    <img
+                      key={item}
+                      style={{
+                        width: "100%",
+                        marginBottom: "10px",
+                        overflow: "hidden",
+                      }}
+                      src={`https://vovalohika.tk/images/600_${item}?t=${uuid()}`}
+                      alt="avatar"
+                      className="rounded img-fluid"
+                    />
+                  );
+                })
+                // <img
+                //   style={{ width: "100%" }}
+                //   src={img}
+                //   alt="avatar"
+                //   className="rounded img-fluid"
+                // />
+              }
             </div>
           </div>
           <div className="col-lg-8">

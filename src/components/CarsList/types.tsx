@@ -14,12 +14,26 @@ export interface IClickedButtonData {
 }
 
 export interface ICarUpdate {
-  id?: string;
   name: string;
   priority: string;
   price: string;
-  image: string;
+  image?: string;
+  ids?: Array<number>;
   categoryId: number;
+}
+
+export interface IImage {
+  id: number;
+  name: string;
+}
+
+export interface ISearchCarById {
+  id: number;
+  name: string;
+  priority: number;
+  image: string;
+  price: number;
+  images: Array<IImage>;
 }
 
 export interface ISearchCar {
@@ -55,7 +69,7 @@ export interface ISearchProduct {
 }
 
 export interface CarState {
-  carSearchedById: ISearchCar | null;
+  carSearchedById: ISearchCarById;
   products: Array<ISearchCar>;
   pages: number;
   total: number;
@@ -86,7 +100,7 @@ export interface FetchCarsSearchAction {
 
 export interface GetCarByIdAction {
   type: CarActionTypes.GET_CAR_BY_ID;
-  payload: ISearchCar;
+  payload: ISearchCarById;
 }
 
 export interface UpdateCarAction {

@@ -15,7 +15,6 @@ const initialValues: IAddCar = {
   priority: "",
   price: "",
   categoryId: 85,
-  
 };
 
 const AddNewCar: React.FC = () => {
@@ -27,14 +26,36 @@ const AddNewCar: React.FC = () => {
   } = useTypedSelector((store) => store.sendingCar);
   const navigate = useNavigate();
   const { uploadCarImage } = useActions();
-  const [cropImages, setCropImages] = React.useState<Array<number>>([]);
 
-  const changeImageHandler = (id: number) => {
-    setCropImages((prevState) => [...prevState, id]);
+  const [cropImages, setCropImages] = React.useState<Array<any>>([
+    "",
+    "",
+    "",
+    "",
+  ]);
+
+  const addImageHandler = (id: number, idx: number) => {
+    setCropImages((prevState) => [
+      ...prevState.map((item, index) => {
+        if (index === idx) {
+          return id;
+        } else return item;
+      }),
+    ]);
+  };
+
+  const removeImageHandler = (idx: number) => {
+    setCropImages((prevState) => [
+      ...prevState.map((item, index) => {
+        if (index === idx) {
+          return "";
+        } else return item;
+      }),
+    ]);
   };
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    addNewCar({ ...values, ids: cropImages });
+    addNewCar({ ...values, ids: cropImages.filter((item) => item !== "") });
   };
 
   const formik = useFormik({
@@ -50,8 +71,7 @@ const AddNewCar: React.FC = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const {errors, touched, handleBlur, handleChange, values } =
-    formik;
+  const { errors, touched, handleBlur, handleChange, values } = formik;
 
   return (
     <>
@@ -63,20 +83,45 @@ const AddNewCar: React.FC = () => {
         <h1 className="text-center">Додати автомобіль</h1>
         {serverError && <h2>{serverError}</h2>}
         {loading && <EclipseWidget />}
-        <div className="col-4 ">
+
+        <div className="col-4 d-flex justify-content-center flex-column">
+          {cropImages.map((item, idx) => {
+            return (
+              <CropperMultiple
+                key={idx}
+                onChange={() => {}}
+                onChangeImage={addImageHandler}
+                onRemoveHandler={removeImageHandler}
+                uploadImageHandler={uploadCarImage}
+                idx={idx}
+                field={`i${idx}`}
+              />
+            );
+          })}
+        </div>
+
+        {/* <div className="col-4 ">
           <CropperMultiple
             uploadImageHandler={uploadCarImage}
             field="image"
             onChange={changeImageHandler}
-            
           />
-
           <CropperMultiple
             uploadImageHandler={uploadCarImage}
             field="image2"
             onChange={changeImageHandler}
           />
-        </div>
+          <CropperMultiple
+            uploadImageHandler={uploadCarImage}
+            field="image3"
+            onChange={changeImageHandler}
+          />
+          <CropperMultiple
+            uploadImageHandler={uploadCarImage}
+            field="image4"
+            onChange={changeImageHandler}
+          />
+        </div> */}
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
           <InputGroup

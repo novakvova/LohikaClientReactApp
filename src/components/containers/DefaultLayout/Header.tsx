@@ -56,16 +56,18 @@ const DefaultHeader = () => {
                   Машини
                 </Link>
               </li>
-              {isAuth && roles==="admin" && (<li className="nav-item">
-                <Link className="nav-link" to="/adminPanel">
-                  Адмінка
-                </Link>
-              </li>)}
+              {isAuth && roles === "admin" && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/adminPanel">
+                    Адмінка
+                  </Link>
+                </li>
+              )}
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                   <img
                     src={
-                      image
+                      !image
                         ? `https://vovalohika.tk/images/50_${image}?t=${uuid()}`
                         : `https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png?t=${uuid()}`
                     }

@@ -1,49 +1,49 @@
-import { Card } from 'primereact/card';
-import { IEditorValues, PhotoObj } from '../types';
-import { Form, FormikProvider, useFormik } from 'formik';
-import { EditorSchema } from '../validation';
-import InputGroup from '../../../common/InputGroup';
-import { Button } from 'primereact/button';
-import CyrillicToTranslit from 'cyrillic-to-translit-js';
+import { Card } from "primereact/card";
+import { IEditorValues, PhotoObj } from "../types";
+import { Form, FormikProvider, useFormik } from "formik";
+import { EditorSchema } from "../validation";
+import InputGroup from "../../../common/InputGroup";
+import { Button } from "primereact/button";
+import CyrillicToTranslit from "cyrillic-to-translit-js";
 import "react-datepicker/dist/react-datepicker.css";
-import EditorTiny from '../../../common/EditorTiny/EditorTiny';
-import Callendar from '../../../common/Callendar';
+import EditorTiny from "../../../common/EditorTiny/EditorTiny";
+import Callendar from "../../../common/Callendar";
 import EclipseWidget from "../../../common/eclipse";
 
-import { useActions } from '../../../../hooks/useActions';
-import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import CropperComponent from '../../../containers/CropperComponent/CropperComponent';
-import { useRef } from 'react';
-import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple"
+import { useActions } from "../../../../hooks/useActions";
+import { useTypedSelector } from "../../../../hooks/useTypedSelector";
+import CropperComponent from "../../../containers/CropperComponent/CropperComponent";
+import { useRef } from "react";
+import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
 import { Toast } from "primereact/toast";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 
 const TinyEditor = () => {
   const { addNews, uploadImages } = useActions();
-  const { images } = useTypedSelector(store => store.news)
+  const { images } = useTypedSelector((store) => store.news);
   const toast = useRef<Toast>(null);
-  const { loading } = useTypedSelector( store => store.news);
+  const { loading } = useTypedSelector((store) => store.news);
   const cyr = new CyrillicToTranslit();
-  const initialValues:IEditorValues = {
+  const initialValues: IEditorValues = {
     name: "",
     text: "",
     image: "",
     slug: "",
     isShow: true,
     dateTimePublish: new Date().toLocaleDateString(),
-  };  
+  };
 
-  const uploadImng = async ( image:string ) => {
+  const uploadImng = async (image: string) => {
     try {
       await uploadImages(image);
-          if (toast.current !== null) {
-            toast.current.show({
-              severity: "info",
-              summary: "Виконано",
-              detail: "Фото додано",
-              life: 3000,
-            });
-          }
+      if (toast.current !== null) {
+        toast.current.show({
+          severity: "info",
+          summary: "Виконано",
+          detail: "Фото додано",
+          life: 3000,
+        });
+      }
     } catch (error) {
       if (toast.current !== null) {
         toast.current.show({
@@ -54,8 +54,8 @@ const TinyEditor = () => {
         });
       }
     }
-  }
-  
+  };
+
   const onHandleSubmit = async (values: IEditorValues) => {
     try {
       await addNews(values);
@@ -69,14 +69,14 @@ const TinyEditor = () => {
         });
       }
     } catch (error) {
-            if (toast.current !== null) {
-              toast.current.show({
-                severity: "error",
-                summary: "Виконано",
-                detail: "Щось пішло не так",
-                life: 3000,
-              });
-            }
+      if (toast.current !== null) {
+        toast.current.show({
+          severity: "error",
+          summary: "Виконано",
+          detail: "Щось пішло не так",
+          life: 3000,
+        });
+      }
     }
   };
 
@@ -93,10 +93,10 @@ const TinyEditor = () => {
     handleSubmit,
     setFieldValue,
     values,
-    resetForm
+    resetForm,
   } = formik;
- 
-	return (
+
+  return (
     <>
       <Helmet>
         <title>Добавити новини</title>
@@ -169,6 +169,7 @@ const TinyEditor = () => {
                       Загрузити картинки
                     </label>
                     <CropperMultiple
+                      onChange={() => {}}
                       field="addImage"
                       uploadImageHandler={uploadImng}
                     />
