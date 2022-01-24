@@ -26,12 +26,6 @@ const AddNewCar: React.FC = () => {
   } = useTypedSelector((store) => store.sendingCar);
   const navigate = useNavigate();
   const { uploadCarImage } = useActions();
-  // const [cropImages, setCropImages] = React.useState<Array<number>>([]);
-
-  // const changeImageHandler = (id: number) => {
-  //   setCropImages((prevState) => [...prevState, id]);
-  // };
-
 
   const [cropImages, setCropImages] = React.useState<Array<any>>([
     "",
@@ -39,8 +33,6 @@ const AddNewCar: React.FC = () => {
     "",
     "",
   ]);
-
-  console.log(cropImages)
 
   const addImageHandler = (id: number, idx: number) => {
     setCropImages((prevState) => [
@@ -51,9 +43,8 @@ const AddNewCar: React.FC = () => {
       }),
     ]);
   };
-  
+
   const removeImageHandler = (idx: number) => {
-    console.log(idx);
     setCropImages((prevState) => [
       ...prevState.map((item, index) => {
         if (index === idx) {
@@ -64,7 +55,7 @@ const AddNewCar: React.FC = () => {
   };
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    addNewCar({ ...values, ids: cropImages.filter((item) => item != "") });
+    addNewCar({ ...values, ids: cropImages.filter((item) => item !== "") });
   };
 
   const formik = useFormik({
@@ -99,22 +90,15 @@ const AddNewCar: React.FC = () => {
               <CropperMultiple
                 key={idx}
                 onChange={() => {}}
-                onChangeImage ={addImageHandler}
+                onChangeImage={addImageHandler}
                 onRemoveHandler={removeImageHandler}
                 uploadImageHandler={uploadCarImage}
                 idx={idx}
                 field={`i${idx}`}
-                
               />
             );
           })}
         </div>
-
-
-
-
-
-
 
         {/* <div className="col-4 ">
           <CropperMultiple
