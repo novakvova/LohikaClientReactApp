@@ -8,6 +8,8 @@ import LastNewsList from '../NewsList';
 import EclipseWidget from '../../../common/eclipse';
 import { Helmet } from 'react-helmet';
 
+import "./newsInfo.css";
+
 const NewsInfo = () => {
 	let { slug } = useParams();
 	const {getInfoNews} = useActions();
@@ -36,7 +38,7 @@ const title = (
         <title>{name}</title>
       </Helmet>
       {loading && <EclipseWidget />}
-      <div className="row">
+      <div className="row newsInfo">
         <div className="col-8">
           <Card
             title={title}

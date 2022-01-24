@@ -17,7 +17,7 @@ const NewsHomePage = () => {
         <Carousel
           value={news}
           numVisible={4}
-          numScroll={4}
+          numScroll={1}
           responsiveOptions={responsiveOptions}
           itemTemplate={productTemplate}
           header={<h3 className='text-center'>Новини та акції</h3>}
