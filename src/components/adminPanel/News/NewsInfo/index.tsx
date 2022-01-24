@@ -13,7 +13,7 @@ import "./newsInfo.css";
 const NewsInfo = () => {
 	let { slug } = useParams();
 	const {getInfoNews} = useActions();
-	const { newsData:{ text, name, dateTimePublish }, loading } = useTypedSelector(store => store.news)
+	const { newsData:{ text, name, dateTimePublish, image }, loading } = useTypedSelector(store => store.news)
 	
 	useEffect(() => {
     if (slug) getInfoNews(slug);
@@ -28,29 +28,38 @@ const publishDate = new Date(dateTimePublish).toLocaleDateString("uk-UA", {day: 
 const title = (
   <>
     <h3>{name}</h3>
-    <span style={{fontSize: "14px"}}>{publishDate}</span>
   </>
 );
-
+const backroundImage = `https://vovalohika.tk/images/1200_${image}`;
 	return (
     <>
       <Helmet>
         <title>{name}</title>
       </Helmet>
       {loading && <EclipseWidget />}
-      <div className="row newsInfo">
-        <div className="col-8">
-          <Card
-            title={title}
-            style={{ width: "100", padding: "1em", marginBottom: "2em" }}
-          >
+      <Card style={{ width: "100", padding: "1em", margin: "1em" }}>
+        <div className="row newsInfo">
+          <div className="col-8">
+            <h2
+              className="titleNews"
+              style={{
+                background: `url(${backroundImage}) no-repeat center`,
+                backgroundSize: "100%",
+              }}
+            >
+              {title}
+            </h2>
+            <span style={{ fontSize: "14px" }}>
+              {" "}
+              Дата публікації: {publishDate}
+            </span>
             {content(text)}
-          </Card>
+          </div>
+          <div className="col-4">
+            <LastNewsList />
+          </div>
         </div>
-        <div className="col-4">
-          <LastNewsList />
-        </div>
-      </div>
+      </Card>
     </>
   );
 }
