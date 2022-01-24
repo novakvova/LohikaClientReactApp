@@ -1,0 +1,26 @@
+.p-card .p-card-body {
+	padding: 0.5rem;
+	
+}
+
+.card_setting {
+	border: 2px solid #c2c6c9;
+	cursor: pointer;
+}
+
+.p-carousel-item:hover {
+	  background: #e9e9e9;
+  top: -8px;
+  left: 2px;
+  box-shadow: 4px 4px 8px 0px rgba(149, 152, 154, 0.36);
+}
+.p-carousel-item {
+  background: #f7f7f7;
+  width: 18rem;
+  transition: all 0.1s linear;
+  position: relative;
+  top: 0;
+  left: 0;
+  box-shadow: 4px 4px 8px 0px rgba(149, 152, 154, 0.08);
+}
+

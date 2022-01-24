@@ -19,7 +19,6 @@ const EditCarPage = () => {
   const { id } = useParams();
   const { fetchCarById, uploadCarImage } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-
   const [cropImages, setCropImages] = React.useState<Array<any>>([
     "",
     "",
@@ -27,7 +26,7 @@ const EditCarPage = () => {
     "",
   ]);
 
-  const initCropImages = () => {
+  const initCropImages = React.useCallback(() => {
     setCropImages((prevState) =>
       prevState.map((item, idx) => {
         if (carSearchedById.images[idx]) {
@@ -35,7 +34,7 @@ const EditCarPage = () => {
         } else return item;
       })
     );
-  };
+  }, [carSearchedById.images]);
 
   const addImageHandler = (id: number, idx: number) => {
     setCropImages((prevState) => [
@@ -46,9 +45,8 @@ const EditCarPage = () => {
       }),
     ]);
   };
-  
+
   const removeImageHandler = (idx: number) => {
-    console.log(idx);
     setCropImages((prevState) => [
       ...prevState.map((item, index) => {
         if (index === idx) {
@@ -60,7 +58,7 @@ const EditCarPage = () => {
 
   React.useEffect(() => {
     initCropImages();
-  }, [carSearchedById]);
+  }, [carSearchedById, initCropImages]);
 
   const initialValues = {
     id: `${id}`,
@@ -89,7 +87,7 @@ const EditCarPage = () => {
     setShowLoader(true);
     await updateCar({
       ...values,
-      ids: cropImages.filter((item) => item != ""),
+      ids: cropImages.filter((item) => item !== ""),
     });
     setShowLoader(false);
     await navigate("/cars");
@@ -114,8 +112,9 @@ const EditCarPage = () => {
           {cropImages.map((item, idx) => {
             return (
               <CropperMultiple
+                onChange={() => {}}
                 key={idx}
-                onChange={addImageHandler}
+                onChangeImage={addImageHandler}
                 onRemoveHandler={removeImageHandler}
                 uploadImageHandler={uploadCarImage}
                 idx={idx}

@@ -12,15 +12,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export interface IGetCropperProps {
-  onChange: (id: number, idx: any) => void;
+  onChange: (id: number) => void;
   uploadImageHandler: (imageBase64: string) => any;
   onRemoveHandler?: (index: any) => void;
+  onChangeImage?: (id: number, idx?: any) => void;
   field: string;
   value?: string;
   error?: string;
   touched?: boolean;
   message?: string;
-  idx: number;
+  idx?: number;
 }
 
 const CropperMultiple: React.FC<IGetCropperProps> = ({
@@ -33,6 +34,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
   idx,
   uploadImageHandler,
   onRemoveHandler,
+  onChangeImage,
 }) => {
   const [img, setImg] = useState<string>(value as string);
   const [cropperObj, setCropperObj] = useState<Cropper>();
@@ -75,7 +77,10 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
       const base = (await cropperObj?.getCroppedCanvas().toDataURL()) as string;
       setBase64(base);
       const data = await uploadImageHandler(base);
-      onChange(data, idx);
+      onChange(data);
+      if (onChangeImage) {
+        onChangeImage(data, idx);
+      }
       setShowModal(false);
     } catch (err) {
       console.log("err => ", err);
@@ -117,6 +122,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
             onClick={() => {
               if (onRemoveHandler) {
                 onRemoveHandler(idx);
+                setBase64("");
               }
             }}
             className="btn btn-outline-secondary h-50 border-0"

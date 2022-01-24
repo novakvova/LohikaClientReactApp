@@ -12,7 +12,7 @@ import * as CategoryActionCreators from "../../components/Categories/actions";
 
 import * as CarImageActionCreators from "../../components/containers/CropperMultiple/actionCropperMultiple";
 
-import * as NewsActionCreators from "../../components/adminPanel/TinyEditor/action";
+import * as NewsActionCreators from "../../components/adminPanel/News/action";
 
 const actions = {
   ...CarActionCreators,

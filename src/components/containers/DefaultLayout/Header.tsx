@@ -12,7 +12,7 @@ import "./headers.css";
 const DefaultHeader = () => {
   const { isAuth } = useTypedSelector((store) => store.auth);
   const {
-    user: { image },
+    user: { image, roles },
   } = useTypedSelector((store) => store.auth);
   const { LogoutUser } = useActions();
   const { clearCartData } = useActions();
@@ -52,21 +52,17 @@ const DefaultHeader = () => {
               </li>
 
               <li className="nav-item d-flex align-items-center">
-                <Link className="nav-link" to="/users">
-                  Юзери
-                </Link>
-              </li>
-
-              <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/cars">
                   Машини
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/adminPanel">
-                  Адмінка
-                </Link>
-              </li>
+              {isAuth && roles === "admin" && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/adminPanel">
+                    Адмінка
+                  </Link>
+                </li>
+              )}
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                   <img

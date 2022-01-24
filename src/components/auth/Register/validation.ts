@@ -7,7 +7,7 @@ export const RegisterSchema = yup.object({
     .required("Поле не повинне бути пустим"),
   firstName: yup.string().required("Поле не повинне бути пустим"),
   secondName: yup.string().required("Поле не повинне бути пустим"),
-  photo: yup.array().min(1, "Виберіть аватар").nullable(),
+  photo: yup.string().required("Поле не повинне бути пустим"),
   phone: yup
     .string()
     .matches(

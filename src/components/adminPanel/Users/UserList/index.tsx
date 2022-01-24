@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "primereact/button";
 import { useActions } from '../../../../hooks/useActions';
 import { Toast } from "primereact/toast";
+import { Helmet } from 'react-helmet';
 
 
 
@@ -28,7 +29,9 @@ const ActionBodyTemplate = (rowData: UserInfo) => {
 
   return (
     <>
-
+      <Helmet>
+        <title>Список користувачів</title>
+      </Helmet>
       <ConfirmDialog
         visible={visible}
         onHide={() => setVisible(false)}
@@ -48,7 +51,6 @@ const ActionBodyTemplate = (rowData: UserInfo) => {
           }
         }}
       />
-
       <Link to={`userinfo/${rowData.id}`}>
         <Button
           icon="pi pi-info"
