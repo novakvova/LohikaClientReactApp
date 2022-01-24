@@ -44,6 +44,7 @@ const LastNewsList = () => {
                 </div>
                 <div className="col-4">
                   <img
+                  style={{maxWidth: "100%"}}
                     src={`https://vovalohika.tk/images/100_${el.image}`}
                     alt={el.image}
                   />
