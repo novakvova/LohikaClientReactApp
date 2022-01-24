@@ -8,36 +8,73 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse";
 import InputGroup from "../../common/InputGroup";
 import { ICarUpdate } from "../types";
-import CropperComponent from "../../containers/CropperComponent/CropperComponent";
+
 import { v4 as uuid } from "uuid";
+import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
 
 const EditCarPage = () => {
   const { updateCar } = useActions();
 
   const [showLoader, setShowLoader] = React.useState(false);
   const { id } = useParams();
-  const { fetchCarById } = useActions();
+  const { fetchCarById, uploadCarImage } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
-  const [img, setImg] = React.useState<string>("");
 
+  const [cropImages, setCropImages] = React.useState<Array<any>>([
+    "",
+    "",
+    "",
+    "",
+  ]);
+
+  const initCropImages = () => {
+    setCropImages((prevState) =>
+      prevState.map((item, idx) => {
+        if (carSearchedById.images[idx]) {
+          return carSearchedById.images[idx].id;
+        } else return item;
+      })
+    );
+  };
+
+  const addImageHandler = (id: number, idx: number) => {
+    setCropImages((prevState) => [
+      ...prevState.map((item, index) => {
+        if (index === idx) {
+          return id;
+        } else return item;
+      }),
+    ]);
+  };
   
+  const removeImageHandler = (idx: number) => {
+    console.log(idx);
+    setCropImages((prevState) => [
+      ...prevState.map((item, index) => {
+        if (index === idx) {
+          return "";
+        } else return item;
+      }),
+    ]);
+  };
+
+  React.useEffect(() => {
+    initCropImages();
+  }, [carSearchedById]);
 
   const initialValues = {
     id: `${id}`,
     name: `${carSearchedById?.name}`,
     priority: `${carSearchedById?.priority}`,
     price: `${carSearchedById?.price}`,
-    image: `${carSearchedById?.image}`,
     categoryId: 85,
   };
 
   const getCarById = React.useCallback(async () => {
     try {
       setShowLoader(true);
-      const data = await fetchCarById(Number(id));
+      await fetchCarById(Number(id));
       setShowLoader(false);
-      const { image } = data;
-      setImg(`https://vovalohika.tk/images/600_${image}?t=${uuid()}`);
     } catch (error) {
       console.log("err = > ", error);
     }
@@ -50,7 +87,10 @@ const EditCarPage = () => {
   const navigate = useNavigate();
   const onSubmit = async (values: ICarUpdate) => {
     setShowLoader(true);
-    await updateCar(values);
+    await updateCar({
+      ...values,
+      ids: cropImages.filter((item) => item != ""),
+    });
     setShowLoader(false);
     await navigate("/cars");
   };
@@ -62,8 +102,6 @@ const EditCarPage = () => {
     validateOnBlur: true,
   });
 
-  const { setFieldValue, errors, touched } = formik;
-
   return (
     <>
       <Helmet>
@@ -72,14 +110,26 @@ const EditCarPage = () => {
       <div className="row">
         <h1 className="text-center">Редагувати запис</h1>
         {showLoader && <EclipseWidget />}
-        <div className="col-4">
-          <CropperComponent
-            field="image"
-            onChange={setFieldValue}
-            error={errors.image}
-            touched={touched.image}
-            value={img}
-          />
+        <div className="col-4 d-flex justify-content-center flex-column">
+          {cropImages.map((item, idx) => {
+            return (
+              <CropperMultiple
+                key={idx}
+                onChange={addImageHandler}
+                onRemoveHandler={removeImageHandler}
+                uploadImageHandler={uploadCarImage}
+                idx={idx}
+                field={`i${idx}`}
+                value={
+                  cropImages[idx] !== "" && carSearchedById.images[idx]
+                    ? `https://vovalohika.tk/images/600_${
+                        carSearchedById.images[idx].name
+                      }?t=${uuid()}`
+                    : ""
+                }
+              />
+            );
+          })}
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>

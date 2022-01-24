@@ -15,7 +15,6 @@ const initialValues: IAddCar = {
   priority: "",
   price: "",
   categoryId: 85,
-  
 };
 
 const AddNewCar: React.FC = () => {
@@ -50,8 +49,7 @@ const AddNewCar: React.FC = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const {errors, touched, handleBlur, handleChange, values } =
-    formik;
+  const { errors, touched, handleBlur, handleChange, values } = formik;
 
   return (
     <>
@@ -63,18 +61,31 @@ const AddNewCar: React.FC = () => {
         <h1 className="text-center">Додати автомобіль</h1>
         {serverError && <h2>{serverError}</h2>}
         {loading && <EclipseWidget />}
+
         <div className="col-4 ">
           <CropperMultiple
             uploadImageHandler={uploadCarImage}
             field="image"
             onChange={changeImageHandler}
-            
+            idx={0}
           />
-
           <CropperMultiple
             uploadImageHandler={uploadCarImage}
             field="image2"
             onChange={changeImageHandler}
+            idx={1}
+          />
+          <CropperMultiple
+            uploadImageHandler={uploadCarImage}
+            field="image3"
+            onChange={changeImageHandler}
+            idx={2}
+          />
+          <CropperMultiple
+            uploadImageHandler={uploadCarImage}
+            field="image4"
+            onChange={changeImageHandler}
+            idx={3}
           />
         </div>
 

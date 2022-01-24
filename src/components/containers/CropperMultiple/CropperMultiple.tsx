@@ -11,14 +11,16 @@ import {
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-
 export interface IGetCropperProps {
-  onChange: (id: number) => void;
+  onChange: (id: number, idx: any) => void;
   uploadImageHandler: (imageBase64: string) => any;
+  onRemoveHandler?: (index: any) => void;
   field: string;
   value?: string;
   error?: string;
   touched?: boolean;
+  message?: string;
+  idx: number;
 }
 
 const CropperMultiple: React.FC<IGetCropperProps> = ({
@@ -27,7 +29,10 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
   error,
   touched,
   value,
+  message,
+  idx,
   uploadImageHandler,
+  onRemoveHandler,
 }) => {
   const [img, setImg] = useState<string>(value as string);
   const [cropperObj, setCropperObj] = useState<Cropper>();
@@ -69,8 +74,8 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
     try {
       const base = (await cropperObj?.getCroppedCanvas().toDataURL()) as string;
       setBase64(base);
-        const data = await uploadImageHandler(base);
-        onChange(data);
+      const data = await uploadImageHandler(base);
+      onChange(data, idx);
       setShowModal(false);
     } catch (err) {
       console.log("err => ", err);
@@ -80,7 +85,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
   return (
     <>
       <form className={classes.formGroup}>
-        <label htmlFor={field} style={{ height: "100%", width: "100%" }}>
+        <label htmlFor={field} className={classes.cropperLabel}>
           <div
             className={classNames(
               classes.labelInput,
@@ -99,13 +104,25 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
                 {!value && (
                   <>
                     <i className="fa fa-image fa-5x"></i>
-                    <span className="d-block">Виберіть фото</span>
+                    {message && <span className="d-block">{message}</span>}
+                    {!message && <span className="d-block">Виберіть фото</span>}
                   </>
                 )}
               </>
             )}
             {error && <div>{error}</div>}
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (onRemoveHandler) {
+                onRemoveHandler(idx);
+              }
+            }}
+            className="btn btn-outline-secondary h-50 border-0"
+          >
+            <i className="fa fa-trash fa-2x"></i>
+          </button>
         </label>
 
         <input

@@ -1,9 +1,15 @@
-
 import { CarState, CarAction, CarActionTypes } from "./types";
 
 const initialState: CarState = {
   loading: false,
-  carSearchedById: null,
+  carSearchedById: {
+    id: 0,
+    name: "",
+    priority: 0,
+    image: "",
+    price: 0,
+    images: [],
+  },
   products: [],
   currentPage: 1,
   pages: 0,
@@ -28,8 +34,6 @@ export const carReducer = (
         ...state,
         products: state.products.filter((item) => item.id !== action.payload),
       };
-
-    
 
     default:
       return state;

@@ -1,12 +1,13 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { IAddCar } from "./AddNewCar/types";
+
 import {
   CarAction,
   CarActionTypes,
   DeleteCarAction,
   ICarSearchList,
-  ISearchCar,
+  ICarUpdate,
+  ISearchCarById,
   ISearchProduct,
   UpdateCarAction,
 } from "./types";
@@ -32,19 +33,19 @@ export const fetchCarById =
   (id: number): any =>
   async (dispatch: Dispatch<CarAction>) => {
     try {
-      const response = await http.get<ISearchCar>(`api/Products/get/${id}`);
+      const response = await http.get<ISearchCarById>(`api/Products/get/${id}`);
       const { data } = response;
       dispatch({
         type: CarActionTypes.GET_CAR_BY_ID,
         payload: response.data,
       });
-      return Promise.resolve<ISearchCar>(data);
+      return Promise.resolve<ISearchCarById>(data);
     } catch (error) {
       console.log("action => ", error);
     }
   };
 
-export const updateCar = (data: IAddCar) => {
+export const updateCar = (data: ICarUpdate) => {
   return (dispatch: Dispatch<UpdateCarAction>) => {
     http
       .put("api/Products/edit", data, {

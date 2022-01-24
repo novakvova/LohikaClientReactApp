@@ -36,19 +36,21 @@ import Categories from "./components/Categories/CategoriesList/Categories";
 
 import TinyEditor from "./components/adminPanel/TinyEditor/AddNews";
 
-
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
 const Login = lazy(() => import("./components/auth/Login/index"));
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
-  const { isAuth, user: {roles} } = useTypedSelector((store) => store.auth);
+  const {
+    isAuth,
+    user: { roles },
+  } = useTypedSelector((store) => store.auth);
 
   const { downloadCartData } = useActions();
   useEffect(() => {
-    downloadCartData();
-  }, [downloadCartData]);
+    isAuth && downloadCartData();
+  }, [downloadCartData, isAuth]);
 
   return (
     <>
