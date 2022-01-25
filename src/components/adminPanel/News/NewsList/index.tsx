@@ -38,8 +38,8 @@ const LastNewsList = () => {
             <div className="newsItem">
               <h6 className="publishDateRight">{publishDate}</h6>
 
-              <div className="row">
-                <div className="col-8">
+              <div className="row container-fluid">
+                <div className="col-xl-8 col-sm-12">
                   <h6>{el.name}</h6>
                 </div>
                 <div className="col-4">

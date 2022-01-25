@@ -61,7 +61,7 @@ const SideBar = () => {
         {
           label: "Список",
           icon: "pi pi-fw pi-list",
-          command: () => navigate("/adminPanel/users"),
+          command: () => navigate("/adminPanel/newsList"),
         },
       ],
     },
