@@ -58,21 +58,17 @@ const CartItem: React.FC<ICartItem> = ({
   };
 
   return (
-    <li className={`${classes["cart-item"]} row border-bottom mb-2 `} key={id}>
-      <div className="col-3 rounded ">
+    <li className={classes["cart-item"]} key={id}>
+      <div className={classes.cartImg}>
         <img
-          className="rounded"
+          
           src={`https://vovalohika.tk/images/600_${images[0]}`}
           alt={productName}
         />
       </div>
-      <div className="col-3 d-flex justify-content-start align-items-center fs-3">
-        {productName}
-      </div>
-      <div className="col-1 d-flex justify-content-start align-items-center">
-        {productPrice}
-      </div>
-      <div className="col-3  d-flex justify-content-center align-items-center">
+      <div className={classes.cartName}>{productName}</div>
+      <div className={classes.cartPrice}>{productPrice}</div>
+      <div className={classes.cartButtons}>
         <button
           type="button"
           className="col-4 w-25 h-50 btn btn-outline-secondary btn-number btn-sm"

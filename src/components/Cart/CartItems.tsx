@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 
 const CartItems = () => {
   const { cartData } = useTypedSelector((store) => store.cart);
-  const [cartArr, setCartArr] = useState(cartData)
+  const [cartArr, setCartArr] = useState(cartData);
 
-  useEffect(()=> {
-    setCartArr((prevState)=> (cartData))
-    
-  }, [cartData])
+  useEffect(() => {
+    setCartArr((prevState) => cartData);
+  }, [cartData]);
 
   const cartItems = cartArr.map((cart) => (
     <CartItem
@@ -22,11 +21,11 @@ const CartItems = () => {
       quantity={cart.quantity}
       images={cart.images}
     />
-  ))
+  ));
 
   return (
     <ul className={classes["cart-items"]}>
-      <li className="row mb-2 fs-4 fw-bold ">
+      <li className={classes.cartHeader}>
         <div className="col-3">Фото</div>
         <div className="col-3">Машина</div>
         <div className="col-1">Ціна</div>

@@ -14,7 +14,7 @@
   /* left: 5%; */
   left: 50%;
   transform: translate(-50%, 0);
-
+  /* max-height: 50%; */
   background-color: white;
   padding: 20px;
   border-radius: 14px;
