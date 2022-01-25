@@ -18,7 +18,7 @@ const DefaultHeader = () => {
   const { clearCartData } = useActions();
 
   return (
-    <nav className="navbar navbar-default fixed-top navbar-expand navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">
           Продаж авто
