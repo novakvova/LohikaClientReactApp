@@ -37,9 +37,9 @@ const backroundImage = `https://vovalohika.tk/images/1200_${image}`;
         <title>{name}</title>
       </Helmet>
       {loading && <EclipseWidget />}
-      <Card style={{ width: "100", padding: "1em", margin: "1em" }}>
-        <div className="row newsInfo">
-          <div className="col-8">
+      <Card style={{ width: "100%", padding: "1em", margin: "1em" }}>
+        <div className="row newsInfo container-flud">
+          <div className="col-lg-8 col-md-12">
             <h2
               className="titleNews"
               style={{
@@ -49,13 +49,10 @@ const backroundImage = `https://vovalohika.tk/images/1200_${image}`;
             >
               {title}
             </h2>
-            <span style={{ fontSize: "14px" }}>
-              {" "}
-              Дата публікації: {publishDate}
-            </span>
+            <span className="publishDate">Дата публікації: {publishDate}</span>
             {content(text)}
           </div>
-          <div className="col-4">
+          <div className="col-lg-4 d-block col-md-none">
             <LastNewsList />
           </div>
         </div>
