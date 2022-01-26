@@ -22,7 +22,6 @@ const content = (text: string) => {
   return <>{parse(text)}</>;
 };
 
-const publishDate = new Date(dateTimePublish).toLocaleDateString("uk-UA", {day: "2-digit", month:"long", year:"numeric"})
 
 const title = (
   <>
@@ -44,7 +43,9 @@ const backroundImage = `https://vovalohika.tk/images/1200_${image}`;
           >
             {title}
           </h2>
-          <span className="publishDate">Дата публікації: {publishDate}</span>
+          <span className="publishDate">
+            Дата публікації: {dateTimePublish}
+          </span>
           {content(text)}
         </div>
       </Card>

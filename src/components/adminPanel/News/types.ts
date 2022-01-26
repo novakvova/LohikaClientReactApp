@@ -1,3 +1,4 @@
+import { SearchNews } from "./NewsList/types";
 
 
 export interface IEditorValues {
@@ -11,6 +12,7 @@ export interface IEditorValues {
 };
 
 export interface NewsState {
+  searchNews: SearchNews;
   news: Array<IEditorValues>;
   newsData: IEditorValues;
   images: Array<PhotoObj>;

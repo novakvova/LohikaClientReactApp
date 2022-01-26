@@ -2,7 +2,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 //import './table.css';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import { ImageBodyTemplate, Header, IsSHowBodyTemplate } from "./configTable";
+import { ImageBodyTemplate, Header } from "./configTable";
 import { useEffect, useRef, useState } from 'react';
 import { ConfirmDialog} from "primereact/confirmdialog";
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { useActions } from '../../../../hooks/useActions';
 import { Toast } from "primereact/toast";
 import { Helmet } from 'react-helmet';
 import { IEditorValues } from '../types';
+import { InputSwitch } from 'primereact/inputswitch';
 
 
 
@@ -18,12 +19,25 @@ const NewsAdminList = () => {
   const [visible, setVisible] = useState(false);
   const [delId, setDelId] = useState<number>(0);
   const toast = useRef<Toast>(null);
-  const { getNews, delNews } = useActions();
+  const { getNews, delNews, editNews } = useActions();
   const {news} = useTypedSelector( store => store.news);
 
   useEffect(() => {
     getNews();
   }, [getNews]);
+
+  const IsSHowBodyTemplate = (rowData: IEditorValues) => {
+    return (
+      <>
+        <InputSwitch
+          checked={rowData.isShow}
+          onChange={() => {
+            editNews({ ...rowData, isShow: !rowData.isShow });
+          }}
+        />
+      </>
+    );
+  };
 
 const ActionBodyTemplate = (rowData: IEditorValues) => {
    const deleteNews = async (id: number) => {

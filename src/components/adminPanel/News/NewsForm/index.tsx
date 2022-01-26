@@ -67,14 +67,7 @@ const FormNews = (props: FormProps) => {
 
   const onHandleSubmit = async (values: IEditorValues) => {
     try {
-
-      const obj = {...values};
-
-          if (values.image.startsWith("http")) {
-             obj.image = ""
-       }
-          
-      await addUpdateHandler(obj);
+      await addUpdateHandler(values);
       if (toast.current !== null) {
         toast.current.show({
           severity: "info",

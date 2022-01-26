@@ -26,3 +26,11 @@
 }
 
 
+.displayMoreNews {
+	cursor: pointer;
+}
+
+.displayMoreNews:hover {
+	cursor: pointer;
+	color: rgb(161, 210, 250);
+}

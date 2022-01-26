@@ -11,17 +11,18 @@ const NewsHomePage = () => {
     getNews();
   }, [getNews]);
 
+    const newsIsShow = news.filter((el) => el.isShow)
 
   return (
     <>
-        <Carousel
-          value={news}
-          numVisible={4}
-          numScroll={1}
-          responsiveOptions={responsiveOptions}
-          itemTemplate={productTemplate}
-          header={<h3 className='text-center'>Новини та акції</h3>}
-        />
+      <Carousel
+        value={newsIsShow}
+        numVisible={4}
+        numScroll={1}
+        responsiveOptions={responsiveOptions}
+        itemTemplate={productTemplate}
+        header={<h3 className="text-center">Новини та акції</h3>}
+      />
     </>
   );
 };

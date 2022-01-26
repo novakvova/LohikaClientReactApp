@@ -9,8 +9,13 @@ import { IEditorValues } from '../types';
       dispatch({
         type: EditNewsActionTypes.EDIT_NEWS,
       });
-
-      await http.put("api/Blogs/edit", data);
+        const obj = { ...data };
+            if (data.image.endsWith("jpeg")) {
+              obj.image = "";
+            }
+            console.log(obj);
+            
+      await http.put("api/Blogs/edit", obj);
       
 
       dispatch({

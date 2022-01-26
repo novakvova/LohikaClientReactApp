@@ -1,5 +1,4 @@
 import { Button } from 'primereact/button';
-import { InputSwitch } from 'primereact/inputswitch';
 import { v4 as uuid } from "uuid";
 import { IEditorValues } from '../types';
 
@@ -40,13 +39,4 @@ export const Header = () => {
   );
 };
 
-export const IsSHowBodyTemplate = (rowData: IEditorValues) => {
-  return (
-    <>
-      <InputSwitch
-        checked={rowData.isShow}
-        onChange={(e) => console.log(e.value) }
-      />
-    </>
-  );
-};
+
