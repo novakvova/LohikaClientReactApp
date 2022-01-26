@@ -1,10 +1,12 @@
+
+
 export interface IEditorValues {
   id?: number
   name: string,
   text: string,
   image: string,
   slug: string,
-  isShow: true,
+  isShow: boolean,
   dateTimePublish: string
 };
 

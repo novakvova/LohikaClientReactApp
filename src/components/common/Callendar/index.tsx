@@ -28,7 +28,7 @@ const Callendar: FC<DatePickerProps> = ({
         name={field}
         autoComplete="off"
         locale={uk}
-        dateFormat="dd.MM.yyyy"
+        dateFormat="dd/MM/yyyy"
         className={classNames(
           "form-control",
           { "is-invalid": touched && error },

@@ -2,7 +2,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 //import './table.css';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import { ImageBodyTemplate, Header } from "./configTable";
+import { ImageBodyTemplate, Header, IsSHowBodyTemplate } from "./configTable";
 import { useEffect, useRef, useState } from 'react';
 import { ConfirmDialog} from "primereact/confirmdialog";
 import { Link } from 'react-router-dom';
@@ -16,9 +16,9 @@ import { IEditorValues } from '../types';
 
 const NewsAdminList = () => {
   const [visible, setVisible] = useState(false);
- // const [delId, setDelId] = useState<number>(0);
+  const [delId, setDelId] = useState<number>(0);
   const toast = useRef<Toast>(null);
-  const { getNews } = useActions();
+  const { getNews, delNews } = useActions();
   const {news} = useTypedSelector( store => store.news);
 
   useEffect(() => {
@@ -26,10 +26,10 @@ const NewsAdminList = () => {
   }, [getNews]);
 
 const ActionBodyTemplate = (rowData: IEditorValues) => {
-  // const delUser = async (id: number) => {
-  //   await setVisible(true);
-  //   setDelId(id);
-  // };
+   const deleteNews = async (id: number) => {
+     await setVisible(true);
+     setDelId(id);
+   };
 
   return (
     <>
@@ -42,26 +42,35 @@ const ActionBodyTemplate = (rowData: IEditorValues) => {
         message="Точно видалити?"
         header="Confirmation"
         icon="pi pi-exclamation-triangle"
-        accept={() => {
-          //deleteUser(delId);
-
-          if (toast.current !== null) {
+        accept={async () => {
+          const res = await delNews(delId);
+          if (toast.current !== null && res === "200") {
             toast.current.show({
               severity: "info",
               summary: "Виконано",
-              detail: "Користувача видалено",
+              detail: "Новину видалено",
               life: 3000,
             });
           }
+          else {
+            if (toast.current !== null && res !== "200") {
+              toast.current.show({
+                severity: "error",
+                summary: "Не виконано",
+                detail: "Щось пішло не так",
+                life: 3000,
+              });
+            }
+          }
         }}
       />
-      <Link to={`userinfo/${rowData.id}`}>
+      <Link to={`/adminPanel/news/newsInfo/${rowData.slug}`}>
         <Button
           icon="pi pi-info"
           className="p-button-rounded p-button-info p-mr-2"
         />
       </Link>
-      <Link to={`edit/${rowData.id}`}>
+      <Link to={`/adminPanel/news/edit/${rowData.slug}`}>
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success p-mr-2"
@@ -70,7 +79,7 @@ const ActionBodyTemplate = (rowData: IEditorValues) => {
       <Button
         icon="pi pi-trash"
         className="p-button-rounded p-button-warning p-mr-2"
-        // onClick={() => rowData.id && delUser(rowData.id)}
+        onClick={() => rowData.id && deleteNews(rowData.id)}
       />
     </>
   );
@@ -89,6 +98,7 @@ const ActionBodyTemplate = (rowData: IEditorValues) => {
         >
           <Column field="id" header="Id"></Column>
           <Column field="name" header="Назва"></Column>
+          <Column header="Відображення" body={IsSHowBodyTemplate}></Column>
           <Column header="Фото" body={ImageBodyTemplate}></Column>
           <Column body={ActionBodyTemplate} header="Дії"></Column>
         </DataTable>

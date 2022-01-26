@@ -21,7 +21,6 @@ import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
-
 import CategoryPage from "./components/Categories/CategoryPage/CategoryPage";
 import AdminPanelLayout from "./components/containers/adminPanelLayout";
 import UserInfo from "./components/adminPanel/Users/UserInfo";
@@ -31,12 +30,12 @@ import CreatePage from "./components/adminPanel/Users/CreatePage";
 import CategoryDetailPage from "./components/Categories/CategoryPage/CategoryPage";
 import EditCategoryPage from "./components/Categories/EditCategoryPage/EditCategoryPage";
 import CreateCategory from "./components/Categories/CreateCategory/CreateCategory";
-
 import Categories from "./components/Categories/CategoriesList/Categories";
-
-import TinyEditor from "./components/adminPanel/News/AddNews";
-import NewsInfo from './components/adminPanel/News/NewsInfo';
 import NewsAdminList from './components/adminPanel/News/NewsListCRUD';
+import NewsWithNewsList from './components/adminPanel/NewsWithNewsLIst';
+import AddNews from './components/adminPanel/News/AddNews';
+import NewsInfo from './components/adminPanel/News/NewsInfo';
+import EditNews from './components/adminPanel/News/EditNews';
 
 //Import lazyLoading
 const Register = lazy(() => import("./components/auth/Register/index"));
@@ -93,15 +92,18 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
-          <Route path="*" element={<NoMatch />} />
 
-          <Route path="/news/:slug" element={<NewsInfo />}></Route>
+          {/* News Routes*/}
+          <Route path="/news/:slug" element={<NewsWithNewsList />}></Route>
+
+          <Route path="*" element={<NoMatch />} />
         </Route>
 
         {/* AdminPanelRoutes */}
 
         {isAuth && roles === "admin" && (
           <Route path="/adminPanel" element={<AdminPanelLayout />}>
+            {/* Users Routes*/}
             <Route path="/adminPanel/users/create" element={<CreatePage />} />
             <Route path="/adminPanel/users" element={<AdminMain />} />
             <Route
@@ -109,9 +111,17 @@ function App() {
               element={<UserInfo />}
             />
             <Route path="/adminPanel/users/edit/:id" element={<EditUser />} />
-            <Route path="/adminPanel/editor/add" element={<TinyEditor />} />
-            <Route path="/adminPanel/newsList" element={<NewsAdminList/>}></Route>
 
+            {/*News admin Routes */}
+            <Route path="/adminPanel/editor/add" element={<AddNews />} />
+            <Route path="/adminPanel/newsList" element={<NewsAdminList />} />
+            <Route
+              path="/adminPanel/news/newsInfo/:slug"
+              element={<NewsInfo />}
+            />
+            <Route path="/adminPanel/news/edit/:slug" element={<EditNews />} />
+
+            {/*Categories in AdminPanel */}
             <Route path="/adminPanel/categories" element={<Categories />} />
             <Route
               path="/adminPanel/categories/categoryInfo/:id"

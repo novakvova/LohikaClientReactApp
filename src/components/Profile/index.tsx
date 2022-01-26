@@ -28,7 +28,7 @@ useEffect(() => {
                 <div className="card-body text-center">
                   <img
                     src={
-                      !photo.endsWith("image/")
+                      !photo.endsWith("image/300_")
                         ? `https://vovalohika.tk/images/300_${photo}`
                         : "https://mdbootstrap.com/img/Photos/new-templates/bootstrap-chat/ava3.png"
                     }
