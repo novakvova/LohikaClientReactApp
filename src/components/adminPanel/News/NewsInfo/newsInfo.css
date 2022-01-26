@@ -3,6 +3,10 @@
 	height:auto
 }
 
+.newsInfo {
+	background-size: cover;
+}
+
 .titleNews {
 	text-align: center;
 	padding: 2em;

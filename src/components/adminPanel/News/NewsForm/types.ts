@@ -1,4 +1,3 @@
-
 export enum AddNewsActionTypes {
   ADD_NEWS = "ADD_NEWS",
   ADD_NEWS_SUCCESS = "ADD_NEWS_SUCCESS",

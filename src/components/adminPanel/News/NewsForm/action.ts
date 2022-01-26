@@ -9,7 +9,7 @@ import { IEditorValues } from '../types';
       dispatch({
         type: AddNewsActionTypes.ADD_NEWS,
       });
-
+      
       await http.post("api/Blogs/add", data);
 
       dispatch({
@@ -23,5 +23,4 @@ import { IEditorValues } from '../types';
     }
   };
 };
-
 export default addNews;
