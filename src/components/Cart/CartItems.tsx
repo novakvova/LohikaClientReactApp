@@ -25,12 +25,6 @@ const CartItems = () => {
 
   return (
     <ul className={classes["cart-items"]}>
-      <li className={classes.cartHeader}>
-        <div className="col-3">Фото</div>
-        <div className="col-3">Машина</div>
-        <div className="col-1">Ціна</div>
-        <div className="col-3">Кількість</div>
-      </li>
       {cartItems}
     </ul>
   );

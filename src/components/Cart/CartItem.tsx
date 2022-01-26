@@ -61,50 +61,55 @@ const CartItem: React.FC<ICartItem> = ({
     <li className={classes["cart-item"]} key={id}>
       <div className={classes.cartImg}>
         <img
-          
           src={`https://vovalohika.tk/images/600_${images[0]}`}
           alt={productName}
         />
       </div>
-      <div className={classes.cartName}>{productName}</div>
-      <div className={classes.cartPrice}>{productPrice}</div>
-      <div className={classes.cartButtons}>
-        <button
-          type="button"
-          className="col-4 w-25 h-50 btn btn-outline-secondary btn-number btn-sm"
-          onClick={onMinusQuantityHandler}
-        >
-          <i className="fa fa-minus fa-2x"></i>
-        </button>
-        <input
-          type="number"
-          className="col-4 w-50 h-50 form-control text-center fs-2"
-          value={inputValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            onChangeQuantityHandler(e.target.value);
-          }}
-        />
-        <button
-          type="button"
-          className="col-4 w-25 h-50 btn btn-outline-secondary btn-sm"
-          onClick={onPlusQuantityHandler}
-        >
-          <i className="fa fa-plus fa-2x"></i>
-        </button>
-      </div>
-      <div className="col-2  d-flex justify-content-center align-items-center">
-        <button
-          onClick={onDeleteHandler}
-          type="button"
-          className=" w-50 h-50 btn btn-outline-danger btn-number btn-sm"
-        >
-          {!showLoader && <i className="fa fa-trash fa-3x"></i>}
-          {showLoader && (
-            <div className="spinner-border spinner-border-sm" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          )}
-        </button>
+      <div className={classes.carIfo}>
+        <div className={classes.cartName}>
+          <span>{productName}</span>
+        </div>
+        <div className={classes.cartPrice}>
+          <span>{productPrice}</span>
+        </div>
+        <div className={classes.cartButtons}>
+          <button
+            type="button"
+            className="col-4 w-25 h-50 btn btn-outline-secondary btn-number btn-sm"
+            onClick={onMinusQuantityHandler}
+          >
+            <i className="fa fa-minus fa-2x"></i>
+          </button>
+          <input
+            type="number"
+            className="col-4 w-50 h-50 form-control text-center fs-2"
+            value={inputValue}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChangeQuantityHandler(e.target.value);
+            }}
+          />
+          <button
+            type="button"
+            className="col-4 w-25 h-50 btn btn-outline-secondary btn-sm"
+            onClick={onPlusQuantityHandler}
+          >
+            <i className="fa fa-plus fa-2x"></i>
+          </button>
+        </div>
+        <div className={classes.delBtn}>
+          <button
+            onClick={onDeleteHandler}
+            type="button"
+            className=" w-50 h-50 btn btn-outline-danger btn-number btn-sm"
+          >
+            {!showLoader && <i className="fa fa-trash fa-3x"></i>}
+            {showLoader && (
+              <div className="spinner-border spinner-border-sm" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            )}
+          </button>
+        </div>
       </div>
     </li>
   );

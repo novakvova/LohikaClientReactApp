@@ -7,6 +7,8 @@ import CartButtonAdd from "./CardButtonAdd";
 import { CarCardProps } from "./types";
 
 import { useNavigate } from "react-router-dom";
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
+
 
 const CarCard: React.FC<CarCardProps> = ({
   id,
@@ -18,6 +20,7 @@ const CarCard: React.FC<CarCardProps> = ({
 }) => {
   const [count, setCount] = useState("1");
   const { addItemToCart, showCart, downloadCartData } = useActions();
+  const { isAuth } = useTypedSelector((store) => store.auth);
 
   const navigator = useNavigate();
 
@@ -49,25 +52,27 @@ const CarCard: React.FC<CarCardProps> = ({
         <h5 className="card-title">{name}</h5>
         <p className="card-text">Ціна: {price} $ </p>
         <div className="row">
-          <div className="col-6 input-group mb-3 ">
-            {!inCart && (
-              <>
-                <input
-                  type="number"
-                  className=" form-control text-center"
-                  min="1"
-                  defaultValue="1"
-                  aria-label="Recipient's username"
-                  aria-describedby="button-addon2"
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    countHandler(event.target.value);
-                  }}
-                />
-                <CartButtonAdd onClick={addItemToCartHandler} />
-              </>
-            )}
-            {inCart && <CardButtonToCart onClick={showCart} />}
-          </div>
+          {isAuth && (
+            <div className="col-6 input-group mb-3 ">
+              {!inCart && (
+                <>
+                  <input
+                    type="number"
+                    className=" form-control text-center"
+                    min="1"
+                    defaultValue="1"
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      countHandler(event.target.value);
+                    }}
+                  />
+                  <CartButtonAdd onClick={addItemToCartHandler} />
+                </>
+              )}
+              {inCart && <CardButtonToCart onClick={showCart} />}
+            </div>
+          )}
         </div>
         <div className="row">
           <div className="col-6 input-group mb-3 ">
