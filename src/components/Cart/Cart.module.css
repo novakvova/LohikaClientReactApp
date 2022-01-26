@@ -23,7 +23,6 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-
   flex-wrap: wrap;
   height: 7rem;
 }
@@ -36,7 +35,6 @@
   justify-content: center;
   font-size: 20px;
   font-weight: 600;
-
   height: 7rem;
 }
 
@@ -47,7 +45,6 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-
   height: 7rem;
 }
 
@@ -56,14 +53,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 7rem;
 }
 
 .delBtn {
   width: 116px;
   height: 100%;
-
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import InputGroup from "../../common/InputGroup";
+import SelectGroup from "../../common/SelectGroup";
 import { useActions } from "../../../hooks/useActions";
 import { IAddCar } from "./types";
 import { useFormik, FormikHelpers } from "formik";
@@ -24,6 +25,9 @@ const AddNewCar: React.FC = () => {
     error: serverError,
     loading,
   } = useTypedSelector((store) => store.sendingCar);
+
+  const { categories } = useTypedSelector((store) => store.categoryCrud);
+
   const navigate = useNavigate();
   const { uploadCarImage } = useActions();
 
@@ -100,30 +104,8 @@ const AddNewCar: React.FC = () => {
           })}
         </div>
 
-        {/* <div className="col-4 ">
-          <CropperMultiple
-            uploadImageHandler={uploadCarImage}
-            field="image"
-            onChange={changeImageHandler}
-          />
-          <CropperMultiple
-            uploadImageHandler={uploadCarImage}
-            field="image2"
-            onChange={changeImageHandler}
-          />
-          <CropperMultiple
-            uploadImageHandler={uploadCarImage}
-            field="image3"
-            onChange={changeImageHandler}
-          />
-          <CropperMultiple
-            uploadImageHandler={uploadCarImage}
-            field="image4"
-            onChange={changeImageHandler}
-          />
-        </div> */}
-
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
+          {/* <SelectGroup /> */}
           <InputGroup
             field="name"
             label="Ім'я"
