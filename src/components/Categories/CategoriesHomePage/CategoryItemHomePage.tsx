@@ -1,15 +1,38 @@
 import { v4 as uuid } from 'uuid';
 import { CategoryInfo } from '../types';
-import { Link } from 'react-router-dom';
-import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import './style.css'
+import { useActions } from '../../../hooks/useActions';
+import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { ISearchProduct } from '../../CarsList/types';
+import { ISearchCategory } from '../types/SearchCategories';
 
 interface Props {
   categoryItem: CategoryInfo;
+
 }
 
-const CategoryItemHomePage: React.FC<Props> = ({ categoryItem: { id, title, image } }) => {
+const CategoryItemHomePage: React.FC<Props> = ({ categoryItem: { urlSlug, title, image } }) => {
+  // const { fetchCarsSearch } = useActions();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchProductSlug, setSearchProductSlug] = useState<ISearchProduct>({
+  //   categorySlug: searchParams.get('CategorySlug')|| ''
+  // })
+
+  // const [searchCategorySlug, setSearchCategorySlug] = useState<ISearchCategory>({
+  //   urlSlug: searchParams.get('urlSlug')|| ''
+  // })
+
+  const onClick = () =>{
+    // console.log(values);
+    if(urlSlug === 'salo'){
+      console.log('Hey!');
+      
+    }
+    
+  }
+  
   const header = (
     <img 
     height="150"
@@ -23,8 +46,10 @@ const CategoryItemHomePage: React.FC<Props> = ({ categoryItem: { id, title, imag
 );
 
   return (
-    <div>
-      <Card className='element'
+    // <div onClick={(()=>{urlSlug})}>
+    <div onClick={onClick}>
+      <Card 
+      className='element'
         title={title}
         style={{ 
           width: '17em', 
