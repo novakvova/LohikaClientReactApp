@@ -31,6 +31,8 @@ const CategorySearch = () => {
   }
 
   const filterNonNull = (obj: ISearchCategory) => {
+    console.log(Object.fromEntries(Object.entries(obj).filter(([k, v]) => v)));
+    
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
   };
 
@@ -42,7 +44,6 @@ const CategorySearch = () => {
     setSearchParams(qs.stringify(filterNonNull(searchData)));
     setSearch(searchData);
     formik.resetForm();
-    console.log('reset');
 
   };
 

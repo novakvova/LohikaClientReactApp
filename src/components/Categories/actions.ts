@@ -87,7 +87,6 @@ export const getCategoryById = (id: number): any => {
       });
       const response = await http.get<CategoryInfo>(`api/Categories/get/${id}`);
       const { data } = response;
-      // console.log(data)
       dispatch({
         type: GetCategoryActionTypes.GET_CATEGORY_SUCCESS,
         payload: data,
