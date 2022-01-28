@@ -11,10 +11,11 @@ import { ICarUpdate } from "../types";
 
 import { v4 as uuid } from "uuid";
 import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
+import SelectGroup from "../../common/SelectGroup";
 
 const EditCarPage = () => {
-  const { updateCar } = useActions();
-
+  const { updateCar, fetchCategories } = useActions();
+  const { categories } = useTypedSelector((store) => store.categoryCrud);
   const [showLoader, setShowLoader] = React.useState(false);
   const { id } = useParams();
   const { fetchCarById, uploadCarImage } = useActions();
@@ -25,6 +26,10 @@ const EditCarPage = () => {
     "",
     "",
   ]);
+
+  React.useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   const initCropImages = React.useCallback(() => {
     setCropImages((prevState) =>
@@ -60,14 +65,6 @@ const EditCarPage = () => {
     initCropImages();
   }, [carSearchedById, initCropImages]);
 
-  const initialValues = {
-    id: `${id}`,
-    name: `${carSearchedById?.name}`,
-    priority: `${carSearchedById?.priority}`,
-    price: `${carSearchedById?.price}`,
-    categoryId: 85,
-  };
-
   const getCarById = React.useCallback(async () => {
     try {
       setShowLoader(true);
@@ -84,6 +81,7 @@ const EditCarPage = () => {
 
   const navigate = useNavigate();
   const onSubmit = async (values: ICarUpdate) => {
+    console.log("values => ", values);
     setShowLoader(true);
     await updateCar({
       ...values,
@@ -93,12 +91,22 @@ const EditCarPage = () => {
     await navigate("/cars");
   };
 
+  const initialValues = {
+    id: `${id}`,
+    name: `${carSearchedById?.name}`,
+    priority: `${carSearchedById?.priority}`,
+    price: `${carSearchedById?.price}`,
+    categoryId: carSearchedById.categoryId,
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
     validateOnBlur: true,
   });
+
+  const { errors, touched, handleChange } = formik;
 
   return (
     <>
@@ -132,6 +140,16 @@ const EditCarPage = () => {
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
+          <SelectGroup
+            label="Категорія"
+            field="categoryId"
+            values={categories}
+            onChange={handleChange}
+            selectedValue={carSearchedById.categoryName}
+            categoryId={carSearchedById.categoryId}
+            touched={touched.categoryId}
+            error={errors.categoryId}
+          />
           <InputGroup
             field="name"
             label="Ім'я"

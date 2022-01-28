@@ -9,6 +9,8 @@ const initialState: CarState = {
     image: "",
     price: 0,
     images: [],
+    categoryId: 0,
+    categoryName: "",
   },
   products: [],
   currentPage: 1,

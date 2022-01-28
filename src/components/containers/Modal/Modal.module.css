@@ -10,11 +10,11 @@
 
 .modal {
   position: fixed;
-  top: 20%;
+  top: 15%;
   /* left: 5%; */
   left: 50%;
   transform: translate(-50%, 0);
-  max-height: 60%;
+  max-height: 80%;
   background-color: white;
   padding: 20px;
   border-radius: 14px;
@@ -22,7 +22,7 @@
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
   min-width: 50rem;
-  
+  max-height: 80%;
 }
 
 .content {
