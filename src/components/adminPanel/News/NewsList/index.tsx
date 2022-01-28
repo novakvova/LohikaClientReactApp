@@ -8,53 +8,52 @@ import EclipseWidget from "../../../common/eclipse";
 import "./lastNewsList.css";
 
 const LastNewsList = () => {
-  const { getNews } = useActions();
-  const { news, loading } = useTypedSelector((store) => store.news);
+  const { getSearchNews } = useActions();
+  const { searchNews: {products}, loading } = useTypedSelector((store) => store.news);
 
   useEffect(() => {
-    getNews();
-  }, [getNews]);
+    getSearchNews({pageSize: 3, Page:1});
+  }, [getSearchNews]);
 
  
   return (
     <>
-	{loading && <EclipseWidget />}
-		 <Card
-              title="Останні новини"
-              style={{ textAlign: "center", padding: "0.5rem" }}
-            >
-      {news.map((el: IEditorValues) => {
-          const publishDate = new Date(el.dateTimePublish).toLocaleDateString(
-            "uk-UA",
-            {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            }
-          );
+      {loading && <EclipseWidget />}
+      <Card
+        title="Останні новини"
+        style={{ textAlign: "center", padding: "0.5rem" }}
+      >
+        {products.map((el: IEditorValues) => {
+          return (
+            <Link to={`/news/${el.slug}`} className="lastNewsList">
+              <div className="newsItem">
+                <h6 className="publishDateRight">{el.dateTimePublish}</h6>
 
-        return (
-          <Link to={`/news/${el.slug}`} className="lastNewsList">
-            <div className="newsItem">
-              <h6 className="publishDateRight">{publishDate}</h6>
-
-              <div className="row container-fluid">
-                <div className="col-xl-8 col-sm-12">
-                  <h6>{el.name}</h6>
-                </div>
-                <div className="col-4">
-                  <img
-                  style={{maxWidth: "100%"}}
-                    src={`https://vovalohika.tk/images/100_${el.image}`}
-                    alt={el.image}
-                  />
+                <div className="row container-fluid">
+                  <div className="col-xl-8 col-sm-12">
+                    <h6>{el.name}</h6>
+                  </div>
+                  <div className="col-4">
+                    <img
+                      style={{ maxWidth: "100%" }}
+                      src={`https://vovalohika.tk/images/100_${el.image}`}
+                      alt={el.image}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        );
-      })}
-	  </Card>
+            </Link>
+          );
+        })}
+        {products.length < 4 && (
+          <h6
+            className="displayMoreNews"
+            onClick={() => getSearchNews({ pageSize: 10, Page: 1 })}
+          >
+            Показати ще
+          </h6>
+        )}
+      </Card>
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { GetSearchNewsActions, GetSearchNewsActionTypes } from './NewsList/types';
 import { AddNewsActions, AddNewsActionTypes} from './AddNews/types';
 import { DelNewsActionTypes, DelNewsActions } from './DelNews/types';
 import { EditNewsActionTypes, EditNewsActions } from "./EditNews/types";
@@ -17,6 +18,12 @@ const newsData: IEditorValues = {
 
 
 const initState: NewsState = {
+  searchNews:{
+    products: [],
+    total: 0,
+    currentPage: 0,
+    pages: 0
+  },
 	news: [],
   images: [],
   newsData,
@@ -32,10 +39,11 @@ export const newsReducer = (
     | GetInfoNewsNewsActions
     | EditNewsActions
     | DelNewsActions
+    | GetSearchNewsActions
 ) => {
   
   switch (action.type) {
-     /* ADD NEWS */
+    /* ADD NEWS */
     case AddNewsActionTypes.ADD_NEWS:
       return { ...state, loading: true };
     case AddNewsActionTypes.ADD_NEWS_SUCCESS:
@@ -43,7 +51,7 @@ export const newsReducer = (
     case AddNewsActionTypes.ADD_NEWS_ERROR:
       return { ...state, loading: false };
 
-      /*Edit news */
+    /*Edit news */
     case EditNewsActionTypes.EDIT_NEWS:
       return { ...state, loading: true };
     case EditNewsActionTypes.EDIT_NEWS_SUCCESS:
@@ -55,13 +63,15 @@ export const newsReducer = (
     case EditNewsActionTypes.EDIT_NEWS_ERROR:
       return { ...state, loading: false };
 
-      /*Delete news */
+    /*Delete news */
     case DelNewsActionTypes.DEL_NEWS:
       return { ...state, loading: true };
     case DelNewsActionTypes.DEL_NEWS_SUCCESS:
-      return { ...state, 
-        news: state.news.filter((el) => el.id !== action.payload), 
-        loading: false };
+      return {
+        ...state,
+        news: state.news.filter((el) => el.id !== action.payload),
+        loading: false,
+      };
     case DelNewsActionTypes.DEL_NEWS_ERROR:
       return { ...state, loading: false };
 
@@ -72,8 +82,15 @@ export const newsReducer = (
       return { ...state, news: action.payload, loading: false };
     case GetNewsActionTypes.GET_NEWS_ERROR:
       return { ...state, loading: false };
-      
-      /*Upload inage for Editor */
+
+    case GetSearchNewsActionTypes.GET_SEARCH_NEWS:
+      return { ...state, loading: true };
+    case GetSearchNewsActionTypes.GET_SEARCH_NEWS_SUCCESS:
+      return { ...state, searchNews: action.payload, loading: false };
+    case GetSearchNewsActionTypes.GET_SEARCH_NEWS_ERROR:
+      return { ...state, loading: false };
+
+    /*Upload inage for Editor */
     case UploadImgActionTypes.SET_IMG:
       return { ...state, loading: true };
     case UploadImgActionTypes.SET_IMG_SUCCESS:
@@ -85,7 +102,7 @@ export const newsReducer = (
     case UploadImgActionTypes.SET_IMG_ERROR:
       return { ...state, loading: false };
 
-      /*Get news Info */
+    /*Get news Info */
     case GetInfoNewsActionTypes.GET_INFO:
       return { ...state, loading: true };
     case GetInfoNewsActionTypes.GET_INFO_SUCCESS:
