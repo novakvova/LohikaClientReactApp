@@ -117,18 +117,18 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
             )}
             {error && <div>{error}</div>}
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              if (onRemoveHandler) {
+          {onRemoveHandler && (
+            <button
+              type="button"
+              onClick={() => {
                 onRemoveHandler(idx);
                 setBase64("");
-              }
-            }}
-            className="btn btn-outline-secondary h-50 border-0"
-          >
-            <i className="fa fa-trash fa-2x"></i>
-          </button>
+              }}
+              className="btn btn-outline-secondary h-50 border-0"
+            >
+              <i className="fa fa-trash fa-2x"></i>
+            </button>
+          )}
         </label>
 
         <input
@@ -155,16 +155,43 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
                 />
               }
             </div>
-            <div
-              ref={previewRef as LegacyRef<HTMLDivElement>}
-              style={{
-                height: "150px",
-                width: "150px",
-                border: "1px solid silver",
-                overflow: "hidden",
-              }}
-            ></div>
             <div className="d-flex justify-content-around mt-2">
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(16 / 9);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                size: 16:9
+              </button>
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(4 / 3);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                size: 4:3
+              </button>
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(1 / 1);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                size: 1:1
+              </button>
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(NaN);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                free size
+              </button>
               <button
                 onClick={rotateImg}
                 type="button"
@@ -194,6 +221,16 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
                 </button>
               </div>
             </div>
+            <div
+              ref={previewRef as LegacyRef<HTMLDivElement>}
+              style={{
+                height: "150px",
+                width: "150px",
+                border: "1px solid silver",
+                overflow: "hidden",
+                margin: "10px auto",
+              }}
+            ></div>
           </div>
         </Modal>
       )}

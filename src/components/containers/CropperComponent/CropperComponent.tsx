@@ -35,7 +35,6 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   const [showModal, setShowModal] = useState(false);
 
   const handleImageChange = async (e: any) => {
-    console.log(e.target.files);
     const file = (e.target.files as FileList)[0];
     if (file) {
       const url = URL.createObjectURL(file);
@@ -136,6 +135,42 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
               }}
             ></div>
             <div className="d-flex justify-content-around mt-2">
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(16 / 9);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                size: 16:9
+              </button>
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(4 / 3);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                size: 4:3
+              </button>
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(1 / 1);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                size: 1:1
+              </button>
+              <button
+                onClick={() => {
+                  cropperObj?.setAspectRatio(NaN);
+                }}
+                type="button"
+                className="btn btn-outline-secondary"
+              >
+                free size
+              </button>
               <button
                 onClick={rotateImg}
                 type="button"

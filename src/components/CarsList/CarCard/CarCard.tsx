@@ -9,12 +9,11 @@ import { CarCardProps } from "./types";
 import { useNavigate } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
-
 const CarCard: React.FC<CarCardProps> = ({
   id,
   name,
   price,
-
+  categoryName,
   inCart,
   images,
 }) => {
@@ -33,13 +32,63 @@ const CarCard: React.FC<CarCardProps> = ({
   };
 
   return (
-    <div className={`card ${classes.carCard} mt-3`}>
-      {images[0] && (
+    <div className={`card ${classes.carCard} mt-3 pt-3`}>
+      {/* {images[0] && (
         <img
           src={`https://vovalohika.tk/images/600_${images[0]}?${uuid()}`}
           className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
           alt={name}
         />
+      )} */}
+      {images[0] && (
+        <div
+          id={`carouselExampleControls${id}`}
+          className="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div className="carousel-inner">
+            {images.map((item, idx) => {
+              return (
+                <div
+                  key={item}
+                  className={
+                    idx === 0 ? "carousel-item active" : "carousel-item"
+                  }
+                >
+                  <img
+                    src={`https://vovalohika.tk/images/600_${item}?${uuid()}`}
+                    className={`d-block w-100 card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
+                    alt={name}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target={`#carouselExampleControls${id}`}
+            data-bs-slide="prev"
+          >
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target={`#carouselExampleControls${id}`}
+            data-bs-slide="next"
+          >
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Next</span>
+          </button>
+        </div>
       )}
 
       {!images[0] && (
@@ -51,6 +100,7 @@ const CarCard: React.FC<CarCardProps> = ({
       <div className="card-body overflow-hidden">
         <h5 className="card-title">{name}</h5>
         <p className="card-text">Ціна: {price} $ </p>
+        <p className="card-text">Категорія: {categoryName} </p>
         <div className="row">
           {isAuth && (
             <div className="col-6 input-group mb-3 ">

@@ -15,7 +15,7 @@ const initialValues: IAddCar = {
   name: "",
   priority: "",
   price: "",
-  categoryId: 85,
+  categoryId: 0,
 };
 
 const AddNewCar: React.FC = () => {
@@ -25,6 +25,12 @@ const AddNewCar: React.FC = () => {
     error: serverError,
     loading,
   } = useTypedSelector((store) => store.sendingCar);
+
+  const { fetchCategories } = useActions();
+
+  React.useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   const { categories } = useTypedSelector((store) => store.categoryCrud);
 
@@ -59,6 +65,7 @@ const AddNewCar: React.FC = () => {
   };
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
+    console.log("add car Values => ", values);
     addNewCar({ ...values, ids: cropImages.filter((item) => item !== "") });
   };
 
@@ -105,7 +112,14 @@ const AddNewCar: React.FC = () => {
         </div>
 
         <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
-          {/* <SelectGroup /> */}
+          <SelectGroup
+            label="Категорія"
+            field="categoryId"
+            values={categories}
+            onChange={handleChange}
+            touched={touched.categoryId}
+            error={errors.categoryId}
+          />
           <InputGroup
             field="name"
             label="Ім'я"
