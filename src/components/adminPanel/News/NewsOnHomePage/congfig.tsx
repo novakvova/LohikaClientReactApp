@@ -27,6 +27,12 @@ export const productTemplate = (news: IEditorValues) => {
         <img
           alt={news.name}
           src={`https://vovalohika.tk/images/600_${news.image}`}
+          srcSet={`https://vovalohika.tk/images/150_${news.image} 480px,
+                   https://vovalohika.tk/images/300_${news.image} 600px,
+                   https://vovalohika.tk/images/600_${news.image} 1024px`}
+          sizes="(max-width: 480px) 440px,
+                  (max-width: 600px) 560px,
+                  600px"
         />
       );
       const sub = (<h6 className='text-center'>{news.name}</h6>)

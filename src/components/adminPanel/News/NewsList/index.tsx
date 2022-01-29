@@ -37,6 +37,8 @@ const LastNewsList = () => {
                     <img
                       style={{ maxWidth: "100%" }}
                       src={`https://vovalohika.tk/images/100_${el.image}`}
+                      width={100}
+                      height={56}
                       alt={el.image}
                     />
                   </div>
