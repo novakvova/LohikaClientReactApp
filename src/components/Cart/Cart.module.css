@@ -1,5 +1,6 @@
 .cart-items {
-  max-height: 450px;
+  /* height: 500px; */
+  max-height: 400px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;

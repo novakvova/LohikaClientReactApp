@@ -34,6 +34,8 @@ export interface ISearchCarById {
   image: string;
   price: number;
   images: Array<IImage>;
+  categoryId: number;
+  categoryName: string;
 }
 
 export interface ISearchCar {
@@ -43,6 +45,7 @@ export interface ISearchCar {
   image: string;
   price: number;
   images: Array<string>;
+  categoryName: string;
 }
 
 export interface ICarItem {

@@ -38,30 +38,72 @@ const CarPage = () => {
         <div className="row mt-4">
           <h1>{carSearchedById?.name}</h1>
           <div className="col-lg-4">
-            <div className="card mb-4">
-              {
-                img.map((item) => {
+            <div
+              id="carouselExampleIndicators"
+              className="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div className="carousel-indicators">
+                {img.map((item, idx) => {
                   return (
-                    <img
-                      key={item}
-                      style={{
-                        width: "100%",
-                        marginBottom: "10px",
-                        overflow: "hidden",
-                      }}
-                      src={`https://vovalohika.tk/images/600_${item}?t=${uuid()}`}
-                      alt="avatar"
-                      className="rounded img-fluid"
-                    />
+                    <button
+                      key={idx}
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-slide-to={idx}
+                      className={idx === 0 ? "active" : ""}
+                      aria-current={idx === 0 ? "true" : "false"}
+                      aria-label={`Slide ${idx + 1}`}
+                    ></button>
                   );
-                })
-                // <img
-                //   style={{ width: "100%" }}
-                //   src={img}
-                //   alt="avatar"
-                //   className="rounded img-fluid"
-                // />
-              }
+                })}
+              </div>
+              <div className="carousel-inner">
+                {img.map((item, idx) => {
+                  return (
+                    <div
+                      key={item}
+                      className={
+                        idx === 0 ? "carousel-item active" : "carousel-item"
+                      }
+                    >
+                      <img
+                        style={{
+                          width: "100%",
+                          overflow: "hidden",
+                        }}
+                        src={`https://vovalohika.tk/images/600_${item}?t=${uuid()}`}
+                        alt="avatar"
+                        className="d-block w-100 h-100 rounded img-fluid"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev"
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next"
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Next</span>
+              </button>
             </div>
           </div>
           <div className="col-lg-8">
@@ -90,7 +132,7 @@ const CarPage = () => {
                     <p className="mb-0">Ціна</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{carSearchedById?.price}</p>
+                    <p className="text-muted mb-0">{`${carSearchedById?.price} $`}</p>
                   </div>
                 </div>
               </div>
