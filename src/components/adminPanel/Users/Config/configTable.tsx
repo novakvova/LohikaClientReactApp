@@ -5,8 +5,6 @@ import {  useState } from 'react';
 import Search from '../SearchForm';
 
 export const ImageBodyTemplate = (rowData: UserInfo) => {
-  console.log(rowData.photo);
-  
   return (
     <img
       src={`https://vovalohika.tk/images/150_${rowData.photo}?t=${uuid()}`}

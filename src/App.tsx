@@ -41,6 +41,8 @@ const EditCategoryPage = lazy(() => import("./components/Categories/EditCategory
 const CreateCategory = lazy(() => import("./components/Categories/CreateCategory/CreateCategory"));
 const Categories = lazy(() => import("./components/Categories/CategoriesList/Categories"));
 const NewsWithNewsList =lazy(() => import("./components/adminPanel/NewsWithNewsLIst"));
+const CheckOut = lazy(() => import("./components/Checkout/index"))
+
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -97,6 +99,8 @@ function App() {
           {/* News Routes*/}
           <Route path="/news/:slug" element={<Suspense fallback={null}><NewsWithNewsList /></Suspense>}></Route>
 
+          {/*Checkout Route*/}
+          <Route path="/ckeckOut" element={<Suspense fallback={null}><CheckOut /></Suspense>}/>
           <Route path="*" element={<NoMatch />} />
         </Route>
 
