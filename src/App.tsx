@@ -21,6 +21,7 @@ import EditCarPage from "./components/CarsList/CarListAdmin/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
+import CarsListBySlug from "./components/Categories/CategoriesHomePage/CarsListBySlug";
 
 
 //Import lazyLoading
@@ -93,6 +94,9 @@ function App() {
           <Route path="/cars" element={<CarsListAdmin />} />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
+
+          <Route path="/category/:urlSlug/items" element={<CarsListBySlug />} />
+
 
           {/* News Routes*/}
           <Route path="/news/:slug" element={<Suspense fallback={null}><NewsWithNewsList /></Suspense>}></Route>

@@ -19,11 +19,19 @@ export interface IStatus {
     pages: number;
     total: number;
   }
-  
-    
-  
-    
-  
-    
-  
-   
+
+  export interface Product {
+    categoryName: string,
+    id: number,
+    images: string[],
+    name: string,
+    price: number,
+    priority: number,
+  }
+
+  export interface PaginatedProductsList {
+    currentPage: number,
+    pages: number,
+    products: Product[],
+    total: number
+  }

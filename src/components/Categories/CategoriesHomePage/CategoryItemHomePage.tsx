@@ -7,30 +7,18 @@ import './style.css'
 // import { useState } from 'react';
 // import { ISearchProduct } from '../../CarsList/types';
 // import { ISearchCategory } from '../types/SearchCategories';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   categoryItem: CategoryInfo;
-
 }
 
-const CategoryItemHomePage: React.FC<Props> = ({ categoryItem: { urlSlug, title, image } }) => {
-  // const { fetchCarsSearch } = useActions();
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const [searchProductSlug, setSearchProductSlug] = useState<ISearchProduct>({
-  //   categorySlug: searchParams.get('CategorySlug')|| ''
-  // })
+const CategoryItemHomePage: React.FC<Props> = ({ categoryItem: { urlSlug, title, image }}) => {
 
-  // const [searchCategorySlug, setSearchCategorySlug] = useState<ISearchCategory>({
-  //   urlSlug: searchParams.get('urlSlug')|| ''
-  // })
+  const navigator = useNavigate();
 
   const onClick = () =>{
-    // console.log(values);
-    if(urlSlug === 'salo'){
-      console.log('Hey!');
-      
-    }
-    
+    navigator(`/category/${urlSlug}/items`)
   }
   
   const header = (
@@ -46,7 +34,6 @@ const CategoryItemHomePage: React.FC<Props> = ({ categoryItem: { urlSlug, title,
 );
 
   return (
-    // <div onClick={(()=>{urlSlug})}>
     <div onClick={onClick}>
       <Card 
       className='element'
