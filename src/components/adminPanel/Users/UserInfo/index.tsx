@@ -14,7 +14,7 @@ const UserInfo = () => {
 	const { getUserById } = useActions();
 	const { userData, loading } = useTypedSelector( store => store.userCrud);
 	const { firstName, phone, photo, email, secondName } = userData;
-
+  const title = <h3 className="text-center">Інформація про користувача</h3>;
 	useEffect(() => {
     getUserById(_id);
   }, [getUserById, _id]);
@@ -27,10 +27,10 @@ const UserInfo = () => {
       <Helmet>
         <title>Інформація про користувача</title>
       </Helmet>
-      <Card title="Інформація про користувача">
+      <Card title={title}>
         <div className="row">
           <div className="col-2">
-            <Image src={`https://vovalohika.tk${photo}`} alt="Image Text" />
+            <img src={`https://vovalohika.tk/images/300_${photo}`} width='207px' height='115px' alt="Image Text" />
           </div>
           <div className="col">
             <div className="row">

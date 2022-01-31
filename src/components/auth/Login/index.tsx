@@ -93,6 +93,7 @@ const { errors, touched, handleChange, handleSubmit } = formik;
                 >
                   Вхід
                 </button>
+                <Link to="/register">Зареєструватися</Link>
               </div>
             </Form>
           </FormikProvider>
