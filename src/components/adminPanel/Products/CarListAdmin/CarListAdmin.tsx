@@ -103,28 +103,6 @@ const CarsListAdmin = () => {
         <Column body={ActionBodyTemplate} header="Дії"></Column>
       </DataTable>
     </div>
-    // <>
-    //   <h1 className="text-center">Автомобілі</h1>
-    //   <CarSearch>
-    //     {showLoader && <EclipseWidget />}
-    //     <table className="table table-striped table-hover">
-    //       <thead>
-    //         <tr>
-    //           <th scope="col">Id</th>
-    //           <th scope="col">Image</th>
-    //           <th scope="col">Name</th>
-    //           <th scope="col">Price</th>
-    //           <th scope="col">Priority</th>
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-    //         {products.map((car: ISearchCar, index) => {
-    //           return <CarAdminItem key={index} car={car} />;
-    //         })}
-    //       </tbody>
-    //     </table>
-    //   </CarSearch>
-    // </>
   );
 };
 

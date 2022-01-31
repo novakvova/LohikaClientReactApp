@@ -18,6 +18,7 @@ export interface IGetCropperProps {
   value?: string;
   error?: string;
   touched?: boolean;
+  aspectRatio?: number;
 }
 
 const CropperComponent: React.FC<IGetCropperProps> = ({
@@ -26,6 +27,7 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   error,
   touched,
   value,
+  aspectRatio = 16 / 9,
 }) => {
   const [img, setImg] = useState<string>(value as string);
   const [cropperObj, setCropperObj] = useState<Cropper>();
@@ -48,14 +50,14 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
   useEffect(() => {
     if (imgRef.current) {
       const cropper = new Cropper(imgRef.current as HTMLImageElement, {
-        aspectRatio: 16 / 9,
+        aspectRatio: aspectRatio,
         viewMode: 1,
         preview: prevRef.current,
       });
       cropper.replace(img);
       setCropperObj(cropper);
     }
-  }, [showModal, img]);
+  }, [showModal, img, aspectRatio]);
 
   const rotateImg = () => {
     if (imgRef.current) {
@@ -135,42 +137,6 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
               }}
             ></div>
             <div className="d-flex justify-content-around mt-2">
-              <button
-                onClick={() => {
-                  cropperObj?.setAspectRatio(16 / 9);
-                }}
-                type="button"
-                className="btn btn-outline-secondary"
-              >
-                size: 16:9
-              </button>
-              <button
-                onClick={() => {
-                  cropperObj?.setAspectRatio(4 / 3);
-                }}
-                type="button"
-                className="btn btn-outline-secondary"
-              >
-                size: 4:3
-              </button>
-              <button
-                onClick={() => {
-                  cropperObj?.setAspectRatio(1 / 1);
-                }}
-                type="button"
-                className="btn btn-outline-secondary"
-              >
-                size: 1:1
-              </button>
-              <button
-                onClick={() => {
-                  cropperObj?.setAspectRatio(NaN);
-                }}
-                type="button"
-                className="btn btn-outline-secondary"
-              >
-                free size
-              </button>
               <button
                 onClick={rotateImg}
                 type="button"
