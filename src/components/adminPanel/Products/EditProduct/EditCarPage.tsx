@@ -1,17 +1,17 @@
 import { useFormik } from "formik";
 import * as React from "react";
-import { AddCarSchema as validationSchema } from "./validation";
+import { AddCarSchema as validationSchema } from "../validation";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
-import { useActions } from "../../../hooks/useActions";
-import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import EclipseWidget from "../../common/eclipse";
-import InputGroup from "../../common/InputGroup";
-import { ICarUpdate } from "../types";
+import { useActions } from "../../../../hooks/useActions";
+import { useTypedSelector } from "../../../../hooks/useTypedSelector";
+import EclipseWidget from "../../../common/eclipse";
+import InputGroup from "../../../common/InputGroup";
+import { ICarUpdate } from "../../../CarsList/types";
 
 import { v4 as uuid } from "uuid";
-import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
-import SelectGroup from "../../common/SelectGroup";
+import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
+import SelectGroup from "../../../common/SelectGroup";
 
 const EditCarPage = () => {
   const { updateCar, fetchCategories } = useActions();

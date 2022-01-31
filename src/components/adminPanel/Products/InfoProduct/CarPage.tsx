@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
-import { useActions } from "../../../hooks/useActions";
-import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import EclipseWidget from "../../common/eclipse";
+import { useActions } from "../../../../hooks/useActions";
+import { useTypedSelector } from "../../../../hooks/useTypedSelector";
+import EclipseWidget from "../../../common/eclipse";
 import { v4 as uuid } from "uuid";
 
 const CarPage = () => {

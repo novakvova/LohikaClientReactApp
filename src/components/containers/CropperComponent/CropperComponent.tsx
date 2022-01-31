@@ -200,16 +200,6 @@ const CropperComponent: React.FC<IGetCropperProps> = ({
                 </button>
               </div>
             </div>
-
-            <div
-              ref={prevRef as LegacyRef<HTMLDivElement>}
-              style={{
-                overflow: "hidden",
-                height: "100px",
-                width: "100px",
-                border: "1px solid silver",
-              }}
-            ></div>
           </div>
         </Modal>
       )}

@@ -1,9 +1,17 @@
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 const DefaultFooter = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav
+      className="navbar navbar-expand-lg navbar-dark bg-dark"
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        zIndex: 100,
+      }}
+    >
       <div className="container">
         <Link to="/" className="navbar-brand">
           LOGO
@@ -15,42 +23,43 @@ const DefaultFooter = () => {
           data-bs-target="#navbarText"
           aria-controls="navbarText"
           aria-expanded="false"
-          aria-label="Toggle navigation">
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/" className="nav-link active" aria-current="page" >
+              <Link to="/" className="nav-link active" aria-current="page">
                 Home
-              </Link >
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/" className="nav-link" >
+              <Link to="/" className="nav-link">
                 Features
-              </Link >
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/" className="nav-link" >
+              <Link to="/" className="nav-link">
                 Pricing
-              </Link >
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/" className="nav-link" >
+              <Link to="/" className="nav-link">
                 FaceBook
-              </Link >
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/" className="nav-link" >
+              <Link to="/" className="nav-link">
                 Instagram
-              </Link >
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/" className="nav-link" >
+              <Link to="/" className="nav-link">
                 Google
               </Link>
             </li>
-          </ul>   
+          </ul>
         </div>
       </div>
     </nav>
