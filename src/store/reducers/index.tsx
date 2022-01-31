@@ -10,6 +10,7 @@ import { fleshMessagesReducer } from '../../components/FleshMessages/reducer';
 import { paginateReducer } from '../../components/adminPanel/Users/Paginator/reducer';
 import { categoryReducer } from '../../components/Categories/reducer';
 import { newsReducer } from "../../components/adminPanel/News/reducer";
+import { productsReducer } from "../../components/Categories/CategoriesHomePage/products-reducer";
 
 export const rootReducer = combineReducers({
   car: carReducer,
@@ -23,6 +24,7 @@ export const rootReducer = combineReducers({
   paginate: paginateReducer,
   categoryCrud: categoryReducer,
   news: newsReducer,
+  productsReducer: productsReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

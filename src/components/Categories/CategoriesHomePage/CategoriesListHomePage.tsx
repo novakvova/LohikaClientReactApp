@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import CategoryItemHomePage from '../CategoriesHomePage/CategoryItemHomePage';
+import Pagination from '../Pagination/Pagination';
 import { CategoryInfo } from '../types';
 import './style.css'
 
