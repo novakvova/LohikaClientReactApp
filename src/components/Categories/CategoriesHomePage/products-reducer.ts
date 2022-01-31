@@ -24,7 +24,15 @@ export const productsReducer = (
 ): CategoryProductsState => {
     switch (action.type) {
         case GetProductsActionTypes.GET_PRODUCTS_SUCCESS: 
-            return {...state, ppl: action.payload};
+            return {...state, loading: false, ppl: action.payload};
+
+        case GetProductsActionTypes.GET_PRODUCTS:
+            return{...state, loading: true};
+
+        case GetProductsActionTypes.GET_PRODUCTS_ERROR:
+            console.log( action.payload);
+            return{...state, loading: false, error: action.payload}
+            
         default:
             return state;
     }

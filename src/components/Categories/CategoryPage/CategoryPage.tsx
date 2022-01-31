@@ -28,7 +28,7 @@ const CategoryDetailPage = () => {
         navigator('/categories');
         await addFlashMessage({
           type: 'error',
-          message: ' Категорію не знайдено',
+          message: 'Категорію не знайдено',
         });
         setTimeout(() => {
           deleteFlashMessage();
@@ -52,8 +52,8 @@ const CategoryDetailPage = () => {
       </Helmet>
       <Card title="Інформація про категорію">
         <div className="row">
-          <div className="col-2">
-            <Image src={`https://vovalohika.tk/images/${image}`} alt="avatar"/>
+          <div className="col-3">
+            <Image src={`https://vovalohika.tk/images/300_${image}`} alt="avatar"/>
           </div>
           <div className="col">
             <div className="row">

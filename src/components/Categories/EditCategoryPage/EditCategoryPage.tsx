@@ -34,12 +34,6 @@ const EditCategoryPage = () => {
     image: categoryData.image,
   };
 
-  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFieldValue('image', (e.target as any).files[0]);
-  //   const file = (e.target as any).files[0];
-  //   setImg(URL.createObjectURL(file));
-  // };
-
   const onHandleSubmit = async (values: CategoryInfo) => {
     try {
       await updateCategory(values);

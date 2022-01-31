@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import CarCard from '../../CarsList/CarCard';
-// import { PaginatedProductsList } from '../types';
 
 const CarsListBySlug = () => {
   const { urlSlug } = useParams();
@@ -19,6 +18,7 @@ const CarsListBySlug = () => {
   const { products, total, pages } = cps.ppl;
 
   return (
+  <>
     <div className="row d-flex justify-content-around flex-wrap">
       {products.map(({ id, name, price, images, categoryName }) => (
         <CarCard
@@ -32,6 +32,7 @@ const CarsListBySlug = () => {
         />
       ))}
     </div>
+  </>
   );
 };
 

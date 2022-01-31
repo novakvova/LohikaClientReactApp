@@ -2,11 +2,6 @@ import { v4 as uuid } from 'uuid';
 import { CategoryInfo } from '../types';
 import { Card } from 'primereact/card';
 import './style.css'
-// import { useActions } from '../../../hooks/useActions';
-// import { useSearchParams } from 'react-router-dom';
-// import { useState } from 'react';
-// import { ISearchProduct } from '../../CarsList/types';
-// import { ISearchCategory } from '../types/SearchCategories';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
