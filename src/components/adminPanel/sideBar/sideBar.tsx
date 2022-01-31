@@ -1,7 +1,6 @@
 import { Menu } from "primereact/menu";
-import { useNavigate } from 'react-router-dom';
-import { useActions } from '../../../hooks/useActions';
-
+import { useNavigate } from "react-router-dom";
+import { useActions } from "../../../hooks/useActions";
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -28,10 +27,12 @@ const SideBar = () => {
         {
           label: "Список",
           icon: "pi pi-fw pi-list",
+          command: () => navigate("/adminPanel/products"),
         },
         {
           label: "Добавити",
           icon: "pi pi-fw pi-plus",
+          command: () => navigate("/adminPanel/products/addProduct"),
         },
       ],
     },

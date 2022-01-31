@@ -15,7 +15,7 @@ const CarsListBySlug = () => {
   }, [getProductsByCategorySlug, _urlSlug]);
 
   const cps = useTypedSelector((store) => store.productsReducer);
-  const { products, total, pages } = cps.ppl;
+  const { products } = cps.ppl;
 
   return (
   <>

@@ -1,15 +1,26 @@
-import './footer.css';
+import { Link } from "react-router-dom";
+
+import "./footer.css";
 
 const DefaultFooter = () => {
-  
   return (
-    <nav className="navbar navbar-dark bg-dark fixed-bottom">
+    <nav
+      className="navbar navbar-dark bg-dark"
+    >
       <div className="container-fluid">
-        <a href="/" className="navbar-brand">LOGO</a>
-        <a href="/" className="navbar-brand">LOGO</a>
-        <a href="/" className="navbar-brand">LOGO</a>
-        <a href="/" className="navbar-brand">LOGO</a>
-        <a href="mailto:admin@gmail.com">Haпишiть нaм</a>
+        <Link to="#" className="navbar-brand">
+          LOGO
+        </Link>
+        <Link to="#" className="navbar-brand">
+          LOGO
+        </Link>
+        <Link to="#" className="navbar-brand">
+          LOGO
+        </Link>
+        <Link to="#" className="navbar-brand">
+          LOGO
+        </Link>
+        <Link to="mailto:admin@gmail.com">Haпишiть нaм</Link>
       </div>
     </nav>
   );

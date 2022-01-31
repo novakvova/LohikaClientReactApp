@@ -36,11 +36,14 @@ const DefaultHeader = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="d-flex navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link" to="/products/add">
-                Додати продукт
-              </Link>
-            </li>
+            {isAuth && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/products/add">
+                  Додати продукт
+                </Link>
+              </li>
+            )}
+
             <li className="ms-3">
               <HeaderSearch />
             </li>
@@ -49,12 +52,6 @@ const DefaultHeader = () => {
             <ul className="navbar-nav d-flex align-items-center">
               <li className="nav-item ">
                 <HeaderCartButton />
-              </li>
-
-              <li className="nav-item d-flex align-items-center">
-                <Link className="nav-link" to="/cars">
-                  Машини
-                </Link>
               </li>
               {isAuth && roles === "admin" && (
                 <li className="nav-item">
