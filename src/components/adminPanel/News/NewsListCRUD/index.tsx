@@ -40,6 +40,7 @@ const NewsAdminList = () => {
   };
 
 const ActionBodyTemplate = (rowData: IEditorValues) => {
+  
    const deleteNews = async (id: number) => {
      await setVisible(true);
      setDelId(id);

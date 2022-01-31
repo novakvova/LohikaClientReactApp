@@ -15,15 +15,18 @@ import AddNewCar from "./components/CarsList/AddNewCar";
 import ProfilePage from "./components/Profile";
 import Cart from "./components/Cart/Cart";
 import NoMatch from "./components/NoMatch";
-import CarsListAdmin from "./components/adminPanel/Products/CarListAdmin/CarListAdmin";
 import CarPage from "./components/adminPanel/Products/InfoProduct/CarPage";
 import EditCarPage from "./components/adminPanel/Products/EditProduct/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 import AddCarAdmin from "./components/adminPanel/Products/AddProduct";
+import CarsListBySlug from "./components/Categories/CategoriesHomePage/CarsListBySlug";
 
 //Import lazyLoading
+const CarsListAdmin = lazy(
+  () => import("./components/adminPanel/Products/CarListAdmin/CarListAdmin")
+);
 const Register = lazy(() => import("./components/auth/Register/index"));
 const Login = lazy(() => import("./components/auth/Login/index"));
 const AdminMain = lazy(() => import("./components/adminPanel/Users"));
@@ -59,7 +62,7 @@ const Categories = lazy(
 const NewsWithNewsList = lazy(
   () => import("./components/adminPanel/NewsWithNewsLIst")
 );
-
+const CheckOut = lazy(() => import("./components/Checkout/index"));
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -109,9 +112,18 @@ function App() {
 
           {/* Products Routes */}
           <Route path="/products/add" element={<AddNewCar />} />
-          <Route path="/cars" element={<CarsListAdmin />} />
+          <Route
+            path="/cars"
+            element={
+              <Suspense fallback={null}>
+                <CarsListAdmin />
+              </Suspense>
+            }
+          />
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
+
+          <Route path="/category/:urlSlug/items" element={<CarsListBySlug />} />
 
           {/* News Routes*/}
           <Route
@@ -123,6 +135,15 @@ function App() {
             }
           ></Route>
 
+          {/*Checkout Route*/}
+          <Route
+            path="/ckeckOut"
+            element={
+              <Suspense fallback={null}>
+                <CheckOut />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<NoMatch />} />
         </Route>
 
@@ -255,7 +276,7 @@ function App() {
                 </Suspense>
               }
             />
-             <Route
+            <Route
               path="/adminPanel/products/addProduct"
               element={
                 <Suspense fallback={null}>
@@ -263,7 +284,7 @@ function App() {
                 </Suspense>
               }
             />
-             <Route
+            <Route
               path="/adminPanel/products/infoProduct/:id"
               element={
                 <Suspense fallback={null}>
@@ -271,7 +292,7 @@ function App() {
                 </Suspense>
               }
             />
-             <Route
+            <Route
               path="/adminPanel/products/EditProduct/:id"
               element={
                 <Suspense fallback={null}>

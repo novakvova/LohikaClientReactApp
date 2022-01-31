@@ -17,7 +17,6 @@ const CategoriesList = () => {
   const [visible, setVisible] = useState(false);
   const toast = useRef<Toast>(null);
   const { deleteCategory } = useActions();
-// console.log(categories);
 
   const ActionBodyTemplate = (rowData: CategoryInfo) => {
     const delCategory = async (id: number) => {

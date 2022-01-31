@@ -72,10 +72,6 @@ const ActionBodyTemplate = (rowData: UserInfo) => {
   );
 };
 
-
-
-
-
 	const { users } = useTypedSelector(store => store.userCrud);
     return (
       <div className="card">
