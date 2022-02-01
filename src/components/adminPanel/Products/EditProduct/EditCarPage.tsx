@@ -12,6 +12,7 @@ import { ICarUpdate } from "../../../CarsList/types";
 import { v4 as uuid } from "uuid";
 import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
 import SelectGroup from "../../../common/SelectGroup";
+import EditorTiny from "../../../common/EditorTiny/EditorTiny";
 
 const EditCarPage = () => {
   const { updateCar, fetchCategories } = useActions();
@@ -85,7 +86,6 @@ const EditCarPage = () => {
 
   const navigate = useNavigate();
   const onSubmit = async (values: ICarUpdate) => {
-    console.log("values => ", values);
     setShowLoader(true);
     await updateCar({
       ...values,
@@ -101,6 +101,7 @@ const EditCarPage = () => {
     priority: `${carSearchedById?.priority}`,
     price: `${carSearchedById?.price}`,
     categoryId: carSearchedById.categoryId,
+    description: carSearchedById.description,
   };
 
   const formik = useFormik({
@@ -111,7 +112,7 @@ const EditCarPage = () => {
     enableReinitialize: true,
   });
 
-  const { errors, touched, handleChange } = formik;
+  const { errors, touched, handleChange, setFieldValue } = formik;
 
   return (
     <>
@@ -186,6 +187,17 @@ const EditCarPage = () => {
             value={formik.values.price as string}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+          />
+
+          <EditorTiny
+            value={formik.values.description}
+            field="description"
+            label="Опис товаару"
+            error={errors.description}
+            touched={touched.description}
+            onEditorChange={(a: string) => {
+              setFieldValue("description", a);
+            }}
           />
           <div className="text-center">
             <button type="submit" className="btn btn-primary">

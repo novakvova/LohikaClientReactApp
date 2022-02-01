@@ -24,7 +24,8 @@ export interface IAddCar {
   price: string;
   image?: string;
   ids?: Array<number>;
-  categoryId?: number ;
+  categoryId?: number;
+  description?: string;
 }
 
 export interface SendingCarAction {
