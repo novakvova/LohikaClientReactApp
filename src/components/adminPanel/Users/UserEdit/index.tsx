@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useActions } from '../../../../hooks/useActions';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import { UserInfo } from '../types';
 import { EditUserSchema } from './validation';
 import { Card } from "primereact/card" 
 import { Helmet } from 'react-helmet';
@@ -11,7 +10,7 @@ import EclipseWidget from '../../../common/eclipse';
 import InputGroup from '../../../common/InputGroup';
 import { Button } from 'primereact/button';
 import CropperComponent from '../../../containers/CropperComponent/CropperComponent';
-
+import "./userEdit.css"
 
 const EditUser = () => {
   const { userData, loading } = useTypedSelector((store) => store.userCrud);
@@ -61,19 +60,22 @@ const EditUser = () => {
       </Helmet>
       {loading && <EclipseWidget />}
       {!loading && (
-        <Card title={title} className='p-5'>
+        <Card title={title} className="p-5">
           <FormikProvider value={formik}>
             <Form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-1"></div>
-                <div className="col-3 m-5">
-                  <CropperComponent
-                    field="photo"
-                    onChange={setFieldValue}
-                    error={errors.photo}
-                    touched={touched.photo}
-                    value={values.photo}
-                  />
+                <div className="col-3 m-3">
+                  <div className="CroperSize_editUser">
+                    <CropperComponent
+                      aspectRatio={4 / 4}
+                      field="photo"
+                      onChange={setFieldValue}
+                      error={errors.photo}
+                      touched={touched.photo}
+                      value={values.photo}
+                    />
+                  </div>
                 </div>
                 <div className="col-4">
                   <InputGroup
@@ -119,7 +121,7 @@ const EditUser = () => {
                       icon="pi pi-check"
                     />
                   </div>
-                  <div className='col-2'></div>
+                  <div className="col-2"></div>
                 </div>
               </div>
             </Form>

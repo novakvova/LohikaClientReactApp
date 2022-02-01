@@ -3,6 +3,7 @@ export enum ProfileActionTypes {
   PROFILE_SUCCESS = "PROFILE_SUCCESS",
   PROFILE_ERROR = "PROFILE_ERROR",
 }
+
 export interface IProfile {
   id: number | null;
   email: string;
@@ -12,11 +13,6 @@ export interface IProfile {
   phone: string
 }
 
-export interface ProfileState {
-  profile: IProfile;
-  loading: boolean;
-  error: undefined | string;
-}
 
 export interface ProfileAction {
   type: ProfileActionTypes.PROFILE;

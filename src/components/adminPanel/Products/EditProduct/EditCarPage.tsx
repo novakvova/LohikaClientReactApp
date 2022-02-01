@@ -1,31 +1,49 @@
 import { useFormik } from "formik";
 import * as React from "react";
-import { AddCarSchema as validationSchema } from "./validation";
+import { AddCarSchema as validationSchema } from "../validation";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
-import { useActions } from "../../../hooks/useActions";
-import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import EclipseWidget from "../../common/eclipse";
-import InputGroup from "../../common/InputGroup";
-import { ICarUpdate } from "../types";
+import { useActions } from "../../../../hooks/useActions";
+import { useTypedSelector } from "../../../../hooks/useTypedSelector";
+import EclipseWidget from "../../../common/eclipse";
+import InputGroup from "../../../common/InputGroup";
+import { ICarUpdate } from "../../../CarsList/types";
 
 import { v4 as uuid } from "uuid";
-import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
-import SelectGroup from "../../common/SelectGroup";
+import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
+import SelectGroup from "../../../common/SelectGroup";
 
 const EditCarPage = () => {
   const { updateCar, fetchCategories } = useActions();
-  const { categories } = useTypedSelector((store) => store.categoryCrud);
   const [showLoader, setShowLoader] = React.useState(false);
   const { id } = useParams();
+  const _id = Number(id);
   const { fetchCarById, uploadCarImage } = useActions();
   const { carSearchedById } = useTypedSelector((store) => store.car);
+  const { categories } = useTypedSelector((store) => store.categoryCrud);
   const [cropImages, setCropImages] = React.useState<Array<any>>([
     "",
     "",
     "",
     "",
   ]);
+
+  const getCarById = React.useCallback(
+    async (id) => {
+      try {
+        setShowLoader(true);
+        await fetchCarById(id);
+        setShowLoader(false);
+      } catch (error) {
+        console.log("err = > ", error);
+      }
+    },
+    [fetchCarById]
+  );
+
+  React.useEffect(() => {
+    getCarById(_id);
+  }, [getCarById, _id]);
 
   React.useEffect(() => {
     fetchCategories();
@@ -65,20 +83,6 @@ const EditCarPage = () => {
     initCropImages();
   }, [carSearchedById, initCropImages]);
 
-  const getCarById = React.useCallback(async () => {
-    try {
-      setShowLoader(true);
-      await fetchCarById(Number(id));
-      setShowLoader(false);
-    } catch (error) {
-      console.log("err = > ", error);
-    }
-  }, [fetchCarById, id]);
-
-  React.useEffect(() => {
-    getCarById();
-  }, [getCarById]);
-
   const navigate = useNavigate();
   const onSubmit = async (values: ICarUpdate) => {
     console.log("values => ", values);
@@ -92,7 +96,7 @@ const EditCarPage = () => {
   };
 
   const initialValues = {
-    id: `${id}`,
+    id: `${_id}`,
     name: `${carSearchedById?.name}`,
     priority: `${carSearchedById?.priority}`,
     price: `${carSearchedById?.price}`,
@@ -104,6 +108,7 @@ const EditCarPage = () => {
     validationSchema,
     onSubmit,
     validateOnBlur: true,
+    enableReinitialize: true,
   });
 
   const { errors, touched, handleChange } = formik;

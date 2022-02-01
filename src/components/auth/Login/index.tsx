@@ -84,7 +84,11 @@ const { errors, touched, handleChange, handleSubmit } = formik;
                 touched={touched.password}
                 onChange={handleChange}
               />
-              <Link to="/recoverPassword">Забув пароль?</Link>
+              <div className="d-flex justify-content-between">
+                <Link to="/recoverPassword">Забув пароль?</Link>
+                <Link to="/register">Зареєструватися</Link>
+              </div>
+
               <div className="text-center">
                 <button
                   type="submit"
@@ -93,7 +97,6 @@ const { errors, touched, handleChange, handleSubmit } = formik;
                 >
                   Вхід
                 </button>
-                <Link to="/register">Зареєструватися</Link>
               </div>
             </Form>
           </FormikProvider>
