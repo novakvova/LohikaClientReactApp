@@ -7,7 +7,7 @@ import http from "../../../http_common";
 const GetOrdersList = () => async (dispatch: Dispatch<GetOrdersActions>) => {
   try {
     dispatch({ type: GetOrdersActionTypes.GET_ORDERS });
-	const response = await http.get<Order[]>("api/Orders/list");
+	const response = await http.get<Order[]>("api/Orders/user/list");
 	const { data } = response;
     dispatch({
       type: GetOrdersActionTypes.GET_ORDERS_SUCCESS,
