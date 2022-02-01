@@ -7,3 +7,10 @@
 	padding-top: 5rem;
 	background-color: #f7f7f6;
 }
+
+.defaultPositions {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	justify-content: space-between;
+  }
