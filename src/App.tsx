@@ -122,8 +122,8 @@ function App() {
               </Suspense>
             }
           /> */}
-          {/* <Route path="/cars/:id" element={<CarPage />} />
-          <Route path="/cars/edit/:id" element={<EditCarPage />} /> */}
+          <Route path="/cars/:id" element={<CarPage />} />
+          {/* <Route path="/cars/edit/:id" element={<EditCarPage />} /> */}
 
           <Route path="/category/:urlSlug/items" element={<CarsListBySlug />} />
 
