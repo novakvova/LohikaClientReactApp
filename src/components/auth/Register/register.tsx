@@ -72,6 +72,7 @@ const RegisterPage = () => {
       <div className="col-3">
         <div className="height_cropper">
           <CropperComponent
+            aspectRatio={4/4}
             field="photo"
             error={errors.photo}
             onChange={setFieldValue}

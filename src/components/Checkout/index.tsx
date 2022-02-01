@@ -9,12 +9,16 @@ import { orderSchema } from './validation';
 import http from "../../http_common";
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { useState } from 'react';
+import EclipseWidget from '../common/eclipse';
 
 
 const CheckOut = () => {
 	const { cartData } = useTypedSelector(store => store.cart)
-	const { GetProfileData } = useActions();
-    const { profile : { phone,  firstName, secondName} } = useTypedSelector( store => store.profile);
+	const { GetProfileData, clearCartData } = useActions();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { profile : { phone,  firstName, secondName} } = useTypedSelector( store => store.profile);
 	const quan = cartData.reduce((prev, current) => prev + current.quantity, 0);
 	const totalSum = cartData.reduce((prev, current) => prev + current.productPrice * current.quantity, 0)
     const toast = useRef<Toast>(null);
@@ -44,6 +48,7 @@ const CheckOut = () => {
 
 	const onHandleSubmit = async () => {
 		try {
+      setLoading(true);
 			const result = await http.post<number>("/api/Orders/add", values);
 			const { status } = result;
 			
@@ -56,7 +61,8 @@ const CheckOut = () => {
 				});
 				setTimeout(() => navigate("/"), 1000);
           	}
-			
+            clearCartData();
+            setLoading(false)
 		} catch (error) {
 					if (toast.current !== null ) {
 						toast.current.show({
@@ -78,40 +84,93 @@ const CheckOut = () => {
 		const { errors, touched, handleChange, handleSubmit, values } = formik;
 	return (
     <>
+      <Helmet>
+        <title>Оформлення замовлення</title>
+      </Helmet>
+      {loading && <EclipseWidget />}
       <FormikProvider value={formik}>
         <Form onSubmit={handleSubmit}>
           <Toast ref={toast} />
           <div className="row m-4">
             <h3 className="text-center">Оформлення замовлення</h3>
             <div className="col-8">
-              <h5 className="m-3 text-center">Контактні дані</h5>
-              <InputGroup
-                field="consumerFirstName"
-                label="Ім'я"
-                type="text"
-                value={values.consumerFirstName}
-                error={errors.consumerFirstName}
-                touched={touched.consumerFirstName}
-                onChange={handleChange}
-              />
-              <InputGroup
-                field="consumerSecondName"
-                label="Прізвище"
-                type="text"
-                value={values.consumerSecondName}
-                error={errors.consumerSecondName}
-                touched={touched.consumerSecondName}
-                onChange={handleChange}
-              />
-              <InputGroup
-                field="consumerPhone"
-                label="Телефон"
-                type="text"
-                value={values.consumerPhone}
-                error={errors.consumerPhone}
-                touched={touched.consumerPhone}
-                onChange={handleChange}
-              />
+              <div className="row">
+                <div className="col-6">
+                  <h5 className="m-3 text-center">Контактні дані</h5>
+                  <InputGroup
+                    field="consumerFirstName"
+                    label="Ім'я"
+                    type="text"
+                    value={values.consumerFirstName}
+                    error={errors.consumerFirstName}
+                    touched={touched.consumerFirstName}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                  />
+                  <InputGroup
+                    field="consumerSecondName"
+                    label="Прізвище"
+                    type="text"
+                    value={values.consumerSecondName}
+                    error={errors.consumerSecondName}
+                    touched={touched.consumerSecondName}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                  />
+                  <InputGroup
+                    field="consumerPhone"
+                    label="Телефон"
+                    type="text"
+                    pattern={`+3 ([0-9]{3} [0-9]{3}-[0-9]{2}-[0-9]{2} )`}
+                    value={values.consumerPhone}
+                    error={errors.consumerPhone}
+                    touched={touched.consumerPhone}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                  />
+                </div>
+                <div className="col-6">
+                  <h5 className="m-3 text-center">Доставка</h5>
+                  <InputGroup
+                    field="region"
+                    label="Область"
+                    type="text"
+                    value={values.region}
+                    error={errors.region}
+                    touched={touched.region}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                  <InputGroup
+                    field="city"
+                    label="Місто"
+                    type="text"
+                    value={values.city}
+                    error={errors.city}
+                    touched={touched.city}
+                    onChange={handleChange}
+                  />
+                  <InputGroup
+                    field="street"
+                    label="Вулиця"
+                    type="text"
+                    value={values.street}
+                    error={errors.street}
+                    touched={touched.street}
+                    onChange={handleChange}
+                  />
+                  <InputGroup
+                    field="homeNumber"
+                    label="Номер будинку, квартира"
+                    type="text"
+                    value={values.homeNumber}
+                    error={errors.homeNumber}
+                    touched={touched.homeNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <hr />
               <h5 className="m-2 text-center">Товари</h5>
               {cartData.map(
                 ({ productName, images, productPrice, quantity }) => {
@@ -150,44 +209,6 @@ const CheckOut = () => {
                   );
                 }
               )}
-
-              <h5 className="m-3 text-center">Доставка</h5>
-              <InputGroup
-                field="region"
-                label="Область"
-                type="text"
-                value={values.region}
-                error={errors.region}
-                touched={touched.region}
-                onChange={handleChange}
-              />
-              <InputGroup
-                field="city"
-                label="Місто"
-                type="text"
-                value={values.city}
-                error={errors.city}
-                touched={touched.city}
-                onChange={handleChange}
-              />
-              <InputGroup
-                field="street"
-                label="Вулиця"
-                type="text"
-                value={values.street}
-                error={errors.street}
-                touched={touched.street}
-                onChange={handleChange}
-              />
-              <InputGroup
-                field="homeNumber"
-                label="Номер будинку, квартира"
-                type="text"
-                value={values.homeNumber}
-                error={errors.homeNumber}
-                touched={touched.homeNumber}
-                onChange={handleChange}
-              />
             </div>
             <div className="col-4 mt-5">
               <div className="card">

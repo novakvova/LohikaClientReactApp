@@ -8,7 +8,7 @@ export interface UserInfo {
   id: number;
   firstName?: string;
   secondName?: string;
-  photo?: string | File;
+  photo: string;
   phone?: string;
   email?: string;
 }

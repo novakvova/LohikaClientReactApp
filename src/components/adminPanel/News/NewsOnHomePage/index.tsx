@@ -21,7 +21,7 @@ const NewsHomePage = () => {
         numScroll={1}
         responsiveOptions={responsiveOptions}
         itemTemplate={productTemplate}
-        header={<h3 className="text-center">Новини та акції</h3>}
+        header={<h3 className="text-center m-4">Новини та акції</h3>}
       />
     </>
   );

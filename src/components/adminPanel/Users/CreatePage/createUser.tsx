@@ -100,7 +100,7 @@ const Create = () => {
                   onChange={handleChange}
                   touched={touched.secondName}
                 />
-                <div className=''>
+                <div>
                   <label htmlFor="photo">Аватар</label>
                   <CropperComponent
                     field="photo"

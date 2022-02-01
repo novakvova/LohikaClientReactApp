@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useActions } from '../../hooks/useActions';
-import { useTypedSelector } from "../../hooks/useTypedSelector";
-import EclipseWidget from '../common/eclipse';
+import { useActions } from '../../../hooks/useActions';
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import EclipseWidget from '../../common/eclipse';
 
 import './index.css'
 

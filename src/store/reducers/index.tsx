@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { carReducer } from "../../components/CarsList/car-reducer";
 import { authReducer } from "../../components/auth/Login/reducer";
 import { registerReducer } from "../../components/auth/Register/reducer";
-import { profileReducer } from '../../components/Profile/reducer';
+import { profileReducer } from '../../components/UserData/reducer';
 import { usersReducer } from "../../components/adminPanel/Users/reducer";
 import { sendingCarReducer } from "../../components/CarsList/AddNewCar/addCar-reducer";
 import { cartReducer } from "../../components/Cart/cart-reduser";
