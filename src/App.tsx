@@ -15,13 +15,14 @@ import AddNewCar from "./components/CarsList/AddNewCar";
 import ProfilePage from "./components/UserData/Profile";
 import Cart from "./components/Cart/Cart";
 import NoMatch from "./components/NoMatch";
-import CarPage from "./components/adminPanel/Products/InfoProduct/CarPage";
+import CarPage from "./components/adminPanel/Products/InfoProduct/InfoPage";
 import EditCarPage from "./components/adminPanel/Products/EditProduct/EditCarPage";
 import RecoverPassword from "./components/auth/recoverPassword";
 import SendEmail from "./components/auth/recoverPassword/recoverSuccess";
 import ResetPassword from "./components/auth/recoverPassword/resetPassword";
 import AddCarAdmin from "./components/adminPanel/Products/AddProduct";
 import CarsListBySlug from "./components/Categories/CategoriesHomePage/CarsListBySlug";
+import InfoPage from "./components/adminPanel/Products/InfoProduct/InfoPage";
 
 //Import lazyLoading
 const CarsListAdmin = lazy(
@@ -289,7 +290,7 @@ function App() {
               path="/adminPanel/products/infoProduct/:id"
               element={
                 <Suspense fallback={null}>
-                  <CarPage />
+                  <InfoPage />
                 </Suspense>
               }
             />

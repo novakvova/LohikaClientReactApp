@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
-import { useActions } from "../../../../hooks/useActions";
-import { useTypedSelector } from "../../../../hooks/useTypedSelector";
-import EclipseWidget from "../../../common/eclipse";
+import { useActions } from "../../hooks/useActions"; 
+import { useTypedSelector } from "../../hooks/useTypedSelector"; 
+import EclipseWidget from "../common/eclipse";
 import { v4 as uuid } from "uuid";
+import parse from "html-react-parser";
 
 const CarPage = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -27,6 +28,10 @@ const CarPage = () => {
   useEffect(() => {
     getCarById();
   }, [getCarById]);
+
+  const desciptionParsed = (text: string) => {
+    return <>{parse(text)}</>;
+  };
 
   return (
     <div>
@@ -135,6 +140,14 @@ const CarPage = () => {
                     <p className="text-muted mb-0">{`${carSearchedById?.price} $`}</p>
                   </div>
                 </div>
+              </div>
+              <div className="row">
+                <div className="col-3"></div>
+                <div className="col-6">
+                  {carSearchedById.description && desciptionParsed(carSearchedById.description)}
+                  
+                </div>
+                <div className="col-3"></div>
               </div>
             </div>
           </div>
