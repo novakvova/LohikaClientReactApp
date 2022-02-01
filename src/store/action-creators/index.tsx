@@ -1,7 +1,7 @@
 import * as CarActionCreators from "../../components/CarsList/car-actions";
 import * as AuthActionCreators from "../../components/auth/Login/action";
 import * as RegActionCreators from "../../components/auth/Register/actions";
-import * as ProfileActionCreators from "../../components/Profile/actions";
+import * as ProfileActionCreators from "../../components/UserData/actions";
 import * as UsersActionCreators from "../../components/adminPanel/Users/actions";
 import * as SendingCarActionCreators from "../../components/CarsList/AddNewCar/addCar";
 import * as CartActionCreators from "../../components/Cart/cart-actions";
@@ -25,9 +25,7 @@ const actions = {
   ...RecoverPasswordActionCreator,
   ...PaginateActionCreator,
   ...CategoryActionCreators,
-
   ...CarImageActionCreators,
-
   ...NewsActionCreators,
   ...ProductsByCategoryActionCreators,
 };

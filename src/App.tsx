@@ -12,7 +12,7 @@ import "../node_modules/font-awesome/css/font-awesome.css";
 import Home from "./components/Home";
 import DefaultLayout from "./components/containers/DefaultLayout";
 import AddNewCar from "./components/CarsList/AddNewCar";
-import ProfilePage from "./components/Profile";
+import ProfilePage from "./components/UserData/Profile";
 import Cart from "./components/Cart/Cart";
 import NoMatch from "./components/NoMatch";
 import CarPage from "./components/adminPanel/Products/InfoProduct/InfoPage";
@@ -64,6 +64,7 @@ const NewsWithNewsList = lazy(
   () => import("./components/adminPanel/NewsWithNewsLIst")
 );
 const CheckOut = lazy(() => import("./components/Checkout/index"));
+const OredrList = lazy(() => import("./components/UserData/UserOrders"))
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -110,7 +111,7 @@ function App() {
 
           {/* Profile Routes */}
           <Route path="/profile" element={<ProfilePage />} />
-
+          <Route path="/oredrList" element={<Suspense fallback={null}><OredrList /></Suspense>} />  
           {/* Products Routes */}
           <Route path="/products/add" element={<AddNewCar />} />
           <Route

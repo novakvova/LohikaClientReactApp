@@ -1,9 +1,10 @@
 import { ProfileActions, ProfileActionTypes, IProfile } from './types';
+
 import { Dispatch } from 'react';
-import http from '../../http_common';
+import http from '../../../http_common';
 
 
-export const GetProfileData = () => async (dispatch: Dispatch<ProfileActions>) => {
+ const GetProfileData = () => async (dispatch: Dispatch<ProfileActions>) => {
 	try {
 		dispatch({type: ProfileActionTypes.PROFILE});
 		const response = await http.get<IProfile>("api/Account/profile");
@@ -18,4 +19,6 @@ export const GetProfileData = () => async (dispatch: Dispatch<ProfileActions>) =
 			payload: error
 		});
 	}
-}
+};
+
+export default GetProfileData;

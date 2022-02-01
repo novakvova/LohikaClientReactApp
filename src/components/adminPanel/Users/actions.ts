@@ -112,16 +112,14 @@ export const getUserById = (id: number): any => {
   };
 };
 
-export const updateUser = (data: UserInfo, formData: FormData) => {
+export const updateUser = (data: UserInfo) => {
   return async (dispatch: Dispatch<UpdateUserActions>) => {
     try {
       dispatch({
         type: UpdateUserActionTypes.UPDATE_USER,
       });
 
-      await http.put<UserInfo>("/api/Users/edit", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await http.put<UserInfo>("/api/Users/edit", data);
 
       dispatch({
         type: UpdateUserActionTypes.UPDATE_USER_SUCCESS,

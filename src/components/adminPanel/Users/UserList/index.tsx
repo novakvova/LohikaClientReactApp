@@ -18,59 +18,59 @@ import { Helmet } from 'react-helmet';
 const UserList = () => {
   const [visible, setVisible] = useState(false);
   const [delId, setDelId] = useState<number>(0);
-    const toast = useRef<Toast>(null);
+  const toast = useRef<Toast>(null);
   const { deleteUser } = useActions();
 
-const ActionBodyTemplate = (rowData: UserInfo) => {
-  const delUser = async (id:number) => {
-      await setVisible(true);
-      setDelId(id);
-  } 
+  const ActionBodyTemplate = (rowData: UserInfo) => {
+    const delUser = async (id:number) => {
+        await setVisible(true);
+        setDelId(id);
+    } 
 
-  return (
-    <>
-      <Helmet>
-        <title>Список користувачів</title>
-      </Helmet>
-      <ConfirmDialog
-        visible={visible}
-        onHide={() => setVisible(false)}
-        message="Точно видалити?"
-        header="Confirmation"
-        icon="pi pi-exclamation-triangle"
-        accept={() => {
-          deleteUser(delId);
+    return (
+      <>
+        <Helmet>
+          <title>Список користувачів</title>
+        </Helmet>
+        <ConfirmDialog
+          visible={visible}
+          onHide={() => setVisible(false)}
+          message="Точно видалити?"
+          header="Confirmation"
+          icon="pi pi-exclamation-triangle"
+          accept={() => {
+            deleteUser(delId);
 
-          if (toast.current !== null) {
-            toast.current.show({
-              severity: "info",
-              summary: "Виконано",
-              detail: "Користувача видалено",
-              life: 3000,
-            });
-          }
-        }}
-      />
-      <Link to={`userinfo/${rowData.id}`}>
-        <Button
-          icon="pi pi-info"
-          className="p-button-rounded p-button-info p-mr-2"
+            if (toast.current !== null) {
+              toast.current.show({
+                severity: "info",
+                summary: "Виконано",
+                detail: "Користувача видалено",
+                life: 3000,
+              });
+            }
+          }}
         />
-      </Link>
-      <Link to={`edit/${rowData.id}`}>
+        <Link to={`userinfo/${rowData.id}`}>
+          <Button
+            icon="pi pi-info"
+            className="p-button-rounded p-button-info p-mr-2"
+          />
+        </Link>
+        <Link to={`edit/${rowData.id}`}>
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success p-mr-2"
+          />
+        </Link>
         <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success p-mr-2"
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-warning p-mr-2"
+          onClick={() => delUser(rowData.id)}
         />
-      </Link>
-      <Button
-        icon="pi pi-trash"
-        className="p-button-rounded p-button-warning p-mr-2"
-        onClick={() => delUser(rowData.id)}
-      />
-    </>
-  );
-};
+      </>
+    );
+  };
 
 	const { users } = useTypedSelector(store => store.userCrud);
     return (
