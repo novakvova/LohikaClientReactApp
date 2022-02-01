@@ -8,6 +8,7 @@ import { useTypedSelector } from "../../../../hooks/useTypedSelector";
 import EclipseWidget from "../../../common/eclipse";
 import InputGroup from "../../../common/InputGroup";
 import { ICarUpdate } from "../../../CarsList/types";
+import { Card } from "primereact/card";
 
 import { v4 as uuid } from "uuid";
 import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
@@ -92,7 +93,7 @@ const EditCarPage = () => {
       ids: cropImages.filter((item) => item !== ""),
     });
     setShowLoader(false);
-    await navigate("/cars");
+    await navigate("/adminPanel/products");
   };
 
   const initialValues = {
@@ -119,7 +120,9 @@ const EditCarPage = () => {
       <Helmet>
         <title>Редагувати</title>
       </Helmet>
+      <Card className="px-4">
       <div className="row">
+        
         <h1 className="text-center">Редагувати запис</h1>
         {showLoader && <EclipseWidget />}
         <div className="col-4 d-flex justify-content-center flex-column">
@@ -145,7 +148,7 @@ const EditCarPage = () => {
           })}
         </div>
 
-        <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
+        <form className="col-8" onSubmit={(e) => formik.handleSubmit(e)}>
           <SelectGroup
             label="Категорія"
             field="categoryId"
@@ -205,8 +208,9 @@ const EditCarPage = () => {
             </button>
           </div>
         </form>
-        <div className="col-4"></div>
+      
       </div>
+      </Card>
     </>
   );
 };

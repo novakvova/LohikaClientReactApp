@@ -114,16 +114,16 @@ function App() {
           <Route path="/oredrList" element={<Suspense fallback={null}><OredrList /></Suspense>} />  
           {/* Products Routes */}
           <Route path="/products/add" element={<AddNewCar />} />
-          <Route
+          {/* <Route
             path="/cars"
             element={
               <Suspense fallback={null}>
                 <CarsListAdmin />
               </Suspense>
             }
-          />
-          <Route path="/cars/:id" element={<CarPage />} />
-          <Route path="/cars/edit/:id" element={<EditCarPage />} />
+          /> */}
+          {/* <Route path="/cars/:id" element={<CarPage />} />
+          <Route path="/cars/edit/:id" element={<EditCarPage />} /> */}
 
           <Route path="/category/:urlSlug/items" element={<CarsListBySlug />} />
 
