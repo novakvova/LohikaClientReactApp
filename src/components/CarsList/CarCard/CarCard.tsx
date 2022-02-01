@@ -33,13 +33,6 @@ const CarCard: React.FC<CarCardProps> = ({
 
   return (
     <div className={`card ${classes.carCard} mt-3 pt-3`}>
-      {/* {images[0] && (
-        <img
-          src={`https://vovalohika.tk/images/600_${images[0]}?${uuid()}`}
-          className={`card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
-          alt={name}
-        />
-      )} */}
       {images[0] && (
         <div
           id={`carouselExampleControls${id}`}

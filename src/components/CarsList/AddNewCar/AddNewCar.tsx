@@ -10,12 +10,14 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import EclipseWidget from "../../common/eclipse/index";
 import { Helmet } from "react-helmet";
 import CropperMultiple from "../../containers/CropperMultiple/CropperMultiple";
+import EditorTiny from "../../common/EditorTiny/EditorTiny";
 
 const initialValues: IAddCar = {
   name: "",
   priority: "",
   price: "",
   categoryId: 0,
+  description: "",
 };
 
 const AddNewCar: React.FC = () => {
@@ -65,7 +67,6 @@ const AddNewCar: React.FC = () => {
   };
 
   const onSubmit = (values: IAddCar, helpers: FormikHelpers<IAddCar>) => {
-    console.log("add car Values => ", values);
     addNewCar({ ...values, ids: cropImages.filter((item) => item !== "") });
   };
 
@@ -82,7 +83,8 @@ const AddNewCar: React.FC = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const { errors, touched, handleBlur, handleChange, values } = formik;
+  const { errors, touched, handleBlur, handleChange, values, setFieldValue } =
+    formik;
 
   return (
     <>
@@ -152,6 +154,16 @@ const AddNewCar: React.FC = () => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
+          <EditorTiny
+            value={values.description}
+            field="description"
+            label="Опис товаару"
+            error={errors.description}
+            touched={touched.description}
+            onEditorChange={(a: string) => {
+              setFieldValue("description", a);
+            }}
+          />
 
           <div className="text-center">
             <button type="submit" className="btn btn-primary">
@@ -161,6 +173,7 @@ const AddNewCar: React.FC = () => {
         </form>
         <div className="col-4"></div>
       </div>
+      
     </>
   );
 };

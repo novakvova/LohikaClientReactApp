@@ -8,10 +8,12 @@ import { useTypedSelector } from "../../../../hooks/useTypedSelector";
 import EclipseWidget from "../../../common/eclipse";
 import InputGroup from "../../../common/InputGroup";
 import { ICarUpdate } from "../../../CarsList/types";
+import { Card } from "primereact/card";
 
 import { v4 as uuid } from "uuid";
 import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
 import SelectGroup from "../../../common/SelectGroup";
+import EditorTiny from "../../../common/EditorTiny/EditorTiny";
 
 const EditCarPage = () => {
   const { updateCar, fetchCategories } = useActions();
@@ -85,14 +87,13 @@ const EditCarPage = () => {
 
   const navigate = useNavigate();
   const onSubmit = async (values: ICarUpdate) => {
-    console.log("values => ", values);
     setShowLoader(true);
     await updateCar({
       ...values,
       ids: cropImages.filter((item) => item !== ""),
     });
     setShowLoader(false);
-    await navigate("/cars");
+    await navigate("/adminPanel/products");
   };
 
   const initialValues = {
@@ -101,6 +102,7 @@ const EditCarPage = () => {
     priority: `${carSearchedById?.priority}`,
     price: `${carSearchedById?.price}`,
     categoryId: carSearchedById.categoryId,
+    description: carSearchedById.description,
   };
 
   const formik = useFormik({
@@ -111,14 +113,16 @@ const EditCarPage = () => {
     enableReinitialize: true,
   });
 
-  const { errors, touched, handleChange } = formik;
+  const { errors, touched, handleChange, setFieldValue } = formik;
 
   return (
     <>
       <Helmet>
         <title>Редагувати</title>
       </Helmet>
+      <Card className="px-4">
       <div className="row">
+        
         <h1 className="text-center">Редагувати запис</h1>
         {showLoader && <EclipseWidget />}
         <div className="col-4 d-flex justify-content-center flex-column">
@@ -144,7 +148,7 @@ const EditCarPage = () => {
           })}
         </div>
 
-        <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
+        <form className="col-8" onSubmit={(e) => formik.handleSubmit(e)}>
           <SelectGroup
             label="Категорія"
             field="categoryId"
@@ -187,14 +191,26 @@ const EditCarPage = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
+
+          <EditorTiny
+            value={formik.values.description}
+            field="description"
+            label="Опис товаару"
+            error={errors.description}
+            touched={touched.description}
+            onEditorChange={(a: string) => {
+              setFieldValue("description", a);
+            }}
+          />
           <div className="text-center">
             <button type="submit" className="btn btn-primary">
               Зберегти зміни
             </button>
           </div>
         </form>
-        <div className="col-4"></div>
+      
       </div>
+      </Card>
     </>
   );
 };

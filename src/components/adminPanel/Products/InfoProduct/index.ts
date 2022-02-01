@@ -1,3 +1,3 @@
-import CarPage from "./CarPage";
+import CarPage from "./InfoPage";
 
 export default CarPage;
