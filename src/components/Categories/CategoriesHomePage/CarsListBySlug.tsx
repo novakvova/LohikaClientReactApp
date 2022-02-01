@@ -17,8 +17,16 @@ const CarsListBySlug = () => {
   const cps = useTypedSelector((store) => store.productsReducer);
   const { products, total, pages } = cps.ppl;
 
+  let categName:string = '';
+  if(products.length === 0){
+    setTimeout(()=> (categName = ' не знайдено'), 100)
+  } else {
+    categName = products[0].categoryName
+  }
+
   return (
   <>
+  <h2>Товари за катерорією {categName}</h2>
     <div className="row d-flex justify-content-around flex-wrap">
       {products.map(({ id, name, price, images, categoryName }) => (
         <CarCard

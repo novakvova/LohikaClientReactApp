@@ -4,7 +4,6 @@ import { v4 as uuid } from 'uuid';
 import { useState } from 'react';
 import CategorySearch from '../CategorySearch/CategorySearch';
 import {  useNavigate } from 'react-router-dom';
-// import { CreateCategory } from '../CreateCategory/CreateCategory';
 
 export const TableImageTemplate = (rowData: CategoryInfo) => {
   const imagesrc = `https://vovalohika.tk/images/150_${rowData.image}?t=${uuid()}`;

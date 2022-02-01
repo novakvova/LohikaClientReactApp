@@ -95,7 +95,7 @@ function App() {
           <Route path="/cars/:id" element={<CarPage />} />
           <Route path="/cars/edit/:id" element={<EditCarPage />} />
 
-          <Route path="/category/:urlSlug/items" element={<CarsListBySlug />} />
+          <Route path="/category/:urlSlug/" element={<CarsListBySlug />} />
 
 
           {/* News Routes*/}
