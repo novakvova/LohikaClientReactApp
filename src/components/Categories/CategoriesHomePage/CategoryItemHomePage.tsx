@@ -13,7 +13,7 @@ const CategoryItemHomePage: React.FC<Props> = ({ categoryItem: { urlSlug, title,
   const navigator = useNavigate();
 
   const onClick = () =>{
-    navigator(`/category/${urlSlug}/items`)
+    navigator(`/category/${urlSlug}`)
   }
   
   const header = (

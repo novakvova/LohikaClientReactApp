@@ -20,6 +20,7 @@ export interface ICarUpdate {
   image?: string;
   ids?: Array<number>;
   categoryId: number;
+  description?: string;
 }
 
 export interface IImage {
@@ -36,6 +37,7 @@ export interface ISearchCarById {
   images: Array<IImage>;
   categoryId: number;
   categoryName: string;
+  description?: string;
 }
 
 export interface ISearchCar {

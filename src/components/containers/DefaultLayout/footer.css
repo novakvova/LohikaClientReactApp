@@ -1,5 +1,5 @@
-
-
-/* var(--bs-body-color) */
-/* --bs-gray-dark: #343a40 */
-/* --bs-gray-900: #212529; */
+.footer-container{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}

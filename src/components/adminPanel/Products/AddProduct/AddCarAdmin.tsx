@@ -9,6 +9,7 @@ import { AddCarSchema as validationSchema } from "../validation";
 import { useTypedSelector } from "../../../../hooks/useTypedSelector";
 import EclipseWidget from "../../../common/eclipse";
 import { Helmet } from "react-helmet";
+import { Card } from "primereact/card";
 import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
 
 const initialValues: IAddCar = {
@@ -89,7 +90,7 @@ const AddCarAdmin = () => {
       <Helmet>
         <title>Додати машину</title>
       </Helmet>
-
+      <Card className="px-4">
       <div className="row text-light">
         <h1 className="text-center">Додати автомобіль</h1>
         {serverError && <h2>{serverError}</h2>}
@@ -111,7 +112,7 @@ const AddCarAdmin = () => {
           })}
         </div>
 
-        <form className="col-4" onSubmit={(e) => formik.handleSubmit(e)}>
+        <form className="col-8" onSubmit={(e) => formik.handleSubmit(e)}>
           <SelectGroup
             label="Категорія"
             field="categoryId"
@@ -161,6 +162,7 @@ const AddCarAdmin = () => {
         </form>
         <div className="col-4"></div>
       </div>
+      </Card>
     </>
   );
 };
