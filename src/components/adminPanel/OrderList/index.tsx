@@ -25,14 +25,14 @@ const Orders = () => {
         <div className="d-flex align-items-center" style={{ minWidth: "100%" }}>
           <div className="col-1">№: {id}</div>
           <div className="col-3">Дата замовлення: {dateCreated}</div>
-          <div className="col-3 p-2">
+          <div className="col-3 p-2" onClick={(e) => e.stopPropagation()}>
             Статус: &nbsp;
             <Dropdown
               className=""
               value={statusObj[0]}
               options={status}
+            
               onChange={(e) => {
-                e.stopPropagation();
                 const statusData = e.target.value as OrderStatus;
                 ChangeOrderStatus(id, statusData.id, statusData.name);
               }}
