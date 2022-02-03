@@ -33,7 +33,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
   value,
   message,
   idx,
-  aspectRatio = 16/9,
+  aspectRatio = 16 / 9,
   uploadImageHandler,
   onRemoveHandler,
   onChangeImage,
@@ -157,47 +157,49 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
                 />
               }
             </div>
-            <div className="d-flex justify-content-around mt-2">
-              
-              <button
-                onClick={rotateImg}
-                type="button"
-                className="btn btn-outline-secondary"
-              >
-                <FontAwesomeIcon icon={faSync} size={"2x"} />
-              </button>
+            <div className="d-flex justify-content-between">
               <div
-                className="d-flex justify-content-between"
-                style={{ width: "150px" }}
-              >
+                ref={previewRef as LegacyRef<HTMLDivElement>}
+                style={{
+                  height: "150px",
+                  width: "150px",
+                  border: "1px solid silver",
+                  overflow: "hidden",
+                  marginTop: "20px",
+                }}
+              ></div>
+
+              <div className="d-flex justify-content-around align-items-center mt-2">
                 <button
-                  onClick={getBase64}
+                  onClick={rotateImg}
                   type="button"
-                  className="btn btn-outline-success"
+                  className="btn btn-outline-secondary"
                 >
-                  <FontAwesomeIcon icon={faCheckCircle} size={"2x"} />
+                  <FontAwesomeIcon icon={faSync} size={"2x"} />
                 </button>
-                <button
-                  onClick={() => {
-                    setShowModal(false);
-                  }}
-                  type="button"
-                  className="btn btn-outline-danger"
+                <div
+                  className="d-flex justify-content-between"
+                  style={{ width: "150px" }}
                 >
-                  <FontAwesomeIcon icon={faTimesCircle} size={"2x"} />
-                </button>
+                  <button
+                    onClick={getBase64}
+                    type="button"
+                    className="btn btn-outline-success"
+                  >
+                    <FontAwesomeIcon icon={faCheckCircle} size={"2x"} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowModal(false);
+                    }}
+                    type="button"
+                    className="btn btn-outline-danger"
+                  >
+                    <FontAwesomeIcon icon={faTimesCircle} size={"2x"} />
+                  </button>
+                </div>
               </div>
             </div>
-            <div
-              ref={previewRef as LegacyRef<HTMLDivElement>}
-              style={{
-                height: "150px",
-                width: "150px",
-                border: "1px solid silver",
-                overflow: "hidden",
-                margin: "10px auto",
-              }}
-            ></div>
           </div>
         </Modal>
       )}
