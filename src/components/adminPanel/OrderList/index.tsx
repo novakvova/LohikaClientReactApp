@@ -19,7 +19,7 @@ const Orders = () => {
 	}, [GetAdminOrdersList]);
 
 
-	const content = orders.map(({id, dateCreated, statusName, items}) => {
+	const content = orders.map(({id, dateCreated, statusName, items, consumerFirstName, consumerSecondName, consumerPhone}) => {
 			const statusObj = status.filter((el) => el.name === statusName);
 			const header = (
         <div className="d-flex align-items-center" style={{ minWidth: "100%" }}>
@@ -29,9 +29,9 @@ const Orders = () => {
             Статус: &nbsp;
             <Dropdown
               className=""
+              style={{ width: "12rem" }}
               value={statusObj[0]}
               options={status}
-            
               onChange={(e) => {
                 const statusData = e.target.value as OrderStatus;
                 ChangeOrderStatus(id, statusData.id, statusData.name);
@@ -39,6 +39,10 @@ const Orders = () => {
               optionLabel="name"
             />
           </div>
+          <div className="col-3">
+            Замовник: {consumerFirstName} &nbsp; {consumerSecondName}
+          </div>
+          <div className="col-2">Тел: {consumerPhone}</div>
         </div>
       );
 			return (
