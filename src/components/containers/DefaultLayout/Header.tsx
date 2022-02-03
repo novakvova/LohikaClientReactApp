@@ -36,14 +36,6 @@ const DefaultHeader = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="d-flex navbar-nav me-auto mb-2 mb-lg-0">
-            {isAuth && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/products/add">
-                  Додати продукт
-                </Link>
-              </li>
-            )}
-
             <li className="ms-3">
               <HeaderSearch />
             </li>

@@ -11,6 +11,7 @@ import EclipseWidget from "../../../common/eclipse";
 import { Helmet } from "react-helmet";
 import { Card } from "primereact/card";
 import CropperMultiple from "../../../containers/CropperMultiple/CropperMultiple";
+import EditorTiny from "../../../common/EditorTiny/EditorTiny";
 
 const initialValues: IAddCar = {
   name: "",
@@ -83,7 +84,8 @@ const AddCarAdmin = () => {
     }
   }, [nav, serverError, navigate]);
 
-  const { errors, touched, handleBlur, handleChange, values } = formik;
+  const { errors, touched, handleBlur, handleChange, values, setFieldValue } =
+    formik;
 
   return (
     <>
@@ -91,77 +93,87 @@ const AddCarAdmin = () => {
         <title>Додати машину</title>
       </Helmet>
       <Card className="px-4">
-      <div className="row text-light">
-        <h1 className="text-center">Додати автомобіль</h1>
-        {serverError && <h2>{serverError}</h2>}
-        {loading && <EclipseWidget />}
+        <div className="row text-light">
+          <h1 className="text-center">Додати автомобіль</h1>
+          {serverError && <h2>{serverError}</h2>}
+          {loading && <EclipseWidget />}
 
-        <div className="col-4 d-flex justify-content-center flex-column">
-          {cropImages.map((item, idx) => {
-            return (
-              <CropperMultiple
-                key={idx}
-                onChange={() => {}}
-                onChangeImage={addImageHandler}
-                onRemoveHandler={removeImageHandler}
-                uploadImageHandler={uploadCarImage}
-                idx={idx}
-                field={`i${idx}`}
-              />
-            );
-          })}
-        </div>
-
-        <form className="col-8" onSubmit={(e) => formik.handleSubmit(e)}>
-          <SelectGroup
-            label="Категорія"
-            field="categoryId"
-            values={categories}
-            onChange={handleChange}
-            touched={touched.categoryId}
-            error={errors.categoryId}
-          />
-          <InputGroup
-            field="name"
-            label="Ім'я"
-            type="text"
-            touched={touched.name}
-            error={errors.name}
-            value={values.name as string}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-
-          <InputGroup
-            field="priority"
-            label="Приорітет"
-            type="number"
-            touched={touched.priority}
-            error={errors.priority}
-            value={values.priority as string}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-
-          <InputGroup
-            field="price"
-            label="Ціна"
-            type="number"
-            touched={touched.price}
-            error={errors.price}
-            value={values.price as string}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-
-          <div className="text-center">
-            <button type="submit" className="btn btn-primary">
-              Додати машину
-            </button>
+          <div className="col-4 d-flex justify-content-center flex-column">
+            {cropImages.map((item, idx) => {
+              return (
+                <CropperMultiple
+                  key={idx}
+                  onChange={() => {}}
+                  onChangeImage={addImageHandler}
+                  onRemoveHandler={removeImageHandler}
+                  uploadImageHandler={uploadCarImage}
+                  idx={idx}
+                  field={`i${idx}`}
+                />
+              );
+            })}
           </div>
-        </form>
-        <div className="col-4"></div>
-      </div>
+
+          <form className="col-8" onSubmit={(e) => formik.handleSubmit(e)}>
+            <SelectGroup
+              label="Категорія"
+              field="categoryId"
+              values={categories}
+              onChange={handleChange}
+              touched={touched.categoryId}
+              error={errors.categoryId}
+            />
+            <InputGroup
+              field="name"
+              label="Ім'я"
+              type="text"
+              touched={touched.name}
+              error={errors.name}
+              value={values.name as string}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <InputGroup
+              field="priority"
+              label="Приорітет"
+              type="number"
+              touched={touched.priority}
+              error={errors.priority}
+              value={values.priority as string}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <InputGroup
+              field="price"
+              label="Ціна"
+              type="number"
+              touched={touched.price}
+              error={errors.price}
+              value={values.price as string}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <EditorTiny
+              value={formik.values.description}
+              field="description"
+              label="Опис товаару"
+              error={errors.description}
+              touched={touched.description}
+              onEditorChange={(a: string) => {
+                setFieldValue("description", a);
+              }}
+            />
+
+            <div className="text-center">
+              <button type="submit" className="btn btn-primary">
+                Додати машину
+              </button>
+            </div>
+          </form>
+          <div className="col-4"></div>
+        </div>
       </Card>
     </>
   );

@@ -11,16 +11,21 @@ const BackDrop = (props: any) => {
 const ModalAlternative = (props: any) => {
   return (
     <BackDrop onClose={props.onClose}>
-      {/* <!-- Modal content --> */}
       <div
         className={classes["modal-content"]}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <span className={classes.close}>&times;</span>
+        <span
+          className={classes.close}
+          onClick={() => {
+            props.onClose();
+          }}
+        >
+          &times;
+        </span>
         {props.children}
-        <p>Some text in the Modal..</p>
       </div>
     </BackDrop>
   );
