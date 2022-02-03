@@ -6,7 +6,7 @@ import CardButtonToCart from "./CardButtonToCart";
 import CartButtonAdd from "./CardButtonAdd";
 import { CarCardProps } from "./types";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
 const CarCard: React.FC<CarCardProps> = ({
@@ -20,8 +20,6 @@ const CarCard: React.FC<CarCardProps> = ({
   const [count, setCount] = useState("1");
   const { addItemToCart, showCart, downloadCartData } = useActions();
   const { isAuth } = useTypedSelector((store) => store.auth);
-
-  const navigator = useNavigate();
 
   const countHandler = (value: string) => {
     setCount(value);
@@ -48,15 +46,18 @@ const CarCard: React.FC<CarCardProps> = ({
                     idx === 0 ? "carousel-item active" : "carousel-item"
                   }
                 >
-                  <img
-                    src={`https://vovalohika.tk/images/600_${item}?${uuid()}`}
-                    className={`d-block w-100 card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
-                    alt={name}
-                  />
+                  <Link to={`/cars/${id}`}>
+                    <img
+                      src={`https://vovalohika.tk/images/600_${item}?${uuid()}`}
+                      className={`d-block w-100 card-img-top  mt-2 rounded-3 ${classes.cardImg}`}
+                      alt={name}
+                    />
+                  </Link>
                 </div>
               );
             })}
           </div>
+
           <button
             className="carousel-control-prev"
             type="button"
@@ -85,9 +86,11 @@ const CarCard: React.FC<CarCardProps> = ({
       )}
 
       {!images[0] && (
-        <div className={`${classes.cardImgMock}`}>
-          <i className={`fa fa-car fa-5x `}></i>
-        </div>
+        <Link to={`/cars/${id}`}>
+          <div className={`${classes.cardImgMock}`}>
+            <i className={`fa fa-car fa-5x `}></i>
+          </div>
+        </Link>
       )}
 
       <div className="card-body overflow-hidden">
@@ -119,15 +122,13 @@ const CarCard: React.FC<CarCardProps> = ({
         </div>
         <div className="row">
           <div className="col-6 input-group mb-3 ">
-            <button
-              onClick={() => {
-                navigator(`/cars/${id}`);
-              }}
+            <Link
+              to={`/cars/${id}`}
               type="button"
               className="w-100 btn btn-outline-success d-flex justify-content-around align-items-center fw-bold"
             >
               Докладніше про товар
-            </button>
+            </Link>
           </div>
         </div>
       </div>
