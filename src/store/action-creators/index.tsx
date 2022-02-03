@@ -12,7 +12,7 @@ import * as CategoryActionCreators from "../../components/Categories/actions";
 import * as CarImageActionCreators from "../../components/containers/CropperMultiple/actionCropperMultiple";
 import * as NewsActionCreators from "../../components/adminPanel/News/action";
 import * as ProductsByCategoryActionCreators from "../../components/Categories/CategoriesHomePage/actions";
-
+import * as GetAdminOrdersActionCreator from "../../components/adminPanel/OrderList/action"
 const actions = {
   ...CarActionCreators,
   ...AuthActionCreators,
@@ -28,6 +28,7 @@ const actions = {
   ...CarImageActionCreators,
   ...NewsActionCreators,
   ...ProductsByCategoryActionCreators,
+  ...GetAdminOrdersActionCreator,
 };
 
 export default actions;

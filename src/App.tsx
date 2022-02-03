@@ -24,6 +24,7 @@ import AddCarAdmin from "./components/adminPanel/Products/AddProduct";
 import CarsListBySlug from "./components/Categories/CategoriesHomePage/CarsListBySlug";
 import InfoPage from "./components/adminPanel/Products/InfoProduct/InfoPage";
 
+
 //Import lazyLoading
 const CarsListAdmin = lazy(
   () => import("./components/adminPanel/Products/CarListAdmin/CarListAdmin")
@@ -65,6 +66,7 @@ const NewsWithNewsList = lazy(
 );
 const CheckOut = lazy(() => import("./components/Checkout/index"));
 const OredrList = lazy(() => import("./components/UserData/UserOrders"))
+const Orders = lazy(() => import("./components/adminPanel/OrderList"));
 
 function App() {
   const { cartIsShow } = useTypedSelector((store) => store.cart);
@@ -111,7 +113,14 @@ function App() {
 
           {/* Profile Routes */}
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/oredrList" element={<Suspense fallback={null}><OredrList /></Suspense>} />  
+          <Route
+            path="/oredrList"
+            element={
+              <Suspense fallback={null}>
+                <OredrList />
+              </Suspense>
+            }
+          />
           {/* Products Routes */}
           <Route path="/products/add" element={<AddNewCar />} />
           {/* <Route
@@ -265,6 +274,15 @@ function App() {
               element={
                 <Suspense fallback={null}>
                   <CategoryPage />
+                </Suspense>
+              }
+            />
+            {/* Order list */}
+            <Route
+              path="/adminPanel/orderList"
+              element={
+                <Suspense fallback={null}>
+                  <Orders />
                 </Suspense>
               }
             />
