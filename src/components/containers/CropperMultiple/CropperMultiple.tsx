@@ -10,6 +10,7 @@ import {
   faCheckCircle,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import ModalAlternative from "../ModalAlternative/ModalAlternative";
 
 export interface IGetCropperProps {
   onChange: (id: number) => void;
@@ -33,7 +34,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
   value,
   message,
   idx,
-  aspectRatio = 16/9,
+  aspectRatio = 16 / 9,
   uploadImageHandler,
   onRemoveHandler,
   onChangeImage,
@@ -142,7 +143,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
       </form>
 
       {showModal && (
-        <Modal
+        <ModalAlternative
           onClose={() => {
             setShowModal(false);
           }}
@@ -158,7 +159,6 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
               }
             </div>
             <div className="d-flex justify-content-around mt-2">
-              
               <button
                 onClick={rotateImg}
                 type="button"
@@ -199,7 +199,7 @@ const CropperMultiple: React.FC<IGetCropperProps> = ({
               }}
             ></div>
           </div>
-        </Modal>
+        </ModalAlternative>
       )}
     </>
   );
