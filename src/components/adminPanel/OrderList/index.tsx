@@ -40,7 +40,7 @@ const Orders = () => {
             />
           </div>
           <div className="col-3">
-            Замовник: {consumerFirstName} &nbsp; {consumerSecondName}
+            Замовник: {consumerFirstName} {consumerSecondName}
           </div>
           <div className="col-2">Тел: {consumerPhone}</div>
         </div>
