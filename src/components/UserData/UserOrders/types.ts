@@ -22,7 +22,8 @@ export interface Order {
     productId: number;
     productName: string;
     quantity: number;
-    buyPrice:number;
+    productImage:Array<string>;
+    buyPrice: number;
   }
 
 

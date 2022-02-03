@@ -21,7 +21,7 @@ const CheckOut = () => {
   const { profile : { phone,  firstName, secondName} } = useTypedSelector( store => store.profile);
 	const quan = cartData.reduce((prev, current) => prev + current.quantity, 0);
 	const totalSum = cartData.reduce((prev, current) => prev + current.productPrice * current.quantity, 0)
-    const toast = useRef<Toast>(null);
+  const toast = useRef<Toast>(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {

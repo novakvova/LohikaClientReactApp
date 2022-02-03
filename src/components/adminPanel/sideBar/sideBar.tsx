@@ -37,6 +37,16 @@ const SideBar = () => {
       ],
     },
     {
+      label: "Замовлення",
+      items: [
+        {
+          label: "Список",
+          icon: "pi pi-fw pi-list",
+          command: () => navigate("/adminPanel/orderList"),
+        },
+      ],
+    },
+    {
       label: "Категорії",
       items: [
         {

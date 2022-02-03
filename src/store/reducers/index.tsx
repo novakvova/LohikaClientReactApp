@@ -11,6 +11,7 @@ import { paginateReducer } from '../../components/adminPanel/Users/Paginator/red
 import { categoryReducer } from '../../components/Categories/reducer';
 import { newsReducer } from "../../components/adminPanel/News/reducer";
 import { productsReducer } from "../../components/Categories/CategoriesHomePage/products-reducer";
+import { ordersAdminReducer } from "../../components/adminPanel/OrderList/reducer"
 
 export const rootReducer = combineReducers({
   car: carReducer,
@@ -24,7 +25,8 @@ export const rootReducer = combineReducers({
   paginate: paginateReducer,
   categoryCrud: categoryReducer,
   news: newsReducer,
-  productsReducer: productsReducer
+  productsReducer: productsReducer,
+  ordersReducer: ordersAdminReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
