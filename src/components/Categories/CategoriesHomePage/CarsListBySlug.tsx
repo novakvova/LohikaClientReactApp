@@ -26,7 +26,7 @@ const CarsListBySlug = () => {
 
   return (
   <>
-  <h2>Товари за катерорією {categName}</h2>
+  <h2>Товари за категорією {categName}</h2>
     <div className="row d-flex justify-content-around flex-wrap">
       {products.map(({ id, name, price, images, categoryName }) => (
         <CarCard
