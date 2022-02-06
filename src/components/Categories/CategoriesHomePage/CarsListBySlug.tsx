@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import CarCard from '../../CarsList/CarCard';
@@ -27,6 +27,10 @@ const CarsListBySlug = () => {
   return (
   <>
   <h2>Товари за категорією {categName}</h2>
+  <div>
+  <span><Link to={'/'}>На головну / </Link></span>
+<span><Link to={'/category/:urlSlug'}>{categName}</Link></span> 
+  </div>
     <div className="row d-flex justify-content-around flex-wrap">
       {products.map(({ id, name, price, images, categoryName }) => (
         <CarCard
