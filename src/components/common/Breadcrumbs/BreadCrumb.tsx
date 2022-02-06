@@ -1,30 +1,33 @@
+
 import { useLocation, Link } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
-import { HomeOutlined } from '@ant-design/icons';
 import "./Breadcrumbs.module.css"
+
+// const routeMapping = new Map<string, string>([
+//   ["category/Salo", "Notebooks"],
+//   ["news/blsdfldsf", "ldkafljkfd"]
+// ])
 
 const BreadCrumb = () => {
   const location = useLocation();
   const breadCrumbView = () => {
     const { pathname } = location;
     console.log(pathname);
+
+    // const name = routeMapping.get(pathname.toString())
     
     const pathNames = pathname.split('/').filter((item) => item);
+
     const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
     return (
       <div >
         <Breadcrumb>
           {pathNames.length > 0 ? (
             <Breadcrumb.Item>
-              <Link to="/">
-                {' '}
-                <HomeOutlined /> Home
-              </Link>
+              <Link to="/"> Home</Link>
             </Breadcrumb.Item>
           ) : (
-            <Breadcrumb.Item>
-              <HomeOutlined /> Home
-            </Breadcrumb.Item>
+            <Breadcrumb.Item> Home</Breadcrumb.Item>
           )}
           {pathNames.map((name, index) => {
             const routeTo = `/${pathNames.slice(0, index + 1).join('/')}`;
