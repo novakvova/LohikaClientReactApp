@@ -1,19 +1,19 @@
-
 import { useLocation, Link } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import "./Breadcrumbs.module.css"
 
 // const routeMapping = new Map<string, string>([
 //   ["category/Salo", "Notebooks"],
-//   ["news/blsdfldsf", "ldkafljkfd"]
+//   ["news/", "NEWS"]
 // ])
 
 const BreadCrumb = () => {
   const location = useLocation();
+  console.log(location);
+  
   const breadCrumbView = () => {
     const { pathname } = location;
-    console.log(pathname);
-
+    
     // const name = routeMapping.get(pathname.toString())
     
     const pathNames = pathname.split('/').filter((item) => item);
@@ -29,8 +29,14 @@ const BreadCrumb = () => {
           ) : (
             <Breadcrumb.Item> Home</Breadcrumb.Item>
           )}
-          {pathNames.map((name, index) => {
+          {pathNames.map((name, index) => {            
             const routeTo = `/${pathNames.slice(0, index + 1).join('/')}`;
+            console.log(routeTo);
+
+            if(routeTo === '/category'||'/category/salo'){
+              name = 'Notebooks'
+            }
+
             const isLast = index === pathNames.length - 1;
             return isLast ? (
               <Breadcrumb.Item key={name}>{capitalize(name)}</Breadcrumb.Item>
