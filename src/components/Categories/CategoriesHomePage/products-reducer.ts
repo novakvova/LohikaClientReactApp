@@ -4,18 +4,21 @@ import { GetProductsActions, GetProductsActionTypes } from "./types"
 interface CategoryProductsState {
     ppl: PaginatedProductsList,
     error: string | undefined,
-    loading: boolean
+    loading: boolean,
+    urlSlug: string
 }
 
 const initialState : CategoryProductsState = {
     ppl: {
+        categoryName: '',
         currentPage: 0,
         pages: 0,
         total: 0,
         products: []
     },
     error: undefined,
-    loading: false
+    loading: false,
+    urlSlug: ''
 }
 
 export const productsReducer = (
