@@ -1,20 +1,28 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useParams,  } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import "./Breadcrumbs.module.css"
-
-// const routeMapping = new Map<string, string>([
-//   ["category/Salo", "Notebooks"],
-//   ["news/", "NEWS"]
-// ])
+import { useActions } from '../../../hooks/useActions';
+import { useEffect } from 'react';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
 
 const BreadCrumb = () => {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
+// const {categoryName} = useParams();
+// console.log(categoryName);
+// const { getProductsByCategorySlug } = useActions();
+
+// useEffect(() => {
+//   return getProductsByCategorySlug(String(categoryName));
+// }, [getProductsByCategorySlug, categoryName]);
+
+// const cps = useTypedSelector((store) => store.productsReducer);
+
+// console.log(cps.ppl.categoryName);
   
+
   const breadCrumbView = () => {
     const { pathname } = location;
-    
-    // const name = routeMapping.get(pathname.toString())
     
     const pathNames = pathname.split('/').filter((item) => item);
 
@@ -24,18 +32,14 @@ const BreadCrumb = () => {
         <Breadcrumb>
           {pathNames.length > 0 ? (
             <Breadcrumb.Item>
-              <Link to="/"> Home</Link>
+              <Link to="/"> Головна сторінка</Link>
             </Breadcrumb.Item>
           ) : (
-            <Breadcrumb.Item> Home</Breadcrumb.Item>
+            <Breadcrumb.Item> Головна сторінка</Breadcrumb.Item>
           )}
           {pathNames.map((name, index) => {            
             const routeTo = `/${pathNames.slice(0, index + 1).join('/')}`;
             console.log(routeTo);
-
-            if(routeTo === '/category'||'/category/salo'){
-              name = 'Notebooks'
-            }
 
             const isLast = index === pathNames.length - 1;
             return isLast ? (
@@ -55,3 +59,5 @@ const BreadCrumb = () => {
 };
 
 export default BreadCrumb;
+
+

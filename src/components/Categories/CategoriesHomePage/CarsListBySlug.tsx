@@ -17,19 +17,13 @@ const CarsListBySlug = () => {
   const cps = useTypedSelector((store) => store.productsReducer);
   const { products } = cps.ppl;
 
-  let categName:string = '';
-  if(products.length === 0){
-    setTimeout(()=> (categName = ' не знайдено'), 100)
-  } else {
-    categName = products[0].categoryName
-  }
-
   return (
   <>
-  <h2>Товари за категорією {categName}</h2>
+  <h2>Товари за категорією {cps.ppl.categoryName}</h2>
+  <h3> Знайдено: {cps.ppl.total === 1 ? `${cps.ppl.total} товар` : `${cps.ppl.total} товари`} </h3>
   <div>
   <span><Link to={'/'}>На головну / </Link></span>
-<span><Link to={'/category/:urlSlug'}>{categName}</Link></span> 
+<span><Link to={'/category/:urlSlug'}>{cps.ppl.categoryName}</Link></span> 
   </div>
     <div className="row d-flex justify-content-around flex-wrap">
       {products.map(({ id, name, price, images, categoryName }) => (

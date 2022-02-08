@@ -33,5 +33,6 @@ export interface IStatus {
     currentPage: number,
     pages: number,
     products: Product[],
-    total: number
+    total: number,
+    categoryName: string
   }
